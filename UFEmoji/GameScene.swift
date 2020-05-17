@@ -426,7 +426,7 @@
                 
                    
                    // DispatchQueue.main.async { [weak self] in
-                        var section : SKReferenceNode? = SKReferenceNode(fileNamed: filename)
+                        let section : SKReferenceNode? = SKReferenceNode(fileNamed: filename)
                     
                         self.scene?.addChild(section!)
                         
