@@ -24,7 +24,7 @@ class GameViewController: UIViewController {
         tas.append(SKTextureAtlas(named: "dirt3"))
 
         // Call the preload and in the completion handler load and start the GameScene:
-        SKTextureAtlas.preloadTextureAtlases(tas, withCompletionHandler: { () -> Void in
+        SKTextureAtlas.preloadTextureAtlases(tas, withCompletionHandler: { 
             //do nothing
 
         })
@@ -40,12 +40,12 @@ class GameViewController: UIViewController {
         
         if let scene = GameMenu(fileNamed:"GameMenu"  ) {
             let skView = self.view as! SKView
-            skView.showsFPS = false
-            skView.showsNodeCount = false
+            skView.showsFPS = true
+            skView.showsNodeCount = true
             skView.showsPhysics = false
             skView.isMultipleTouchEnabled = true
             skView.isAsynchronous = true
-            skView.ignoresSiblingOrder = false
+            skView.ignoresSiblingOrder = true
             skView.clipsToBounds = false
             scene.scaleMode = .aspectFill
             setSceneSizeForMenu(scene: scene)

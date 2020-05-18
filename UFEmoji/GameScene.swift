@@ -73,7 +73,6 @@
  class GameScene: SKScene, ThumbPadProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     var firstBody = SKPhysicsBody()
     var secondBody = SKPhysicsBody()
-    //var laserbeamer = UInt32()
     var rockBounds = CGRect()
     var screenHeight = CGFloat()
     var cam = SKCameraNode()
@@ -175,15 +174,7 @@
             tm.removeAllChildren()
             tm.removeFromParent()
         }
-        
-        
-       
     }
-    
-   // func setupWater(_ scene:SKScene, tileMap: SKTileMapNode, Hi: String) {
-    //    tileMap.zPosition = 60
-    //    tileMap.alpha = 0.2
-   // }
     
     override func update(_ currentTime: TimeInterval) {
         if(hero.position.y > screenHeight  ) {
@@ -426,7 +417,7 @@
                 
                    
                    // DispatchQueue.main.async { [weak self] in
-                        let section : SKReferenceNode? = SKReferenceNode(fileNamed: filename)
+                        var section : SKReferenceNode? = SKReferenceNode(fileNamed: filename)
                     
                         self.scene?.addChild(section!)
                         
@@ -699,8 +690,6 @@
             self.audioPlayer?.stop()
             self.audioPlayer?.volume = 0.0
         }
-        
-        
     }
     
     override func didSimulatePhysics() {
@@ -716,7 +705,6 @@
             if let bp1 = backParalax.first {
                 bp1?.position.x = hero.position.x / -2
             }
-            //backParalax3?.position.x = hero.position.x / -3
             
         } else {
             
@@ -727,12 +715,6 @@
             cam.position = hero.position
             cam.zRotation = hero.zRotation
         }
-        
-        
-        /*
-         cam.position = hero.position
-         cam.zRotation = hero.zRotation
-         */
     }
     
     
@@ -774,8 +756,6 @@
             
             if let name = touchedNode.name
             {
-                //bombAlternator = !bombAlternator
-                //laserAlternator = !laserAlternator
                 
                 if name == "fire-right" {
                     GameProjectiles(laserbeak: laserbeam, scene: self, hero: (hero.position, hero.zRotation), reverse:false ).firebomb(firebomb: firebutton!)
@@ -845,8 +825,6 @@
                 //animate to look not so jerky
                 
                 //this will make the minigame harder!!
-                //if settings.level != 5 {
-                //print(settings.level)
                 let rot = SKAction.rotate(toAngle: 0.0, duration: 0.08)
                 hero.run(rot)
                 hero.physicsBody?.linearDamping = CGFloat(40)
@@ -900,22 +878,18 @@
         }
     }
     
-    func magicP (pos: CGPoint) {
+    func magicParticle (pos: CGPoint) {
         
-        //Using if let for SKEmitterNodes should fix any faulty optionals
-        //Surprised we got one. If let's are awesome in swift.
-        //I have not had good luck with "Guard" statements in case you are wondering
-        if let smoke = SKEmitterNode(fileNamed: "magicParticle") {
-            let fadeToZero = SKAction.fadeAlpha(to: 0.0, duration:TimeInterval(2.0))
-            let removeFromParent = SKAction.removeFromParent()
-            let destroyVaporDelay = SKAction.wait(forDuration: 2.0)
-            smoke.run(SKAction.sequence([destroyVaporDelay,fadeToZero,removeFromParent]))
-            smoke.position = pos
-            smoke.speed = 5
-            smoke.zPosition = 150
-            scene?.addChild(smoke)
-        }
+        guard let smoke = SKEmitterNode(fileNamed: "magicParticle") else { return }
         
+        let fadeToZero = SKAction.fadeAlpha(to: 0.0, duration:TimeInterval(2.0))
+        let removeFromParent = SKAction.removeFromParent()
+        let destroyVaporDelay = SKAction.wait(forDuration: 2.0)
+        smoke.run(SKAction.sequence([destroyVaporDelay,fadeToZero,removeFromParent]))
+        smoke.position = pos
+        smoke.speed = 5
+        smoke.zPosition = 150
+        scene?.addChild(smoke)
         
         if settings.sound {
             let explosion: SKAction = SKAction.playSoundFileNamed("boomFire2.m4a", waitForCompletion: false)
@@ -1088,7 +1062,7 @@
             //if ( secondBody.node?.name != nil) {
             let extraPoints = tallyPoints(name: (secondBody.node?.name)!)
             updateScore(extraPoints:extraPoints )
-            magicP(pos: contactPoint)
+            magicParticle(pos: contactPoint)
             remove(body: firstBody)
             remove(body: secondBody)
             //}

@@ -194,17 +194,17 @@ class GameMenu: SKScene {
         if settings.level > maxlevel {
             settings.level = 1
             settings.highlevel = 9
-            saveGameSettings();
+            saveGameSettings()
             
         }
         settings.highlevel = 10 //cheat to get all levels available
-        saveGameSettings();
+        saveGameSettings()
         
         //print(settings)
         settings.lives = 5; // may be less when power ups are added
         settings.score = 0;
     
-        saveGameSettings();
+        saveGameSettings()
         
         musicLabel.text =  settings.music  ? "🎷🔈" : "🎷🔇"
         soundLabel.text =  settings.sound ? "💥🔔" : "💥🔕"
