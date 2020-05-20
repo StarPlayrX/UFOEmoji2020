@@ -11,9 +11,9 @@ import SpriteKit
 //var mynode = SKReferenceNode()
 
 class GameStartup: GameScene {
-
+    
     func readyPlayerOne (_ scene:SKScene) -> (bombsbutton:SKSpriteNode?,firebutton:SKSpriteNode?,hero:SKSpriteNode?,canape:SKSpriteNode?,tractor:SKSpriteNode?,bombsbutton2:SKSpriteNode?,firebutton2:SKSpriteNode?) {
-      
+        
         var rocket = "aliensaucer"
         var glass = "aliencanape"
         var offset = 0;
@@ -25,13 +25,13 @@ class GameStartup: GameScene {
             glass = "aliencanape"
             offset = 10
             size = 26;
-        //monkey
+            //monkey
         } else if settings.emoji == 2 {
             rocket = "monkeyrocket"
             glass = "monkeycanape"
             offset = 0
             size = 32
-        //poop emoji
+            //poop emoji
         }  else if settings.emoji == 3 {
             rocket = "poopship"
             glass = "poopcanape"
@@ -55,8 +55,8 @@ class GameStartup: GameScene {
             alpha: 1.0,
             speed: 1,
             alphaThreshold: 0.0
-            ).drawSprite()
-
+        ).drawSprite()
+        
         heroEmoji = SKLabelNode(fontNamed:"Apple Color Emoji")
         heroEmoji.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         heroEmoji.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
@@ -82,9 +82,9 @@ class GameStartup: GameScene {
             alpha: 0.5,
             speed: 1,
             alphaThreshold: 0.0
-            ).drawSprite()
+        ).drawSprite()
         
-
+        
         
         tractor = defineSprite (
             texture: "tractorbeam",
@@ -101,7 +101,7 @@ class GameStartup: GameScene {
             alpha: 0.1,
             speed: 1,
             alphaThreshold: 0.0
-            ).drawSprite()
+        ).drawSprite()
         
         hud = defineSprite (
             texture: "hud45-right",
@@ -118,8 +118,8 @@ class GameStartup: GameScene {
             alpha: 1.0,
             speed: 0,
             alphaThreshold: 0
-            ).drawHud()
- 
+        ).drawHud()
+        
         hud = defineSprite (
             texture: "hud45-left",
             scene: scene,
@@ -135,7 +135,7 @@ class GameStartup: GameScene {
             alpha: 1.0,
             speed: 0,
             alphaThreshold: 0
-            ).drawHud()
+        ).drawHud()
         
         hud = defineSprite (
             texture: "hud45-btm",
@@ -152,7 +152,7 @@ class GameStartup: GameScene {
             alpha: 1.0,
             speed: 0,
             alphaThreshold: 0
-            ).drawHud()
+        ).drawHud()
         
         hud = defineSprite (
             texture: "hud45-top",
@@ -169,8 +169,8 @@ class GameStartup: GameScene {
             alpha: 1.0,
             speed: 0,
             alphaThreshold: 0
-            ).drawHud()
-
+        ).drawHud()
+        
         firebutton = defineSprite (
             texture: "fire45-right",
             scene: scene,
@@ -186,7 +186,7 @@ class GameStartup: GameScene {
             alpha: 0.0001,
             speed: 0,
             alphaThreshold: 0
-            ).drawHud()
+        ).drawHud()
         
         firebutton2 = defineSprite (
             texture: "fire45-left",
@@ -203,7 +203,7 @@ class GameStartup: GameScene {
             alpha: 0.0001,
             speed: 0,
             alphaThreshold: 0
-            ).drawHud()
+        ).drawHud()
         
         bombsbutton2 = defineSprite (
             texture: "fire45-top",
@@ -220,7 +220,7 @@ class GameStartup: GameScene {
             alpha: 0.0001,
             speed: 0,
             alphaThreshold: 0
-            ).drawHud()
+        ).drawHud()
         
         bombsbutton = defineSprite (
             texture: "fire45-btm",
@@ -237,9 +237,8 @@ class GameStartup: GameScene {
             alpha: 0.0001,
             speed: 0,
             alphaThreshold: 0
-            ).drawHud()
+        ).drawHud()
         
-    
         createCanapeJoint(scene)
         createHeroJoint(scene)
         arcadeJoyPad(scene)
@@ -266,7 +265,7 @@ class GameStartup: GameScene {
         
         func drawSprite() -> SKSpriteNode  {
             let sprite = SKSpriteNode(imageNamed: texture)
-			
+            
             if name == "canape" {
                 let radius = sprite.size.width / 2 - 12
                 sprite.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
@@ -285,9 +284,8 @@ class GameStartup: GameScene {
                 
             } else {
                 sprite.physicsBody = SKPhysicsBody(texture: sprite.texture!, alphaThreshold: alphaThreshold, size: sprite.size)
-
+                
             }
-            
             
             sprite.physicsBody?.categoryBitMask = category
             sprite.physicsBody?.collisionBitMask = collision
@@ -299,11 +297,7 @@ class GameStartup: GameScene {
             sprite.physicsBody?.velocity = CGVector( dx: 0, dy: 0 )
             sprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 0.0))
             sprite.name = name
-           
-            //let node = SKNode()
-            //scene.addChild(node)
-           
-        
+            
             sprite.zPosition = zPosition
             sprite.alpha = alpha
             sprite.speed = speed
@@ -317,11 +311,11 @@ class GameStartup: GameScene {
         }
         
         func drawHud() -> SKSpriteNode  {
-        
+            
             let sprite = SKSpriteNode(imageNamed: texture)
             let btnLoc = settings.stick ? "R" : "L"
             sprite.position = CGPoint(x:0,y:0)
-          
+            
             if name == "fire-right" ||  name == "hud-right" {
                 sprite.position.x = sprite.size.width / 2
                 sprite.position.y = -sprite.size.height / 2
@@ -357,11 +351,25 @@ class GameStartup: GameScene {
             headsUpDisplay.addChild(sprite)
             //node.zRotation = CGFloat(Double.pi/4)
             
+            var xAdjust = CGFloat(1.0)
+            var yAdjust = CGFloat(1.0)
+            //iPhone (convert this to an enum)
+            if settings.mode == 4 {
+                xAdjust = CGFloat(1.4)
+                yAdjust = CGFloat(1.1)
+            }
+            
             /* move the button to where we want them */
             if btnLoc == "L" {
-                headsUpDisplay.position = CGPoint(x: CGFloat(scene.frame.size.width / -2 + 78 + CGFloat(10 * settings.mode) ) ,y:  CGFloat(scene.frame.size.height / -2 + 85) )
+                headsUpDisplay.position = CGPoint(
+                    x: CGFloat(scene.frame.size.width / -2 + (85 * xAdjust) ) ,
+                    y: CGFloat(scene.frame.size.height / -2 + (85 * yAdjust ) )
+                )
             } else {
-                headsUpDisplay.position = CGPoint(x: CGFloat(scene.frame.size.width / 2 - 78 - CGFloat(10 * settings.mode) ) ,y:  CGFloat(scene.frame.size.height / -2 + 85) )
+                headsUpDisplay.position = CGPoint(
+                    x: CGFloat(scene.frame.size.width / 2 - (85 * xAdjust)  ) ,
+                    y: CGFloat(scene.frame.size.height / -2 + (85 * yAdjust ) )
+                )
             }
             
             if settings.mode == 1 {
@@ -373,15 +381,15 @@ class GameStartup: GameScene {
                 }
                 
                 headsUpDisplay.setScale(0.75)
-
+                
             }
             
-        
+            
             return sprite
         }
     }
     
-
+    
     
     func createHeroJoint(_ scene:SKScene) {
         let bodyA = hero.physicsBody!
@@ -402,11 +410,25 @@ class GameStartup: GameScene {
     func arcadeJoyPad(_ scene:SKScene) {
         let stick = settings.stick ? "L" : "R"
         
+        var xAdjust = CGFloat(1.0)
+        var yAdjust = CGFloat(1.0)
+        //iPhone (convert this to an enum)
+        if settings.mode == 4 {
+            xAdjust = CGFloat(1.4)
+            yAdjust = CGFloat(1.1)
+        }
+        
         /* move the stick to where we want it */
         if stick == "L" {
-            ThumbPad.position = CGPoint(x: CGFloat(scene.frame.size.width / -2 + 78 + CGFloat(10 * settings.mode) ) ,y:  CGFloat(scene.frame.size.height / -2 + 85) )
+            ThumbPad.position = CGPoint(
+                x: CGFloat(scene.frame.size.width / -2 + (85 * xAdjust) ) ,
+                y: CGFloat(scene.frame.size.height / -2 + (85 * yAdjust ) )
+            )
         } else {
-            ThumbPad.position = CGPoint(x: CGFloat(scene.frame.size.width / 2 - 78 - CGFloat(10 * settings.mode) ) ,y:  CGFloat(scene.frame.size.height / -2 + 85) )
+            ThumbPad.position = CGPoint(
+                x: CGFloat(scene.frame.size.width / 2 - (85 * xAdjust)  ) ,
+                y: CGFloat(scene.frame.size.height / -2 + (85 * yAdjust ) )
+            )
         }
         
         ThumbPad.delagate = self

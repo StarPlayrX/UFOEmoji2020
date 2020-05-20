@@ -1,5 +1,5 @@
 //
-//  Joy | Thumb Pad ][ the Ultimate Precision Game Controller
+//  Joy | Thumb Pad ][ the Ultimate Touch Screen Precision Game Controller
 //
 //  by Todd Bruss 12/3/2015 - 5/17/2020
 //
@@ -139,7 +139,6 @@ class JoyPad: SKNode {
         var floorX = floor(location.x)
         var floorY = floor(location.y)
        
-        
         if floorY < -thumbNodeRadius {
             floorY = floor(-thumbNodeRadius)
             

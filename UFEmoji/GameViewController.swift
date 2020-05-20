@@ -38,17 +38,18 @@ class GameViewController: UIViewController {
 
     func startScene() {
         
-        if let scene = GameMenu(fileNamed:"GameMenu"  ) {
-            let skView = self.view as! SKView
-            skView.showsFPS = true
-            skView.showsNodeCount = true
+        if let scene = GameMenu(fileNamed:"GameMenu"),
+            let skView = self.view as? SKView {
+           
+            skView.showsFPS = false
+            skView.showsNodeCount = false
             skView.showsPhysics = false
-            skView.isMultipleTouchEnabled = true
-            skView.isAsynchronous = true
+            skView.isMultipleTouchEnabled = false
+            skView.isAsynchronous = false
             skView.ignoresSiblingOrder = true
-            skView.clipsToBounds = false
+            skView.clipsToBounds = true
             scene.scaleMode = .aspectFill
-            setSceneSizeForMenu(scene: scene)
+            setSceneSizeForGame(scene: scene)
             scene.backgroundColor = SKColor.black
             skView.presentScene(scene)
         }

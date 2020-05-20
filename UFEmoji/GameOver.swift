@@ -83,7 +83,6 @@ class GameOver: SKScene {
                     
                     let skView = self.view! as SKView
                     
-                    setSceneSizeForMenu(scene: scene)
                     
                     skView.showsFPS = false
                     skView.showsNodeCount = false
@@ -92,7 +91,7 @@ class GameOver: SKScene {
                     skView.ignoresSiblingOrder = true
                     skView.clipsToBounds = false
                     scene.scaleMode = .aspectFill
-                    setSceneSizeForMenu(scene: scene)
+                    setSceneSizeForGame(scene: scene)
                     scene.backgroundColor = SKColor.black
                     
                     scene.scaleMode = .aspectFill
@@ -126,7 +125,7 @@ func gameOver(world:SKNode, moving:SKNode, scene:SKScene, hero: SKSpriteNode, tr
         SKAction.run() {
             let reveal = SKTransition.fade(withDuration: TimeInterval(1.5))
             let gameOverScene = GameOver( size: scene.size )
-            setSceneSizeForMenu(scene: scene)
+            setSceneSizeForGame(scene: scene)
             gameOverScene.scaleMode = .aspectFill
             scene.view?.presentScene(gameOverScene, transition: reveal)
         }

@@ -43,33 +43,8 @@
     }
  }
  
- //var transparentimage = UIImage()
- //var heroPos = CGPoint()
  var headsUpDisplay = SKReferenceNode()
- 
- //Back Tonight at
- //8PM EST TIME... Twitch.tv/UFEmoji
- 
- //SEE YOU THEN...
- 
- // Friday: Troubleshoot the Asteroid Belt Star Wars inspired Level.  mainly its completion. "Not too shabby."
- // Fixed crash bug at end of Asteroid Belt level
- // Add in some better game play design to the it (tonight).
- 
- // Tomorrow:
- // Saturday: The Walking Dead MiniGame Level
- 
- // If there is time:
- // Sunday: The Legoland MiniGame Level
- 
- // Also in the works:
- // Animoji integration
- // New Background Music
- 
- // Another Theme (Egyptian / Sand).
- 
- 
- 
+
  class GameScene: SKScene, ThumbPadProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     var firstBody = SKPhysicsBody()
     var secondBody = SKPhysicsBody()
@@ -104,7 +79,6 @@
     var highscore = Int()
     var lives = Int()
     var highlevel = Int()
-    //let notInUse2:UInt32 = 6
     let heroCategory:UInt32         =  1
     let worldCategory:UInt32        =  2
     let bombBoundsCategory:UInt32   =  4
@@ -118,9 +92,6 @@
     let charmsCategory:UInt32       =  1024
     let levelupCategory:UInt32      =  2048
     let laserBorder:UInt32          =  4096
-    
-    //var firstBody: SKphysicsBody?
-    //var secondBody: SKphysicsBody?
     var scoreDict: [String:Int] = [:]
     //we can swap these out if we use other emoji ships: 0 through 6
     
@@ -134,9 +105,6 @@
                     if(node.name == "Rocky") {
                         node.zPosition = 50
                         
-                    } else if node.name == "Water" {
-                        node.alpha = 0.2
-                        node.zPosition = 60
                     }
                 }
             }
@@ -145,9 +113,8 @@
     
     
     func setupLevel(tileMap: SKTileMapNode? = nil) {
-       
+        
         if let tm = tileMap {
-            
             let tmr = TMR(TileMap: tm)
             
             for col in (0 ..< tm.numberOfColumns) {
@@ -155,12 +122,6 @@
                     let tileDefinition = tm.tileDefinition(atColumn: col, row: row)
                     var center = tm.centerOfTile(atColumn: col, row: row)
                     
-                    //flip this section
-                    //if flipsection {
-                        //center = CGPoint(x:-center.x, y: center.y)
-                    //}
-
-                    //print(center)
                     if let td = tileDefinition, let name = tileDefinition!.name {
                         if name.count > 0 {
                             tmr.tileMapRun(tileDefinition: td, center: center)
@@ -203,7 +164,7 @@
         /* end demo mode */
     }
     override func didMove(to view: SKView) {
-		
+        
         //badguyai = [:] //MARK TODD
         
         // This is the default of King, Queen Nationality
@@ -297,23 +258,6 @@
         
         world = childNode(withName: "world")
         
-        // 😃 = 1
-        // 😆 = 2
-        // 🤣 = 3
-        // 😇 = 4
-        // 😉 = 5
-        // 😘 = 6
-        // 😚 = 7
-        // 😝 = 8
-        // 🤨 = 9
-        // 😎 = 10
-        
-        // 🏉 = Right End
-        // 🏀 = Left/Right Guard
-        // 🏈 = Center
-        // ⚽️ = Right/Left Guard
-        // ⚾️ = Left End
-        
         let subLevels = UInt32(8) //  no larger than 8 should be allowed here
         let sectionWidth = CGFloat(1440)
         
@@ -334,40 +278,39 @@
         //level = 1
         switch level {
             
-            
-        case 1..<100:
-            prefix = "🦕"
-            backgroundArray = [(name:"", alpha: CGFloat(1.0)),
-                               (name:"", alpha:CGFloat(1.0)),
-                               (name:"desertMtns", alpha:CGFloat(1.0)) ]
-            spot = 0
-            counter = 1
-        case 50000:
-            print("EWFWFWEEWF")
-            prefix = "🚀"
-            minilevelname = "🚀🚀🚀" // can be randomized later
-            spot = 0
-            counter = 1
-        case 6..<9:
-            prefix = "📓"
-            backgroundArray = [(name:"skyMtns", alpha: CGFloat(1.0)),
-                               (name:"", alpha:CGFloat(1.0)),
-                               (name:"", alpha:CGFloat(1.0)) ]
-            spot = 2
-            counter = -1
-        case 10:
-            prefix = "🧟‍♀️"
-            minilevelname = "🧟‍♀️🧟‍♀️🧟‍♀️" // can be randomized later
-            spot = 0
-            counter = 1
-            
-            backgroundArray = [(name:"skyMtns", alpha: CGFloat(0.5)),
-                               (name:"", alpha:CGFloat(0.25)),
-                               (name:"", alpha:CGFloat(0.0)) ]
-        default :
-            prefix = "🦕"
-            spot = 2
-            counter = -1
+            //skyMtns
+            case 1..<100:
+                prefix = "🦕"
+                backgroundArray = [(name:"", alpha: CGFloat(1.0)),
+                                   (name:"", alpha:CGFloat(1.0)),
+                                   (name:"waterWorld", alpha:CGFloat(1.0)) ]
+                spot = 0
+                counter = 1
+            case 50000:
+                prefix = "🚀"
+                minilevelname = "🚀🚀🚀" // can be randomized later
+                spot = 0
+                counter = 1
+            case 6..<9:
+                prefix = "📓"
+                backgroundArray = [(name:"skyMtns", alpha: CGFloat(1.0)),
+                                   (name:"", alpha:CGFloat(1.0)),
+                                   (name:"", alpha:CGFloat(1.0)) ]
+                spot = 2
+                counter = -1
+            case 10:
+                prefix = "🧟‍♀️"
+                minilevelname = "🧟‍♀️🧟‍♀️🧟‍♀️" // can be randomized later
+                spot = 0
+                counter = 1
+                
+                backgroundArray = [(name:"skyMtns", alpha: CGFloat(0.5)),
+                                   (name:"", alpha:CGFloat(0.25)),
+                                   (name:"", alpha:CGFloat(0.0)) ]
+            default :
+                prefix = "🦕"
+                spot = 2
+                counter = -1
         }
         
         
@@ -386,7 +329,7 @@
             } else {
                 filename = (prefix + position[counter][flip] + sector)
                 filename = (prefix + position[counter][flip] + sector)
-
+                
             }
             
             
@@ -394,7 +337,7 @@
             //if ( iteration == 2 && level < 1000 ) {
             //filename = "🦕⚽️🤣"
             filename = "level1"
-
+            
             //}
             
             /*
@@ -413,44 +356,50 @@
             //Check if level exists first (safe)
             if let _ = GameScene(fileNamed: filename ) {
                 if SKReferenceNode(fileNamed: filename) != nil {
-                   
-                
-                   
-                   // DispatchQueue.main.async { [weak self] in
-                        var section : SKReferenceNode? = SKReferenceNode(fileNamed: filename)
                     
-                        self.scene?.addChild(section!)
-                        
-                        if self.level != 10000 {
-                            section?.position.x = sectionWidth * CGFloat(iteration)
-                        } else {
-                            section?.position = CGPoint(x:0,y:0)
-                        }
                     
-                                 
-                    	skView.isPaused = true
-						
-                        if let level = section?.children.first?.children {
-                        	//No longer hard encoded
-                            for land in level {
-                                
-                                if let name = land.name {
-                                    if let midsection = section?.childNode(withName: "//" + name ) as? SKTileMapNode {
+                    
+                    // DispatchQueue.main.async { [weak self] in
+                    var section : SKReferenceNode? = SKReferenceNode(fileNamed: filename)
+                    
+                    self.scene?.addChild(section!)
+                    
+                    if self.level != 10000 {
+                        section?.position.x = sectionWidth * CGFloat(iteration)
+                    } else {
+                        section?.position = CGPoint(x:0,y:0)
+                    }
+                    
+                    
+                    skView.isPaused = true
+                    
+                    if let level = section?.children.first?.children {
+                        //No longer hard encoded
+                        for land in level {
+                            
+                            if let name = land.name {
+                                if let midsection = section?.childNode(withName: "//" + name ) as? SKTileMapNode {
+                                    
+                                    if name != "Water" {
                                         self.setupLevel( tileMap: midsection)
+                                    } else {
+                                        land.alpha = 0.4
+                                        land.zPosition = 1000
                                     }
                                 }
-                        	}
-                    	}
-             
-	
-                    	skView.isPaused = false
-
-
-                   // }
+                            }
+                        }
+                    }
+                    
+                    
+                    skView.isPaused = false
+                    
+                    
+                    // }
                     
                     
                     
-                 
+                    
                     
                 }
             } else {
@@ -465,7 +414,7 @@
                 
                 //Texture Map Node Stuff goes here
                 for node in node.children {
-                    
+
                     if(node.name == "Rocky") {
                         
                         rockBounds = node.frame
@@ -542,9 +491,9 @@
                 backParalax.append( SKNode() )
                 
                 if let bp = backParalax[counter] {
-                  
+                    
                     scene?.addChild(bp)
-
+                    
                     let texture = SKTexture(imageNamed: bkgdArr.name)
                     let width = texture.size().width
                     let rounded = Int(round( rockBounds.width / width ))
@@ -558,48 +507,11 @@
                     }
                 }
             }
-         
-            
-            /*
-            backParalax3 = SKNode()
-            scene?.addChild(backParalax3!)
-
-            let cloudsTexture = SKTexture(imageNamed: backgroundArray[1].name)
-            let cloudsWidth = cloudsTexture.size().width
-             rounded = Int(round( rockBounds.width / cloudsWidth ))
-            for i in -rounded...rounded {
-                let sprite = SKSpriteNode(texture: cloudsTexture)
-                sprite.position = CGPoint(x: CGFloat(i) * cloudsWidth, y: 0)
-                sprite.alpha = backgroundArray[1].alpha
-                self.backParalax3?.addChild(sprite)
-                self.backParalax3?.zPosition = -238
-            }
-            
-           
-            backParalax2 = SKNode()
-            scene?.addChild(backParalax2!)
-            
-            let mtnsTexture = SKTexture(imageNamed:  backgroundArray[2].name)
-            let mtnsWidth = mtnsTexture.size().width
-             rounded = Int(round( rockBounds.width / mtnsWidth ))
-            print(rounded)
-            
-
-            for i in -rounded...rounded {
-                let sprite = SKSpriteNode(texture: mtnsTexture)
-
-                sprite.position = CGPoint(x: CGFloat(i) * mtnsWidth, y: 0)
-                sprite.alpha = backgroundArray[2].alpha
-                
-                self.backParalax2?.addChild(sprite)
-                self.backParalax2?.zPosition = -236
-            }
-                */
-            
+                    
         } else {
             
             var backParalax: SKNode? = nil
-
+            
             backParalax = SKNode()
             scene?.addChild(backParalax!)
             let starryNightTexture = SKTexture(imageNamed: "starfield1")
@@ -740,7 +652,7 @@
                 emojiLab.text = emojis[3]
             }
             
-            ]))
+        ]))
         
         run(SKAction.repeatForever(runemoji))
         
@@ -824,12 +736,9 @@
             if case (hero.physicsBody?.linearDamping)! = CGFloat(0) {
                 //animate to look not so jerky
                 
-                //this will make the minigame harder!!
                 let rot = SKAction.rotate(toAngle: 0.0, duration: 0.08)
                 hero.run(rot)
                 hero.physicsBody?.linearDamping = CGFloat(40)
-                //}
-                
             }
         }
         
@@ -925,7 +834,6 @@
                 }
                 
                 firstBody.linearDamping = dampening
-                //firstBody.node?.setScale(1.15)
                 
                 let x1 = firstBodyPos?.x
                 let x2 = hero.position.x
@@ -1018,56 +926,33 @@
     }
     
     
-    // Here we are super careful not cause a crash
+
     func remove(body:SKPhysicsBody?) {
-        if body == nil {
-            return
-        }
+        guard
+            let b = body,
+            let node = b.node as? SKSpriteNode
+            else { return }
         
-        if let b = body {
-            if (b.node == nil) {
-                return
-            }
-            
-            //remove from parent
-            if let node = b.node as? SKSpriteNode  {
-                let r = SKAction.removeFromParent()
-                node.run(r)
-            }
-        }
-     
+        node.run( SKAction.removeFromParent() )
     }
     
     // Here we are super careful not cause a crash
     func removeNode(node:SKSpriteNode?) {
-        if (node == nil) {
-            return
-        }
+        guard let n = node else { return }
         
-        if let n = node {
-            let r = SKAction.removeFromParent()
-            n.run(r)
-        }
-  
+        let r = SKAction.removeFromParent()
+        n.run(r)
     }
     
     
     func goodiePointsHelper(firstBody:SKPhysicsBody, secondBody:SKPhysicsBody, contactPoint: CGPoint) {
+        guard let sbnn = secondBody.node?.name else { return }
         
-        if secondBody.node?.name == nil {
-            return
-        }
-        
-        if let _ = secondBody.node?.name {
-            //if ( secondBody.node?.name != nil) {
-            let extraPoints = tallyPoints(name: (secondBody.node?.name)!)
-            updateScore(extraPoints:extraPoints )
-            magicParticle(pos: contactPoint)
-            remove(body: firstBody)
-            remove(body: secondBody)
-            //}
-        }
-        
+        let extraPoints = tallyPoints(name: (sbnn))
+        updateScore(extraPoints:extraPoints )
+        magicParticle(pos: contactPoint)
+        remove(body: firstBody)
+        remove(body: secondBody)
     }
     
     
@@ -1085,7 +970,7 @@
         if level > maxlevel {
             level = 1
         }
-    
+        
         moving.speed = 0
         tractor.speed = 0
         
@@ -1100,14 +985,18 @@
     
     //MARK: digBeginContact
     func didBegin(_ contact: SKPhysicsContact) {
+        guard
+            contact.bodyA.categoryBitMask !=  0,
+            contact.bodyB.categoryBitMask != 0,
+            contact.bodyA.node?.parent != nil,
+            contact.bodyB.node?.parent != nil,
+            contact.bodyA.node != nil,
+        	contact.bodyB.node != nil,
+        	contact.bodyA.node?.name != nil,
+        	contact.bodyB.node?.name != nil
+            else { return }
         
-        if  ( contact.bodyA.categoryBitMask ==  0 || contact.bodyB.categoryBitMask == 0 || contact.bodyA.node?.parent == nil || contact.bodyB.node?.parent == nil  ) {
-            return
-        }
-        
-        if  ( contact.bodyA.node == nil || contact.bodyB.node == nil || contact.bodyA.node?.name == nil || contact.bodyB.node?.name == nil ) {
-            return
-        }
+      
         
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
@@ -1121,80 +1010,80 @@
         
         switch catMask {
             
-        case laserbeam | laserBorder :
-            if let x = firstBody.node?.name {
-                if x == "🚩" {
-                    remove(body:firstBody)
-                }
+            case laserbeam | laserBorder :
+                if let x = firstBody.node?.name {
+                    if x == "🚩" {
+                        remove(body:firstBody)
+                    }
             }
             
-        case worldCategory | laserbeam :
-            //take care of business
-            
-            if firstBody.node?.name == "stone" && !firstBody.isDynamic && secondBody.node?.name != "🔱" && secondBody.node?.name != "💠" && !supermanLaser   {
-                stoneVersusLaser(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-            } else if firstBody.isDynamic || (supermanLaser && secondBody.node?.name == "💠") { 
-                baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-            } else {
-                worldVersusLaser(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-            }
-        case badFishCategory | laserbeam :
-            if firstBody.isDynamic || (supermanLaser && secondBody.node?.name == "💠") {
-                baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-            } else {
-                worldVersusLaser(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+            case worldCategory | laserbeam :
+                //take care of business
                 
+                if firstBody.node?.name == "stone" && !firstBody.isDynamic && secondBody.node?.name != "🔱" && secondBody.node?.name != "💠" && !supermanLaser   {
+                    stoneVersusLaser(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                } else if firstBody.isDynamic || (supermanLaser && secondBody.node?.name == "💠") {
+                    baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                } else {
+                    worldVersusLaser(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
             }
-        case badGuyCategory | laserbeam :
-            baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-        case laserbeam | itemCategory :
-            if secondBody.isDynamic || (supermanLaser && firstBody.node?.name == "💠") {
+            case badFishCategory | laserbeam :
+                if firstBody.isDynamic || (supermanLaser && secondBody.node?.name == "💠") {
+                    baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                } else {
+                    worldVersusLaser(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                    
+            }
+            case badGuyCategory | laserbeam :
+                baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+            case laserbeam | itemCategory :
+                if secondBody.isDynamic || (supermanLaser && firstBody.node?.name == "💠") {
+                    goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                } else {
+                    laserVersusFloater(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+            }
+            case laserbeam | fishCategory :
+                if secondBody.isDynamic || (supermanLaser && firstBody.node?.name == "💠") {
+                    goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                } else {
+                    laserVersusFloater(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+            }
+            case laserbeam | charmsCategory :
                 goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-            } else {
-                laserVersusFloater(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-            }
-        case laserbeam | fishCategory :
-            if secondBody.isDynamic || (supermanLaser && firstBody.node?.name == "💠") {
-                goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-            } else {
-                laserVersusFloater(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-            }
-        case laserbeam | charmsCategory :
-            goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-        case tractorCategory | itemCategory, tractorCategory | charmsCategory, tractorCategory | fishCategory :
-            
-            if let prize = secondBody.node as? SKSpriteNode {
-                tractorBeamedThisItem(prize: prize)
+            case tractorCategory | itemCategory, tractorCategory | charmsCategory, tractorCategory | fishCategory :
+                
+                if let prize = secondBody.node as? SKSpriteNode {
+                    tractorBeamedThisItem(prize: prize)
             }
             
-        case heroCategory | levelupCategory :
-            
-            /*print(secondBody.node?.name)*/
-            
-            levelUpHelper()
-            
-            
-            if secondBody.node?.name == "🌀" {
-                if level > 0 && level < 4 {
-                    level = 5
+            case heroCategory | levelupCategory :
+                
+                /*print(secondBody.node?.name)*/
+                
+                levelUpHelper()
+                
+                
+                if secondBody.node?.name == "🌀" {
+                    if level > 0 && level < 4 {
+                        level = 5
+                    }
                 }
-            }
+                
+                GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+                
+                removeHero()
+                removeGUI()
+                starPlayrOneLevelUp(world:world!, moving:moving, scene:self, hero:hero, tractor:tractor)
             
-            GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
-            
-            removeHero()
-            removeGUI()
-            starPlayrOneLevelUp(world:world!, moving:moving, scene:self, hero:hero, tractor:tractor)
-            
-        case heroCategory | worldCategory, heroCategory | badGuyCategory, heroCategory | badFishCategory :
-            
-            if ( shield ) {
+            case heroCategory | worldCategory, heroCategory | badGuyCategory, heroCategory | badFishCategory :
+                
+                if ( shield ) {
+                    return
+                }
+                
+                stopIt(secondBody: secondBody, contactPoint: contact.contactPoint)
+            default :
                 return
-            }
-            
-            stopIt(secondBody: secondBody, contactPoint: contact.contactPoint)
-        default :
-            return
             /*
              //used for debugging
              print(String("** begin unexpected contact ->"))
@@ -1241,13 +1130,9 @@
     }
     
     func removeGUI() {
-        
-        if let _ = cam.childNode(withName: "ArcadeJoyPad")  {
-            cam.childNode(withName: "ArcadeJoyPad")?.removeFromParent()
-        }
-        
-        if let _ = cam.childNode(withName: "HeadsUpDisplay") {
-            cam.childNode(withName: "HeadsUpDisplay")?.removeAllChildren()
+        if let pad = cam.childNode(withName: "ArcadeJoyPad"), let hud = cam.childNode(withName: "HeadsUpDisplay")  {
+            pad.removeFromParent()
+            hud.removeAllChildren()
         }
     }
     
@@ -1287,9 +1172,11 @@
             explosion.zPosition = 175
             explosion.position = hero.position
             scene?.addChild(explosion)
+            
             explosion.run(SKAction.sequence([
                 SKAction.scale(to: -1.5, duration: 0.6),
-                ]))
+            ]))
+            
             explosion.run(SKAction.sequence([
                 SKAction.scale(to: 0.5, duration: 0.6),
                 SKAction.fadeAlpha(to: 0, duration: 0.6),
@@ -1297,7 +1184,7 @@
                 SKAction.run {
                     explosion.removeFromParent()
                 }
-                ]))
+            ]))
         }
         
         moving.speed = moving.speed / 2
@@ -1362,7 +1249,7 @@
                 //Reset Game Action Sequence
                 self.scene?.run(SKAction.sequence([runResetWorld,runWorld]))
             }
-            ]))
+        ]))
     }
     
     
@@ -1381,7 +1268,6 @@
         }
         
         let pts = 1
-        
         
         if name == "❣️" && lives >= 0 && lives <= 9 {
             lives = lives + 1
@@ -1402,20 +1288,14 @@
         
         
         
-        let x = false
-		
-        
-        
         //gives our ship shields
         if name == "🛡"  {
             /* Power Ups */
-            shield = true;
+            shield = true
             
             hero.alpha = 0.5
-            if let l = livesLabel.text, x == l.contains("🛡") {
-                if !x {
-                    livesLabel.text! += "🛡"
-                }
+            if var l = livesLabel.text, !l.contains("🛡") {
+                l += "🛡"
             }
             
             if settings.sound {
@@ -1426,16 +1306,12 @@
         }
         
         
-        
-        
         //gives our ship double lasers
         if name == "🔫" || name == "‼️"  {
             doublelaser = 1
             
-            if let l = livesLabel.text, x == l.contains("🔫") {
-                if !x {
-                    livesLabel.text = livesLabel.text! + "🔫"
-                }
+            if var l = livesLabel.text, !l.contains("🔫") {
+                l += "🔫"
             }
             
             if settings.sound {
@@ -1447,15 +1323,10 @@
         //gives our ship double lasers
         if name == "💠" {
             supermanLaser = true
-            
-            
-            if let l = livesLabel.text, x == l.contains("💠") {
-            	if !x {
-            	    livesLabel.text! += "💠"
-           	 	}
+                        
+            if var l = livesLabel.text, !l.contains("💠") {
+                l += "💠"
             }
-            
-           
             
             if settings.sound {
                 let fire: SKAction = SKAction.playSoundFileNamed("doublelaser.m4a", waitForCompletion: false)
@@ -1466,12 +1337,9 @@
         //gives our trident bombs
         if name == "🔱" {
             trident = true
-            
-            
-            if let l = livesLabel.text, x == l.contains("🔱") {
-                if !x {
-                     livesLabel.text! += "🔱"
-                }
+
+            if var l = livesLabel.text, !l.contains("🔱") {
+                l += "🔱"
             }
             
             if settings.sound {
@@ -1505,16 +1373,5 @@
             GameStartup().saveScores(level: self.level, highlevel: self.highlevel, score: self.score, hscore:self.highscore, lives: self.lives)
         }
     }
-    
-  /*  func getImageWithColor(color: UIColor, size: CGSize) -> UIImage
-    {
-        let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: size.width, height: size.height))
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        color.setFill()
-        UIRectFill(rect)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return image
-    }(*/
  }
-
+ 

@@ -66,7 +66,7 @@ func startUp(_ scene:SKScene) {
         SKAction.run() {
             let transition = SKTransition.doorsOpenHorizontal(withDuration: 2.0)
             let gameOverScene = StartUp( size: scene.size )
-            setSceneSizeForMenu(scene: scene)
+            setSceneSizeForGame(scene: scene)
             gameOverScene.scaleMode = .aspectFill
             scene.view?.presentScene(gameOverScene, transition: transition)
         }

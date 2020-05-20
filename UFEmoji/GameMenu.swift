@@ -422,17 +422,6 @@ class GameMenu: SKScene {
 
                 scene.addChild(levelLabel)
                 
-                /*
-                let magic = SKEmitterNode(fileNamed: "magicParticle")!
-                magic.position = (scene.childNode(withName: "level")?.position)!
-                magic.position.x = levelLabel.position.x
-                magic.position.y = magic.position.y - 5
-
-                magic.alpha = 0.1
-                magic.zPosition = 90
-                scene.addChild(magic)
-                */
-                
                 
                 versusLabel.name = "versusLabel"
                 versusLabel.fontSize = 48
@@ -442,17 +431,6 @@ class GameMenu: SKScene {
                 versusLabel.position.x = versusLabel.position.x + 28
                 versusLabel.zPosition = 100
                 
-                /*
-                let smoke = SKEmitterNode(fileNamed: "smokeParticle")!
-                smoke.position = (scene.childNode(withName: "level")?.position)!
-                smoke.position.x = versusLabel.position.x
-                smoke.position.y = smoke.position.y - 5
-                
-                smoke.alpha = 0.1
-                smoke.zPosition = 90
-                
-                scene.addChild(smoke)
-                */
                 scene.addChild(versusLabel)
             }
             

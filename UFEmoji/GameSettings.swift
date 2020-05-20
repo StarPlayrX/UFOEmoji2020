@@ -95,9 +95,9 @@ func getDeviceSize() {
     let screenWidth = Int(UIScreen.main.bounds.size.width)
     let screenHeight = Int(UIScreen.main.bounds.size.height)
     let screenMax = Int(max(screenWidth,screenHeight))
-    let iPhone = (screenMax == 568 || screenMax == 667 || screenMax == 736)
-    let iPhoneX = screenMax == 812
-    
+    let iPhone = screenMax == 568 || screenMax == 667 || screenMax == 736
+    let iPhoneX = screenMax == 812 || screenMax == 896
+
     settings.mode = 1 // iPad
     
     if iPhone {
@@ -109,49 +109,24 @@ func getDeviceSize() {
     }
 }
 
-func setSceneSizeForMenu(scene:SKScene ) -> Void {
-    loadGameSettings()
 
+
+func setSceneSizeForGame(scene:SKScene) -> Void {
+    loadGameSettings()
+    
+     getDeviceSize()
+    
     //Put this in a common area
     if (settings.mode == 2 ) {
-        // iPhone
-       // print("iPhone")
-        //scene.size = CGSize(width: 612, height: 340)
+        //regular iPhone style
         scene.size = CGSize(width: 626, height: 352)
-
+        
     } else if (settings.mode == 4) {
-        // iPhone X
-      //  print("iPhone X")
-        //scene.size = CGSize(width: 736, height: 340)
+        // iPhone X style
         scene.size = CGSize(width: 762, height: 352)
-
+        
     } else {
-        //iPad
-      ////  print("iPad")
-       /// scene.size = CGSize(width: 600, height: 450)
-        scene.size = CGSize(width: 762, height: 352)
-
-       // scene.size = CGSize(width: 470, height: 352)
-
-    }
-}
-
-func setSceneSizeForGame(scene:SKScene ) -> Void {
-    loadGameSettings()
-    //Put this in a common area
-    if (settings.mode == 2 ) {
-        // iPhone
-        scene.size = CGSize(width: 626, height: 352)
-    } else if (settings.mode == 4) {
-        // iPhone X
-        scene.size = CGSize(width: 762, height: 352)
-    } else {
-        /////iPad
-        //////scene.size = CGSize(width: 800, height: 600)
-        //scene.size = CGSize(width: 470, height: 352)
-        scene.size = CGSize(width: 650, height: 300)
-
-
+        scene.size = CGSize(width: 470, height: 352)
     }
 }
 
@@ -177,14 +152,16 @@ func levelLauncher(self:SKScene) -> Void {
         prefix = "🦕"
     }
     
-    if let scene = GameScene(fileNamed:prefix){
-        skView = self.view! as SKView
+    if let scene = GameScene(fileNamed:prefix),
+        let view = self.view,
+    	let skView = view as SKView? {
         setSceneSizeForGame(scene: scene)
-        skView.showsFPS = false
-        skView.showsNodeCount = false
+        skView.showsFPS = true
+        skView.showsNodeCount = true
         skView.showsPhysics = false
         skView.showsFields = false
-        skView.preferredFramesPerSecond = 60
+        skView.preferredFramesPerSecond = 61
+        skView.isMultipleTouchEnabled = true
         skView.clearsContextBeforeDrawing = true
         skView.isAsynchronous = true
         skView.ignoresSiblingOrder = true

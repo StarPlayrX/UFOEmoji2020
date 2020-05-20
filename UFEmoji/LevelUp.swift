@@ -77,7 +77,7 @@ func starPlayrOneLevelUp(world:SKNode, moving:SKNode, scene:SKScene, hero: SKSpr
         SKAction.run() {
             let reveal = SKTransition.fade(withDuration: TimeInterval(1.0))
             let gameOverScene = LevelUp( size: scene.size )
-            setSceneSizeForMenu(scene: scene)
+            setSceneSizeForGame(scene: scene)
             gameOverScene.scaleMode = .aspectFill
             scene.view?.presentScene(gameOverScene, transition: reveal)
         }

@@ -20,14 +20,14 @@ class TMR {
     }
     
     //Draw Coins
-    func DrawCoins(TileNode: SKSpriteNode, PhysicsBody: SKPhysicsBody, Dynamic: Bool, Gravity: Bool, Category: UInt32, Collision: UInt32, Rotation: Bool, Emoji: String, Name: String, Contact: UInt32, Mass: CGFloat, Friction: CGFloat, NewItem: String) {
-        
+    func DrawCoins(TileNode: SKSpriteNode, PhysicsBody: SKPhysicsBody, Dynamic: Bool, Gravity: Bool, Category: UInt32, Collision: UInt32, Rotation: Bool, Emoji: String, Name: String, Contact: UInt32, Mass: CGFloat, Friction: CGFloat, NewItem: String, fliph: Bool, flipy: Bool) {
         
         TileNode.physicsBody = PhysicsBody
         TileNode.zPosition = 75
         TileNode.physicsBody?.restitution = 0.5
         
-        if NewItem == "🐟" || Name == "💢" || Name == "🛑" || Name == "♨️" || Emoji == "🐝" || NewItem == "🦀" {
+     
+        if NewItem == "🐟" || Name == "💢" || Name == "🛑" || Name == "♨️" || Emoji == "🐝" || NewItem == "🦀" || Emoji == "🌈" {
             TileNode.zPosition = -20
             TileNode.physicsBody?.affectedByGravity = false //true
             TileNode.physicsBody?.isDynamic = false //false
@@ -88,14 +88,15 @@ class TMR {
         spriteLabelNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         spriteLabelNode.alpha = 1.0
         spriteLabelNode.position = CGPoint(x: 0, y: 0)
-        //spriteLabelNode.xScale = fliph ? -1 : 1
-        //spriteLabelNode.yScale = flipy ? -1 : 1
+        spriteLabelNode.xScale = fliph ? -1 : 1
+        spriteLabelNode.yScale = flipy ? -1 : 1
         
         
         var str = Emoji //may include variants at random or for holidays
         spriteLabelNode.fontSize = 32
         
         switch NewItem {
+
         case "🐟":
             spriteLabelNode.zPosition = -20
         case "☄️":
@@ -352,8 +353,8 @@ class TMR {
                     let physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
                     let rotation = true;
                     
-                    //let fliph = tileDefinition.flipHorizontally
-                    //let flipy = tileDefinition.flipVertically
+                    let fliph = tileDefinition.flipHorizontally
+                    let flipy = tileDefinition.flipVertically
                     let cat = 16 as UInt32
                     let col = 0  as UInt32
                     let con = 1 + 64 as UInt32
@@ -1213,8 +1214,8 @@ class TMR {
             
             var rotation = true;
             
-            //let fliph = tileDefinition.flipHorizontally
-            //let flipy = tileDefinition.flipVertically
+            let fliph = tileDefinition.flipHorizontally
+            let flipy = tileDefinition.flipVertically
             var col = 258 as UInt32
             var con = 32 as UInt32
             var cat = 1024 as UInt32
@@ -1294,7 +1295,7 @@ class TMR {
                 tileNode.xScale =  tileNode.xScale * -1
             }
 
-            DrawCoins(TileNode: tileNode, PhysicsBody: physicsBody, Dynamic: true, Gravity: gravity, Category: cat, Collision: col, Rotation: rotation, Emoji: newemoji, Name: newname, Contact: con, Mass: 0.1, Friction: 0, NewItem: newitem)
+            DrawCoins(TileNode: tileNode, PhysicsBody: physicsBody, Dynamic: true, Gravity: gravity, Category: cat, Collision: col, Rotation: rotation, Emoji: newemoji, Name: newname, Contact: con, Mass: 0.1, Friction: 0, NewItem: newitem, fliph: fliph, flipy: flipy)
         }
     }
 }
