@@ -8,11 +8,12 @@
 
 import SpriteKit
 
-var alternator = true
-var spinner = CGFloat(1)
+
 class GameProjectiles {
-    
-    
+
+    var alternator = true
+    var spinner = CGFloat(1)
+
     var laser: SKSpriteNode!
     var bomb: SKSpriteNode!
     
@@ -22,10 +23,7 @@ class GameProjectiles {
     var fireSound = "fire.m4a";
     var bombSound = "wah2.m4a"
     
-    
-    //var transparentimage = UIImage()
-    
-    init(laserbeak laserbeam:UInt32, scene:SKScene, hero: (position:CGPoint, zRotation: CGFloat), reverse: Bool ) {
+    init(laserbeak laserbeam:UInt32, scene:SKScene, hero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool ) {
         
         //if !hero.isHidden {
         
@@ -39,7 +37,7 @@ class GameProjectiles {
         var laserPhysicsBody = SKPhysicsBody(rectangleOf: laser.size)
         
         alternator = !alternator
-
+        
         //Monkey
         if settings.emoji == 2 {
             
@@ -88,11 +86,6 @@ class GameProjectiles {
         laser.physicsBody?.usesPreciseCollisionDetection = false
         let heroPositionX = hero.position.x
         
-        
-   
-        
-        
-        ///Power Up that lasts the entire level!
         if doublelaser == 1 && settings.emoji != 2 {
             laser.position = (CGPoint(x:heroPositionX, y:hero.position.y - 5))
         } else if doublelaser == 1 && settings.emoji == 2 {
@@ -101,24 +94,15 @@ class GameProjectiles {
             laser.position = hero.position
         }
         
-        //} else {
-          //  laser.position = (CGPoint(x:hero.position.x + 30 / 2, y:hero.position.y - 2 ))
-        //}
         let rotateLaser = hero.zRotation * -3
-        //let velocityLaser = hero.physicsBody?.velocity
-        //var dx = (velocityLaser?.dx)!
         
-        /*
-        if (dx < 0) {
-            dx = dx * -1
-        }
-        */
+        let constantX = CGFloat(750)
+        let constantY = CGFloat(250)
+        let uno = CGFloat(1)
         
-        if reverse {
-            laser.physicsBody?.velocity =  CGVector( dx: -750, dy: rotateLaser * 250  )
-        } else {
-            laser.physicsBody?.velocity =  CGVector( dx: 750, dy: rotateLaser * -250  )
-        }
+        let d = reverse ? (x : -uno, y : uno) : (x : uno, y : -uno)
+        
+        laser.physicsBody?.velocity = CGVector( dx: d.x * constantX + hero.velocity.dx, dy: rotateLaser * d.y * constantY )
         
         laser.zRotation = hero.zRotation
         scene.addChild(laser)
@@ -142,8 +126,6 @@ class GameProjectiles {
             scene.addChild(laser2 as! SKSpriteNode)
         }
         
-        
-
         if doublelaser >= 2 {
             if !reverse {
                 let laser3 = laser.copy()
@@ -182,7 +164,7 @@ class GameProjectiles {
                 (laser6 as! SKSpriteNode).position = (CGPoint(x:heroPositionX + 20, y:hero.position.y - 15))
                 scene.addChild(laser6 as! SKSpriteNode)
             }
-      
+            
         }
         
         
@@ -191,36 +173,19 @@ class GameProjectiles {
             laser.run(fire)
             
         }
-        //}
-        
-        //let audioNode = SKAudioNode(fileNamed: fireSound)
-        //audioNode.autoplayLooped = false
-        //audioNode.isPositional = true
-        //audioNode.position =  laser.position
-        //hero.addChild(audioNode)
-        // let playAction = SKAction.play()
-        //let groupAction = SKAction.group([changeVolume,playAction])
-        //audioNode.run(groupAction)
-        
-        
-        // let removeFromParent = SKAction.removeFromParent()q
-        // let waitToEnableFire = SKAction.wait(forDuration: 100.0)
-        //laser.run(SKAction.sequence([fire]))
     }
     
     
     
     init(bombsaway laserbeam:UInt32, scene:SKScene, hero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool ) {
         alternator = !alternator
-        //if !hero.isHidden {
-        //transparentimage = getImageWithColor( color: UIColor.clear, size: CGSize(width: 1, height: 1) )
-        //let texture = SKTexture.init(image: self.transparentimage)
+        
         bomb = SKSpriteNode()
         bomb.position = (CGPoint(x:hero.position.x, y:hero.position.y - 10))
         bomb.name = "💣"
         
         if !trident {
-             bomb.name = "💣"
+            bomb.name = "💣"
         } else {
             bomb.name = "🔱" 
         }
@@ -243,15 +208,15 @@ class GameProjectiles {
         bomb.physicsBody?.restitution = 0.5
         
         var wait = 400
-
+        
         if reverse {
             bomb.physicsBody?.velocity =  CGVector( dx: hero.velocity.dx * 1.15, dy: 500)
             wait = 800
             
-        
+            
         } else {
             bomb.physicsBody?.velocity =  CGVector( dx: hero.velocity.dx , dy: -350 )
-     }
+        }
         
         
         if ( alternator ) {
@@ -259,8 +224,8 @@ class GameProjectiles {
         } else {
             bomb.zPosition = -100;
         }
-            
-      
+        
+        
         bombEmoji.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         bombEmoji.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         //bombEmoji.position = CGPoint(x: 0, y: 0)
@@ -279,7 +244,7 @@ class GameProjectiles {
         bomb.addChild(bombEmoji)
         bomb.speed = 200
         scene.addChild(bomb)
-    
+        
         let decay = SKAction.wait(forDuration: TimeInterval(wait))
         let remove = SKAction.removeFromParent()
         bomb.run(SKAction.sequence([decay,remove]))
@@ -288,26 +253,6 @@ class GameProjectiles {
             let bombs: SKAction = SKAction.playSoundFileNamed(bombSound, waitForCompletion: false)
             bomb.run(bombs)
         }
-        //}
-        
-        
-        /*
-         let audioNode = SKAudioNode(fileNamed: bombSound)
-         audioNode.autoplayLooped = false
-         audioNode.isPositional = true
-         audioNode.position = bomb.position
-         bomb.addChild(audioNode)
-         let playAction = SKAction.play()
-         let changeVolume = SKAction.changeVolume(to: 0.5, duration: TimeInterval(1000))
-         let groupAction = SKAction.group([changeVolume,playAction])
-         audioNode.run(groupAction)
-         */
-        
-        //print(bomb)
-        //let removeFromParent = SKAction.removeFromParent()
-        //let waitToEnableFire = SKAction.wait(forDuration: 400.00)
-        //bomb.run(SKAction.sequence([bombSound]))
-        
     }
     
     func firebomb(firebomb:SKSpriteNode) {

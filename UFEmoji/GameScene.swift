@@ -460,7 +460,7 @@
     
     public func emojiAnimation(emojis:Array<String>) {
         
-        let emojiLab = hero.children[0] as! SKLabelNode
+        guard let emojiLab = hero.children[0] as? SKLabelNode else { return }
         
         let runemoji = (SKAction.sequence([
             SKAction.wait(forDuration: 1.0),
@@ -487,30 +487,37 @@
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard
+            let firebutton = firebutton,
+            let firebutton2 = firebutton2,
+            let bombsbutton = bombsbutton,
+            let bombsbutton2 = bombsbutton2,
+            let heroVelocity = hero.physicsBody?.velocity
+            else
+        { return }
         
         super.touchesBegan(touches as Set<UITouch>, with: event)
+        
         for touch: AnyObject in touches {
             let location: CGPoint = touch.location(in: self)
             let touchedNode = atPoint(location)
-            
-            
-            if let name = touchedNode.name
-            {
+        
+            if let name = touchedNode.name {
                 
                 if name == "fire-right" {
-                    GameProjectiles(laserbeak: laserbeam, scene: self, hero: (hero.position, hero.zRotation), reverse:false ).firebomb(firebomb: firebutton!)
+                    GameProjectiles(laserbeak: laserbeam, scene: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse:false ).firebomb(firebomb: firebutton)
                 }
                 
                 if name == "fire-left" {
-                    GameProjectiles(laserbeak: laserbeam, scene: self, hero: (hero.position, hero.zRotation), reverse:true ).firebomb(firebomb: firebutton2!)
+                    GameProjectiles(laserbeak: laserbeam, scene: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse:true ).firebomb(firebomb: firebutton2)
                 }
                 
                 if name == "fire-down" {
-                    GameProjectiles(bombsaway: laserbeam, scene: self, hero: (hero.position, hero.zRotation, (hero.physicsBody?.velocity)!), reverse: false).firebomb(firebomb: bombsbutton!)
+                    GameProjectiles(bombsaway: laserbeam, scene: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse: false).firebomb(firebomb: bombsbutton)
                 }
                 
                 if name == "fire-top" {
-                    GameProjectiles(bombsaway: laserbeam, scene: self, hero: (hero.position, hero.zRotation, (hero.physicsBody?.velocity)!), reverse:true ).firebomb(firebomb: bombsbutton2!)
+                    GameProjectiles(bombsaway: laserbeam, scene: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse:true ).firebomb(firebomb: bombsbutton2)
                 }
             }
         }
