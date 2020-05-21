@@ -30,7 +30,7 @@
     var canape:SKSpriteNode!
     var tractor:SKSpriteNode!
     var centerTexture: SKTexture!
-    var backParalax: [SKNode?] = [nil]
+    var backParalax: SKNode? = nil
     var scoreLabelNode:SKLabelNode!
     var highScoreLabelNode:SKLabelNode!
     var hud: SKNode!
@@ -205,8 +205,8 @@
         tractor = gamestartup.tractor
         tractor.addGlow()
         
-        if let _ = gamestartup.bombsbutton {
-            bombsbutton = gamestartup.bombsbutton!
+        if let bombBtn = gamestartup.bombsbutton {
+            bombsbutton = bombBtn
         }
         
         firebutton = gamestartup.firebutton
@@ -217,51 +217,39 @@
         
         world = childNode(withName: "world")
                 
-        var backgroundArray = [(name:"", alpha: CGFloat(1.0)),
-                               (name:"", alpha:CGFloat(1.0)),
-                               (name:"blue-mtns", alpha:CGFloat(1.0)) ]
-        //level = 1
+        var background = ""
+   
         switch level {
             
             //skyMtns
             case 1..<100:
-                backgroundArray = [(name:"", alpha: CGFloat(1.0)),
-                                   (name:"", alpha:CGFloat(1.0)),
-                                   (name:"waterWorld", alpha:CGFloat(1.0)) ]
+                background = "waterWorld"
             case 6..<9:
-                backgroundArray = [(name:"skyMtns", alpha: CGFloat(1.0)),
-                                   (name:"", alpha:CGFloat(1.0)),
-                                   (name:"", alpha:CGFloat(1.0)) ]
+             	()
             case 10:
-                
-                backgroundArray = [(name:"skyMtns", alpha: CGFloat(0.5)),
-                                   (name:"", alpha:CGFloat(0.25)),
-                                   (name:"", alpha:CGFloat(0.0)) ]
+                ()
             default :
             	()
         }
         
-        
-        
+
         var filename = "" //default
         
         filename = "level1"
    
         //Check if level exists first (safe)
-        if let _ = GameScene(fileNamed: filename ), let sk = SKReferenceNode(fileNamed: filename)  {
-           
-                let section : SKReferenceNode? = sk
-                self.scene?.addChild(section!)
-                section?.position = CGPoint(x:0,y:0)
+        if let _ = GameScene(fileNamed: filename), let section = SKReferenceNode(fileNamed: filename)  {
+                self.scene?.addChild(section)
+                section.position = CGPoint(x:0,y:0)
                 
                 skView.isPaused = true
                 
-                if let level = section?.children.first?.children {
+                if let level = section.children.first?.children {
                     //No longer hard encoded
                     for land in level {
                         
                         if let name = land.name {
-                            if let midsection = section?.childNode(withName: "//" + name ) as? SKTileMapNode {
+                            if let midsection = section.childNode(withName: "//" + name ) as? SKTileMapNode {
                                 
                                 if name != "Water" {
                                     self.setupLevel( tileMap: midsection)
@@ -277,7 +265,7 @@
                 skView.isPaused = false
              
         } else {
-            print("//*** Level not found:" + filename + " ***//")
+            print("//*** Level not found: \(filename) ***//")
         }
         
         ParaStartup()
@@ -291,23 +279,9 @@
                     if(node.name == "Rocky") {
                         rockBounds = node.frame
                         
-                        if settings.level != 50000 {
-                            scene?.physicsWorld.gravity = CGVector(dx: 0.0, dy: -3) //mini
-                        } else {
-                            scene?.anchorPoint = CGPoint(x:0.5,y:0.5)
-                            scene?.physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0) //mini
-                        }
-                        
+                        scene?.physicsWorld.gravity = CGVector(dx: 0.0, dy: -3) //mini
                         scene?.physicsWorld.contactDelegate = self
-                                                
-                        if level != 50000 {
-                            scene?.physicsBody = SKPhysicsBody(edgeLoopFrom: rockBounds)
-                            
-                        } else {
-                            //minigame
-                            let circlePath = UIBezierPath(arcCenter: CGPoint(x: 0,y: 0), radius: CGFloat((rockBounds.height - ((scene?.frame.width)! / 2)) / 2), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
-                            scene?.physicsBody = SKPhysicsBody(edgeLoopFrom: circlePath.cgPath)
-                        }
+                        scene?.physicsBody = SKPhysicsBody(edgeLoopFrom: rockBounds)
                         
                         scene?.physicsBody?.categoryBitMask = wallCategory //2 + 8 + 128 + 256 + 512 + 1024
                         scene?.physicsBody?.collisionBitMask = 0
@@ -336,7 +310,6 @@
                             node.physicsBody = SKPhysicsBody(edgeLoopFrom: laserBounds )
                         }
                     
-                 
                         node.name = "🔲"
                         node.physicsBody?.categoryBitMask = laserBorder
                         node.physicsBody?.collisionBitMask = 0
@@ -353,49 +326,29 @@
         }
         
         scene?.addChild(moving)
-        
-        //print(rockBounds.width)
-        
-        //if not a mini game, do this
-        if level != 50000 {
             
-            var counter = -1
-            for bkgdArr in backgroundArray {
-                counter += 1
-                
-                backParalax.append( SKNode() )
-                
-                if let bp = backParalax[counter] {
-                    
-                    scene?.addChild(bp)
-                    
-                    let texture = SKTexture(imageNamed: bkgdArr.name)
-                    let width = texture.size().width
-                    let rounded = Int(round( rockBounds.width / width ))
-                    
-                    for i in -rounded...rounded  {
-                        let sprite = SKSpriteNode(texture: texture)
-                        sprite.position = CGPoint(x: CGFloat(i) * width, y: 0)
-                        sprite.alpha = bp.alpha
-                        bp.addChild(sprite)
-                        bp.zPosition = -240 + CGFloat(counter)
-                    }
-                }
+            
+            
+        let bp = SKNode()
+        
+            
+            scene?.addChild(bp)
+            
+            let texture = SKTexture(imageNamed: background)
+            let width = texture.size().width
+            let rounded = Int(round( rockBounds.width / width ))
+            
+            for i in -rounded...rounded  {
+                let sprite = SKSpriteNode(texture: texture)
+                sprite.position = CGPoint(x: CGFloat(i) * width, y: 0)
+                sprite.alpha = bp.alpha
+                bp.addChild(sprite)
+                bp.zPosition = -243
             }
                     
-        } else {
-            
-            var backParalax: SKNode? = nil
-            
-            backParalax = SKNode()
-            scene?.addChild(backParalax!)
-            let starryNightTexture = SKTexture(imageNamed: "starfield1")
-            let sprite = SKSpriteNode(texture: starryNightTexture)
-            sprite.position = CGPoint(x: 0, y: 0)
-            sprite.alpha = 1.0
-            backParalax?.addChild(sprite)
-            backParalax?.zPosition = -240
-        }
+        
+    	backParalax = bp
+     
         
         self.childNode(withName: "world")?.speed = 1.0
         moving.speed = 1
@@ -485,28 +438,23 @@
     }
     
     override func didSimulatePhysics() {
-        if settings.level != 50000 {
-            
-            if hero == nil || canape == nil {
-                return
-            }
-            
-            cam.position.x = hero.position.x
-            canape.zRotation = hero.zRotation
-            
-            if let bp1 = backParalax.first {
-                bp1?.position.x = hero.position.x / -2
-            }
-            
-        } else {
-            
-            if hero == nil {
-                return
-            }
-            
-            cam.position = hero.position
-            cam.zRotation = hero.zRotation
-        }
+        
+        guard
+            let h = hero,
+            let c = canape,
+            let bp = backParalax
+            else
+        { return }
+        
+        //camera node x position = hero's
+        cam.position.x = h.position.x
+        
+        //canape and hero have the same rotation
+        c.zRotation = h.zRotation
+        
+        // adds depth to the scene
+        // by moving the backgorund slower
+        bp.position.x = cam.position.x * 0.334
     }
     
     
