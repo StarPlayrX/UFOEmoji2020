@@ -20,14 +20,18 @@ class TMRX {
     }
     
     //Draw Coins
-    func DrawCoins(TileNode: SKSpriteNode?, PhysicsBody: SKPhysicsBody?, Dynamic: Bool, Gravity: Bool, Category: UInt32, Collision: UInt32, Rotation: Bool, Emoji: String, Name: String, Contact: UInt32, Mass: CGFloat, Friction: CGFloat, NewItem: String, fliph: Bool, flipy: Bool) {
+    func DrawCoinsX(TileNode: SKSpriteNode?, PhysicsBody: SKPhysicsBody?, Dynamic: Bool, Gravity: Bool, Category: UInt32, Collision: UInt32, Rotation: Bool, Emoji: String, Name: String, Contact: UInt32, Mass: CGFloat, Friction: CGFloat, NewItem: String, fliph: Bool, flipy: Bool) {
         
         guard
-            let TileNode = TileNode,
-            let PhysicsBody = PhysicsBody
+            let TileNode = TileNode
             else { return }
         
-        TileNode.physicsBody = PhysicsBody
+        if PhysicsBody == nil {
+            TileNode.physicsBody = SKPhysicsBody()
+        } else {
+            TileNode.physicsBody = PhysicsBody
+        }
+        
         TileNode.zPosition = 75
         TileNode.physicsBody?.restitution = 0.5
         
@@ -1299,7 +1303,7 @@ class TMRX {
                 tileNode.xScale =  tileNode.xScale * -1
             }
             
-            DrawCoins(TileNode: tileNode, PhysicsBody: physicsBody, Dynamic: true, Gravity: gravity, Category: cat, Collision: col, Rotation: rotation, Emoji: newemoji, Name: newname, Contact: con, Mass: 0.1, Friction: 0, NewItem: newitem, fliph: fliph, flipy: flipy)
+            DrawCoinsX(TileNode: tileNode, PhysicsBody: physicsBody, Dynamic: true, Gravity: gravity, Category: cat, Collision: col, Rotation: rotation, Emoji: newemoji, Name: newname, Contact: con, Mass: 0.1, Friction: 0, NewItem: newitem, fliph: fliph, flipy: flipy)
         }
     }
     

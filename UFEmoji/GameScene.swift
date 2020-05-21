@@ -12,8 +12,9 @@
  var headsUpDisplay = SKReferenceNode()
 
  class GameScene: SKScene, ThumbPadProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
-    var firstBody = SKPhysicsBody()
-    var secondBody = SKPhysicsBody()
+
+    weak var firstBody : SKPhysicsBody!
+    weak var secondBody : SKPhysicsBody!
     var rockBounds = CGRect()
     var screenHeight = CGFloat()
     var cam = SKCameraNode()
@@ -38,7 +39,7 @@
     var livesLabel:SKLabelNode!
     var livesLabelNode:SKLabelNode!
     var heroLocation:CGPoint = CGPoint.zero
-    var TileMap:SKTileMapNode = SKTileMapNode()
+    weak var TileMap: SKTileMapNode!
     var rockPile:SKNode = SKNode()
     var score = Int()
     var level = Int()
