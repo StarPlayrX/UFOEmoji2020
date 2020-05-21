@@ -19,9 +19,7 @@ var badGuyFifth = ["4","5"]
 
 
 func DrawBadGuxAI(TileMapNode: SKTileMapNode, TileNode: SKSpriteNode, PhysicsBody: SKPhysicsBody, Dynamic: Bool, Gravity: Bool, Category: UInt32, Collision: UInt32, Rotation: Bool, Emoji: String, Name: String, Contact: UInt32, Mass: CGFloat, Friction: CGFloat, Letter:String, Routes:Int, Nodes:Int ) {
-    
-    
-    
+ 
     TileNode.physicsBody = PhysicsBody
     TileNode.zPosition = 70
     

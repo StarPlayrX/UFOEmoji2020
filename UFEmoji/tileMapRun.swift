@@ -353,8 +353,8 @@ class TMR {
                     let physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
                     let rotation = true;
                     
-                    let fliph = tileDefinition.flipHorizontally
-                    let flipy = tileDefinition.flipVertically
+                    //let fliph = tileDefinition.flipHorizontally
+                    //let flipy = tileDefinition.flipVertically
                     let cat = 16 as UInt32
                     let col = 0  as UInt32
                     let con = 1 + 64 as UInt32

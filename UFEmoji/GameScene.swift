@@ -2,47 +2,13 @@
  //  GameScene.swift
  //  UF Emoji
  //
- //  Created by Todd Bruss on 12/3/15.
+ //  Created by Todd Bruss on 12/3/15 to 5/9/20
  //  Copyright (c) 2015 Todd Bruss. All rights reserved.
  //
  
- 
- // Levels
- 
- // 🏉 = Right End / Rugby
- // 🏀 = Right Guard / Basketball
- // 🏐 = Right Center / Volleyball
- // 🏈 = Left Center / Football
- // ⚽️ = Left Guard / Soccer
- // ⚾️ = Left End / Baseball
- 
- // 😃 = 1
- // 😆 = 2
- // 🤣 = 3
- // 😇 = 4
- // 😉 = 5
- // 😘 = 6
- // 😚 = 7
- // 😝 = 8
- // 🤨 = 9
- // 😎 = 10
- 
- 
  import SpriteKit
  import AVFoundation
- //import GameplayKit
- 
- extension SKSpriteNode {
-    
-    func addGlow(radius: Float = 16) {
-        let effectNode = SKEffectNode()
-        effectNode.addChild(SKSpriteNode(texture: texture))
-        effectNode.filter = CIFilter(name: "CIMotionBlur", parameters: ["inputRadius":radius,"inputAngle":CGFloat.pi/2])
-        effectNode.shouldRasterize = true
-        addChild(effectNode)
-    }
- }
- 
+
  var headsUpDisplay = SKReferenceNode()
 
  class GameScene: SKScene, ThumbPadProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
@@ -122,8 +88,8 @@
                     let tileDefinition = tm.tileDefinition(atColumn: col, row: row)
                     var center = tm.centerOfTile(atColumn: col, row: row)
                     
-                    if let td = tileDefinition, let name = tileDefinition!.name {
-                        if name.count > 0 {
+                    if let td = tileDefinition, let name = td.name {
+                        if !name.isEmpty {
                             tmr.tileMapRun(tileDefinition: td, center: center)
                         }
                     }
@@ -164,9 +130,7 @@
         /* end demo mode */
     }
     override func didMove(to view: SKView) {
-        
-        //badguyai = [:] //MARK TODD
-        
+                
         // This is the default of King, Queen Nationality
         KingQueenGlobalDie = 100
         
@@ -176,10 +140,10 @@
         
         doublelaser = 0
         
-        
         if (settings.level >= 1 && settings.level <= 10) {
-            let soundURL: URL = Bundle.main.url(forResource: "music1", withExtension: "mp3")!
-            audioPlayer = try! AVAudioPlayer(contentsOf: soundURL)
+            if let soundURL: URL = Bundle.main.url(forResource: "music1", withExtension: "mp3") {
+                audioPlayer = try? AVAudioPlayer(contentsOf: soundURL)
+            }
         }
         
         if settings.music {
@@ -193,13 +157,10 @@
         camera = cam
         addChild(cam)
         cam.zPosition = 100
-        
-        
+    
         headsUpDisplay.name = "HeadsUpDisplay"
         scene?.camera?.addChild(headsUpDisplay)
         headsUpDisplay.zRotation = CGFloat(Double.pi/4)
-        
-        
         
         let gamestartup = GameStartup().readyPlayerOne(self)
         
@@ -222,24 +183,22 @@
         scoreDict["❌"] = 75 //villians
         scoreDict["😱"] = 80 //super villians
         scoreDict["😳"] = 90 //super villians
-        scoreDict["🤯"] =  00 //super villian leader
+        scoreDict["🤯"] = 100 //super villian leader
         scoreDict["💎"] = 110 //rare
         scoreDict["👑"] = 115 //rare
         scoreDict["❣️"] = 120 //extra life (displays him/herself in the game)
         scoreDict["🔫"] = 130 //super rare marker for double laser beams
-        
         scoreDict["🔱"] = 140 //super rare trident (super bomb)
         scoreDict["‼️"] = 130 //super rare shields (cloaked ghost, move through walls)
         scoreDict["🛡"] = 150 //super rare shields (cloaked ghost, move through walls)
         scoreDict["💠"] = 150 //super rare shields (cloaked ghost, move through walls)
-        scoreDict["gold"] = 2
-        scoreDict["land"] = 1
-        scoreDict["dirt"] = 1
-        scoreDict["grass"] = 2
+        scoreDict["gold"] 	= 16
+        scoreDict["land"] 	= 1
+        scoreDict["dirt"] 	= 1
+        scoreDict["grass"] 	= 2
         scoreDict["desert"] = 2
-        scoreDict["sand"] = 3
-        scoreDict["stone"] = 3
-        
+        scoreDict["sand"] 	= 4
+        scoreDict["stone"] 	= 8
         
         hero = gamestartup.hero
         canape = gamestartup.canape
@@ -257,154 +216,68 @@
         (level, highlevel, score, highscore, lives) = GameStartup().loadScores()
         
         world = childNode(withName: "world")
-        
-        let subLevels = UInt32(8) //  no larger than 8 should be allowed here
-        let sectionWidth = CGFloat(1440)
-        
-        //no flip : yes flip
-        let position = [["⚾️","🏉"],["⚽️","🏀"],["🏈","🏐"],["🏀","⚽️"],["🏉","⚾️"]]
-        let sectional = ["😃","😆","🤣","😇","😉","😘","😚","😝","🤨","😎"]
-        var spot = 2
-        var counter = -1
-        //Level Prefix
-        var prefix = "🦕"
-        // Defaults
+                
         var backgroundArray = [(name:"", alpha: CGFloat(1.0)),
                                (name:"", alpha:CGFloat(1.0)),
                                (name:"blue-mtns", alpha:CGFloat(1.0)) ]
-        
-        var minilevelname = "" //default
-        
         //level = 1
         switch level {
             
             //skyMtns
             case 1..<100:
-                prefix = "🦕"
                 backgroundArray = [(name:"", alpha: CGFloat(1.0)),
                                    (name:"", alpha:CGFloat(1.0)),
                                    (name:"waterWorld", alpha:CGFloat(1.0)) ]
-                spot = 0
-                counter = 1
-            case 50000:
-                prefix = "🚀"
-                minilevelname = "🚀🚀🚀" // can be randomized later
-                spot = 0
-                counter = 1
             case 6..<9:
-                prefix = "📓"
                 backgroundArray = [(name:"skyMtns", alpha: CGFloat(1.0)),
                                    (name:"", alpha:CGFloat(1.0)),
                                    (name:"", alpha:CGFloat(1.0)) ]
-                spot = 2
-                counter = -1
             case 10:
-                prefix = "🧟‍♀️"
-                minilevelname = "🧟‍♀️🧟‍♀️🧟‍♀️" // can be randomized later
-                spot = 0
-                counter = 1
                 
                 backgroundArray = [(name:"skyMtns", alpha: CGFloat(0.5)),
                                    (name:"", alpha:CGFloat(0.25)),
                                    (name:"", alpha:CGFloat(0.0)) ]
             default :
-                prefix = "🦕"
-                spot = 2
-                counter = -1
+            	()
         }
         
         
         
-        //// if level != 0 {
-        for iteration in -spot...spot  {
-            let sublevel = Int(arc4random_uniform(subLevels)) //6
-            let sector = sectional[sublevel]
-            let flip = Int(arc4random_uniform(2))
-            var filename = "" //default
-            
-            //turn on the minigame level
-            //Mini game levels will be every 5 levels
-            if level % 50000 == 0 && 1 == 2 {
-                filename = minilevelname
-            } else {
-                filename = (prefix + position[counter][flip] + sector)
-                filename = (prefix + position[counter][flip] + sector)
+        var filename = "" //default
+        
+        filename = "level1"
+   
+        //Check if level exists first (safe)
+        if let _ = GameScene(fileNamed: filename ), let sk = SKReferenceNode(fileNamed: filename)  {
+           
+                let section : SKReferenceNode? = sk
+                self.scene?.addChild(section!)
+                section?.position = CGPoint(x:0,y:0)
                 
-            }
-            
-            
-            //Test the mini level entry
-            //if ( iteration == 2 && level < 1000 ) {
-            //filename = "🦕⚽️🤣"
-            filename = "level1"
-            
-            //}
-            
-            /*
-             print("=->")
-             print("counter: " + String(counter))
-             print("level:   " + String(level))
-             print("prefix:  " + String(prefix))
-             
-             print("sublevel:" + String(sublevel))
-             print("sector:  " + String(sector))
-             print("flip:    " + String(flip))
-             print("filename:" + String(filename))
-             print("<-=")
-             */
-            
-            //Check if level exists first (safe)
-            if let _ = GameScene(fileNamed: filename ) {
-                if SKReferenceNode(fileNamed: filename) != nil {
-                    
-                    
-                    
-                    // DispatchQueue.main.async { [weak self] in
-                    var section : SKReferenceNode? = SKReferenceNode(fileNamed: filename)
-                    
-                    self.scene?.addChild(section!)
-                    
-                    if self.level != 10000 {
-                        section?.position.x = sectionWidth * CGFloat(iteration)
-                    } else {
-                        section?.position = CGPoint(x:0,y:0)
-                    }
-                    
-                    
-                    skView.isPaused = true
-                    
-                    if let level = section?.children.first?.children {
-                        //No longer hard encoded
-                        for land in level {
-                            
-                            if let name = land.name {
-                                if let midsection = section?.childNode(withName: "//" + name ) as? SKTileMapNode {
-                                    
-                                    if name != "Water" {
-                                        self.setupLevel( tileMap: midsection)
-                                    } else {
-                                        land.alpha = 0.4
-                                        land.zPosition = 1000
-                                    }
+                skView.isPaused = true
+                
+                if let level = section?.children.first?.children {
+                    //No longer hard encoded
+                    for land in level {
+                        
+                        if let name = land.name {
+                            if let midsection = section?.childNode(withName: "//" + name ) as? SKTileMapNode {
+                                
+                                if name != "Water" {
+                                    self.setupLevel( tileMap: midsection)
+                                } else {
+                                    land.alpha = 0.4
+                                    land.zPosition = 1000
                                 }
                             }
                         }
                     }
-                    
-                    
-                    skView.isPaused = false
-                    
-                    
-                    // }
-                    
-                    
-                    
-                    
-                    
                 }
-            } else {
-                print("//*** Level not found:" + filename + " ***//")
-            }
+                
+                skView.isPaused = false
+             
+        } else {
+            print("//*** Level not found:" + filename + " ***//")
         }
         
         ParaStartup()
@@ -416,7 +289,6 @@
                 for node in node.children {
 
                     if(node.name == "Rocky") {
-                        
                         rockBounds = node.frame
                         
                         if settings.level != 50000 {
@@ -425,13 +297,9 @@
                             scene?.anchorPoint = CGPoint(x:0.5,y:0.5)
                             scene?.physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0) //mini
                         }
-                        //scene?.physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
                         
                         scene?.physicsWorld.contactDelegate = self
-                        //print("Rocky")
-                        
-                        //world container  LET's PLAY!!!!
-                        
+                                                
                         if level != 50000 {
                             scene?.physicsBody = SKPhysicsBody(edgeLoopFrom: rockBounds)
                             
@@ -446,7 +314,6 @@
                         scene?.physicsBody?.restitution = 0.02
                         scene?.physicsBody?.contactTestBitMask = 0
                         
-                        
                         //container for bombBounds
                         let bombBounds = CGRect(x: node.frame.origin.x ,y: node.frame.origin.y, width: node.frame.width, height: node.frame.height + 128)
                         
@@ -458,10 +325,18 @@
                         addnode.physicsBody?.categoryBitMask = bombBoundsCategory;
                         scene?.addChild(addnode)
                         
-                        
                         let node = SKNode()
-                        let laserBounds = CGRect(x: ((scene?.frame.origin.x)! - 5 ), y: (scene?.frame.origin.y)!, width: (scene?.frame.width)! + 10, height: ((scene?.frame.height)!))
-                        node.physicsBody = SKPhysicsBody(edgeLoopFrom: laserBounds )
+                        
+                        if  let x = scene?.frame.origin.x,
+                            let y = scene?.frame.origin.y,
+                            let w = scene?.frame.width ,
+                        	let h = scene?.frame.height {
+                            
+                            let laserBounds = CGRect(x: x - 5, y: y, width: w + 10, height: h)
+                            node.physicsBody = SKPhysicsBody(edgeLoopFrom: laserBounds )
+                        }
+                    
+                 
                         node.name = "🔲"
                         node.physicsBody?.categoryBitMask = laserBorder
                         node.physicsBody?.collisionBitMask = 0
@@ -529,13 +404,18 @@
             emojiAnimation(emojis:["🙈","🙊","🙉","🐵"])
         }
         
-        screenHeight = (scene?.frame.size.height)! / 2 - 64
+        var sceneheight = CGFloat(0)
+		var indent = CGFloat(0)
         
-        let sceneheight = (scene?.frame.size.height)! / 2
+        if let sh = scene?.frame.size.height, let sw = scene?.frame.size.width {
+            screenHeight = sh / 2 - 64
+            sceneheight = sh / 2
+            indent = ( sw / 2 ) - 7.5 * CGFloat(settings.mode)
+        }
+        
         let difference = CGFloat(20)
         let labelheight = sceneheight - difference
         let scoreheight = sceneheight - (difference * CGFloat(2))
-        let indent = CGFloat((scene?.frame.size.width)! / 2) - 7.5 * CGFloat(settings.mode)
         let scoreLabel = SKLabelNode(fontNamed:"Emulogic")
         scoreLabel.position = CGPoint( x: -indent, y: labelheight )
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
@@ -1293,9 +1173,19 @@
             /* Power Ups */
             shield = true
             
-            hero.alpha = 0.5
             if var l = livesLabel.text, !l.contains("🛡") {
                 l += "🛡"
+                
+                hero.alpha = 0.75
+
+                //MARK: aura particle emitter
+                if let aura = SKEmitterNode(fileNamed: "aura") {
+                    aura.alpha = 0.25
+                    aura.speed = 1
+                    aura.name = "aura"
+                    aura.setScale(0.5)
+                    hero.addChild(aura)
+                }
             }
             
             if settings.sound {
@@ -1375,3 +1265,14 @@
     }
  }
  
+ 
+ extension SKSpriteNode {
+    func addGlow(radius: Float = 16) {
+        let effectNode = SKEffectNode()
+        effectNode.addChild(SKSpriteNode(texture: texture))
+        effectNode.filter = CIFilter(name: "CIMotionBlur", parameters: ["inputRadius":radius,"inputAngle":CGFloat.pi/2])
+        effectNode.shouldRasterize = true
+        addChild(effectNode)
+    }
+ }
+  

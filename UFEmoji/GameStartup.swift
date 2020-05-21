@@ -280,11 +280,9 @@ class GameStartup: GameScene {
                 let radius = sprite.size
                 sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: radius.width + 5, height: radius.height + 5))
                 sprite.physicsBody?.restitution = 0
-                sprite.position = CGPoint(x:sprite.position.x, y: sprite.position.y - 15)
-                
+                sprite.position = CGPoint(x:sprite.position.x, y: sprite.position.y - 25)
             } else {
                 sprite.physicsBody = SKPhysicsBody(texture: sprite.texture!, alphaThreshold: alphaThreshold, size: sprite.size)
-                
             }
             
             sprite.physicsBody?.categoryBitMask = category
@@ -345,14 +343,11 @@ class GameStartup: GameScene {
                 sprite.isUserInteractionEnabled = false
             }
             
-            //let node = SKReferenceNode()
-            //node.name = name
-            //scene.camera?.addChild(node)
             headsUpDisplay.addChild(sprite)
-            //node.zRotation = CGFloat(Double.pi/4)
             
             var xAdjust = CGFloat(1.0)
             var yAdjust = CGFloat(1.0)
+            
             //iPhone (convert this to an enum)
             if settings.mode == 4 {
                 xAdjust = CGFloat(1.4)

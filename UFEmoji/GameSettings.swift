@@ -11,7 +11,6 @@ import SpriteKit
 
 class GameSettings: NSObject, NSCoding {
     
-
     let level:      Any
     let highlevel:  Any
     let emoji:      Any
@@ -134,23 +133,7 @@ var skView = SKView()
 
 func levelLauncher(self:SKScene) -> Void {
     
-    var prefix = "🦕"
-    
-    //settings.level = 0 //minigame
-    
-    switch settings.level {
-    
-    case 1..<999:
-        prefix = "🦕" // levels 1-4
-    case 50000:
-        prefix = "🚀" // mini level 5 // So far the mini game is fun
-    case 6..<9:
-        prefix = "📓" // levels 6-9 /// Not sure why it crashed when completing the minigame
-    case 10:
-        prefix = "🧟‍♀️"
-    default :
-        prefix = "🦕"
-    }
+    let prefix = "🦕"
     
     if let scene = GameScene(fileNamed:prefix),
         let view = self.view,
@@ -172,7 +155,6 @@ func levelLauncher(self:SKScene) -> Void {
         skView.clipsToBounds = true
         scene.scaleMode = .aspectFill
         scene.backgroundColor = SKColor.black
-
         skView.presentScene(scene)
     }
 }
