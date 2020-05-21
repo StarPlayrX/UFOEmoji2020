@@ -65,8 +65,14 @@ class LevelUp: SKScene {
 }
 
 //Loads the LevelUp Scene
-func starPlayrOneLevelUp(world:SKNode, moving:SKNode, scene:SKScene, hero: SKSpriteNode, tractor: SKSpriteNode) {
+func starPlayrOneLevelUpX(world:SKNode?, moving:SKNode?, scene:SKScene?, hero: SKSpriteNode?, tractor: SKSpriteNode?) {
     
+    guard let world = world,
+          let moving = moving,
+          let hero = hero,
+          var scene = scene,
+          let tractor = tractor
+        else { return }
     hero.removeFromParent()
     tractor.removeFromParent()
     moving.speed = moving.speed / 2
@@ -82,5 +88,6 @@ func starPlayrOneLevelUp(world:SKNode, moving:SKNode, scene:SKScene, hero: SKSpr
             scene.view?.presentScene(gameOverScene, transition: reveal)
         }
         ]))
+    
 }
 

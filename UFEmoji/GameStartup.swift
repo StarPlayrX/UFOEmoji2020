@@ -10,9 +10,12 @@ import SpriteKit
 
 //var mynode = SKReferenceNode()
 
+typealias Oreo =  (bombsbutton:SKSpriteNode?,firebutton:SKSpriteNode?,hero:SKSpriteNode?,canape:SKSpriteNode?,tractor:SKSpriteNode?,bombsbutton2:SKSpriteNode?,firebutton2:SKSpriteNode?)
 class GameStartup: GameScene {
     
-    func readyPlayerOne (_ scene:SKScene) -> (bombsbutton:SKSpriteNode?,firebutton:SKSpriteNode?,hero:SKSpriteNode?,canape:SKSpriteNode?,tractor:SKSpriteNode?,bombsbutton2:SKSpriteNode?,firebutton2:SKSpriteNode?) {
+    func readyPlayerOne (_ scene:SKScene?) -> Oreo? {
+        
+        guard let scene = scene else { return nil }
         
         var rocket = "aliensaucer"
         var glass = "aliencanape"

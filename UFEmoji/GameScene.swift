@@ -79,14 +79,13 @@
     
     
     func setupLevel(tileMap: SKTileMapNode? = nil) {
-        
-        if let tm = tileMap {
-            let tmr = TMR(TileMap: tm)
+        guard var tileMap = tileMap else { return }
+            let tmr = TMRX(TileMap: tileMap)
             
-            for col in (0 ..< tm.numberOfColumns) {
-                for row in (0 ..< tm.numberOfRows) {
-                    let tileDefinition = tm.tileDefinition(atColumn: col, row: row)
-                    var center = tm.centerOfTile(atColumn: col, row: row)
+            for col in (0 ..< tileMap.numberOfColumns) {
+                for row in (0 ..< tileMap.numberOfRows) {
+                    let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
+                    var center = tileMap.centerOfTile(atColumn: col, row: row)
                     
                     if let td = tileDefinition, let name = td.name {
                         if !name.isEmpty {
@@ -98,9 +97,9 @@
                 }
             }
             
-            tm.removeAllChildren()
-            tm.removeFromParent()
-        }
+            tileMap.removeAllChildren()
+            tileMap.removeFromParent()
+        	tileMap = SKTileMapNode()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -162,7 +161,7 @@
         scene?.camera?.addChild(headsUpDisplay)
         headsUpDisplay.zRotation = CGFloat(Double.pi/4)
         
-        let gamestartup = GameStartup().readyPlayerOne(self)
+        guard let gamestartup = GameStartup().readyPlayerOne(self) else { return }
         
         doublelaser = 0;
         scoreDict[""] = 0
@@ -203,7 +202,7 @@
         hero = gamestartup.hero
         canape = gamestartup.canape
         tractor = gamestartup.tractor
-        tractor.addGlow()
+        //tractor.addGlow()
         
         if let bombBtn = gamestartup.bombsbutton {
             bombsbutton = bombBtn
@@ -329,10 +328,7 @@
             
             
             
-        let bp = SKNode()
-        
-            
-            scene?.addChild(bp)
+        if let bp : SKNode? = SKNode() {
             
             let texture = SKTexture(imageNamed: background)
             let width = texture.size().width
@@ -341,14 +337,20 @@
             for i in -rounded...rounded  {
                 let sprite = SKSpriteNode(texture: texture)
                 sprite.position = CGPoint(x: CGFloat(i) * width, y: 0)
-                sprite.alpha = bp.alpha
-                bp.addChild(sprite)
-                bp.zPosition = -243
+                bp?.addChild(sprite)
+                bp?.zPosition = -243
             }
-                    
+            
+            backParalax = bp
+            scene?.addChild(backParalax!)
+
+            
+        }
         
-    	backParalax = bp
-     
+            
+               
+        
+    	
         
         self.childNode(withName: "world")?.speed = 1.0
         moving.speed = 1
@@ -908,7 +910,7 @@
                 
                 removeHero()
                 removeGUI()
-                starPlayrOneLevelUp(world:world!, moving:moving, scene:self, hero:hero, tractor:tractor)
+                starPlayrOneLevelUpX(world:world!, moving:moving, scene: self, hero:hero, tractor:tractor)
             
             case heroCategory | worldCategory, heroCategory | badGuyCategory, heroCategory | badFishCategory :
                 
@@ -1049,7 +1051,7 @@
                 let runWorld = SKAction.run() {
                     self.moving.speed       = 1
                     
-                    let gamestartup = GameStartup().readyPlayerOne(self)
+                    guard let gamestartup = GameStartup().readyPlayerOne(self) else { return }
                     
                     self.hero = gamestartup.hero
                     self.canape = gamestartup.canape
@@ -1222,7 +1224,7 @@
  
  
  extension SKSpriteNode {
-    func addGlow(radius: Float = 16) {
+    func addGlowX(radius: Float = 16) {
         let effectNode = SKEffectNode()
         effectNode.addChild(SKSpriteNode(texture: texture))
         effectNode.filter = CIFilter(name: "CIMotionBlur", parameters: ["inputRadius":radius,"inputAngle":CGFloat.pi/2])
@@ -1230,4 +1232,3 @@
         addChild(effectNode)
     }
  }
-  

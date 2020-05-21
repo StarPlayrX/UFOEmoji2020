@@ -9,24 +9,29 @@
 import SpriteKit
 //var earth = SKSpriteNode()
 
-class TMR {
+class TMRX {
     
-    var TileMap: SKTileMapNode
-
+    weak var TileMap: SKTileMapNode!
+    
     init(TileMap: SKTileMapNode) {
         
         self.TileMap = TileMap
-
+        
     }
     
     //Draw Coins
-    func DrawCoins(TileNode: SKSpriteNode, PhysicsBody: SKPhysicsBody, Dynamic: Bool, Gravity: Bool, Category: UInt32, Collision: UInt32, Rotation: Bool, Emoji: String, Name: String, Contact: UInt32, Mass: CGFloat, Friction: CGFloat, NewItem: String, fliph: Bool, flipy: Bool) {
+    func DrawCoins(TileNode: SKSpriteNode?, PhysicsBody: SKPhysicsBody?, Dynamic: Bool, Gravity: Bool, Category: UInt32, Collision: UInt32, Rotation: Bool, Emoji: String, Name: String, Contact: UInt32, Mass: CGFloat, Friction: CGFloat, NewItem: String, fliph: Bool, flipy: Bool) {
+        
+        guard
+            let TileNode = TileNode,
+            let PhysicsBody = PhysicsBody
+            else { return }
         
         TileNode.physicsBody = PhysicsBody
         TileNode.zPosition = 75
         TileNode.physicsBody?.restitution = 0.5
         
-     
+        
         if NewItem == "🐟" || Name == "💢" || Name == "🛑" || Name == "♨️" || Emoji == "🐝" || NewItem == "🦀" || Emoji == "🌈" {
             TileNode.zPosition = -20
             TileNode.physicsBody?.affectedByGravity = false //true
@@ -96,91 +101,91 @@ class TMR {
         spriteLabelNode.fontSize = 32
         
         switch NewItem {
-
-        case "🐟":
-            spriteLabelNode.zPosition = -20
-        case "☄️":
-            spriteLabelNode.fontSize = 40
-        default:
-            spriteLabelNode.fontSize = 36
+            
+            case "🐟":
+                spriteLabelNode.zPosition = -20
+            case "☄️":
+                spriteLabelNode.fontSize = 40
+            default:
+                spriteLabelNode.fontSize = 36
         }
         
         switch Emoji {
             
-        case "🚀":
-            spriteLabelNode.zRotation = CGFloat(Double.pi/4)
-            spriteLabelNode.xScale = -1
-        case "🛸":
-             spriteLabelNode.xScale = -1
-            spriteLabelNode.zRotation = CGFloat(Double.pi/9)
-            spriteLabelNode.fontSize = 50
-        case "🧟‍♀️","🧟‍♂️":
-            spriteLabelNode.fontSize = 42
-        case "🎱","🥚","💀","⚽️","🏈","🍊","🍏","🍎","🍅","🍈","🍋","🍑","🍓","🥥","🍩":
-            TileNode.physicsBody?.allowsRotation = true
-            TileNode.physicsBody?.friction = 1
-        case "🐌":
-            spriteLabelNode.xScale = -1
-        case "☄️":
-            spriteLabelNode.zRotation = CGFloat(-Double.pi/4)
-        case "🦔":
-            spriteLabelNode.fontSize = 40
-            spriteLabelNode.yScale = 1.25
-        case "😱":
-            let coinToss = arc4random_uniform(2) == 0
-            str = coinToss ? "😱" : "🙀"
-        case "🌿":
-            let coinToss = arc4random_uniform(2) == 0
-            str = coinToss ? "🌿" : "🌱"
-        case "🍀":
-            let coinToss = arc4random_uniform(2) == 0
-            str = coinToss ? "🍀" : "☘️"
-        case "🤴","👸":
-            if KingQueenGlobalDie == 100 {
-                KingQueenGlobalDie = Int(arc4random_uniform(4))
+            case "🚀":
+                spriteLabelNode.zRotation = CGFloat(Double.pi/4)
+                spriteLabelNode.xScale = -1
+            case "🛸":
+                spriteLabelNode.xScale = -1
+                spriteLabelNode.zRotation = CGFloat(Double.pi/9)
+                spriteLabelNode.fontSize = 50
+            case "🧟‍♀️","🧟‍♂️":
+                spriteLabelNode.fontSize = 42
+            case "🎱","🥚","💀","⚽️","🏈","🍊","🍏","🍎","🍅","🍈","🍋","🍑","🍓","🥥","🍩":
+                TileNode.physicsBody?.allowsRotation = true
+                TileNode.physicsBody?.friction = 1
+            case "🐌":
+                spriteLabelNode.xScale = -1
+            case "☄️":
+                spriteLabelNode.zRotation = CGFloat(-Double.pi/4)
+            case "🦔":
+                spriteLabelNode.fontSize = 40
+                spriteLabelNode.yScale = 1.25
+            case "😱":
+                let coinToss = arc4random_uniform(2) == 0
+                str = coinToss ? "😱" : "🙀"
+            case "🌿":
+                let coinToss = arc4random_uniform(2) == 0
+                str = coinToss ? "🌿" : "🌱"
+            case "🍀":
+                let coinToss = arc4random_uniform(2) == 0
+                str = coinToss ? "🍀" : "☘️"
+            case "🤴","👸":
+                if KingQueenGlobalDie == 100 {
+                    KingQueenGlobalDie = Int(arc4random_uniform(4))
+                }
+                
+                if Emoji == "🤴" {
+                    switch KingQueenGlobalDie {
+                        case 0:
+                            str = "🤴🏻"
+                        case 1:
+                            str = "🤴🏼"
+                        case 2:
+                            str = "🤴🏽"
+                        case 3:
+                            str = "🤴"
+                        default:
+                            str = "🤴🏻"
+                    }
+                } else {
+                    switch KingQueenGlobalDie {
+                        case 0:
+                            str = "👸🏻"
+                        case 1:
+                            str = "👸🏼"
+                        case 2:
+                            str = "👸🏽"
+                        case 3:
+                            str = "👸"
+                        default:
+                            str = "👸🏻"
+                    }
             }
             
-            if Emoji == "🤴" {
-                switch KingQueenGlobalDie {
-                case 0:
-                    str = "🤴🏻"
-                case 1:
-                    str = "🤴🏼"
-                case 2:
-                    str = "🤴🏽"
-                case 3:
-                    str = "🤴"
-                default:
-                    str = "🤴🏻"
-                }
-            } else {
-                switch KingQueenGlobalDie {
-                case 0:
-                    str = "👸🏻"
-                case 1:
-                    str = "👸🏼"
-                case 2:
-                    str = "👸🏽"
-                case 3:
-                    str = "👸"
-                default:
-                    str = "👸🏻"
-                }
-            }
-            
-        case "🏯":
-            let coinToss = arc4random_uniform(2) == 0
-            str = coinToss ? "⛩" : "🏯"
-        case "💢", "🎇", "🌀", "♨️", "🛑":
-            str = "" // No Emoji
-        case "‼️","🔫":
-            str = "🔫" // Gun
-        case "🦎":
-            spriteLabelNode.xScale = -1
-        case "❣️":
-            str = heroArray[settings.emoji];
-        default:
-            str = Emoji
+            case "🏯":
+                let coinToss = arc4random_uniform(2) == 0
+                str = coinToss ? "⛩" : "🏯"
+            case "💢", "🎇", "🌀", "♨️", "🛑":
+                str = "" // No Emoji
+            case "‼️","🔫":
+                str = "🔫" // Gun
+            case "🦎":
+                spriteLabelNode.xScale = -1
+            case "❣️":
+                str = heroArray[settings.emoji];
+            default:
+                str = Emoji
         }
         
         //if the item is on the left side and this is a center section, flip it
@@ -294,10 +299,9 @@ class TMR {
     
     //Tile Map Run
     func tileMapRun(tileDefinition: SKTileDefinition, center: CGPoint, leftside: Bool = false
-, flipsection: Bool = false, centerSection:Bool = true) {
+        , flipsection: Bool = false, centerSection:Bool = true) {
         var name = String()
-        let ds = DS(TileMap: TileMap)
-
+        
         if let x = tileDefinition.name {
             name = x //gets the Sprite name
         }
@@ -354,7 +358,7 @@ class TMR {
                     let rotation = true;
                     
                     //let fliph = tileDefinition.flipHorizontally
-                    //let flipy = tileDefinition.flipVertically
+                    let flipy = tileDefinition.flipVertically
                     let cat = 16 as UInt32
                     let col = 0  as UInt32
                     let con = 1 + 64 as UInt32
@@ -411,8 +415,8 @@ class TMR {
             var stagename = tileData?["name"] as! String
             var physicsBody = SKPhysicsBody(rectangleOf: tileNode.size, center: CGPoint(x: 0, y: 0))
             
-            ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 2)
-
+            DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 2)
+            
             /* A2 set */
             centerTexture = SKTexture(imageNamed: name + "btm3")
             tileNode =  SKSpriteNode(texture: centerTexture)
@@ -422,8 +426,8 @@ class TMR {
             physicsBody = SKPhysicsBody(rectangleOf: tileNode.size, center: CGPoint(x: 0, y: 0))
             
             stagename = "dirt"
-            ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 2)
-
+            DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 2)
+            
         } else if ( tileData?["isDirt"] as? Bool == true || tileData?["isStone"] as? Bool == true  )  {
             
             let halfwidth = centerTexture.size().width / 2
@@ -456,8 +460,8 @@ class TMR {
                 path.closeSubpath()
                 var physicsBody = SKPhysicsBody(polygonFrom: path)
                 
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 2)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 2)
+                
                 /* A2 set */
                 centerTexture = SKTexture(imageNamed: name + "2")
                 tileNode =  SKSpriteNode(texture: centerTexture)
@@ -473,7 +477,7 @@ class TMR {
                 path.closeSubpath()
                 physicsBody = SKPhysicsBody(polygonFrom: path)
                 
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 2)
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 2)
             } else if coinToss == 99  {
                 
                 //MARK: 5 UpperLeftCorner
@@ -503,7 +507,7 @@ class TMR {
                 path.closeSubpath()
                 
                 var physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 4)
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 4)
                 //mark: 6 UpperRightCorner
                 centerTexture = SKTexture(imageNamed: name + "6")
                 tileNode =  SKSpriteNode(texture: centerTexture)
@@ -519,8 +523,8 @@ class TMR {
                 path.closeSubpath()
                 physicsBody = SKPhysicsBody(polygonFrom: path)
                 
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 4)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 4)
+                
                 
                 //mark: 7 LowerLeftCorner
                 centerTexture = SKTexture(imageNamed: name + "7")
@@ -538,8 +542,8 @@ class TMR {
                 physicsBody = SKPhysicsBody(polygonFrom: path)
                 
                 
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 4)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 4)
+                
                 //mark: 8 LowerRightCorner
                 centerTexture = SKTexture(imageNamed: name + "8")
                 tileNode =  SKSpriteNode(texture: centerTexture)
@@ -555,8 +559,8 @@ class TMR {
                 path.closeSubpath()
                 physicsBody = SKPhysicsBody(polygonFrom: path)
                 
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 4)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 4)
+                
             } else if coinToss == 3  {
                 /* A1 set */
                 let upperLeft = CGPoint(x: 0 - halfwidth, y: height - halfheight)
@@ -587,8 +591,8 @@ class TMR {
                 
                 var physicsBody = SKPhysicsBody(polygonFrom: path)
                 
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 2)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 2)
+                
                 /* A2 set */
                 
                 centerTexture = SKTexture(imageNamed: name + "4")
@@ -604,8 +608,8 @@ class TMR {
                 
                 path.closeSubpath()
                 physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 2)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 2)
+                
             } else {
                 /* A1 set */
                 let upperLeft = CGPoint(x: 0 - halfwidth, y: height - halfheight)
@@ -632,7 +636,7 @@ class TMR {
                 path.closeSubpath()
                 
                 let physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 1)
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 1)
             }
         } else if ( tileData?["isQtr"] as? Bool == true )  {
             
@@ -675,7 +679,7 @@ class TMR {
                 path.closeSubpath()
                 
                 let physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
             }
             
             //mark: 6 UpperRightCorner
@@ -694,7 +698,7 @@ class TMR {
                 path.closeSubpath()
                 
                 let physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
             }
             
             //mark: 7 LowerLeftCorner
@@ -712,7 +716,7 @@ class TMR {
                 
                 path.closeSubpath()
                 let physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
             }
             
             //MARK: 8 LowerRightCorner
@@ -730,7 +734,7 @@ class TMR {
                 
                 path.closeSubpath()
                 let physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
             }
             
         } else if ( tileData?["isGrassCorner"] as? Bool == true )  {
@@ -766,8 +770,8 @@ class TMR {
                 path.closeSubpath()
                 
                 var physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "grass", Attribute: 3)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "grass", Attribute: 3)
+                
                 // Mark -2
                 centerTexture = SKTexture(imageNamed: "grass2-btm-right-2")
                 tileNode =  SKSpriteNode(texture: centerTexture)
@@ -783,8 +787,8 @@ class TMR {
                 
                 path.closeSubpath()
                 physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "dirt", Attribute: 6)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "dirt", Attribute: 6)
+                
                 //grass2-btm-right-1
             } else if (tileData?["sector"] as? UInt32 == 1 && !flipsection) || ( tileData?["sector"] as? UInt32 == 2 && flipsection )  {
                 
@@ -805,8 +809,8 @@ class TMR {
                 
                 //let stagename = tileData?["name"] as! String
                 var physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "grass", Attribute: 3)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "grass", Attribute: 3)
+                
                 
                 // Mark -2
                 centerTexture = SKTexture(imageNamed: "grass2-btmleft-2")
@@ -823,8 +827,8 @@ class TMR {
                 
                 path.closeSubpath()
                 physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "dirt", Attribute: 6)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "dirt", Attribute: 6)
+                
                 //grass2-topright
             } else if (tileData?["sector"] as? UInt32 == 4 && !flipsection) || ( tileData?["sector"] as? UInt32 == 3 && flipsection )  {
                 
@@ -840,8 +844,8 @@ class TMR {
                 
                 path.closeSubpath()
                 var physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "grass", Attribute: 6)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "grass", Attribute: 6)
+                
                 // Mark -2
                 centerTexture = SKTexture(imageNamed: "grass2-topright-2")
                 tileNode =  SKSpriteNode(texture: centerTexture)
@@ -857,8 +861,8 @@ class TMR {
                 
                 path.closeSubpath()
                 physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "dirt", Attribute: 3)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "dirt", Attribute: 3)
+                
                 //grass2-topleft
             } else if (tileData?["sector"] as? UInt32 == 3 && !flipsection) || ( tileData?["sector"] as? UInt32 == 4 && flipsection )  {
                 
@@ -877,8 +881,8 @@ class TMR {
                 
                 var physicsBody = SKPhysicsBody(polygonFrom: path)
                 
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "grass", Attribute: 6)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "grass", Attribute: 6)
+                
                 centerTexture = SKTexture(imageNamed: "grass2-topleft-2")
                 tileNode =  SKSpriteNode(texture: centerTexture)
                 tileNode.position = center
@@ -893,7 +897,7 @@ class TMR {
                 
                 path.closeSubpath()
                 physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "dirt", Attribute: 3)
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "dirt", Attribute: 3)
             }
             
             //Check for Cows and Chickens
@@ -933,8 +937,8 @@ class TMR {
                 
                 let stagename = tileData?["name"] as! String
                 let physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 6)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 6)
+                
                 //Lower Right Triangle
             } else if (tileData?["sector"] as? UInt32) == 1 {
                 
@@ -956,8 +960,8 @@ class TMR {
                 
                 let stagename = tileData?["name"] as! String
                 let physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 6)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 6)
+                
                 //Upper Left Triangle
             } else if (tileData?["sector"] as? UInt32) == 4  {
                 
@@ -979,8 +983,8 @@ class TMR {
                 
                 let stagename = tileData?["name"] as! String
                 var physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 6)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 6)
+                
                 // Mark -2
                 centerTexture = SKTexture(imageNamed: name + "-2")
                 tileNode =  SKSpriteNode(texture: centerTexture)
@@ -996,8 +1000,8 @@ class TMR {
                 
                 path.closeSubpath()
                 physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "dirt", Attribute: 6)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "dirt", Attribute: 6)
+                
                 //Upper Right Triangle
             } else if (tileData?["sector"] as? UInt32) == 3  {
                 
@@ -1017,9 +1021,9 @@ class TMR {
                 
                 path.closeSubpath()
                 var physicsBody = SKPhysicsBody(polygonFrom: path)
-
+                
                 if let stagename = tileData?["name"] as? String {
-                    ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 6)
+                    DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 6)
                 }
                 
                 // Mark -2
@@ -1037,7 +1041,7 @@ class TMR {
                 
                 path.closeSubpath()
                 physicsBody = SKPhysicsBody(polygonFrom: path)
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "dirt", Attribute: 6)
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: "dirt", Attribute: 6)
             }
         } else if ( tileData?["isCorner"] as? Bool == true )  {
             
@@ -1114,19 +1118,19 @@ class TMR {
             let stagename = tileData?["name"] as! String
             
             if (tileData?["sector"] as? UInt32) == 1 {
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
+                
                 //Lower Right Triangle
             } else if (tileData?["sector"] as? UInt32) == 2 {
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
+                
                 //Upper Left Triangle
             } else if (tileData?["sector"] as? UInt32) == 3  {
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
+                
                 //Upper Right Triangle
             } else if (tileData?["sector"] as? UInt32) == 4  {
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
             }
             
             
@@ -1190,17 +1194,17 @@ class TMR {
             let stagename = tileData?["name"] as! String
             
             if (tileData?["sector"] as? UInt32) == 1 {
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
-
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
+                
                 //Lower Right Triangle
             } else if (tileData?["sector"] as? UInt32) == 2 {
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
                 //Upper Left Triangle
             } else if (tileData?["sector"] as? UInt32) == 3  {
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
                 //Upper Right Triangle
             } else if (tileData?["sector"] as? UInt32) == 4  {
-                ds.DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
+                DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: stagename, Attribute: 4)
             }
             // isCoin and isPrize is deprecated, use item integer instead
         } else if newitem.count == 1 && newname.count == 1 && newemoji.count == 1  {
@@ -1222,66 +1226,66 @@ class TMR {
             
             switch newitem {
                 
-            case "🐍","🔥","🚧","🚨", "🖲" , "❄️" :
-                col = 2 + 128 + 256 + 1024  as UInt32
-                con = 1 + 64 as UInt32
-                cat = 2 as UInt32
+                case "🐍","🔥","🚧","🚨", "🖲" , "❄️" :
+                    col = 2 + 128 + 256 + 1024  as UInt32
+                    con = 1 + 64 as UInt32
+                    cat = 2 as UInt32
                 
-            case "👣","🐾","🍞" :
-                rotation = false;
-                col = 2 + 128 + 256 + 1024  as UInt32
-                con = 32 as UInt32
-                cat = 1024 as UInt32
-            case "☄️" :
-                col = 0  as UInt32
-                con = 1 + 64 as UInt32
-                cat = 16 as UInt32
-            case "🐟" :
-                rotation = false;
-                con = 0 as UInt32
-                col = 0  as UInt32
-                cat = 512 as UInt32
-            case "🌼","📦","😩":
-                rotation = true;
-                col = 2 + 128 + 256 + 1024 as UInt32
-                con = 32 as UInt32
-                cat = 1024 as UInt32
+                case "👣","🐾","🍞" :
+                    rotation = false;
+                    col = 2 + 128 + 256 + 1024  as UInt32
+                    con = 32 as UInt32
+                    cat = 1024 as UInt32
+                case "☄️" :
+                    col = 0  as UInt32
+                    con = 1 + 64 as UInt32
+                    cat = 16 as UInt32
+                case "🐟" :
+                    rotation = false;
+                    con = 0 as UInt32
+                    col = 0  as UInt32
+                    cat = 512 as UInt32
+                case "🌼","📦","😩":
+                    rotation = true;
+                    col = 2 + 128 + 256 + 1024 as UInt32
+                    con = 32 as UInt32
+                    cat = 1024 as UInt32
                 
-            case "⭕️": // heroes
-                col = 2 + 128 + 256 + 1024 as UInt32
-                con = 32 as UInt32
-                cat = 1024 as UInt32
-                newemoji = String(levelarray[settings.level])
+                case "⭕️": // heroes
+                    col = 2 + 128 + 256 + 1024 as UInt32
+                    con = 32 as UInt32
+                    cat = 1024 as UInt32
+                    newemoji = String(levelarray[settings.level])
                 
-            case "❣️", "‼️", "🔱", "💠", "🛡", "🔫":
-                col = 2 + 128 + 256 + 1024 as UInt32
-                con = 32 as UInt32
-                cat = 1024 as UInt32
+                case "❣️", "‼️", "🔱", "💠", "🛡", "🔫":
+                    col = 2 + 128 + 256 + 1024 as UInt32
+                    con = 32 as UInt32
+                    cat = 1024 as UInt32
                 
-            case "❌": // villains
-                col = 2 + 128 + 256 + 1024 as UInt32
-                con = 1 + 64 as UInt32
-                cat = 2 as UInt32
-                newemoji = String(antiarray[settings.level])
+                case "❌": // villains
+                    col = 2 + 128 + 256 + 1024 as UInt32
+                    con = 1 + 64 as UInt32
+                    cat = 2 as UInt32
+                    newemoji = String(antiarray[settings.level])
                 
-            // This should work now
-            case "💢", "🛑", "♨️"  :
-                col = 0 as UInt32
-                cat = 0 as UInt32
-                con = 0 as UInt32
-            case "🦀" :
-                col = 1 + 64 as UInt32
-                con = 1 + 64 as UInt32
-                cat = 8 as UInt32
+                // This should work now
+                case "💢", "🛑", "♨️"  :
+                    col = 0 as UInt32
+                    cat = 0 as UInt32
+                    con = 0 as UInt32
+                case "🦀" :
+                    col = 1 + 64 as UInt32
+                    con = 1 + 64 as UInt32
+                    cat = 8 as UInt32
                 
-            case "🛸" :
-                col = 2 + 64 + 128 + 256 + 1024 as UInt32
-                con = 1 + 64 as UInt32
-                cat = 2 as UInt32
-            default :
-                col = 258 as UInt32
-                con = 32 as UInt32
-                cat = 1024 as UInt32
+                case "🛸" :
+                    col = 2 + 64 + 128 + 256 + 1024 as UInt32
+                    con = 1 + 64 as UInt32
+                    cat = 2 as UInt32
+                default :
+                    col = 258 as UInt32
+                    con = 32 as UInt32
+                    cat = 1024 as UInt32
                 
             }
             
@@ -1294,24 +1298,15 @@ class TMR {
                 newitem != "♨️" && newitem != "🛑" && leftside {
                 tileNode.xScale =  tileNode.xScale * -1
             }
-
+            
             DrawCoins(TileNode: tileNode, PhysicsBody: physicsBody, Dynamic: true, Gravity: gravity, Category: cat, Collision: col, Rotation: rotation, Emoji: newemoji, Name: newname, Contact: con, Mass: 0.1, Friction: 0, NewItem: newitem, fliph: fliph, flipy: flipy)
         }
     }
-}
-
-
-
-class DS : TMR {
-
-    
-   
-    override init(TileMap: SKTileMapNode) {
-        super.init(TileMap : TileMap)
-    }
     
     
-    func DrawSprites(TileNode: SKSpriteNode, PhysicsBody: SKPhysicsBody, Name: String, Attribute: Int) {
+    func DrawSprites(TileNode: SKSpriteNode?, PhysicsBody: SKPhysicsBody?, Name: String, Attribute: Int) {
+        
+        guard var TileNode = TileNode, let PhysicsBody = PhysicsBody else { return }
         
         TileNode.physicsBody = PhysicsBody
         
@@ -1351,6 +1346,10 @@ class DS : TMR {
         TileNode.name = Name
         
         TileMap.parent?.addChild(TileNode)
-        
+        TileNode = SKSpriteNode()
     }
+    
 }
+
+
+
