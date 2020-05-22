@@ -10,8 +10,13 @@
  import AVFoundation
 
  var headsUpDisplay = SKReferenceNode()
-
+ var backParalaxCopy : SKNode? = nil
+ 
  class GameScene: SKScene, ThumbPadProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
+	
+    //static let gs = GameScene()
+    
+    var backParalax: SKNode? = nil
 
     weak var firstBody : SKPhysicsBody!
     weak var secondBody : SKPhysicsBody!
@@ -31,7 +36,6 @@
     var canape:SKSpriteNode!
     var tractor:SKSpriteNode!
     var centerTexture: SKTexture!
-    var backParalax: SKNode? = nil
     var scoreLabelNode:SKLabelNode!
     var highScoreLabelNode:SKLabelNode!
     var hud: SKNode!
@@ -119,7 +123,7 @@
         supermanLaser = true
         trident = true
         let logonode = SKSpriteNode(texture: SKTexture(imageNamed: "UFOEmojiLogoLarge"))
-        scene?.camera?.addChild(logonode)
+        self.camera?.addChild(logonode)
         logonode.setScale(0.1875)
         logonode.alpha = 1.00
         logonode.zPosition = 100
@@ -130,7 +134,11 @@
         /* end demo mode */
     }
     override func didMove(to view: SKView) {
-                
+        super.didMove(to: view)
+
+        world = childNode(withName: "world")
+
+        
         // This is the default of King, Queen Nationality
         KingQueenGlobalDie = 100
         
@@ -152,10 +160,9 @@
             audioPlayer?.volume = 0.0
         }
         
-        super.didMove(to: view)
         cam = SKCameraNode()
         camera = cam
-        addChild(cam)
+        world?.addChild(cam)
         cam.zPosition = 100
     
         headsUpDisplay.name = "HeadsUpDisplay"
@@ -215,7 +222,6 @@
         
         (level, highlevel, score, highscore, lives) = GameStartup().loadScores()
         
-        world = childNode(withName: "world")
                 
         var background = ""
    
@@ -238,11 +244,11 @@
         filename = "level1"
    
         //Check if level exists first (safe)
-        if let _ = GameScene(fileNamed: filename), let section = SKReferenceNode(fileNamed: filename)  {
-                self.scene?.addChild(section)
+        if let section = SKReferenceNode(fileNamed: filename)  {
+            	world?.addChild(section)
                 section.position = CGPoint(x:0,y:0)
                 
-                skView.isPaused = true
+                self.isPaused = true
                 
                 if let level = section.children.first?.children {
                     //No longer hard encoded
@@ -262,7 +268,7 @@
                     }
                 }
                 
-                skView.isPaused = false
+                self.isPaused = false
              
         } else {
             print("//*** Level not found: \(filename) ***//")
@@ -278,7 +284,6 @@
 
                     if(node.name == "Rocky") {
                         rockBounds = node.frame
-                        
                         scene?.physicsWorld.gravity = CGVector(dx: 0.0, dy: -3) //mini
                         scene?.physicsWorld.contactDelegate = self
                         scene?.physicsBody = SKPhysicsBody(edgeLoopFrom: rockBounds)
@@ -297,7 +302,7 @@
                         
                         addnode.physicsBody = SKPhysicsBody(edgeLoopFrom: bombBounds)
                         addnode.physicsBody?.categoryBitMask = bombBoundsCategory;
-                        scene?.addChild(addnode)
+                        world?.addChild(addnode)
                         
                         let node = SKNode()
                         
@@ -327,33 +332,45 @@
         
         scene?.addChild(moving)
             
-            
-            
-        if let bp : SKNode? = SKNode() {
-            
-            let texture = SKTexture(imageNamed: background)
-            let width = texture.size().width
-            let rounded = Int(round( rockBounds.width / width ))
-            
-            for i in -rounded...rounded  {
-                let sprite = SKSpriteNode(texture: texture)
-                sprite.position = CGPoint(x: CGFloat(i) * width, y: 0)
-                bp?.addChild(sprite)
-                bp?.zPosition = -243
-            }
-            
-            backParalax = bp
-            scene?.addChild(backParalax!)
+        if backParalaxCopy != nil {
+            backParalax = backParalaxCopy
+            world?.addChild((backParalax)!)
 
+        } else {
+            backParalax = SKNode()
             
+            var  texture = SKTexture(imageNamed: background)
+            texture.filteringMode = .linear
+            
+            texture.preload { [weak self] in
+                let rounded = Int(round( (self?.rockBounds.width)! / 1440 / 2 ))
+                
+                for i in -rounded...rounded  {
+                    let sprite = SKSpriteNode(texture: texture)
+                    sprite.xScale = 4
+                    sprite.yScale = 4
+                    sprite.position = CGPoint(x: CGFloat(i) * 1440, y: 0)
+                    self?.backParalax?.addChild(sprite)
+                }
+                
+                self?.backParalax?.zPosition = -243
+                
+                backParalaxCopy = (self?.backParalax!.copy())! as! SKNode
+                self?.world?.addChild((self?.backParalax)!)
+                
+            }
         }
+     
+          
+            
+            
         
             
-               
+
         
     	
         
-        self.childNode(withName: "world")?.speed = 1.0
+        world?.speed = 1
         moving.speed = 1
         
         if settings.emoji == 2 {
@@ -595,7 +612,7 @@
             
             smoke.speed = 5
             smoke.zPosition = 150
-            scene?.addChild(smoke)
+            world?.addChild(smoke)
         }
         
         
@@ -616,7 +633,7 @@
             smoke.position = pos
             smoke.speed = 5
             smoke.zPosition = 150
-            scene?.addChild(smoke)
+            world?.addChild(smoke)
         }
         
         if settings.sound {
@@ -636,7 +653,7 @@
         smoke.position = pos
         smoke.speed = 5
         smoke.zPosition = 150
-        scene?.addChild(smoke)
+        world?.addChild(smoke)
         
         if settings.sound {
             let explosion: SKAction = SKAction.playSoundFileNamed("boomFire2.m4a", waitForCompletion: false)
@@ -811,6 +828,7 @@
         
         moving.speed = 0
         tractor.speed = 0
+    
         
         if settings.music {
             audioPlayer?.numberOfLoops = 0
@@ -911,7 +929,55 @@
                 
                 removeHero()
                 removeGUI()
-                starPlayrOneLevelUpX(world:world!, moving:moving, scene: self, hero:hero, tractor:tractor)
+                
+            	
+                self.removeAllActions()
+                self.removeAllChildren()
+                self.removeFromParent()
+            
+            
+                //Loads the LevelUp Scene
+                func starPlayrOneLevelUpX(world:SKNode?, moving:SKNode?, hero: SKSpriteNode?, tractor: SKSpriteNode?) {
+                    
+                    guard let world = world,
+                        let moving = moving,
+                        let hero = hero,
+                        let tractor = tractor
+                        else { return }
+                    
+                    
+                    hero.removeFromParent()
+                    tractor.removeFromParent()
+                    moving.speed = moving.speed / 2
+                    world.speed =  world.speed / 2
+                    
+                    
+                    let size = scene!.size
+                
+                    
+                    /* new.run(SKAction.sequence([
+                     SKAction.wait(forDuration: 2.0),
+                     SKAction.run() { [weak self] in
+                        self?.world?.removeAllChildren()
+                        self?.world?.removeAllActions()
+                        self?.world?.removeFromParent()
+
+                     }
+                     ]))*/
+                    
+                    let reveal = SKTransition.fade(withDuration: TimeInterval(2.0))
+                    let gameOverScene = LevelUp(size: size, scene: scene!)
+                    gameOverScene.runner()
+                    scene?.size = setSceneSizeForGame()
+                    gameOverScene.scaleMode = .aspectFill
+                    scene?.view?.presentScene(gameOverScene, transition: reveal)
+                    
+            }
+            
+                starPlayrOneLevelUpX(world:world, moving:moving, hero: hero, tractor: tractor)
+
+
+            
             
             case heroCategory | worldCategory, heroCategory | badGuyCategory, heroCategory | badFishCategory :
                 
@@ -940,6 +1006,8 @@
         }
         
     }
+    
+  
     
     func stopIt(secondBody: SKPhysicsBody, contactPoint: CGPoint) {
         //save first
@@ -1000,7 +1068,33 @@
     func EndGame() {
         removeHero()
         GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
-        gameOver(world:world!, moving:moving, scene:self, hero:hero, tractor:tractor)
+        
+        //Loads the game over scene
+        func gameOver(world:SKNode, moving:SKNode, hero: SKSpriteNode, tractor: SKSpriteNode) {
+            
+            let explosion = SKEmitterNode(fileNamed: "fireParticle.sks")!
+            explosion.alpha = 0.5
+            explosion.position = hero.position
+            scene?.addChild(explosion)
+            tractor.removeFromParent()
+            hero.physicsBody?.affectedByGravity = true;
+            moving.speed = moving.speed / 2
+            world.speed =  world.speed / 2
+            
+            let reveal = SKTransition.fade(withDuration: TimeInterval(1.5))
+            let gameOverScene = GameOver( size: scene!.size )
+            gameOverScene.runner()
+            scene?.size = setSceneSizeForGame()
+            gameOverScene.scaleMode = .aspectFill
+            scene?.view?.presentScene(gameOverScene, transition: reveal)
+        	
+            scene?.removeAllActions()
+            scene?.removeAllChildren()
+            scene?.removeFromParent()
+            
+        }
+    
+        gameOver(world:world!, moving:moving, hero:hero, tractor:tractor)
     }
     
     
@@ -1009,7 +1103,7 @@
             explosion.alpha = 0.5
             explosion.zPosition = 175
             explosion.position = hero.position
-            scene?.addChild(explosion)
+            world?.addChild(explosion)
             
             explosion.run(SKAction.sequence([
                 SKAction.scale(to: -1.5, duration: 0.6),
@@ -1224,7 +1318,7 @@
  }
  
  
- extension SKSpriteNode {
+ /*extension SKSpriteNode {
     func addGlowX(radius: Float = 16) {
         let effectNode = SKEffectNode()
         effectNode.addChild(SKSpriteNode(texture: texture))
@@ -1232,4 +1326,4 @@
         effectNode.shouldRasterize = true
         addChild(effectNode)
     }
- }
+ }*/

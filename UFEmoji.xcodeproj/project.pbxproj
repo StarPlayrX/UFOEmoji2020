@@ -16,8 +16,9 @@
 		5F635967229C660300C9ACE0 /* end.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F635966229C660300C9ACE0 /* end.sks */; };
 		5F6F7699229A39FB0058B45E /* land.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F6F7698229A39FA0058B45E /* land.sks */; };
 		5F7488A42419A8370044DE2C /* things.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F7488A32419A8370044DE2C /* things.sks */; };
+		5F82BF1724774D360027F17F /* 2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F82BF1624774D360027F17F /* 2.sks */; };
 		5F931E9D2475D68F005D0B14 /* blackHole.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F931E9C2475D68F005D0B14 /* blackHole.sks */; };
-		5F931E9E24760B88005D0B14 /* 🦕.sks in Resources */ = {isa = PBXBuildFile; fileRef = EA103B2F200C20E400C6BBCB /* 🦕.sks */; };
+		5F931E9E24760B88005D0B14 /* 1.sks in Resources */ = {isa = PBXBuildFile; fileRef = EA103B2F200C20E400C6BBCB /* 1.sks */; };
 		5FA3637D24184F0D0053A0C2 /* level01.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FA3637C24184F0D0053A0C2 /* level01.sks */; };
 		5FA3637F241850E20053A0C2 /* level000.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FA3637E241850E20053A0C2 /* level000.sks */; };
 		5FB573FC240FD520005877C1 /* gold.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FB573FB240FD520005877C1 /* gold.sks */; };
@@ -76,6 +77,7 @@
 		5F635966229C660300C9ACE0 /* end.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = end.sks; sourceTree = "<group>"; };
 		5F6F7698229A39FA0058B45E /* land.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = land.sks; sourceTree = "<group>"; };
 		5F7488A32419A8370044DE2C /* things.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = things.sks; sourceTree = "<group>"; };
+		5F82BF1624774D360027F17F /* 2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = 2.sks; sourceTree = "<group>"; };
 		5F931E9C2475D68F005D0B14 /* blackHole.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = blackHole.sks; sourceTree = "<group>"; };
 		5FA3637C24184F0D0053A0C2 /* level01.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level01.sks; sourceTree = "<group>"; };
 		5FA3637E241850E20053A0C2 /* level000.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level000.sks; sourceTree = "<group>"; };
@@ -120,7 +122,7 @@
 		EA0E9CEC200BD170004A55E8 /* murrmurr.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = murrmurr.m4a; sourceTree = "<group>"; };
 		EA0E9CED200BD170004A55E8 /* doublelaser.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = doublelaser.m4a; sourceTree = "<group>"; };
 		EA0E9CEE200BD170004A55E8 /* extralife.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = extralife.m4a; sourceTree = "<group>"; };
-		EA103B2F200C20E400C6BBCB /* 🦕.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = "🦕.sks"; sourceTree = "<group>"; };
+		EA103B2F200C20E400C6BBCB /* 1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = 1.sks; sourceTree = "<group>"; };
 		EA161AE8201839630006F3FA /* sadmonkey1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sadmonkey1.mp4; sourceTree = "<group>"; };
 		EA32F6B3202D3D4300FE7680 /* aura.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = aura.sks; sourceTree = "<group>"; };
 		EA36F58B2022AAB70039BB18 /* minigamehole.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = minigamehole.sks; sourceTree = "<group>"; };
@@ -306,7 +308,8 @@
 				5FFC64B22409993A002C2E6D /* level0.sks */,
 				5FA3637C24184F0D0053A0C2 /* level01.sks */,
 				5FD584442473798B00002002 /* level1.sks */,
-				EA103B2F200C20E400C6BBCB /* 🦕.sks */,
+				EA103B2F200C20E400C6BBCB /* 1.sks */,
+				5F82BF1624774D360027F17F /* 2.sks */,
 			);
 			name = "levels 1-8";
 			sourceTree = "<group>";
@@ -378,7 +381,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F931E9E24760B88005D0B14 /* 🦕.sks in Resources */,
+				5F931E9E24760B88005D0B14 /* 1.sks in Resources */,
 				5FA3637D24184F0D0053A0C2 /* level01.sks in Resources */,
 				EA0E9CF0200BD171004A55E8 /* doublelaser.m4a in Resources */,
 				EA0E9CF1200BD171004A55E8 /* extralife.m4a in Resources */,
@@ -393,6 +396,7 @@
 				CF14B6ED20008624002784DE /* fireParticle.sks in Resources */,
 				CF68A4E01FFEFC4E006848DA /* wah2.m4a in Resources */,
 				CF3A15791FFDBF7B00F2F6C6 /* music2.m4a in Resources */,
+				5F82BF1724774D360027F17F /* 2.sks in Resources */,
 				CF3A157A1FFDBF7B00F2F6C6 /* music1.mp3 in Resources */,
 				EA32F6B4202D3D4300FE7680 /* aura.sks in Resources */,
 				EAB316E5200B1122003C22C4 /* grayParticle.sks in Resources */,

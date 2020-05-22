@@ -12,14 +12,18 @@ class GameOver: SKScene {
     
     override init(size: CGSize ) {
         super.init(size: size)
+        
+    }
+    
+    func runner() {
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        let movie = SKVideoNode(fileNamed: "sadmonkey1.mp4")
+        /*let movie = SKVideoNode(fileNamed: "sadmonkey1.mp4")
         movie.size = CGSize(width: 128, height: 128)
         movie.position = CGPoint(x: 0,
                                  y: 64)
         movie.alpha = 1.0
-        movie.play()
+        movie.play()*/
         
         
         let score = GameStartup().loadScores().score
@@ -57,81 +61,55 @@ class GameOver: SKScene {
         label2.fontColor = SKColor.white
         label2.position = CGPoint(x: 0, y: -64)
         
-        movie.alpha = 0
         label.alpha = 0
         label2.alpha = 0
         
-        addChild(movie)
-        addChild(label)
-        addChild(label2)
+        scene?.removeAllActions()
+        scene?.removeAllChildren()
+        scene?.removeFromParent()
+        
+        scene?.addChild(label)
+        scene?.addChild(label2)
+   
         run(SKAction.sequence([
             SKAction.run() {
-                movie.run(SKAction.fadeAlpha(to: 1.0, duration: 1.3))
                 label.run(SKAction.fadeAlpha(to: 1.0, duration: 1.3))
                 label2.run(SKAction.fadeAlpha(to: 1.0, duration: 1.3))
-
-
+            },
+            
+            SKAction.wait(forDuration: 3.0),
+            SKAction.run() { [ weak self] in
+                
+                self?.scene?.removeAllActions()
+                self?.scene?.removeAllChildren()
+                self?.scene?.removeFromParent()
+                
+            },
+            
+            SKAction.run() { [ weak self] in
+                guard let self = self else { return }
+                levelLauncherXX(self:self, filename: "GameMenu")
+            }
+        ]))
+        
+        /*run(SKAction.sequence([
+            
+            SKAction.run() { [weak self] in
+                guard let self = self else { return }
+                levelLauncherXX(self:self, filename: "GameMenu")
             }
             
-            ]))
+        ]))*/
         
-        run(SKAction.sequence([
-            SKAction.wait(forDuration: 6.0),
-            SKAction.run() {
-                let transition = SKTransition.fade(with: UIColor.black, duration: 3.0)
-                if let scene = GameScene(fileNamed: "GameMenu"){
-                    
-                    let skView = self.view! as SKView
-                    
-                    
-                    skView.showsFPS = false
-                    skView.showsNodeCount = false
-                    skView.showsPhysics = false
-                    skView.isAsynchronous = true
-                    skView.ignoresSiblingOrder = true
-                    skView.clipsToBounds = false
-                    scene.scaleMode = .aspectFill
-                    setSceneSizeForGame(scene: scene)
-                    scene.backgroundColor = SKColor.black
-                    
-                    scene.scaleMode = .aspectFill
-                    
-                    skView.presentScene(scene, transition:transition)
-                }
-            }
-            ]))
     }
+    
+    
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
 }
-
-//Loads the game over scene
-func gameOver(world:SKNode, moving:SKNode, scene:SKScene, hero: SKSpriteNode, tractor: SKSpriteNode) {
-    
-    let explosion = SKEmitterNode(fileNamed: "fireParticle.sks")!
-    explosion.alpha = 0.5
-    explosion.position = hero.position
-    scene.addChild(explosion)
-    tractor.removeFromParent()
-    hero.physicsBody?.affectedByGravity = true;
-    moving.speed = moving.speed / 2
-    world.speed =  world.speed / 2
-    
-    scene.run(SKAction.sequence([
-        SKAction.wait(forDuration: 3.0),
-        SKAction.run() {
-            let reveal = SKTransition.fade(withDuration: TimeInterval(1.5))
-            let gameOverScene = GameOver( size: scene.size )
-            setSceneSizeForGame(scene: scene)
-            gameOverScene.scaleMode = .aspectFill
-            scene.view?.presentScene(gameOverScene, transition: reveal)
-        }
-        ]))
-}
-
 
 
 

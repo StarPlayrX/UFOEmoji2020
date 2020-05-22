@@ -10,9 +10,13 @@ import SpriteKit
 
 class StartUp: SKScene {
     
-    override init(size: CGSize) {
+     init(size: CGSize, scene: SKScene) {
         
         super.init(size: size)
+      
+    }
+    
+    func runner() {
         backgroundColor = SKColor.black
         
         let mainCharacter = heroArray[settings.emoji]
@@ -46,10 +50,12 @@ class StartUp: SKScene {
         
         run(SKAction.sequence([
             SKAction.wait(forDuration: 0.0),
-            SKAction.run() {
-                levelLauncher(self:self)
+            SKAction.run() { [ weak self] in
+                guard let self = self else { return }
+                levelLauncherXX(self:self, filename: "1")
+
             }
-            ]))
+        ]))
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -61,14 +67,10 @@ class StartUp: SKScene {
 
 //Loads the Startup Scenex
 func startUp(_ scene:SKScene) {
-    scene.run(SKAction.sequence([
-        SKAction.wait(forDuration: 0.0),
-        SKAction.run() {
-            let transition = SKTransition.doorsOpenHorizontal(withDuration: 2.0)
-            let gameOverScene = StartUp( size: scene.size )
-            setSceneSizeForGame(scene: scene)
-            gameOverScene.scaleMode = .aspectFill
-            scene.view?.presentScene(gameOverScene, transition: transition)
-        }
-        ]))
+    let transition = SKTransition.doorsOpenHorizontal(withDuration: 2.0)
+    let gameOverScene = StartUp( size: scene.size, scene: scene )
+    gameOverScene.runner()
+    scene.size = setSceneSizeForGame()
+    gameOverScene.scaleMode = .aspectFill
+    scene.view?.presentScene(gameOverScene, transition: transition)
 }

@@ -104,13 +104,13 @@ func getDeviceSize() {
         settings.mode = 2
     } else if iPhoneX {
         //iPhone Ten
-        settings.mode = 4;
+        settings.mode = 4
     }
 }
 
 
 
-func setSceneSizeForGame(scene:SKScene) -> Void {
+func setSceneSizeForGame() -> CGSize  {
     loadGameSettings()
     
      getDeviceSize()
@@ -118,43 +118,43 @@ func setSceneSizeForGame(scene:SKScene) -> Void {
     //Put this in a common area
     if (settings.mode == 2 ) {
         //regular iPhone style
-        scene.size = CGSize(width: 626, height: 352)
+        return CGSize(width: 626, height: 352)
         
     } else if (settings.mode == 4) {
         // iPhone X style
-        scene.size = CGSize(width: 762, height: 352)
+        return CGSize(width: 762, height: 352)
         
     } else {
-        scene.size = CGSize(width: 470, height: 352)
+        return CGSize(width: 470, height: 352)
     }
 }
 
 var skView = SKView()
 
-func levelLauncher(self:SKScene) -> Void {
-    
-    let prefix = "🦕"
-    
-    if let scene = GameScene(fileNamed:prefix),
+func levelLauncherXX(self:SKScene, filename: String)  {
+    guard
+        let scene = GameScene(fileNamed:filename),
         let view = self.view,
-    	let skView = view as SKView? {
-        setSceneSizeForGame(scene: scene)
-        skView.showsFPS = true
-        skView.showsNodeCount = true
-        skView.showsPhysics = false
-        skView.showsFields = false
-        skView.preferredFramesPerSecond = 61
-        skView.isMultipleTouchEnabled = true
-        skView.clearsContextBeforeDrawing = true
-        skView.isAsynchronous = true
-        skView.ignoresSiblingOrder = true
-        skView.allowsTransparency = false
-        skView.isOpaque = true
-        skView.isHidden = false
-        skView.shouldCullNonVisibleNodes = true
-        skView.clipsToBounds = true
-        scene.scaleMode = .aspectFill
-        scene.backgroundColor = SKColor.black
-        skView.presentScene(scene)
-    }
+        let skView = view as SKView?
+        
+        else { return }
+    
+    scene.size = setSceneSizeForGame()
+    skView.showsFPS = true
+    skView.showsNodeCount = true
+    skView.showsPhysics = false
+    skView.showsFields = false
+    skView.preferredFramesPerSecond = 61
+    skView.isMultipleTouchEnabled = true
+    skView.clearsContextBeforeDrawing = true
+    skView.isAsynchronous = true
+    skView.ignoresSiblingOrder = true
+    skView.allowsTransparency = false
+    skView.isOpaque = true
+    skView.isHidden = false
+    skView.shouldCullNonVisibleNodes = true
+    skView.clipsToBounds = true
+    scene.scaleMode = .aspectFill
+    scene.backgroundColor = SKColor.black
+    skView.presentScene(scene)
 }

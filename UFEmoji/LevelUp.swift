@@ -10,16 +10,20 @@ import SpriteKit
 
 class LevelUp: SKScene {
     
-    override init(size: CGSize ) {
+     init(size: CGSize, scene: SKScene ) {
         
         super.init(size: size)
         
+    }
+        
+    
+    func runner () {
         let lives = GameStartup().loadScores().lives
         
         let heroMessage = levelarray[settings.level]
         
         let enemyMessage = antiarray[settings.level]
-
+        
         let livesMessage = livesDisplay[ lives ]
         
         backgroundColor = SKColor.black
@@ -41,7 +45,7 @@ class LevelUp: SKScene {
         label3.position = CGPoint(x: size.width/2 + 48, y: size.height/2 + 72)
         addChild(label3)
         
-    
+        
         let label2 = SKLabelNode(fontNamed: "Apple Color Emoji")
         label2.text = livesMessage
         label2.fontSize = 64
@@ -53,11 +57,13 @@ class LevelUp: SKScene {
         run(SKAction.sequence([
             SKAction.wait(forDuration: 0.0),
             SKAction.run() {
-                levelLauncher(self: self)
+                levelLauncherXX(self:self, filename: "1")
             }
-            ]))
+        ]))
         
     }
+        
+ 
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -70,24 +76,31 @@ func starPlayrOneLevelUpX(world:SKNode?, moving:SKNode?, scene:SKScene?, hero: S
     guard let world = world,
           let moving = moving,
           let hero = hero,
-          var scene = scene,
+          let scene = scene,
           let tractor = tractor
         else { return }
+    
+    
     hero.removeFromParent()
     tractor.removeFromParent()
     moving.speed = moving.speed / 2
     world.speed =  world.speed / 2
     
-    scene.run(SKAction.sequence([
+    scene.removeAllActions()
+    scene.removeAllChildren()
+    scene.removeFromParent()
+    
+   /* scene.run(SKAction.sequence([
         SKAction.wait(forDuration: 1.0),
         SKAction.run() {
-            let reveal = SKTransition.fade(withDuration: TimeInterval(1.0))
-            let gameOverScene = LevelUp( size: scene.size )
-            setSceneSizeForGame(scene: scene)
-            gameOverScene.scaleMode = .aspectFill
-            scene.view?.presentScene(gameOverScene, transition: reveal)
         }
-        ]))
+        ]))*/
+    
+    let reveal = SKTransition.fade(withDuration: TimeInterval(1.0))
+    let gameOverScene = LevelUp( size: scene.size, scene: scene )
+    scene.size = setSceneSizeForGame()
+    gameOverScene.scaleMode = .aspectFill
+    scene.view?.presentScene(gameOverScene, transition: reveal)
     
 }
 
