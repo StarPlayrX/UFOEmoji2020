@@ -11,6 +11,12 @@ import SpriteKit
 
 class TMRX {
     
+    
+    deinit {
+        print("DEINIT TileMap")
+        
+        TileMap = nil
+    }
     weak var TileMap: SKTileMapNode!
     
     init(TileMap: SKTileMapNode) {
@@ -312,6 +318,7 @@ class TMRX {
         
         let tileData = tileDefinition.userData
         
+        
         var centerTexture = SKTexture()
         var newname = String()
         var newitem = String()
@@ -362,7 +369,7 @@ class TMRX {
                     let rotation = true;
                     
                     //let fliph = tileDefinition.flipHorizontally
-                    let flipy = tileDefinition.flipVertically
+                    //let flipy = tileDefinition.flipVertically
                     let cat = 16 as UInt32
                     let col = 0  as UInt32
                     let con = 1 + 64 as UInt32

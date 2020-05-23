@@ -10,7 +10,7 @@ import SpriteKit
 import AVFoundation
 
 typealias appsettings =  (level: Int, highlevel: Int, emoji: Int, score: Int, highscore: Int, lives: Int, music: Bool, sound: Bool, stick: Bool, mode: Int)
-var settings : appsettings = (level: 1, highlevel: 9, emoji: 1, score: 0, highscore: 0, lives: 3, music: true, sound: true, stick: true, mode: 0)
+var settings : appsettings = (level: 1, highlevel: 9, emoji: 1, score: 0, highscore: 0, lives: 1, music: true, sound: true, stick: true, mode: 0)
 
 var levelarray: Array = ["🦕","🦕","🦎","🐢","🦋", "📡", "🕊","🦆","🍀","🐯", "🧟‍♀️", "🐿","💐","🦄","🐴","🐶","💐","🐌","🐄","🐄"]
 var antiarray : Array = ["🦖","🦖","🐊","🐇","🐛", "🛰", "🐍","🦅","🎱","🦁", "🧟‍♂️", "🦔","🍄","🐺","🐗","🐱","🍄","🦂","🐓","🐓"]
@@ -41,6 +41,13 @@ class GameMenu: SKScene {
     var playLabel1: SKLabelNode = SKLabelNode(fontNamed: "Apple Color Emoji")
     var playLabel2: SKLabelNode = SKLabelNode(fontNamed: "Apple Color Emoji")
     var playNode = SKNode()
+    
+    
+    deinit {
+        removeAllActions()
+        removeAllChildren()
+        removeFromParent()
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
       
@@ -201,7 +208,7 @@ class GameMenu: SKScene {
         saveGameSettings()
         
         //print(settings)
-        settings.lives = 5; // may be less when power ups are added
+        settings.lives = 1; // may be less when power ups are added
         settings.score = 0;
     
         saveGameSettings()

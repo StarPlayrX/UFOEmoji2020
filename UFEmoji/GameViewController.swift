@@ -9,6 +9,8 @@
 import UIKit
 import SpriteKit
 
+var mySKView = SKView()
+
 class GameViewController: UIViewController {
     
     override func viewDidLoad() {
@@ -29,7 +31,7 @@ class GameViewController: UIViewController {
 
         })
 
-        getDeviceSize()
+        //getDeviceSize()
 
         self.startScene()
 
@@ -38,14 +40,15 @@ class GameViewController: UIViewController {
 
     func startScene() {
         
-        if let scene = GameMenu(fileNamed:"GameMenu"),
-            let skView = self.view as? SKView {
-           
+        mySKView = self.view as! SKView
+        let skView = mySKView
+
+        if let scene = GameMenu(fileNamed:"GameMenu") {
             skView.showsFPS = false
             skView.showsNodeCount = false
             skView.showsPhysics = false
-            skView.isMultipleTouchEnabled = false
-            skView.isAsynchronous = false
+            skView.isMultipleTouchEnabled = true
+            skView.isAsynchronous = true
             skView.ignoresSiblingOrder = true
             skView.clipsToBounds = true
             scene.scaleMode = .aspectFill

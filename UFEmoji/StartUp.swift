@@ -10,10 +10,17 @@ import SpriteKit
 
 class StartUp: SKScene {
     
-     init(size: CGSize, scene: SKScene) {
+    override init(size: CGSize) {
         
         super.init(size: size)
       
+    }
+    
+    
+    deinit {
+        removeAllActions()
+        removeAllChildren()
+        removeFromParent()
     }
     
     func runner() {
@@ -49,10 +56,9 @@ class StartUp: SKScene {
         addChild(label3)
         
         run(SKAction.sequence([
-            SKAction.wait(forDuration: 0.0),
-            SKAction.run() { [ weak self] in
-                guard let self = self else { return }
-                levelLauncherXX(self:self, filename: "1")
+            SKAction.wait(forDuration: 1.0),
+            SKAction.run() {
+                levelLauncherXX(filename: "1")
 
             }
         ]))
@@ -68,7 +74,7 @@ class StartUp: SKScene {
 //Loads the Startup Scenex
 func startUp(_ scene:SKScene) {
     let transition = SKTransition.doorsOpenHorizontal(withDuration: 2.0)
-    let gameOverScene = StartUp( size: scene.size, scene: scene )
+    let gameOverScene = StartUp( size: scene.size)
     gameOverScene.runner()
     scene.size = setSceneSizeForGame()
     gameOverScene.scaleMode = .aspectFill

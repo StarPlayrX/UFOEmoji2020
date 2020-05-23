@@ -15,6 +15,12 @@ class GameOver: SKScene {
         
     }
     
+    deinit {
+        removeAllActions()
+        removeAllChildren()
+		removeFromParent()
+    }
+    
     func runner() {
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
@@ -61,34 +67,17 @@ class GameOver: SKScene {
         label2.fontColor = SKColor.white
         label2.position = CGPoint(x: 0, y: -64)
         
-        label.alpha = 0
-        label2.alpha = 0
+        label.alpha = 1
+        label2.alpha = 1
         
-        scene?.removeAllActions()
-        scene?.removeAllChildren()
-        scene?.removeFromParent()
-        
-        scene?.addChild(label)
-        scene?.addChild(label2)
+     
+    	addChild(label)
+        addChild(label2)
    
         run(SKAction.sequence([
+            SKAction.wait(forDuration: 1.5),
             SKAction.run() {
-                label.run(SKAction.fadeAlpha(to: 1.0, duration: 1.3))
-                label2.run(SKAction.fadeAlpha(to: 1.0, duration: 1.3))
-            },
-            
-            SKAction.wait(forDuration: 3.0),
-            SKAction.run() { [ weak self] in
-                
-                self?.scene?.removeAllActions()
-                self?.scene?.removeAllChildren()
-                self?.scene?.removeFromParent()
-                
-            },
-            
-            SKAction.run() { [ weak self] in
-                guard let self = self else { return }
-                levelLauncherXX(self:self, filename: "GameMenu")
+                levelLauncherXX(filename: "GameMenu")
             }
         ]))
         

@@ -14,6 +14,13 @@
  
  class GameScene: SKScene, ThumbPadProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
 	
+    deinit {
+        print("DEINIT")
+        self.removeAllActions()
+        self.removeAllChildren()
+        self.removeFromParent()
+    }
+    
     //static let gs = GameScene()
     
     var backParalax: SKNode? = nil
@@ -85,6 +92,8 @@
     
     func setupLevel(tileMap: SKTileMapNode? = nil) {
         guard var tileMap = tileMap else { return }
+        
+        print(tileMap)
             let tmr = TMRX(TileMap: tileMap)
             
             for col in (0 ..< tileMap.numberOfColumns) {
@@ -135,7 +144,8 @@
     }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-
+		
+        print("HLFEWFEWWEF")
         world = childNode(withName: "world")
 
         
@@ -169,7 +179,7 @@
         scene?.camera?.addChild(headsUpDisplay)
         headsUpDisplay.zRotation = CGFloat(Double.pi/4)
         
-        guard let gamestartup = GameStartup().readyPlayerOne(self) else { return }
+        guard let gamestartup = GameStartup.gs.readyPlayerOneX(self) else { return }
         
         doublelaser = 0;
         scoreDict[""] = 0
@@ -220,7 +230,7 @@
         bombsbutton2 = gamestartup.bombsbutton2
         firebutton2 = gamestartup.firebutton2
         
-        (level, highlevel, score, highscore, lives) = GameStartup().loadScores()
+        (level, highlevel, score, highscore, lives) = GameStartup.gs.loadScores()
         
                 
         var background = ""
@@ -925,7 +935,7 @@
                     }
                 }
                 
-                GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+                GameStartup.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
                 
                 removeHero()
                 removeGUI()
@@ -1011,7 +1021,7 @@
     
     func stopIt(secondBody: SKPhysicsBody, contactPoint: CGPoint) {
         //save first
-        GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+        GameStartup.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
         
         if moving.speed > 0 {
             
@@ -1061,13 +1071,15 @@
             livesLabelNode.text = String(livesDisplay[lives])
         }
         
-        GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+        GameStartup.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
     }
     
     
+    
     func EndGame() {
+        print("ENDGAME")
         removeHero()
-        GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+        GameStartup.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
         
         //Loads the game over scene
         func gameOver(world:SKNode, moving:SKNode, hero: SKSpriteNode, tractor: SKSpriteNode) {
@@ -1077,21 +1089,18 @@
             explosion.position = hero.position
             scene?.addChild(explosion)
             tractor.removeFromParent()
-            hero.physicsBody?.affectedByGravity = true;
+            hero.physicsBody?.affectedByGravity = true
             moving.speed = moving.speed / 2
             world.speed =  world.speed / 2
-            
-            let reveal = SKTransition.fade(withDuration: TimeInterval(1.5))
-            let gameOverScene = GameOver( size: scene!.size )
-            gameOverScene.runner()
-            scene?.size = setSceneSizeForGame()
-            gameOverScene.scaleMode = .aspectFill
-            scene?.view?.presentScene(gameOverScene, transition: reveal)
-        	
-            scene?.removeAllActions()
-            scene?.removeAllChildren()
-            scene?.removeFromParent()
-            
+ 
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+                guard let self = self else { return }
+                let gameOverScene = GameOver( size: self.size )
+                gameOverScene.runner()
+                self.size = setSceneSizeForGame()
+                gameOverScene.scaleMode = .aspectFill
+                mySKView.presentScene(gameOverScene)
+            }
         }
     
         gameOver(world:world!, moving:moving, hero:hero, tractor:tractor)
@@ -1146,8 +1155,8 @@
                 let runWorld = SKAction.run() {
                     self.moving.speed       = 1
                     
-                    guard let gamestartup = GameStartup().readyPlayerOne(self) else { return }
-                    
+                    guard let gamestartup = GameStartup.gs.readyPlayerOneX(self) else { return }
+
                     self.hero = gamestartup.hero
                     self.canape = gamestartup.canape
                     self.tractor = gamestartup.tractor
@@ -1156,8 +1165,8 @@
                         self.emojiAnimation(emojis:["🙈","🙊","🙉","🐵"])
                     }
                     
-                    if let _ = gamestartup.bombsbutton {
-                        self.bombsbutton = gamestartup.bombsbutton!
+                    if let bb = gamestartup.bombsbutton {
+                        self.bombsbutton = bb
                     }
                     
                     self.firebutton = gamestartup.firebutton
@@ -1312,7 +1321,7 @@
         self.scoreLabelNode.text = String(self.score)
         
         if moving.speed == 0 {
-            GameStartup().saveScores(level: self.level, highlevel: self.highlevel, score: self.score, hscore:self.highscore, lives: self.lives)
+            GameStartup.gs.saveScores(level: self.level, highlevel: self.highlevel, score: self.score, hscore:self.highscore, lives: self.lives)
         }
     }
  }

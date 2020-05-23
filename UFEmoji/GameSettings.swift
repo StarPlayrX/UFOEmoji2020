@@ -129,14 +129,11 @@ func setSceneSizeForGame() -> CGSize  {
     }
 }
 
-var skView = SKView()
+func levelLauncherXX(filename: String)  {
+    let skView = mySKView
 
-func levelLauncherXX(self:SKScene, filename: String)  {
     guard
-        let scene = GameScene(fileNamed:filename),
-        let view = self.view,
-        let skView = view as SKView?
-        
+        let scene = GameScene(fileNamed:filename)
         else { return }
     
     scene.size = setSceneSizeForGame()
@@ -156,5 +153,13 @@ func levelLauncherXX(self:SKScene, filename: String)  {
     skView.clipsToBounds = true
     scene.scaleMode = .aspectFill
     scene.backgroundColor = SKColor.black
-    skView.presentScene(scene)
+    
+    
+    if filename == "GameMenu" {
+        let doors = SKTransition.doorsCloseHorizontal(withDuration: 2.0)
+        skView.presentScene(scene,transition: doors)
+    } else {
+        skView.presentScene(scene)
+    }
+   
 }

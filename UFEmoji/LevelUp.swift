@@ -16,6 +16,11 @@ class LevelUp: SKScene {
         
     }
         
+    deinit {
+        removeAllActions()
+        removeAllChildren()
+        removeFromParent()
+    }
     
     func runner () {
         let lives = GameStartup().loadScores().lives
@@ -57,7 +62,7 @@ class LevelUp: SKScene {
         run(SKAction.sequence([
             SKAction.wait(forDuration: 0.0),
             SKAction.run() {
-                levelLauncherXX(self:self, filename: "1")
+                levelLauncherXX(filename: "1")
             }
         ]))
         
