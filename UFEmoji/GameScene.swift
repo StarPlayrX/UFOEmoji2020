@@ -11,7 +11,7 @@
 
  var headsUpDisplay = SKReferenceNode()
  var backParalaxCopy : SKNode? = nil
- var dampeningCounter = -1
+ var maxVelocity = CGFloat(0)
 
  class GameScene: SKScene, ThumbPadProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
 	
@@ -21,10 +21,6 @@
         self.removeAllChildren()
         self.removeFromParent()
     }
-    
-   
-    
-    //static let gs = GameScene()
     
     var backParalax: SKNode? = nil
     weak var firstBody : SKPhysicsBody!
@@ -146,10 +142,8 @@
     }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        dampeningCounter += 1
-        print("HLFEWFEWWEF")
-        world = childNode(withName: "world")
 
+        world = childNode(withName: "world")
         
         // This is the default of King, Queen Nationality
         KingQueenGlobalDie = 100
@@ -588,18 +582,61 @@
         prize.run(SKAction.sequence([scale,removeFromParent]))
     }
     
+    //MARK: For troubleshooting max velocity - test flying to the right
+    /*let localMaxVelocity = CGFloat(max(pb.velocity.dx, pb.velocity.dy))
+     
+     if localMaxVelocity > maxVelocity {
+     maxVelocity = localMaxVelocity
+     print("max:",maxVelocity)
+     }*/
+    //MARK: End troubleshooting
+    
+    let angle = CGFloat(0.0), dampZero = CGFloat(0.0), dampMax = CGFloat(40.0)
+    let ease = TimeInterval(0.08), shipduration = TimeInterval(0.005)
+    let shipMax = CGFloat(500.0)
+    let shipCtr = CGFloat(250.0)
+    let shipMin = CGFloat(-500.0)
+    
+    
     func TouchPad(velocity: CGVector, zRotation: CGFloat) {
+        
+        //MARK: reference to hero's physic's body - easier
+        guard let pb = hero.physicsBody else { return }
+        
+        //MARK: Full stop
         if velocity == CGVector.zero {
-            let rot = SKAction.rotate(toAngle: 0.0, duration: 0.08)
+            let rot = SKAction.rotate(toAngle: angle, duration: ease)
+            rot.timingMode = .easeInEaseOut
+
             hero.run(rot)
-            hero.physicsBody?.linearDamping = CGFloat(40 + dampeningCounter)
+            pb.linearDamping = dampMax
+            pb.velocity = velocity
+            
         } else {
-            let rot = SKAction.rotate(toAngle: zRotation, duration: 0.005)
+            
+            let rot = SKAction.rotate(toAngle: zRotation, duration: shipduration)
+            rot.timingMode = .easeInEaseOut
             hero.run(rot)
-            hero.physicsBody?.applyForce(velocity)
-            hero.physicsBody?.linearDamping = CGFloat(Float(dampeningCounter))
+
+            pb.linearDamping = CGFloat(dampZero)
+            pb.velocity = velocity
+            
+            //MARK: Clamp using min max
+            func clamp (_ f: CGFloat) -> CGFloat {
+                return min(max(f, shipMin), shipMax)
+            }
+        
+            //MARK: Add a little extra to our ships movement
+            pb.applyImpulse(CGVector( dx: velocity.dx / shipCtr, dy: velocity.dy / shipMax))
+            
+            //MARK: make sure we don't exceed 500 - Impulse is an accelerant
+            pb.velocity.dx = clamp(pb.velocity.dx)
+            pb.velocity.dy = clamp(pb.velocity.dy)
         }
     }
+    
+    
+    
     
     func blueZ (pos: CGPoint) {
         
