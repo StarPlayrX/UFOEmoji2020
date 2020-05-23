@@ -76,7 +76,7 @@ class LevelUp: SKScene {
 }
 
 //Loads the LevelUp Scene
-func starPlayrOneLevelUpX(world:SKNode?, moving:SKNode?, scene:SKScene?, hero: SKSpriteNode?, tractor: SKSpriteNode?) {
+/*func starPlayrOneLevelUpX(world:SKNode?, moving:SKNode?, scene:SKScene?, hero: SKSpriteNode?, tractor: SKSpriteNode?) {
     
     guard let world = world,
           let moving = moving,
@@ -107,5 +107,5 @@ func starPlayrOneLevelUpX(world:SKNode?, moving:SKNode?, scene:SKScene?, hero: S
     gameOverScene.scaleMode = .aspectFill
     scene.view?.presentScene(gameOverScene, transition: reveal)
     
-}
+}*/
 

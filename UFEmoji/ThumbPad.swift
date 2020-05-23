@@ -7,7 +7,7 @@
 import SpriteKit
 
 protocol ThumbPadProtocol {
-    func ThumbPad(velocity: CGVector, zRotation: CGFloat)
+    func TouchPad(velocity: CGVector, zRotation: CGFloat)
 }
 
 class JoyPad: SKNode {
@@ -62,6 +62,10 @@ class JoyPad: SKNode {
     var delagate: ThumbPadProtocol? {
         didSet {
             if let _ = delagate {
+                let easeOut: SKAction = SKAction.move(to: anchor, duration: 0.0)
+                easeOut.timingMode = SKActionTimingMode.easeOut
+                thumbNode.run(easeOut)
+                
                 runtimeLoop = CADisplayLink(target: self, selector: #selector(update))
                 runtimeLoop?.add(to: RunLoop.current, forMode: RunLoop.Mode.common)
             }
@@ -71,7 +75,7 @@ class JoyPad: SKNode {
     @objc func update() {
         if velocity == CGVector.zero && focus {
 
-            delagate?.ThumbPad(velocity: velocity, zRotation: CGFloat(velocity.dx * dx))
+            delagate?.TouchPad(velocity: velocity, zRotation: CGFloat(velocity.dx * dx))
           
             focus = false
             
@@ -80,12 +84,7 @@ class JoyPad: SKNode {
             thumbNode.run(easeOut)
             
         } else if velocity != CGVector.zero {
-            if settings.level != 5 {
-                delagate?.ThumbPad(velocity: velocity, zRotation: CGFloat(velocity.dx * dx))
-            } else {
-                delagate?.ThumbPad(velocity: velocity, zRotation: CGFloat(velocity.dx * (dx * two) ))
-
-            }
+            delagate?.TouchPad(velocity: velocity, zRotation: CGFloat(velocity.dx * dx))
             focus = true
         }
     }

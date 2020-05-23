@@ -11,7 +11,8 @@
 
  var headsUpDisplay = SKReferenceNode()
  var backParalaxCopy : SKNode? = nil
- 
+ var dampeningCounter = -1
+
  class GameScene: SKScene, ThumbPadProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
 	
     deinit {
@@ -26,7 +27,6 @@
     //static let gs = GameScene()
     
     var backParalax: SKNode? = nil
-
     weak var firstBody : SKPhysicsBody!
     weak var secondBody : SKPhysicsBody!
     var rockBounds = CGRect()
@@ -146,7 +146,7 @@
     }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-		
+        dampeningCounter += 1
         print("HLFEWFEWWEF")
         world = childNode(withName: "world")
 
@@ -174,7 +174,7 @@
         
         cam = SKCameraNode()
         camera = cam
-        world?.addChild(cam)
+        addChild(cam)
         cam.zPosition = 100
     
         headsUpDisplay.name = "HeadsUpDisplay"
@@ -257,7 +257,7 @@
    
         //Check if level exists first (safe)
         if let section = SKReferenceNode(fileNamed: filename)  {
-            	world?.addChild(section)
+            	addChild(section)
                 section.position = CGPoint(x:0,y:0)
                 
                 self.isPaused = true
@@ -314,7 +314,7 @@
                         
                         addnode.physicsBody = SKPhysicsBody(edgeLoopFrom: bombBounds)
                         addnode.physicsBody?.categoryBitMask = bombBoundsCategory;
-                        world?.addChild(addnode)
+                        addChild(addnode)
                         
                         let node = SKNode()
                         
@@ -346,7 +346,7 @@
             
         if backParalaxCopy != nil {
             backParalax = backParalaxCopy
-            world?.addChild((backParalax)!)
+            addChild((backParalax)!)
 
         } else {
             backParalax = SKNode()
@@ -368,7 +368,7 @@
                 self?.backParalax?.zPosition = -243
                 
                 backParalaxCopy = (self?.backParalax!.copy())! as! SKNode
-                self?.world?.addChild((self?.backParalax)!)
+                self?.addChild((self?.backParalax)!)
                 
             }
         }
@@ -382,7 +382,7 @@
         
     	
         
-        world?.speed = 1
+        world?.speed = 0
         moving.speed = 1
         
         if settings.emoji == 2 {
@@ -588,28 +588,17 @@
         prize.run(SKAction.sequence([scale,removeFromParent]))
     }
     
-    func ThumbPad(velocity: CGVector, zRotation: CGFloat) {
-        
-        
-        if velocity != CGVector.zero {
-            hero.physicsBody?.linearDamping = CGFloat(0)
+    func TouchPad(velocity: CGVector, zRotation: CGFloat) {
+        if velocity == CGVector.zero {
+            let rot = SKAction.rotate(toAngle: 0.0, duration: 0.08)
+            hero.run(rot)
+            hero.physicsBody?.linearDamping = CGFloat(40 + dampeningCounter)
+        } else {
             let rot = SKAction.rotate(toAngle: zRotation, duration: 0.005)
             hero.run(rot)
-            
             hero.physicsBody?.applyForce(velocity)
-            //hero.physicsBody?.applyImpulse(velocity)
-        } else if velocity == CGVector.zero {
-            
-            if case (hero.physicsBody?.linearDamping)! = CGFloat(0) {
-                //animate to look not so jerky
-                
-                let rot = SKAction.rotate(toAngle: 0.0, duration: 0.08)
-                hero.run(rot)
-                hero.physicsBody?.linearDamping = CGFloat(40)
-            }
+            hero.physicsBody?.linearDamping = CGFloat(Float(dampeningCounter))
         }
-        
-        
     }
     
     func blueZ (pos: CGPoint) {
@@ -624,7 +613,7 @@
             
             smoke.speed = 5
             smoke.zPosition = 150
-            world?.addChild(smoke)
+            addChild(smoke)
         }
         
         
@@ -645,7 +634,7 @@
             smoke.position = pos
             smoke.speed = 5
             smoke.zPosition = 150
-            world?.addChild(smoke)
+            addChild(smoke)
         }
         
         if settings.sound {
@@ -665,7 +654,7 @@
         smoke.position = pos
         smoke.speed = 5
         smoke.zPosition = 150
-        world?.addChild(smoke)
+        addChild(smoke)
         
         if settings.sound {
             let explosion: SKAction = SKAction.playSoundFileNamed("boomFire2.m4a", waitForCompletion: false)
@@ -939,13 +928,23 @@
                 
                 GameStartup.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
                 
+              
+                
+                hero.physicsBody?.velocity = CGVector( dx: 0, dy: 0 )
+                hero.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 0.0))
+                
+                let easeOut: SKAction = SKAction.move(to: CGPoint.zero, duration: 0.0)
+                easeOut.timingMode = SKActionTimingMode.easeOut
+                ThumbPad.run(easeOut)
+                TouchPad(velocity: CGVector.zero, zRotation: 0.0)
+                
                 removeHero()
                 removeGUI()
                 
-            	
-                self.removeAllActions()
-                self.removeAllChildren()
-                self.removeFromParent()
+               
+                //self.removeAllActions()
+                //self.removeAllChildren()
+                //self.removeFromParent()
             
             
                 //Loads the LevelUp Scene
@@ -954,35 +953,45 @@
                     guard let world = world,
                         let moving = moving,
                         let hero = hero,
-                        let tractor = tractor
+                        let tractor = tractor,
+                    	let scene = scene
                         else { return }
                     
-                    
+                    hero.physicsBody?.velocity = CGVector( dx: 0, dy: 0 )
+                    hero.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 0.0))
+                    hero.speed = 0
                     hero.removeFromParent()
                     tractor.removeFromParent()
                     moving.speed = moving.speed / 2
                     world.speed =  world.speed / 2
                     
                     
-                    let size = scene!.size
+                    let size = scene.size
                 
                     
-                    /* new.run(SKAction.sequence([
+                     run(SKAction.sequence([
                      SKAction.wait(forDuration: 2.0),
                      SKAction.run() { [weak self] in
-                        self?.world?.removeAllChildren()
-                        self?.world?.removeAllActions()
-                        self?.world?.removeFromParent()
+                        self?.removeAllChildren()
+                        self?.removeAllActions()
+                        self?.removeFromParent()
 
                      }
-                     ]))*/
+                     ]))
                     
-                    let reveal = SKTransition.fade(withDuration: TimeInterval(2.0))
-                    let gameOverScene = LevelUp(size: size, scene: scene!)
-                    gameOverScene.runner()
-                    scene?.size = setSceneSizeForGame()
-                    gameOverScene.scaleMode = .aspectFill
-                    scene?.view?.presentScene(gameOverScene, transition: reveal)
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak scene] in
+                        guard let scene = scene else { return }
+                        let reveal = SKTransition.fade(withDuration: TimeInterval(2.0))
+                        let levelup = LevelUp(size: size, scene: scene)
+                        levelup.runner()
+                        scene.size = setSceneSizeForGame()
+                        levelup.scaleMode = .aspectFill
+                        scene.view?.presentScene(levelup, transition: reveal)
+                    }
+                    
+                    
+                   
                     
             }
             
@@ -1114,7 +1123,7 @@
             explosion.alpha = 0.5
             explosion.zPosition = 175
             explosion.position = hero.position
-            world?.addChild(explosion)
+            addChild(explosion)
             
             explosion.run(SKAction.sequence([
                 SKAction.scale(to: -1.5, duration: 0.6),
@@ -1146,7 +1155,7 @@
             SKAction.run() {
                 
                 self.moving.speed = 1
-                self.world?.speed = 1
+                self.world?.speed = 0
                 
                 let runResetWorld = SKAction.run() {
                     let resetWorld = SKAction.moveTo(x: (self.world?.position.x)!, duration: 0)

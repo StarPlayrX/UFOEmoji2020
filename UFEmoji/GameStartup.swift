@@ -262,7 +262,7 @@ class GameStartup: GameScene {
     //MARK: Sprites
     struct defineSprite {
         let texture: String
-        let scene: SKScene
+        let scene: SKScene?
         let name: String
         let category:UInt32
         let collision:UInt32
@@ -276,7 +276,10 @@ class GameStartup: GameScene {
         let speed:CGFloat
         let alphaThreshold: Float
         
-        func drawSprite() -> SKSpriteNode  {
+        func drawSprite() -> SKSpriteNode?  {
+            
+            guard let scene = scene else { return nil }
+
             let sprite = SKSpriteNode(imageNamed: texture)
             
             if name == "canape" {
@@ -321,7 +324,10 @@ class GameStartup: GameScene {
             return sprite
         }
         
-        func drawHud() -> SKSpriteNode  {
+        func drawHud() -> SKSpriteNode?  {
+            
+            guard let scene = scene else { return nil }
+
             
             let sprite = SKSpriteNode(imageNamed: texture)
             let btnLoc = settings.stick ? "R" : "L"
