@@ -603,21 +603,19 @@
         //MARK: reference to hero's physic's body - easier
         guard let pb = hero.physicsBody else { return }
         
+        func rotateShip (_ t: TimeInterval ) {
+            let rot = SKAction.rotate(toAngle: angle, duration: t)
+            rot.timingMode = .easeInEaseOut
+            hero.run(rot)
+        }
+        
         //MARK: Full stop
         if velocity == CGVector.zero {
-            let rot = SKAction.rotate(toAngle: angle, duration: ease)
-            rot.timingMode = .easeInEaseOut
-
-            hero.run(rot)
+            
             pb.linearDamping = dampMax
             pb.velocity = velocity
-            
         } else {
             
-            let rot = SKAction.rotate(toAngle: zRotation, duration: shipduration)
-            rot.timingMode = .easeInEaseOut
-            hero.run(rot)
-
             pb.linearDamping = CGFloat(dampZero)
             pb.velocity = velocity
             
@@ -632,6 +630,8 @@
             //MARK: make sure we don't exceed 500 - Impulse is an accelerant
             pb.velocity.dx = clamp(pb.velocity.dx)
             pb.velocity.dy = clamp(pb.velocity.dy)
+            
+            rotateShip(shipduration)
         }
     }
     

@@ -182,13 +182,12 @@ class GameProjectiles {
         
         bomb = SKSpriteNode()
         bomb.position = (CGPoint(x:hero.position.x, y:hero.position.y - 10))
-        bomb.name = "💣"
         
-        if !trident {
-            bomb.name = "💣"
-        } else {
-            bomb.name = "🔱" 
-        }
+        //MARK: How to assign values in an Elvis Operator
+        🔱 ? (bomb.name = "🔱") : (bomb.name = "💣")
+    
+        //MARK: How not assign values...
+        🔱 ? bomb.name = "🔱" : bomb.name = "💣"
         
         bomb.isUserInteractionEnabled = false
         bomb.physicsBody = bombPhysicsBody
@@ -207,24 +206,17 @@ class GameProjectiles {
         bomb.physicsBody?.applyAngularImpulse(20)
         bomb.physicsBody?.restitution = 0.5
         
-        var wait = 400
+        let wait = 800
         
         if reverse {
-            bomb.physicsBody?.velocity =  CGVector( dx: hero.velocity.dx * 1.15, dy: 500)
-            wait = 800
-            
-            
+            bomb.physicsBody?.velocity =  CGVector( dx: hero.velocity.dx / 4, dy: 350)
         } else {
-            bomb.physicsBody?.velocity =  CGVector( dx: hero.velocity.dx , dy: -350 )
+            bomb.physicsBody?.velocity =  CGVector( dx: hero.velocity.dx / 4, dy: -350 )
         }
         
         
-        if ( alternator ) {
-            bomb.zPosition = 100
-        } else {
-            bomb.zPosition = -100;
-        }
-        
+        alternator ? bomb.zPosition = 100 : bomb.zPosition = -100
+            
         
         bombEmoji.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         bombEmoji.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center

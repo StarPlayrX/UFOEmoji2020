@@ -61,32 +61,26 @@ class JoyPad: SKNode {
     }
     
     var delagate: ThumbPadProtocol? {
-        didSet {
-            if let _ = delagate {
-                let easeOut: SKAction = SKAction.move(to: anchor, duration: ease)
-                easeOut.timingMode = SKActionTimingMode.easeOut
-                thumbNode.run(easeOut)
-                
-                runtimeLoop = CADisplayLink(target: self, selector: #selector(update))
-                runtimeLoop?.add(to: RunLoop.current, forMode: RunLoop.Mode.common)
-            }
+        willSet {
+            velocity = CGVector.zero
+            recenter()
+            runtimeLoop = CADisplayLink(target: self, selector: #selector(update))
+            runtimeLoop?.add(to: RunLoop.current, forMode: RunLoop.Mode.common)
         }
     }
 
     @objc func update() {
-        if velocity == CGVector.zero && focus {
-
-            delagate?.TouchPad(velocity: velocity, zRotation: CGFloat( (velocity.dx / multiplier) * dx ))
-          
+        
+        delagate?.TouchPad(velocity: velocity, zRotation: CGFloat( velocity.dx / multiplier * dx ))
+    
+        if velocity != CGVector.zero {
+            focus = true
+        } else if focus {
             focus = false
             
             let easeOut: SKAction = SKAction.move(to: anchor, duration: thumbSpring)
             easeOut.timingMode = SKActionTimingMode.easeOut
             thumbNode.run(easeOut)
-            
-        } else if velocity != CGVector.zero {
-            delagate?.TouchPad(velocity: velocity, zRotation: CGFloat( (velocity.dx / multiplier) * dx ))
-            focus = true
         }
     }
     
@@ -134,72 +128,38 @@ class JoyPad: SKNode {
         }
     }
     
-    
+
     //MARK: Stick Moved (After)
-    func stickMovedX(location: CGPoint) {
-        
-        //MARK: Clamp our max and min range of our joystick
-        func clamp (_ f: CGFloat, low: CGFloat, high: CGFloat) -> CGFloat {
-            return min(max(f, low), high)
-        }
-        
-        //MARK: Make sure our Joystick can't to a ways out
-        var floorX = clamp( floor(location.x), low: -thumbNodeRadius, high: thumbNodeRadius)
-        var floorY = clamp( floor(location.y), low: -thumbNodeRadius, high: thumbNodeRadius)
-        
-        //MARK: Doubles as a d-pad by snapping to a pole (Up,Down,Left,Right) - Uses Range and News Operators
-        (floorY == -thumbNodeRadius || floorY == thumbNodeRadius) && -snapToPoint...snapToPoint ~= floorX ? ( floorX = zero ) : ()
-        (floorX == -thumbNodeRadius || floorX == thumbNodeRadius) && -snapToPoint...snapToPoint ~= floorY ? ( floorY = zero ) : ()
-        
-        velocity = CGVector(dx: floorX * multiplier, dy: (floorY * multiplier) / 2)
-        let moveToLocation = SKAction.move(to: CGPoint(x:floorX,y:floorY), duration: ease)
-        moveToLocation.timingMode = SKActionTimingMode.easeOut
-        thumbNode.run(moveToLocation)
-    }
-    
-    
-    
-    //MARK: Stick Moved - Before
     func stickMoved(location: CGPoint) {
         
-        var floorX = floor(location.x)
-        var floorY = floor(location.y)
-       
-        if floorY < -thumbNodeRadius {
-            floorY = floor(-thumbNodeRadius)
-            
-            if floorX >= -snapToPoint && floorX <= snapToPoint {
-                floorX = zero
-            }
-            
-        } else if floorY > thumbNodeRadius {
-            floorY = floor(thumbNodeRadius)
-            
-            if floorX >= -snapToPoint && floorX <= snapToPoint {
-                floorX = zero
-            }
+        //MARK: Clamp our max and min range of our joystick
+        func clamp (_ f: CGFloat) -> CGFloat {
+            min(max(f, -thumbNodeRadius), thumbNodeRadius)
         }
         
-        if floorX < -thumbNodeRadius {
-            floorX = floor(-thumbNodeRadius)
-            
-            if floorY >= -snapToPoint && floorY <= snapToPoint {
-                floorY = zero
-            }
-        
-        } else if floorX > thumbNodeRadius {
-            floorX = floor(thumbNodeRadius)
-            
-            if floorY >= -snapToPoint && floorY <= snapToPoint {
-                floorY = zero
-            }
+        //MARK: SnapToPoint (Up, Down, Left, Right)
+        func snap (_ f: CGFloat, _ s: CGFloat ) -> CGFloat {
+                f == -thumbNodeRadius || f == thumbNodeRadius
+                    && -snapToPoint...snapToPoint ~= s
+                    ? zero : s
         }
-    
-        velocity = CGVector(dx: floorX * multiplier, dy: (floorY * multiplier) / 2)
-        let moveToLocation = SKAction.move(to: CGPoint(x:floorX,y:floorY), duration: ease)
-        moveToLocation.timingMode = SKActionTimingMode.easeOut
-        thumbNode.run(moveToLocation)
+        
+        //MARK: clampX and Y
+        let clampX = clamp( location.x )
+        let clampY = clamp( location.y )
+        
+        let snapY = snap( clampX, clampY )
+        let snapX = snap( clampY, clampX )
+        
+        velocity = CGVector(dx: snapX * multiplier, dy: ( snapY * multiplier ) / two )
+        
+        print("C")
+        let moveToLocation = SKAction.move(to: CGPoint( x: snapX,y: snapY ), duration: ease )
+        moveToLocation.timingMode = .easeOut
+        thumbNode.run( moveToLocation )
     }
+    
+    
     
     //MARK: Touches moved
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {

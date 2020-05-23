@@ -22,7 +22,7 @@ var livesDisplay = ["", "👽","👽👽","👽👽👽","👽👽👽👽","�
 
 var maxlevel = 10
 var doublelaser = 0
-var trident = false
+var 🔱 = false
 var shield = false
 var supermanLaser = false
 
