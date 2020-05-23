@@ -21,6 +21,8 @@
         self.removeFromParent()
     }
     
+   
+    
     //static let gs = GameScene()
     
     var backParalax: SKNode? = nil

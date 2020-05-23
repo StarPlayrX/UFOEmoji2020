@@ -13,6 +13,7 @@ import SpriteKit
 typealias Oreo =  (bombsbutton:SKSpriteNode?,firebutton:SKSpriteNode?,hero:SKSpriteNode?,canape:SKSpriteNode?,tractor:SKSpriteNode?,bombsbutton2:SKSpriteNode?,firebutton2:SKSpriteNode?)
 class GameStartup: GameScene {
     
+    
     static let gs = GameStartup()
     
     deinit {
@@ -21,8 +22,9 @@ class GameStartup: GameScene {
         removeFromParent()
     }
     
+  
+    
     func readyPlayerOneX (_ scene:SKScene?) -> Oreo? {
-        
         guard let scene = scene else { return nil }
         
         var rocket = "aliensaucer"
