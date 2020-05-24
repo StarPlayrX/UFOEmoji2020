@@ -14,15 +14,9 @@ protocol GameProtocol {
     func runGameLevel()
 }
 
+var gameDelegate : GameProtocol?
 
 class GameViewController: UIViewController, GameProtocol {
-    func runGameLevel() {
-    	gameScene()
-    }
-    
-    func runGameMenu() {
-        self.startScene()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,19 +29,19 @@ class GameViewController: UIViewController, GameProtocol {
         //let defaults = UserDefaults.standard
        // let level = 1
    
-        //var tas = [SKTextureAtlas]()
-        //tas.append(SKTextureAtlas(named: "grass2"))
-        //tas.append(SKTextureAtlas(named: "dirt3"))
+        var tas = [SKTextureAtlas]()
+    tas.append(SKTextureAtlas(named: "grass2"))
+        tas.append(SKTextureAtlas(named: "dirt3"))
 
-        // Call the preload and in the completion handler load and start the GameScene:
-       // SKTextureAtlas.preloadTextureAtlases(tas, withCompletionHandler: {
+      //   Call the preload and in the completion handler load and start the GameScene:
+    SKTextureAtlas.preloadTextureAtlases(tas, withCompletionHandler: {
             //do nothing
 
-       // })
+        })
 
-        //getDeviceSize()
+        getDeviceSize()
 
-        self.startScene()
+        self.runGameMenu()
 
         
     }
@@ -56,7 +50,7 @@ class GameViewController: UIViewController, GameProtocol {
         removeFromParent()
     }
     
-    func startScene() {
+    func runGameMenu() {
         if let scene = GameMenu(fileNamed:"GameMenu"),  let skView = self.view as? SKView {
             skView.scene?.removeAllActions()
             skView.scene?.removeAllChildren()
@@ -79,7 +73,7 @@ class GameViewController: UIViewController, GameProtocol {
     }
     
     
-    func gameScene() {
+    func runGameLevel() {
         if let scene = GameScene(fileNamed:"1"),  let skView = self.view as? SKView {
             skView.scene?.removeAllActions()
             skView.scene?.removeAllChildren()

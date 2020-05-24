@@ -171,8 +171,9 @@ class GameMenu: SKScene {
                                         "👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽👽"]
                     }
                     
-                    let runcode = SKAction.run {
-                        startUp(self)
+                    let runcode = SKAction.run { [weak self] in
+                        guard let s = self else { return }
+                        startUp(s)
                     }
                     
                     let fadeIn = SKAction.fadeAlpha(to: 0.5, duration:TimeInterval(0.3))

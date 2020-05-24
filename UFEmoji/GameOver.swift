@@ -8,7 +8,6 @@
 
 import SpriteKit
 
-var gameDelegate : GameProtocol?
 
 class GameOver: SKScene {
     

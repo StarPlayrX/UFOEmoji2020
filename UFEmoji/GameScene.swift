@@ -94,22 +94,7 @@
     
     var laserbeak = GameProjectiles(laserbeak: nil,🚞: nil)
     //we can swap these out if we use other emoji ships: 0 through 6
-    
-    func ParaStartup() {
-        
-        for node in self.children {
-            if (node.name == "world") {
-                
-                //Texture Map Node Stuff goes here
-                for node in node.children {
-                    if(node.name == "Rocky") {
-                        node.zPosition = 50
-                        
-                    }
-                }
-            }
-        }
-    }
+
     
     
     func setupLevel(tileMap: SKTileMapNode? = nil) {
@@ -297,6 +282,7 @@
                             if name != "Water" {
                                 self.setupLevel( tileMap: midsection)
                             } else {
+                                self.removeFromParent()
                                 land.alpha = 0.4
                                 land.zPosition = 1000
                             }
@@ -310,9 +296,7 @@
         } else {
             print("//*** Level not found: \(filename) ***//")
         }
-        
-        ParaStartup()
-        
+                
         for node in self.children {
             if (node.name == "world") {
                 
@@ -320,15 +304,18 @@
                 for node in node.children {
                     
                     if(node.name == "Rocky") {
+                        node.zPosition = 50
                         rockBounds = node.frame
+                        
+                        
                         scene?.physicsWorld.gravity = CGVector(dx: 0.0, dy: -3) //mini
                         scene?.physicsWorld.contactDelegate = self
-                        scene?.physicsBody = SKPhysicsBody(edgeLoopFrom: rockBounds)
+                        node.physicsBody = SKPhysicsBody(edgeLoopFrom: rockBounds)
                         
-                        scene?.physicsBody?.categoryBitMask = wallCategory //2 + 8 + 128 + 256 + 512 + 1024
-                        scene?.physicsBody?.collisionBitMask = 0
-                        scene?.physicsBody?.restitution = 0.02
-                        scene?.physicsBody?.contactTestBitMask = 0
+                        node.physicsBody?.categoryBitMask = wallCategory //2 + 8 + 128 + 256 + 512 + 1024
+                        node.physicsBody?.collisionBitMask = 0
+                        node.physicsBody?.restitution = 0.02
+                        node.physicsBody?.contactTestBitMask = 0
                         
                         //container for bombBounds
                         let bombBounds = CGRect(x: node.frame.origin.x ,y: node.frame.origin.y, width: node.frame.width, height: node.frame.height + 128)
@@ -345,7 +332,7 @@
                         
                         if  let x = scene?.frame.origin.x,
                             let y = scene?.frame.origin.y,
-                            let w = scene?.frame.width ,
+                            let w = scene?.frame.width,
                             let h = scene?.frame.height {
                             
                             let laserBounds = CGRect(x: x - 5, y: y, width: w + 10, height: h)
@@ -357,8 +344,8 @@
                         node.physicsBody?.collisionBitMask = 0
                         node.physicsBody?.contactTestBitMask = 0
                         node.physicsBody?.isDynamic = false
-                        node.physicsBody?.affectedByGravity = false;
-                        node.physicsBody?.restitution = 0;
+                        node.physicsBody?.affectedByGravity = false
+                        node.physicsBody?.restitution = 0
                         node.speed = 0
                         node.yScale = 1.5
                         self.camera?.addChild(node)
@@ -371,8 +358,9 @@
         world?.addChild(moving)
         
         backParalax.removeFromParent()
+        self.world?.addChild(backParalax)
 
-        if !backParalax.isEqual(to: SKNode()) {
+      /*  if !backParalax.isEqual(to: SKNode()) {
             self.world?.addChild(backParalax.copy() as! SKNode)
         } else {
             let texture = SKTexture(imageNamed: background)
@@ -391,7 +379,6 @@
                 for i in -rounded...rounded  {
                     sprite.position = CGPoint(x: CGFloat(i) * 1440, y: 0)
                     backParalax.addChild(sprite.copy() as! SKSpriteNode )
-                    
                 }
                 
                 backParalax.zPosition = -243
@@ -404,7 +391,7 @@
             }
             
             
-        }
+        }*/
         
      
         
