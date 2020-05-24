@@ -445,7 +445,7 @@ class GameStartup: GameScene {
             )
         }
         
-        ThumbPad.delagate = self
+        ThumbPad.delegate = self
         scene.camera?.addChild(ThumbPad)
         ThumbPad.zPosition = 1000
         ThumbPad.name = "ArcadeJoyPad"

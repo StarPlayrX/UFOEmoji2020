@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "fire45-right.pdf",
+      "filename" : "bg-joystick.pdf",
       "idiom" : "universal"
     }
   ],
@@ -11,6 +11,7 @@
   },
   "properties" : {
     "compression-type" : "gpu-optimized-smallest",
-    "preserves-vector-representation" : true
+    "preserves-vector-representation" : true,
+    "template-rendering-intent" : "original"
   }
 }

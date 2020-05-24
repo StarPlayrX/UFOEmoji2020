@@ -10,88 +10,91 @@ import SpriteKit
 
 
 class GameProjectiles {
-
-    var alternator = true
-    var spinner = CGFloat(1)
-
-    var laser: SKSpriteNode!
-    var bomb: SKSpriteNode!
     
-    let bombPhysicsBody =  SKPhysicsBody(circleOfRadius: 16);
-    let bombEmoji: SKLabelNode! = SKLabelNode(fontNamed:"Apple Color Emoji")
+    var 🛥 = true
+    var 🍕 = CGFloat(1)
+    
+    var 👁: SKSpriteNode!
+    var 💣: SKSpriteNode!
+    
+    let 🦞 = SKPhysicsBody(circleOfRadius: 16);
+    let 🧨: SKLabelNode! = SKLabelNode(fontNamed:"Apple Color Emoji")
     var 💩 = "💩"
-    var fireSound = "fire.m4a";
-    var bombSound = "wah2.m4a"
+    var 🚨 = "fire.m4a"
+    var 💥 = "wah2.m4a"
+
+    var 🌞 = UInt32(0)
+    var 🚞 = SKScene()
+    let 🍺 = CGFloat(16)
+    let 🍎 = "Apple Color Emoji"
+    let 🍌 = "🍌"
+	let 🦸 = "laserbeam"
+    let 🥾 = "super"
     
-    init(laserbeak laserbeam:UInt32, scene:SKScene, hero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool ) {
+    
+    func hero (hero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool) {
         
-        //if !hero.isHidden {
+        let 🧵 = 🔋 ?  🥾 + 🦸 : 🦸
+                
+        👁 = SKSpriteNode(texture: SKTexture(imageNamed: 🧵 ))
+    
         
-        if !supermanLaser {
-            laser = SKSpriteNode(texture: SKTexture(imageNamed: "laserbeam") )
-        } else {
-            laser = SKSpriteNode(texture: SKTexture(imageNamed: "superlaserbeam") )
-        }
+        var 👨‍🔬 = SKPhysicsBody(rectangleOf: 👁.size)
         
-        //var laserPhysicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "laserbeam"), alphaThreshold: 0.9, size: SKSpriteNode(texture: SKTexture(imageNamed: "laserbeam")).size)
-        var laserPhysicsBody = SKPhysicsBody(rectangleOf: laser.size)
-        
-        alternator = !alternator
+        🛥 = !🛥
         
         //Monkey
         if settings.emoji == 2 {
             
-            laser.physicsBody?.applyAngularImpulse(5)
-            if alternator {
-                spinner = 1
+            👁.physicsBody?.applyAngularImpulse(5)
+            if 🛥 {
+                🍕 = 1
             } else {
-                spinner = -1
+                🍕 = -1
             }
             
+           
             //let texture = SKTexture.init(image: self.transparentimage)
-            laser = SKSpriteNode()
-            laserPhysicsBody =  SKPhysicsBody(circleOfRadius: 16);
-            let laserEmoji: SKLabelNode! = SKLabelNode(fontNamed:"Apple Color Emoji")
-            let 🍌 = "🍌"
+            👁 = SKSpriteNode()
+            👨‍🔬 = SKPhysicsBody(circleOfRadius: 🍺);
+            let 🔫: SKLabelNode = SKLabelNode(fontNamed:🍎)
             
-            laserEmoji.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
-            laserEmoji.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
-            //laserEmoji.alpha = 1.0
-            //laserEmoji.position = CGPoint(x: 0, y: 0)
-            laserEmoji.text = String(🍌)
-            laserEmoji.fontSize = 32
-            laser.addChild(laserEmoji)
+            🔫.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
+            🔫.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+            🔫.text = 🍌
+            🔫.fontSize = 32
+            👁.addChild(🔫)
         }
         
-        if !supermanLaser {
-            laser.name = "🚩"
+        
+        if !🔋 {
+            👁.name = "🚩"
         } else {
-            laser.name = "💠"
+            👁.name = "💠"
         }
         
-        laser.isUserInteractionEnabled = false
-        laser.physicsBody = laserPhysicsBody
-        laser.zPosition = -100
-        laser.physicsBody?.isDynamic = true
-        laser.physicsBody?.affectedByGravity = false
-        laser.physicsBody?.mass = 0
-        laser.physicsBody?.fieldBitMask = 0
-        laser.physicsBody?.categoryBitMask = 64
-        laser.physicsBody?.collisionBitMask = 0
-        //let ctb = UInt32(2 + 8 + 16 + 256 + 512 + 1024 + 4096 + 8192)
+        👁.isUserInteractionEnabled = false
+        👁.physicsBody = 👨‍🔬
+        👁.zPosition = -100
+        👁.physicsBody?.isDynamic = true
+        👁.physicsBody?.affectedByGravity = false
+        👁.physicsBody?.mass = 0
+        👁.physicsBody?.fieldBitMask = 0
+        👁.physicsBody?.categoryBitMask = 64
+        👁.physicsBody?.collisionBitMask = 0
         let ctb = UInt32(14106)
-        laser.physicsBody?.contactTestBitMask = UInt32(ctb)
-        laser.physicsBody?.applyImpulse(CGVector(dx: 100,dy: 0))
-        laser.speed = CGFloat(0.8)
-        laser.physicsBody?.usesPreciseCollisionDetection = false
+        👁.physicsBody?.contactTestBitMask = UInt32(ctb)
+        👁.physicsBody?.applyImpulse(CGVector(dx: 100,dy: 0))
+        👁.speed = CGFloat(0.8)
+        👁.physicsBody?.usesPreciseCollisionDetection = false
         let heroPositionX = hero.position.x
         
         if doublelaser == 1 && settings.emoji != 2 {
-            laser.position = (CGPoint(x:heroPositionX, y:hero.position.y - 5))
+            👁.position = (CGPoint(x:heroPositionX, y:hero.position.y - 5))
         } else if doublelaser == 1 && settings.emoji == 2 {
-            laser.position = (CGPoint(x:heroPositionX, y:hero.position.y - 16))
+            👁.position = (CGPoint(x:heroPositionX, y:hero.position.y - 16))
         } else {
-            laser.position = hero.position
+            👁.position = hero.position
         }
         
         let rotateLaser = hero.zRotation * -3
@@ -102,148 +105,116 @@ class GameProjectiles {
         
         let d = reverse ? (x : -uno, y : uno) : (x : uno, y : -uno)
         
-        laser.physicsBody?.velocity = CGVector( dx: d.x * constantX + hero.velocity.dx, dy: rotateLaser * d.y * constantY )
+        👁.physicsBody?.velocity = CGVector( dx: d.x * constantX + hero.velocity.dx, dy: rotateLaser * d.y * constantY )
         
-        laser.zRotation = hero.zRotation
-        scene.addChild(laser)
+        👁.zRotation = hero.zRotation
+        
+        if 👁.name!.isEmpty {
+            print(👁)
+        }
+        
+        🚞.addChild(👁)
         
         if settings.emoji == 2 {
             let decay = SKAction.wait(forDuration: TimeInterval(0.6 * Double(settings.mode)))
-            let spin = SKAction.rotate(byAngle: CGFloat.pi * 3.0 * spinner, duration: 2)
+            let spin = SKAction.rotate(byAngle: CGFloat.pi * 3.0 * 🍕, duration: 2)
             let remove = SKAction.removeFromParent()
-            laser.run(SKAction.sequence([spin,decay,remove]))
+            👁.run(SKAction.sequence([spin,decay,remove]))
             
         } else {
             let decay = SKAction.wait(forDuration: TimeInterval(0.6 * Double(settings.mode)))
             let remove = SKAction.removeFromParent()
-            laser.run(SKAction.sequence([decay,remove]))
+            👁.run(SKAction.sequence([decay,remove]))
         }
         
-        ///Power Up that lasts the entire level!
+        //MARK: Power Up that lasts the entire level!
         if doublelaser == 1 {
-            let laser2 = laser.copy()
+            let laser2 = 👁.copy()
             (laser2 as! SKSpriteNode).position = (CGPoint(x:heroPositionX, y:hero.position.y + 5))
-            scene.addChild(laser2 as! SKSpriteNode)
+            🚞.addChild(laser2 as! SKSpriteNode)
         }
-        
-        if doublelaser >= 2 {
-            if !reverse {
-                let laser3 = laser.copy()
-                (laser3 as! SKSpriteNode).position = (CGPoint(x:heroPositionX - 10, y:hero.position.y + 10))
-                scene.addChild(laser3 as! SKSpriteNode)
-                
-                let laser4 = laser.copy()
-                (laser4 as! SKSpriteNode).position = (CGPoint(x:heroPositionX - 10, y:hero.position.y - 10))
-                scene.addChild(laser4 as! SKSpriteNode)
-            } else {
-                let laser3 = laser.copy()
-                (laser3 as! SKSpriteNode).position = (CGPoint(x:heroPositionX + 10, y:hero.position.y + 10))
-                scene.addChild(laser3 as! SKSpriteNode)
-                
-                let laser4 = laser.copy()
-                (laser4 as! SKSpriteNode).position = (CGPoint(x:heroPositionX + 10, y:hero.position.y - 10))
-                scene.addChild(laser4 as! SKSpriteNode)
-            }
-        }
-        
-        if doublelaser >= 3 {
-            if !reverse {
-                let laser5 = laser.copy()
-                (laser5 as! SKSpriteNode).position = (CGPoint(x:heroPositionX - 20, y:hero.position.y + 15))
-                scene.addChild(laser5 as! SKSpriteNode)
-                
-                let laser6 = laser.copy()
-                (laser6 as! SKSpriteNode).position = (CGPoint(x:heroPositionX - 20, y:hero.position.y - 15))
-                scene.addChild(laser6 as! SKSpriteNode)
-            } else {
-                let laser5 = laser.copy()
-                (laser5 as! SKSpriteNode).position = (CGPoint(x:heroPositionX + 20, y:hero.position.y + 15))
-                scene.addChild(laser5 as! SKSpriteNode)
-                
-                let laser6 = laser.copy()
-                (laser6 as! SKSpriteNode).position = (CGPoint(x:heroPositionX + 20, y:hero.position.y - 15))
-                scene.addChild(laser6 as! SKSpriteNode)
-            }
-            
-        }
-        
         
         if settings.sound {
-            let fire: SKAction = SKAction.playSoundFileNamed(fireSound, waitForCompletion: false)
-            laser.run(fire)
+            let fire: SKAction = SKAction.playSoundFileNamed(🚨, waitForCompletion: false)
+            👁.run(fire)
             
         }
     }
     
-    
-    
-    init(bombsaway laserbeam:UInt32, scene:SKScene, hero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool ) {
-        alternator = !alternator
+    deinit {
+     
+        self.🚞.removeAllActions()
+        self.🚞.removeAllChildren()
+        self.🚞.removeFromParent()
         
-        bomb = SKSpriteNode()
-        bomb.position = (CGPoint(x:hero.position.x, y:hero.position.y - 10))
+        
+    }
+    
+    init(laserbeak 🌞:UInt32?, 🚞:SKScene?) {
+        guard let 🌞 = 🌞, let 🚞 = 🚞 else { return }
+        self.🌞 = 🌞
+        self.🚞 = 🚞
+    }
+    
+    
+    
+    init(bombsaway 🌞:UInt32, 🚞:SKScene, hero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool ) {
+        🛥 = !🛥
+        
+        💣 = SKSpriteNode()
+        💣.position = (CGPoint(x:hero.position.x, y:hero.position.y - 10))
         
         //MARK: How to assign values in an Elvis Operator
-        🔱 ? (bomb.name = "🔱") : (bomb.name = "💣")
-    
-        //MARK: How not assign values...
-        🔱 ? bomb.name = "🔱" : bomb.name = "💣"
+        🔱 ? (💣.name = "🔱") : (💣.name = "💣")
         
-        bomb.isUserInteractionEnabled = false
-        bomb.physicsBody = bombPhysicsBody
-        bomb.physicsBody?.affectedByGravity = true
-        bomb.physicsBody?.isDynamic = true
-        bomb.physicsBody?.affectedByGravity = true
-        bomb.physicsBody?.allowsRotation = true
-        bomb.physicsBody?.categoryBitMask = 64
-        bomb.physicsBody?.collisionBitMask = 4
+        
+        💣.isUserInteractionEnabled = false
+        💣.physicsBody = 🦞
+        💣.physicsBody?.affectedByGravity = true
+        💣.physicsBody?.isDynamic = true
+        💣.physicsBody?.affectedByGravity = true
+        💣.physicsBody?.allowsRotation = true
+        💣.physicsBody?.categoryBitMask = 64
+        💣.physicsBody?.collisionBitMask = 4
         //let ctb = UInt32(2 + 8 + 16 + 256 + 512 + 1024 + 8192)
         let ctb = UInt32(14106)
-        bomb.physicsBody?.contactTestBitMask = ctb
-        bomb.physicsBody?.applyImpulse(CGVector(dx: 0,dy: 50))
-        bomb.physicsBody?.density = 0
-        bomb.physicsBody?.fieldBitMask = 0
-        bomb.physicsBody?.applyAngularImpulse(20)
-        bomb.physicsBody?.restitution = 0.5
+        💣.physicsBody?.contactTestBitMask = ctb
+        💣.physicsBody?.applyImpulse(CGVector(dx: 0,dy: 50))
+        💣.physicsBody?.density = 0
+        💣.physicsBody?.fieldBitMask = 0
+        💣.physicsBody?.applyAngularImpulse(20)
+        💣.physicsBody?.restitution = 0.5
         
         let wait = 800
         
         if reverse {
-            bomb.physicsBody?.velocity =  CGVector( dx: hero.velocity.dx / 4, dy: 350)
+            💣.physicsBody?.velocity =  CGVector( dx: hero.velocity.dx / 4, dy: 350)
         } else {
-            bomb.physicsBody?.velocity =  CGVector( dx: hero.velocity.dx / 4, dy: -350 )
+            💣.physicsBody?.velocity =  CGVector( dx: hero.velocity.dx / 4, dy: -350 )
         }
         
         
-        alternator ? bomb.zPosition = 100 : bomb.zPosition = -100
-            
+        🛥 ? (💣.zPosition = 100) : (💣.zPosition = -100)
         
-        bombEmoji.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
-        bombEmoji.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
-        //bombEmoji.position = CGPoint(x: 0, y: 0)
+        🧨.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
+        🧨.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         
+        🔱 ? (🧨.text = "🔱") : (🧨.text = "💩")
         
-        if !trident {
-            bombEmoji.text = String("💩") //bombsaway
-        } else {
-            bombEmoji.text = String("🔱") //bombsaway
-        }
+        🔱 && !reverse ? (🧨.yScale = -1) : ()
         
-        if trident && !reverse {
-            bombEmoji.yScale = -1
-        }
-        bombEmoji.fontSize = 32
-        bomb.addChild(bombEmoji)
-        bomb.speed = 200
-        scene.addChild(bomb)
+        🧨.fontSize = 32
+        💣.addChild(🧨)
+        💣.speed = 200
+        🚞.addChild(💣)
         
         let decay = SKAction.wait(forDuration: TimeInterval(wait))
         let remove = SKAction.removeFromParent()
-        bomb.run(SKAction.sequence([decay,remove]))
+        💣.run(SKAction.sequence([decay,remove]))
         
         if settings.sound {
-            let bombs: SKAction = SKAction.playSoundFileNamed(bombSound, waitForCompletion: false)
-            bomb.run(bombs)
+            let bombs: SKAction = SKAction.playSoundFileNamed(💥, waitForCompletion: false)
+            💣.run(bombs)
         }
     }
     
@@ -265,5 +236,8 @@ class GameProjectiles {
         UIGraphicsEndImageContext()
         return image
     }
+    
+    
+   
     
 }

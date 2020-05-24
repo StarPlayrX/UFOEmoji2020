@@ -10,6 +10,8 @@ import SpriteKit
 
 class LevelUp: SKScene {
     
+    var gd = gameDelegate
+    
      init(size: CGSize, scene: SKScene ) {
         
         super.init(size: size)
@@ -23,6 +25,11 @@ class LevelUp: SKScene {
     }
     
     func runner () {
+        
+        scene?.removeAllActions()
+        scene?.removeAllChildren()
+        scene?.removeFromParent()
+        
         let lives = GameStartup().loadScores().lives
         
         let heroMessage = levelarray[settings.level]
@@ -59,12 +66,15 @@ class LevelUp: SKScene {
         label2.position = CGPoint(x: size.width/2, y: size.height/2 - 72)
         addChild(label2)
         
-        run(SKAction.sequence([
-            SKAction.wait(forDuration: 0.0),
-            SKAction.run() {
-                levelLauncherXX(filename: "1")
-            }
-        ]))
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            self?.gd?.runGameLevel()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+            self?.removeAllChildren()
+            self?.removeAllActions()
+            self?.removeFromParent()
+        }
         
     }
         

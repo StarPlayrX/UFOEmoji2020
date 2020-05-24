@@ -60,7 +60,7 @@ class JoyPad: SKNode {
         get { return (thumbNode.size.width / two) }
     }
     
-    var delagate: ThumbPadProtocol? {
+    var delegate: ThumbPadProtocol? {
         willSet {
             velocity = CGVector.zero
             recenter()
@@ -71,7 +71,7 @@ class JoyPad: SKNode {
 
     @objc func update() {
         
-        delagate?.TouchPad(velocity: velocity, zRotation: CGFloat( velocity.dx / multiplier * dx ))
+        delegate?.TouchPad(velocity: velocity, zRotation: CGFloat( velocity.dx / multiplier * dx ))
     
         if velocity != CGVector.zero {
             focus = true
@@ -145,15 +145,14 @@ class JoyPad: SKNode {
         }
         
         //MARK: clampX and Y
-        let clampX = clamp( location.x )
-        let clampY = clamp( location.y )
+        let clampX = clamp( floor(location.x) )
+        let clampY = clamp( floor(location.y) )
         
         let snapY = snap( clampX, clampY )
         let snapX = snap( clampY, clampX )
         
         velocity = CGVector(dx: snapX * multiplier, dy: ( snapY * multiplier ) / two )
         
-        print("C")
         let moveToLocation = SKAction.move(to: CGPoint( x: snapX,y: snapY ), duration: ease )
         moveToLocation.timingMode = .easeOut
         thumbNode.run( moveToLocation )

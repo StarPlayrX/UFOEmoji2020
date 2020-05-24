@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "hud45-btm.pdf",
+      "filename" : "hud45-top.pdf",
       "idiom" : "universal"
     }
   ],
@@ -11,6 +11,7 @@
   },
   "properties" : {
     "compression-type" : "gpu-optimized-smallest",
-    "preserves-vector-representation" : true
+    "preserves-vector-representation" : true,
+    "template-rendering-intent" : "original"
   }
 }

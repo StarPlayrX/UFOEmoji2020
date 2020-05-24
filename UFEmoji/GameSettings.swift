@@ -129,37 +129,60 @@ func setSceneSizeForGame() -> CGSize  {
     }
 }
 
-func levelLauncherXX(filename: String)  {
-    let skView = mySKView
 
-    guard
-        let scene = GameScene(fileNamed:filename)
-        else { return }
+/*class StartUpScene: SKScene {
     
-    scene.size = setSceneSizeForGame()
-    skView.showsFPS = true
-    skView.showsNodeCount = true
-    skView.showsPhysics = false
-    skView.showsFields = false
-    skView.preferredFramesPerSecond = 61
-    skView.isMultipleTouchEnabled = true
-    skView.clearsContextBeforeDrawing = true
-    skView.isAsynchronous = true
-    skView.ignoresSiblingOrder = true
-    skView.allowsTransparency = false
-    skView.isOpaque = true
-    skView.isHidden = false
-    skView.shouldCullNonVisibleNodes = true
-    skView.clipsToBounds = true
-    scene.scaleMode = .aspectFill
-    scene.backgroundColor = SKColor.black
-    
-    
-    if filename == "GameMenu" {
-        let doors = SKTransition.doorsCloseHorizontal(withDuration: 2.0)
-        skView.presentScene(scene,transition: doors)
-    } else {
-        skView.presentScene(scene)
+    override init(size: CGSize) {
+        
+        super.init(size: size)
+        print(size)
     }
-   
-}
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    func levelLauncher(filename: String)  {
+        guard let scene = GameScene(fileNamed:filename) else { return }
+
+        var skView = SKView()
+        
+        if filename == "GameMenu" {
+        	skView = menuView
+        } else {
+            skView = gameView
+        }
+        
+        skView.scene?.removeAllChildren()
+    	skView.scene?.removeAllActions()
+        skView.scene?.removeFromParent()
+        skView.showsFPS = false
+        skView.showsNodeCount = false
+        skView.showsPhysics = false
+        skView.showsFields = false
+        skView.preferredFramesPerSecond = 60
+        skView.isMultipleTouchEnabled = true
+        skView.clearsContextBeforeDrawing = true
+        skView.isAsynchronous = true
+        skView.ignoresSiblingOrder = true
+        skView.allowsTransparency = false
+        skView.isOpaque = true
+        skView.isHidden = false
+        skView.shouldCullNonVisibleNodes = true
+        skView.clipsToBounds = true
+        scene.size = setSceneSizeForGame()
+        scene.scaleMode = .aspectFill
+        scene.backgroundColor = SKColor.black
+        
+        if filename == "GameMenu" {
+            let doors = SKTransition.doorsCloseHorizontal(withDuration: 2.0)
+            skView.presentScene(scene,transition: doors)
+        } else {
+            skView.presentScene(scene)
+        }
+        
+        
+    }
+    
+}*/

@@ -8,21 +8,43 @@
  
  import SpriteKit
  import AVFoundation
-
+ 
  var headsUpDisplay = SKReferenceNode()
- var backParalaxCopy : SKNode? = nil
  var maxVelocity = CGFloat(0)
+ var backParalax =  SKNode()
 
  class GameScene: SKScene, ThumbPadProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
-	
+    
     deinit {
-        print("DEINIT")
+        backParalax.removeFromParent()
+        
+        world?.removeAllActions()
+        world?.removeAllChildren()
+        world?.removeFromParent()
+        
+        cam.removeAllActions()
+        cam.removeAllChildren()
+        cam.removeFromParent()
+        
+        camera?.removeFromParent()
+        camera?.removeAllActions()
+        camera?.removeFromParent()
+        
+        scene?.removeAllActions()
+        scene?.removeAllChildren()
+        scene?.removeFromParent()
+        
         self.removeAllActions()
         self.removeAllChildren()
         self.removeFromParent()
+        
+        removeAllActions()
+        removeAllChildren()
+        removeFromParent()
+        
+        
     }
     
-    var backParalax: SKNode? = nil
     weak var firstBody : SKPhysicsBody!
     weak var secondBody : SKPhysicsBody!
     var rockBounds = CGRect()
@@ -69,6 +91,8 @@
     let levelupCategory:UInt32      =  2048
     let laserBorder:UInt32          =  4096
     var scoreDict: [String:Int] = [:]
+    
+    var laserbeak = GameProjectiles(laserbeak: nil,🚞: nil)
     //we can swap these out if we use other emoji ships: 0 through 6
     
     func ParaStartup() {
@@ -92,26 +116,26 @@
         guard var tileMap = tileMap else { return }
         
         print(tileMap)
-            let tmr = TMRX(TileMap: tileMap)
-            
-            for col in (0 ..< tileMap.numberOfColumns) {
-                for row in (0 ..< tileMap.numberOfRows) {
-                    let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
-                    var center = tileMap.centerOfTile(atColumn: col, row: row)
-                    
-                    if let td = tileDefinition, let name = td.name {
-                        if !name.isEmpty {
-                            tmr.tileMapRun(tileDefinition: td, center: center)
-                        }
+        let tmr = TMRX(TileMap: tileMap)
+        
+        for col in (0 ..< tileMap.numberOfColumns) {
+            for row in (0 ..< tileMap.numberOfRows) {
+                let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
+                var center = tileMap.centerOfTile(atColumn: col, row: row)
+                
+                if let td = tileDefinition, let name = td.name {
+                    if !name.isEmpty {
+                        tmr.tileMapRun(tileDefinition: td, center: center)
                     }
-                    
-                    center = CGPoint()
                 }
+                
+                center = CGPoint()
             }
-            
-            tileMap.removeAllChildren()
-            tileMap.removeFromParent()
-        	tileMap = SKTileMapNode()
+        }
+        
+        tileMap.removeAllChildren()
+        tileMap.removeFromParent()
+        tileMap = SKTileMapNode()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -124,11 +148,12 @@
         }
     }
     
+    
     func demoMode() {
         /* demo mode */
         shield = true
-        supermanLaser = true
-        trident = true
+        🔋 = true
+        🔱 = true
         let logonode = SKSpriteNode(texture: SKTexture(imageNamed: "UFOEmojiLogoLarge"))
         self.camera?.addChild(logonode)
         logonode.setScale(0.1875)
@@ -142,14 +167,20 @@
     }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-
+        
+        
+        
+        
+        
+        laserbeak = GameProjectiles(laserbeak: laserbeam, 🚞: self)
+        
         world = childNode(withName: "world")
         
         // This is the default of King, Queen Nationality
         KingQueenGlobalDie = 100
         
-        trident = false
-        supermanLaser = false
+        🔱 = false
+        🔋 = false
         shield = false
         
         doublelaser = 0
@@ -170,9 +201,9 @@
         camera = cam
         addChild(cam)
         cam.zPosition = 100
-    
+        
         headsUpDisplay.name = "HeadsUpDisplay"
-        scene?.camera?.addChild(headsUpDisplay)
+        cam.addChild(headsUpDisplay)
         headsUpDisplay.zRotation = CGFloat(Double.pi/4)
         
         guard let gamestartup = GameStartup.gs.readyPlayerOneX(self) else { return }
@@ -228,54 +259,54 @@
         
         (level, highlevel, score, highscore, lives) = GameStartup.gs.loadScores()
         
-                
+        
         var background = ""
-   
+        
         switch level {
             
             //skyMtns
             case 1..<100:
                 background = "waterWorld"
             case 6..<9:
-             	()
+                ()
             case 10:
                 ()
             default :
-            	()
+                ()
         }
         
-
+        
         var filename = "" //default
         
         filename = "level1"
-   
+        
         //Check if level exists first (safe)
         if let section = SKReferenceNode(fileNamed: filename)  {
-            	addChild(section)
-                section.position = CGPoint(x:0,y:0)
-                
-                self.isPaused = true
-                
-                if let level = section.children.first?.children {
-                    //No longer hard encoded
-                    for land in level {
-                        
-                        if let name = land.name {
-                            if let midsection = section.childNode(withName: "//" + name ) as? SKTileMapNode {
-                                
-                                if name != "Water" {
-                                    self.setupLevel( tileMap: midsection)
-                                } else {
-                                    land.alpha = 0.4
-                                    land.zPosition = 1000
-                                }
+            addChild(section)
+            section.position = CGPoint(x:0,y:0)
+            
+            //self.isPaused = true
+            
+            if let level = section.children.first?.children {
+                //No longer hard encoded
+                for land in level {
+                    
+                    if let name = land.name {
+                        if let midsection = section.childNode(withName: "//" + name ) as? SKTileMapNode {
+                            
+                            if name != "Water" {
+                                self.setupLevel( tileMap: midsection)
+                            } else {
+                                land.alpha = 0.4
+                                land.zPosition = 1000
                             }
                         }
                     }
                 }
-                
-                self.isPaused = false
-             
+            }
+            
+            //self.isPaused = false
+            
         } else {
             print("//*** Level not found: \(filename) ***//")
         }
@@ -287,7 +318,7 @@
                 
                 //Texture Map Node Stuff goes here
                 for node in node.children {
-
+                    
                     if(node.name == "Rocky") {
                         rockBounds = node.frame
                         scene?.physicsWorld.gravity = CGVector(dx: 0.0, dy: -3) //mini
@@ -315,12 +346,12 @@
                         if  let x = scene?.frame.origin.x,
                             let y = scene?.frame.origin.y,
                             let w = scene?.frame.width ,
-                        	let h = scene?.frame.height {
+                            let h = scene?.frame.height {
                             
                             let laserBounds = CGRect(x: x - 5, y: y, width: w + 10, height: h)
                             node.physicsBody = SKPhysicsBody(edgeLoopFrom: laserBounds )
                         }
-                    
+                        
                         node.name = "🔲"
                         node.physicsBody?.categoryBitMask = laserBorder
                         node.physicsBody?.collisionBitMask = 0
@@ -336,45 +367,46 @@
             }
         }
         
-        scene?.addChild(moving)
-            
-        if backParalaxCopy != nil {
-            backParalax = backParalaxCopy
-            addChild((backParalax)!)
+        
+        world?.addChild(moving)
+        
+        backParalax.removeFromParent()
 
+        if !backParalax.isEqual(to: SKNode()) {
+            self.world?.addChild(backParalax.copy() as! SKNode)
         } else {
-            backParalax = SKNode()
-            
-            var  texture = SKTexture(imageNamed: background)
+            let texture = SKTexture(imageNamed: background)
             texture.filteringMode = .linear
-            
             texture.preload { [weak self] in
-                let rounded = Int(round( (self?.rockBounds.width)! / 1440 / 2 ))
+                guard
+                    let self = self
+                    
+                    else { return }
+                let rounded = Int(round( self.rockBounds.width / 1440 / 2 ))
+                var sprite = SKSpriteNode(texture: texture)
+                sprite.name = String("BackTexture")
+                sprite.xScale = 4
+                sprite.yScale = 4
                 
                 for i in -rounded...rounded  {
-                    let sprite = SKSpriteNode(texture: texture)
-                    sprite.xScale = 4
-                    sprite.yScale = 4
                     sprite.position = CGPoint(x: CGFloat(i) * 1440, y: 0)
-                    self?.backParalax?.addChild(sprite)
+                    backParalax.addChild(sprite.copy() as! SKSpriteNode )
+                    
                 }
                 
-                self?.backParalax?.zPosition = -243
+                backParalax.zPosition = -243
+                sprite = SKSpriteNode()
                 
-                backParalaxCopy = (self?.backParalax!.copy())! as! SKNode
-                self?.addChild((self?.backParalax)!)
-                
+                backParalax.name = "backParalaxOriginal"
+                backParalax = backParalax.copy() as! SKNode
+                self.world?.addChild(backParalax)
+        
             }
+            
+            
         }
+        
      
-          
-            
-            
-        
-            
-
-        
-    	
         
         world?.speed = 0
         moving.speed = 1
@@ -384,7 +416,7 @@
         }
         
         var sceneheight = CGFloat(0)
-		var indent = CGFloat(0)
+        var indent = CGFloat(0)
         
         if let sh = scene?.frame.size.height, let sw = scene?.frame.size.width {
             screenHeight = sh / 2 - 64
@@ -467,8 +499,7 @@
         
         guard
             let h = hero,
-            let c = canape,
-            let bp = backParalax
+            let c = canape
             else
         { return }
         
@@ -480,7 +511,7 @@
         
         // adds depth to the scene
         // by moving the backgorund slower
-        bp.position.x = cam.position.x * 0.334
+        backParalax.position.x = cam.position.x * 0.334
     }
     
     
@@ -515,7 +546,6 @@
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard
             let firebutton = firebutton,
-            let firebutton2 = firebutton2,
             let bombsbutton = bombsbutton,
             let bombsbutton2 = bombsbutton2,
             let heroVelocity = hero.physicsBody?.velocity
@@ -527,23 +557,25 @@
         for touch: AnyObject in touches {
             let location: CGPoint = touch.location(in: self)
             let touchedNode = atPoint(location)
-        
+            
             if let name = touchedNode.name {
                 
                 if name == "fire-right" {
-                    GameProjectiles(laserbeak: laserbeam, scene: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse:false ).firebomb(firebomb: firebutton)
+                    laserbeak.hero(hero: (hero.position, hero.zRotation, heroVelocity), reverse:false)
+                    laserbeak.firebomb(firebomb: firebutton)
                 }
                 
                 if name == "fire-left" {
-                    GameProjectiles(laserbeak: laserbeam, scene: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse:true ).firebomb(firebomb: firebutton2)
+                    laserbeak.hero(hero: (hero.position, hero.zRotation, heroVelocity), reverse:true)
+                    laserbeak.firebomb(firebomb: firebutton)
                 }
                 
                 if name == "fire-down" {
-                    GameProjectiles(bombsaway: laserbeam, scene: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse: false).firebomb(firebomb: bombsbutton)
+                    GameProjectiles(bombsaway: laserbeam, 🚞: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse: false).firebomb(firebomb: bombsbutton)
                 }
                 
                 if name == "fire-top" {
-                    GameProjectiles(bombsaway: laserbeam, scene: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse:true ).firebomb(firebomb: bombsbutton2)
+                    GameProjectiles(bombsaway: laserbeam, 🚞: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse:true ).firebomb(firebomb: bombsbutton2)
                 }
             }
         }
@@ -591,7 +623,7 @@
      }*/
     //MARK: End troubleshooting
     
-    let angle = CGFloat(0.0), dampZero = CGFloat(0.0), dampMax = CGFloat(40.0)
+    let zero = CGFloat(0.0), dampZero = CGFloat(0.0), dampMax = CGFloat(40.0)
     let ease = TimeInterval(0.08), shipduration = TimeInterval(0.005)
     let shipMax = CGFloat(500.0)
     let shipCtr = CGFloat(250.0)
@@ -603,17 +635,18 @@
         //MARK: reference to hero's physic's body - easier
         guard let pb = hero.physicsBody else { return }
         
-        func rotateShip (_ t: TimeInterval ) {
+        func rotateShip (_ t: TimeInterval, _ angle: CGFloat ) {
             let rot = SKAction.rotate(toAngle: angle, duration: t)
             rot.timingMode = .easeInEaseOut
             hero.run(rot)
         }
         
-        //MARK: Full stop
         if velocity == CGVector.zero {
             
             pb.linearDamping = dampMax
             pb.velocity = velocity
+            
+            rotateShip(ease, zRotation)
         } else {
             
             pb.linearDamping = CGFloat(dampZero)
@@ -621,9 +654,9 @@
             
             //MARK: Clamp using min max
             func clamp (_ f: CGFloat) -> CGFloat {
-                return min(max(f, shipMin), shipMax)
+                min(max(f, shipMin), shipMax)
             }
-        
+            
             //MARK: Add a little extra to our ships movement
             pb.applyImpulse(CGVector( dx: velocity.dx / shipCtr, dy: velocity.dy / shipMax))
             
@@ -631,7 +664,7 @@
             pb.velocity.dx = clamp(pb.velocity.dx)
             pb.velocity.dy = clamp(pb.velocity.dy)
             
-            rotateShip(shipduration)
+            rotateShip(shipduration, zRotation)
         }
     }
     
@@ -819,7 +852,7 @@
     }
     
     
-
+    
     func remove(body:SKPhysicsBody?) {
         guard
             let b = body,
@@ -866,7 +899,7 @@
         
         moving.speed = 0
         tractor.speed = 0
-    
+        
         
         if settings.music {
             audioPlayer?.numberOfLoops = 0
@@ -885,12 +918,12 @@
             contact.bodyA.node?.parent != nil,
             contact.bodyB.node?.parent != nil,
             contact.bodyA.node != nil,
-        	contact.bodyB.node != nil,
-        	contact.bodyA.node?.name != nil,
-        	contact.bodyB.node?.name != nil
+            contact.bodyB.node != nil,
+            contact.bodyA.node?.name != nil,
+            contact.bodyB.node?.name != nil
             else { return }
         
-      
+        
         
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
@@ -914,15 +947,15 @@
             case worldCategory | laserbeam :
                 //take care of business
                 
-                if firstBody.node?.name == "stone" && !firstBody.isDynamic && secondBody.node?.name != "🔱" && secondBody.node?.name != "💠" && !supermanLaser   {
+                if firstBody.node?.name == "stone" && !firstBody.isDynamic && secondBody.node?.name != "🔱" && secondBody.node?.name != "💠" && !🔋   {
                     stoneVersusLaser(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-                } else if firstBody.isDynamic || (supermanLaser && secondBody.node?.name == "💠") {
+                } else if firstBody.isDynamic || (🔋 && secondBody.node?.name == "💠") {
                     baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
                 } else {
                     worldVersusLaser(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
             }
             case badFishCategory | laserbeam :
-                if firstBody.isDynamic || (supermanLaser && secondBody.node?.name == "💠") {
+                if firstBody.isDynamic || (🔋 && secondBody.node?.name == "💠") {
                     baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
                 } else {
                     worldVersusLaser(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
@@ -931,13 +964,13 @@
             case badGuyCategory | laserbeam :
                 baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
             case laserbeam | itemCategory :
-                if secondBody.isDynamic || (supermanLaser && firstBody.node?.name == "💠") {
+                if secondBody.isDynamic || (🔋 && firstBody.node?.name == "💠") {
                     goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
                 } else {
                     laserVersusFloater(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
             }
             case laserbeam | fishCategory :
-                if secondBody.isDynamic || (supermanLaser && firstBody.node?.name == "💠") {
+                if secondBody.isDynamic || (🔋 && firstBody.node?.name == "💠") {
                     goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
                 } else {
                     laserVersusFloater(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
@@ -965,9 +998,7 @@
                 
                 GameStartup.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
                 
-              
-                
-                hero.physicsBody?.velocity = CGVector( dx: 0, dy: 0 )
+                hero.physicsBody?.velocity = CGVector.zero
                 hero.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 0.0))
                 
                 let easeOut: SKAction = SKAction.move(to: CGPoint.zero, duration: 0.0)
@@ -978,12 +1009,12 @@
                 removeHero()
                 removeGUI()
                 
-               
+                
                 //self.removeAllActions()
                 //self.removeAllChildren()
                 //self.removeFromParent()
-            
-            
+                
+                
                 //Loads the LevelUp Scene
                 func starPlayrOneLevelUpX(world:SKNode?, moving:SKNode?, hero: SKSpriteNode?, tractor: SKSpriteNode?) {
                     
@@ -991,7 +1022,7 @@
                         let moving = moving,
                         let hero = hero,
                         let tractor = tractor,
-                    	let scene = scene
+                        let scene = scene
                         else { return }
                     
                     hero.physicsBody?.velocity = CGVector( dx: 0, dy: 0 )
@@ -1004,17 +1035,17 @@
                     
                     
                     let size = scene.size
-                
                     
-                     run(SKAction.sequence([
-                     SKAction.wait(forDuration: 2.0),
-                     SKAction.run() { [weak self] in
-                        self?.removeAllChildren()
-                        self?.removeAllActions()
-                        self?.removeFromParent()
-
-                     }
-                     ]))
+                    
+                    run(SKAction.sequence([
+                        SKAction.wait(forDuration: 2.0),
+                        SKAction.run() { [weak self] in
+                            self?.removeAllChildren()
+                            self?.removeAllActions()
+                            self?.removeFromParent()
+                            
+                        }
+                    ]))
                     
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak scene] in
@@ -1028,13 +1059,13 @@
                     }
                     
                     
-                   
                     
-            }
-            
+                    
+                }
+                
                 starPlayrOneLevelUpX(world:world, moving:moving, hero: hero, tractor: tractor)
-
-
+            
+            
             
             
             case heroCategory | worldCategory, heroCategory | badGuyCategory, heroCategory | badFishCategory :
@@ -1065,7 +1096,7 @@
         
     }
     
-  
+    
     
     func stopIt(secondBody: SKPhysicsBody, contactPoint: CGPoint) {
         //save first
@@ -1097,6 +1128,7 @@
         if let pad = cam.childNode(withName: "ArcadeJoyPad"), let hud = cam.childNode(withName: "HeadsUpDisplay")  {
             pad.removeFromParent()
             hud.removeAllChildren()
+            hud.removeFromParent()
         }
     }
     
@@ -1127,6 +1159,7 @@
     func EndGame() {
         print("ENDGAME")
         removeHero()
+        removeGUI()
         GameStartup.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
         
         //Loads the game over scene
@@ -1140,17 +1173,21 @@
             hero.physicsBody?.affectedByGravity = true
             moving.speed = moving.speed / 2
             world.speed =  world.speed / 2
- 
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
                 guard let self = self else { return }
                 let gameOverScene = GameOver( size: self.size )
                 gameOverScene.runner()
                 self.size = setSceneSizeForGame()
                 gameOverScene.scaleMode = .aspectFill
-                mySKView.presentScene(gameOverScene)
+                self.view?.presentScene(gameOverScene)
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                backParalax.removeFromParent()
             }
         }
-    
+        
         gameOver(world:world!, moving:moving, hero:hero, tractor:tractor)
     }
     
@@ -1204,7 +1241,7 @@
                     self.moving.speed       = 1
                     
                     guard let gamestartup = GameStartup.gs.readyPlayerOneX(self) else { return }
-
+                    
                     self.hero = gamestartup.hero
                     self.canape = gamestartup.canape
                     self.tractor = gamestartup.tractor
@@ -1286,7 +1323,7 @@
                 l += "🛡"
                 
                 hero.alpha = 0.75
-
+                
                 //MARK: aura particle emitter
                 if let aura = SKEmitterNode(fileNamed: "aura") {
                     aura.alpha = 0.25
@@ -1321,8 +1358,8 @@
         
         //gives our ship double lasers
         if name == "💠" {
-            supermanLaser = true
-                        
+            🔋 = true
+            
             if var l = livesLabel.text, !l.contains("💠") {
                 l += "💠"
             }
@@ -1335,8 +1372,8 @@
         
         //gives our trident bombs
         if name == "🔱" {
-            trident = true
-
+            🔱 = true
+            
             if var l = livesLabel.text, !l.contains("🔱") {
                 l += "🔱"
             }
@@ -1376,11 +1413,11 @@
  
  
  /*extension SKSpriteNode {
-    func addGlowX(radius: Float = 16) {
-        let effectNode = SKEffectNode()
-        effectNode.addChild(SKSpriteNode(texture: texture))
-        effectNode.filter = CIFilter(name: "CIMotionBlur", parameters: ["inputRadius":radius,"inputAngle":CGFloat.pi/2])
-        effectNode.shouldRasterize = true
-        addChild(effectNode)
-    }
- }*/
+  func addGlowX(radius: Float = 16) {
+  let effectNode = SKEffectNode()
+  effectNode.addChild(SKSpriteNode(texture: texture))
+  effectNode.filter = CIFilter(name: "CIMotionBlur", parameters: ["inputRadius":radius,"inputAngle":CGFloat.pi/2])
+  effectNode.shouldRasterize = true
+  addChild(effectNode)
+  }
+  }*/

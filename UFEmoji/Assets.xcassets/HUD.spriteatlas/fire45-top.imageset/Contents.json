@@ -1,8 +1,7 @@
 {
   "images" : [
     {
-      "compression-type" : "gpu-optimized-smallest",
-      "filename" : "newStarField-Universal.pdf",
+      "filename" : "fire45-top.pdf",
       "idiom" : "universal"
     }
   ],
@@ -11,8 +10,7 @@
     "version" : 1
   },
   "properties" : {
-    "auto-scaling" : "auto",
-    "compression-type" : "gpu-optimized-best",
+    "compression-type" : "gpu-optimized-smallest",
     "preserves-vector-representation" : true,
     "template-rendering-intent" : "original"
   }

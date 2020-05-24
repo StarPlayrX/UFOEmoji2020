@@ -10,6 +10,7 @@ import SpriteKit
 
 class StartUp: SKScene {
     
+    var gd = gameDelegate
     override init(size: CGSize) {
         
         super.init(size: size)
@@ -24,6 +25,11 @@ class StartUp: SKScene {
     }
     
     func runner() {
+        
+        scene?.removeAllActions()
+        scene?.removeAllChildren()
+        scene?.removeFromParent()
+        
         backgroundColor = SKColor.black
         
         let mainCharacter = heroArray[settings.emoji]
@@ -55,13 +61,15 @@ class StartUp: SKScene {
         label3.position = CGPoint(x: size.width/2 + 120, y: size.height/2)
         addChild(label3)
         
-        run(SKAction.sequence([
-            SKAction.wait(forDuration: 1.0),
-            SKAction.run() {
-                levelLauncherXX(filename: "1")
-
-            }
-        ]))
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            self?.gd?.runGameLevel()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+            self?.removeAllChildren()
+            self?.removeAllActions()
+            self?.removeFromParent()
+        }
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -79,4 +87,12 @@ func startUp(_ scene:SKScene) {
     scene.size = setSceneSizeForGame()
     gameOverScene.scaleMode = .aspectFill
     scene.view?.presentScene(gameOverScene, transition: transition)
+    
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak scene] in
+        guard let scene = scene else { return }
+        scene.removeAllActions()
+        scene.removeAllChildren()
+        scene.removeFromParent()
+    }
 }

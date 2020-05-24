@@ -14,9 +14,9 @@ class TMRX {
     
     deinit {
         print("DEINIT TileMap")
-        
         TileMap = nil
     }
+
     weak var TileMap: SKTileMapNode!
     
     init(TileMap: SKTileMapNode) {

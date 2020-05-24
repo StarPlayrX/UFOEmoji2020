@@ -24,7 +24,7 @@ var maxlevel = 10
 var doublelaser = 0
 var 🔱 = false
 var shield = false
-var supermanLaser = false
+var 🔋 = false
 
 var KingQueenGlobalDie = 100
 
@@ -44,9 +44,9 @@ class GameMenu: SKScene {
     
     
     deinit {
-        removeAllActions()
-        removeAllChildren()
-        removeFromParent()
+        scene?.removeAllActions()
+        scene?.removeAllChildren()
+        scene?.removeFromParent()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -194,6 +194,7 @@ class GameMenu: SKScene {
     
     override func didMove(to view: SKView) {
         KingQueenGlobalDie = 100
+        backgroundColor = SKColor.init(displayP3Red: 0, green: 15 / 255, blue: 70 / 255, alpha: 1.0)
 
         
         loadGameSettings()

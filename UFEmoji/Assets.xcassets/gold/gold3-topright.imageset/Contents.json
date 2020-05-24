@@ -1,12 +1,16 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "gold3-topright.pdf"
+      "filename" : "gold3-topright.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "compression-type" : "gpu-optimized-smallest",
+    "preserves-vector-representation" : true
   }
 }

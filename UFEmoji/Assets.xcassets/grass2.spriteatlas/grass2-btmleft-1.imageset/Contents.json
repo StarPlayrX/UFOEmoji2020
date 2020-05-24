@@ -1,12 +1,16 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "grass2-btmleft-1.pdf"
+      "filename" : "grass2-btmleft-1.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "compression-type" : "gpu-optimized-smallest",
+    "preserves-vector-representation" : true
   }
 }

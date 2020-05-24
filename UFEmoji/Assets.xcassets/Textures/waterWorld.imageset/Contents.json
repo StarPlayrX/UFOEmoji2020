@@ -12,7 +12,8 @@
   },
   "properties" : {
     "auto-scaling" : "auto",
-    "compression-type" : "gpu-optimized-best",
+    "compression-type" : "lossless",
+    "preserves-vector-representation" : true,
     "template-rendering-intent" : "original"
   }
 }

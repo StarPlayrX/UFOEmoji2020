@@ -9,27 +9,41 @@
 import UIKit
 import SpriteKit
 
-var mySKView = SKView()
+protocol GameProtocol {
+    func runGameMenu()
+    func runGameLevel()
+}
 
-class GameViewController: UIViewController {
+
+class GameViewController: UIViewController, GameProtocol {
+    func runGameLevel() {
+    	gameScene()
+    }
+    
+    func runGameMenu() {
+        self.startScene()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        gameDelegate = self
+
         UIApplication.shared.isStatusBarHidden = true
-        view.backgroundColor = UIColor.black
+        view.backgroundColor = SKColor.init(displayP3Red: 0, green: 15 / 255, blue: 70 / 255, alpha: 1.0)
 
         //let defaults = UserDefaults.standard
        // let level = 1
    
-        var tas = [SKTextureAtlas]()
-        tas.append(SKTextureAtlas(named: "grass2"))
-        tas.append(SKTextureAtlas(named: "dirt3"))
+        //var tas = [SKTextureAtlas]()
+        //tas.append(SKTextureAtlas(named: "grass2"))
+        //tas.append(SKTextureAtlas(named: "dirt3"))
 
         // Call the preload and in the completion handler load and start the GameScene:
-        SKTextureAtlas.preloadTextureAtlases(tas, withCompletionHandler: { 
+       // SKTextureAtlas.preloadTextureAtlases(tas, withCompletionHandler: {
             //do nothing
 
-        })
+       // })
 
         //getDeviceSize()
 
@@ -37,27 +51,55 @@ class GameViewController: UIViewController {
 
         
     }
-
+	
+    deinit {
+        removeFromParent()
+    }
+    
     func startScene() {
-        
-        mySKView = self.view as! SKView
-        let skView = mySKView
-
-        if let scene = GameMenu(fileNamed:"GameMenu") {
+        if let scene = GameMenu(fileNamed:"GameMenu"),  let skView = self.view as? SKView {
+            skView.scene?.removeAllActions()
+            skView.scene?.removeAllChildren()
+            skView.scene?.removeFromParent()
+            
             skView.showsFPS = false
+            skView.preferredFramesPerSecond = 60
             skView.showsNodeCount = false
             skView.showsPhysics = false
             skView.isMultipleTouchEnabled = true
             skView.isAsynchronous = true
             skView.ignoresSiblingOrder = true
             skView.clipsToBounds = true
-            scene.scaleMode = .aspectFill
+            skView.scene?.scaleMode = .aspectFill
             scene.size = setSceneSizeForGame()
-            scene.backgroundColor = SKColor.black
+            scene.scaleMode = .aspectFill
+            scene.backgroundColor = SKColor.init(displayP3Red: 0, green: 15 / 255, blue: 70 / 255, alpha: 1.0)
             skView.presentScene(scene)
         }
     }
     
+    
+    func gameScene() {
+        if let scene = GameScene(fileNamed:"1"),  let skView = self.view as? SKView {
+            skView.scene?.removeAllActions()
+            skView.scene?.removeAllChildren()
+            skView.scene?.removeFromParent()
+
+            skView.showsFPS = false
+            skView.preferredFramesPerSecond = 60
+            skView.showsNodeCount = false
+            skView.showsPhysics = false
+            skView.isMultipleTouchEnabled = true
+            skView.isAsynchronous = true
+            skView.ignoresSiblingOrder = true
+            skView.clipsToBounds = true
+            skView.scene?.scaleMode = .aspectFill
+            scene.size = setSceneSizeForGame()
+            scene.scaleMode = .aspectFill
+            scene.backgroundColor = .black
+            skView.presentScene(scene)
+        }
+    }
 
     override var shouldAutorotate : Bool {
         return true
