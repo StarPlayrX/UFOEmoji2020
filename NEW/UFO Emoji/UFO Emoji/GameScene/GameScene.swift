@@ -22,63 +22,65 @@
         cam.removeAllChildren()
         cam.removeFromParent()
         
-        camera?.removeFromParent()
-        camera?.removeAllActions()
-        camera?.removeFromParent()
-         
-        removeAllActions()
-        removeAllChildren()
-        removeFromParent()
+        world = nil
+    	camera = nil
+  
+        scene?.removeAllActions()
+        scene?.removeAllChildren()
+        scene?.removeFromParent()
+        
+        scene?.parent?.removeAllActions()
+        scene?.parent?.removeAllChildren()
+        scene?.parent?.removeFromParent()
+
+
     }
     
-    weak var firstBody : SKPhysicsBody!
-    weak var secondBody : SKPhysicsBody!
-    var rockBounds = CGRect()
-    var screenHeight = CGFloat()
-    var cam = SKCameraNode()
-    var moving = SKNode()
-    var audioPlayer: AVAudioPlayer?
-    var world:SKNode?
-    let ThumbPad: JoyPad = JoyPad()
-    var bombsbutton: SKSpriteNode? = nil
-    var firebutton: SKSpriteNode? = nil
-    var bombsbutton2: SKSpriteNode? = nil
-    var firebutton2: SKSpriteNode? = nil
-    var hero:SKSpriteNode!
-    var heroEmoji:SKLabelNode!
-    var canape:SKSpriteNode!
-    var tractor:SKSpriteNode!
-    var centerTexture: SKTexture!
-    var scoreLabelNode:SKLabelNode!
-    var highScoreLabelNode:SKLabelNode!
-    var hud: SKNode!
-    var highScoreLabel:SKLabelNode!
-    var livesLabel:SKLabelNode!
-    var livesLabelNode:SKLabelNode!
-    var heroLocation:CGPoint = CGPoint.zero
-    weak var TileMap: SKTileMapNode!
-    var rockPile:SKNode = SKNode()
-    var score = Int()
-    var level = Int()
-    var highscore = Int()
-    var lives = Int()
-    var highlevel = Int()
-    let heroCategory:UInt32         =  1
-    let worldCategory:UInt32        =  2
-    let bombBoundsCategory:UInt32   =  4
-    let badFishCategory:UInt32      =  8
-    let badGuyCategory:UInt32       =  16
-    let tractorCategory:UInt32      =  32
-    let laserbeam: UInt32           =  64
-    let wallCategory:UInt32         =  128
-    let itemCategory:UInt32         =  256
-    let fishCategory:UInt32         =  512
-    let charmsCategory:UInt32       =  1024
-    let levelupCategory:UInt32      =  2048
-    let laserBorder:UInt32          =  4096
-    var scoreDict: [String:Int] = [:]
+    private weak var firstBody : SKPhysicsBody!
+    private weak var secondBody : SKPhysicsBody!
+    private weak var bombsbutton: SKSpriteNode!
+    private weak var firebutton: SKSpriteNode!
+    private weak var bombsbutton2: SKSpriteNode!
+    private weak var firebutton2: SKSpriteNode!
+    private weak var hero:SKSpriteNode!
+    private weak var canape:SKSpriteNode!
+    private weak var tractor:SKSpriteNode!
+    private weak var world: SKNode!
+    private var moving = SKNode()
+	
+    private var ThumbPad: JoyPad! = JoyPad()
+    private var heroEmoji:SKLabelNode!
+    private var audioPlayer: AVAudioPlayer!
+    private var cam : SKCameraNode!
+    private var rockBounds = CGRect()
+    private var scoreLabelNode:SKLabelNode!
+    private var highScoreLabelNode:SKLabelNode!
+    private var highScoreLabel:SKLabelNode!
+    private var livesLabel:SKLabelNode!
+    private var livesLabelNode:SKLabelNode!
     
-    var laserbeak = GameProjectiles(laserbeak: nil,🚞: nil)
+    private var screenHeight = CGFloat()  // MARK: may get rid of this
+    private var score = Int()
+    private var level = Int()
+    private var highscore = Int()
+    private var lives = Int()
+    private var highlevel = Int()
+    private let heroCategory:UInt32         		=  1
+    private let worldCategory:UInt32        		=  2
+    private let bombBoundsCategory:UInt32   		=  4
+    private let badFishCategory:UInt32      		=  8
+    private let badGuyCategory:UInt32       		=  16
+    private let tractorCategory:UInt32      		=  32
+    private let laserbeam: UInt32          		 	=  64
+    private let wallCategory:UInt32        		 	=  128
+    private let itemCategory:UInt32         		=  256
+    private let fishCategory:UInt32        			=  512
+    private let charmsCategory:UInt32      			=  1024
+    private let levelupCategory:UInt32      		=  2048
+    private let laserBorder:UInt32         	 		=  4096
+    private var scoreDict: [String:Int] = [:]
+    
+    private var laserbeak : GameProjectiles! = GameProjectiles(laserbeak: nil,🚞: nil)
     //we can swap these out if we use other emoji ships: 0 through 6
 
     
@@ -471,7 +473,7 @@
             }
             
             ThumbPad.delegate = self
-            camera?.addChild(ThumbPad)
+            cam.addChild(ThumbPad)
             ThumbPad.zPosition = 1000
             ThumbPad.name = "ArcadeJoyPad"
             
@@ -498,7 +500,7 @@
     
     
     func setupLevel(tileMap: SKTileMapNode) {
-        let tmr = TMRX(TileMap: tileMap)
+        let tmr = TMRX(TileMapTileSize: tileMap.tileSize, TileMapParent: tileMap.parent, TileMapRect: tileMap.scene?.frame)
         	tileMap.alpha = 0.0
             for col in (0 ..< tileMap.numberOfColumns) {
                 for row in (0 ..< tileMap.numberOfRows) {
@@ -519,6 +521,7 @@
     }
     
     override func update(_ currentTime: TimeInterval) {
+        guard let hero = hero else { return }
         if(hero.position.y > screenHeight  ) {
             highScoreLabelNode.run(SKAction.fadeAlpha(to: 0.0, duration: 0.25))
             highScoreLabel.run(SKAction.fadeAlpha(to: 0.0, duration: 0.25))
@@ -535,7 +538,7 @@
         🔋 = true
         🔱 = true
         let logonode = SKSpriteNode(texture: SKTexture(imageNamed: "UFOEmojiLogoLarge"))
-        self.camera?.addChild(logonode)
+        self.cam.addChild(logonode)
         logonode.setScale(0.1875)
         logonode.alpha = 1.00
         logonode.zPosition = 100
@@ -740,7 +743,7 @@
                         node.physicsBody?.restitution = 0
                         node.speed = 0
                         node.yScale = 1.5
-                        self.camera?.addChild(node)
+                        self.cam.addChild(node)
                     }
                 }
             }
@@ -785,14 +788,15 @@
             emojiAnimation(emojis:["🙈","🙊","🙉","🐵"])
         }
         
-        var sceneheight = CGFloat(0)
-        var indent = CGFloat(0)
         
-        if let sh = scene?.frame.size.height, let sw = scene?.frame.size.width {
+        guard
+            let sh = scene?.frame.size.height,
+            let sw = scene?.frame.size.width
+            else { return }
+        
             screenHeight = sh / 2 - 64
-            sceneheight = sh / 2
-            indent = ( sw / 2 ) - 7.5 * CGFloat(settings.mode)
-        }
+            let sceneheight = sh / 2
+            let indent = ( sw / 2 ) - 7.5 * CGFloat(settings.mode)
         
         let difference = CGFloat(20)
         let labelheight = sceneheight - difference
@@ -1005,7 +1009,7 @@
     func TouchPad(velocity: CGVector, zRotation: CGFloat) {
         
         //MARK: reference to hero's physic's body - easier
-        guard let pb = hero.physicsBody else { return }
+        guard let hero = hero, let pb = hero.physicsBody else { return }
         
         func rotateShip (_ t: TimeInterval, _ angle: CGFloat ) {
             let rot = SKAction.rotate(toAngle: angle, duration: t)
@@ -1171,7 +1175,7 @@
         
     }
     func laserVersusFloater(firstBody:SKPhysicsBody,secondBody:SKPhysicsBody, contactPoint: CGPoint) {
-        
+        guard let hero = hero else { return }
         
         if ( secondBody.node?.parent != nil && firstBody.node?.parent != nil && secondBody.node != nil && firstBody.node != nil) {
             

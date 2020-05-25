@@ -12,16 +12,26 @@ class TMRX {
     
     
     deinit {
-        print("DEINIT TileMap")
-        TileMap = nil
+        print("DEINIT TMRX")
+        TileMapTileSize = nil
+        TileMapParent   = nil
+        TileMapRect     = nil
     }
 
-    private weak var TileMap: SKTileMapNode!
-    
-    init(TileMap: SKTileMapNode?) {
-        guard let TileMap = TileMap else { return }
-        self.TileMap = TileMap
+    private weak var TileMapParent   : SKNode!
+    private var 	 TileMapTileSize : CGSize!
+    private var      TileMapRect     : CGRect!
+
+    init( TileMapTileSize: CGSize?, TileMapParent: SKNode?, TileMapRect: CGRect? ) {
+        guard
+            let TileMapTileSize = TileMapTileSize,
+            let TileMapParent   = TileMapParent,
+            let TileMapRect     = TileMapRect
+            else { return }
         
+        self.TileMapTileSize 		= TileMapTileSize
+        self.TileMapParent  = TileMapParent
+        self.TileMapRect    = TileMapRect
     }
     
     //Draw Coins
@@ -65,12 +75,7 @@ class TMRX {
         TileNode.physicsBody?.mass = Mass
         TileNode.name = Name
         
-        //let name = TileMapNode.name
-        //let scene = TileMapNode.scene
-        //let world = scene?.childNode(withName: "world")?.childNode(withName: name!)
-        //world?.addChild(TileNode)
-        TileMap.parent?.addChild(TileNode)
-        
+        TileMapParent.addChild(TileNode)
         if NewItem == "🐟" || Emoji == "🐝" || NewItem == "🦀" || NewItem == "🛸"  {
             var random = Int(arc4random_uniform(6)) + 1
             let r2 = Int(arc4random_uniform(1))
@@ -253,7 +258,7 @@ class TMRX {
         if Name == "🎇" {
             let field = SKFieldNode.springField()
             field.strength = 0.2
-            field.minimumRadius = Float((TileMap.scene?.frame.height)! / 4)
+            field.minimumRadius = Float(TileMapRect.height / 4)
             field.position = CGPoint(x:0,y:0)
             let shape = SKShapeNode(circleOfRadius: 256)
             field.region = SKRegion(path: shape.path!)
@@ -281,7 +286,7 @@ class TMRX {
         if Name == "🌀" {
             let field = SKFieldNode.springField()
             field.strength = 0.2
-            field.minimumRadius = Float((TileMap.scene?.frame.height)! / 8)
+            field.minimumRadius = Float(TileMapRect.height / 8)
             field.position = CGPoint(x:0,y:0)
             let shape = SKShapeNode(circleOfRadius: 128)
             field.region = SKRegion(path: shape.path!)
@@ -361,7 +366,7 @@ class TMRX {
                     badguyai[newitem + String(badguyArray[i])] = pos // we are now setting the home position, but we are storing this for the drive Letter
                     
                     let gravity = false;
-                    let radius = TileMap.tileSize.width / 2.0 - 2.0
+                    let radius = TileMapTileSize.width / 2.0 - 2.0
                     let physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
                     let rotation = true;
                     
@@ -396,9 +401,9 @@ class TMRX {
                         bgnodes = 5 //tileData?["nodes"] as! Int
                     }
                     
-                    DrawBadGuxAI(TileMapNode: TileMap, TileNode: tileNode, PhysicsBody: physicsBody, Dynamic: true, Gravity: gravity, Category: cat, Collision: col, Rotation: rotation, Emoji: newemoji, Name: newitem, Contact: con, Mass: 0.1, Friction: 0, Letter: String(badguyArray[i]), Routes: bgroutes, Nodes: bgnodes )
+                    DrawBadGuxAI(TileMapParent: TileMapParent, TileNode: tileNode, PhysicsBody: physicsBody, Dynamic: true, Gravity: gravity, Category: cat, Collision: col, Rotation: rotation, Emoji: newemoji, Name: newitem, Contact: con, Mass: 0.1, Friction: 0, Letter: String(badguyArray[i]), Routes: bgroutes, Nodes: bgnodes )
                     
-                    break;
+                    break
                 }
             }
             
@@ -1219,7 +1224,7 @@ class TMRX {
             
             let gravity = true;
             
-            let radius = TileMap.tileSize.width / 2.0 - 2.0
+            let radius = TileMapTileSize.width / 2.0 - 2.0
             let physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
             
             //let mysize = CGSize(width: 30, height: 30)
@@ -1353,7 +1358,7 @@ class TMRX {
         TileNode.zPosition = 70
         TileNode.name = Name
         
-        TileMap.parent?.addChild(TileNode)
+        TileMapParent.addChild(TileNode)
         TileNode = SKSpriteNode()
     }
     

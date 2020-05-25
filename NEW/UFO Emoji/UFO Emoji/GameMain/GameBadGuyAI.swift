@@ -18,7 +18,7 @@ var badGuyFifth = ["4","5"]
 //var badGuyCount = Int(0)
 
 
-func DrawBadGuxAI(TileMapNode: SKTileMapNode, TileNode: SKSpriteNode, PhysicsBody: SKPhysicsBody, Dynamic: Bool, Gravity: Bool, Category: UInt32, Collision: UInt32, Rotation: Bool, Emoji: String, Name: String, Contact: UInt32, Mass: CGFloat, Friction: CGFloat, Letter:String, Routes:Int, Nodes:Int ) {
+func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SKPhysicsBody, Dynamic: Bool, Gravity: Bool, Category: UInt32, Collision: UInt32, Rotation: Bool, Emoji: String, Name: String, Contact: UInt32, Mass: CGFloat, Friction: CGFloat, Letter:String, Routes:Int, Nodes:Int ) {
  
     TileNode.physicsBody = PhysicsBody
     TileNode.zPosition = 70
@@ -39,7 +39,7 @@ func DrawBadGuxAI(TileMapNode: SKTileMapNode, TileNode: SKSpriteNode, PhysicsBod
     //let scene = TileMapNode.scene
     //let world = scene?.childNode(withName: "world")?.childNode(withName: name!)
     
-    TileMapNode.parent?.addChild(TileNode)
+    TileMapParent.addChild(TileNode)
     
     let codeaction = SKAction.run {
         

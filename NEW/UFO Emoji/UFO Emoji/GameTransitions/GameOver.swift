@@ -28,19 +28,25 @@ class GameOver: SKScene {
     func runner() {
         
         DispatchQueue.main.async { [weak self] in
-            self?.scene?.removeAllActions()
-            self?.scene?.removeAllChildren()
-            self?.scene?.removeFromParent()
-            
-            self?.view?.allowsTransparency = false
-            self?.view?.ignoresSiblingOrder = true
-            self?.view?.isAsynchronous = false
-            self?.view?.shouldCullNonVisibleNodes = true
-            self?.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            guard let self = self else { return }
 
-            self?.removeAllActions()
-            self?.removeFromParent()
+            self.removeAllActions()
+            self.removeAllChildren()
+            self.removeFromParent()
             
+            self.view?.isMultipleTouchEnabled = true
+            self.view?.allowsTransparency = false
+            self.view?.isAsynchronous = true
+            self.view?.isOpaque = true
+            self.view?.clipsToBounds = true
+            self.view?.ignoresSiblingOrder = true
+            self.view?.showsFPS = true
+            self.view?.showsNodeCount = true
+            self.view?.shouldCullNonVisibleNodes = true
+            self.view?.preferredFramesPerSecond = 61
+            
+            self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+
             let my = GameStartup.gs.loadScores()
             var scorelabel = "🎲"
             
@@ -50,7 +56,7 @@ class GameOver: SKScene {
         
             let message = "🎯 " + scorelabel
             
-            self?.backgroundColor = SKColor.black
+            self.backgroundColor = SKColor.black
             
             /* Game Over Message */
             let label = SKLabelNode(fontNamed: "Apple Color Emoji")
@@ -69,23 +75,20 @@ class GameOver: SKScene {
             label2.fontColor = SKColor.white
             label2.position = CGPoint(x: 0, y: -64)
             
-            self?.addChild(label)
-            self?.addChild(label2)
+            self.addChild(label)
+            self.addChild(label2)
         }
-        
-        
-        
-       
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
             self?.gd?.runGameMenu()
-
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
-            self?.removeAllChildren()
-            self?.removeAllActions()
-            self?.removeFromParent()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) { [weak self] in
+            guard let self = self else { return }
+
+            self.removeAllChildren()
+            self.removeAllActions()
+            self.removeFromParent()
         }
     
         

@@ -29,19 +29,22 @@ class LevelUp: SKScene {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
-            self.scene?.removeAllActions()
-            self.scene?.removeAllChildren()
-            self.scene?.removeFromParent()
-            
-            self.view?.allowsTransparency = false
-            self.view?.ignoresSiblingOrder = true
-            self.view?.isAsynchronous = false
-            self.view?.shouldCullNonVisibleNodes = true
+            self.removeAllActions()
+            self.removeAllChildren()
+            self.removeFromParent()
+			
             self.anchorPoint = CGPoint(x: 0.0, y: 0.0)
             
-            self.removeAllActions()
-            self.removeFromParent()
-            
+            self.view?.isMultipleTouchEnabled = true
+            self.view?.allowsTransparency = false
+            self.view?.isAsynchronous = true
+            self.view?.isOpaque = true
+            self.view?.clipsToBounds = true
+            self.view?.ignoresSiblingOrder = true
+            self.view?.showsFPS = true
+            self.view?.showsNodeCount = true
+            self.view?.shouldCullNonVisibleNodes = true
+            self.view?.preferredFramesPerSecond = 61
             
             let lives = GameStartup.gs.loadScores().lives
             let heroMessage = levelarray[settings.level]

@@ -18,13 +18,13 @@ class GameViewController: UIViewController, GameProtocol {
     func runGameLevel() {
         gameLevel()
     }
-    	
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         gameDelegate = self
         gameMenu()
     }
-	
+    
     
     func getDeviceSize() {
         // iPhone detection
@@ -43,6 +43,9 @@ class GameViewController: UIViewController, GameProtocol {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        view.backgroundColor = .red
+    }
     
     func setSceneSizeForGame() -> CGSize  {
         //loadGameSettings()
@@ -68,21 +71,25 @@ class GameViewController: UIViewController, GameProtocol {
         guard
             let view = self.view as? SKView,
             let scene = SKScene(fileNamed: "GameMenu")
-        else { return }
+            else { return }
         
         DispatchQueue.main.async  { [weak self] in
             guard let self = self else { return }
-			
+            
             scene.scaleMode = .aspectFill
             scene.size = self.setSceneSizeForGame()
             scene.scaleMode = .aspectFill
             scene.backgroundColor = SKColor.init(displayP3Red: 0, green: 20 / 255, blue: 80 / 255, alpha: 1.0)
             view.isMultipleTouchEnabled = true
-            view.isAsynchronous = false
+            view.allowsTransparency = false
+            view.isAsynchronous = true
+            view.isOpaque = true
             view.clipsToBounds = true
-            view.ignoresSiblingOrder = true
+            view. ignoresSiblingOrder = true
             view.showsFPS = true
             view.showsNodeCount = true
+            view.shouldCullNonVisibleNodes = true
+            view.preferredFramesPerSecond = 61
             view.presentScene(scene)
         }
         
@@ -90,10 +97,8 @@ class GameViewController: UIViewController, GameProtocol {
             guard let self = self else { return }
             self.removeFromParent()
         }
-
+        
     }
-    
-    
     
     func gameLevel() {
         guard
@@ -109,11 +114,15 @@ class GameViewController: UIViewController, GameProtocol {
             scene.scaleMode = .aspectFill
             scene.backgroundColor = SKColor.black
             view.isMultipleTouchEnabled = true
-            view.isAsynchronous = false
+            view.allowsTransparency = false
+            view.isAsynchronous = true
+            view.isOpaque = true
             view.clipsToBounds = true
             view.ignoresSiblingOrder = true
             view.showsFPS = true
             view.showsNodeCount = true
+            view.shouldCullNonVisibleNodes = true
+            view.preferredFramesPerSecond = 61
             view.presentScene(scene)
         }
         

@@ -25,9 +25,27 @@ class GameMenu: SKScene {
     private var lockDown = false
     
     deinit {
-        scene?.removeAllActions()
-        scene?.removeAllChildren()
-        scene?.removeFromParent()
+        removeAllActions()
+        removeAllChildren()
+        removeFromParent()
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+            [ weak musicLabel, weak soundLabel, weak stickLabel, weak levelLabel, weak versusLabel, weak emojiLabel, weak playLabel1, weak playLabel2, weak playNode] in
+            guard
+                let _  = musicLabel,
+            	let _  = soundLabel,
+            	let _  = stickLabel,
+            	let _  = levelLabel,
+            	let _  = versusLabel,
+            	let _  = emojiLabel,
+            	let _  = playLabel1,
+            	let _  = playLabel2,
+            	let _    = playNode
+
+                else { return }
+
+        }
     }
     
     internal override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -171,15 +189,8 @@ class GameMenu: SKScene {
                         
                         self.lockDown = false
                     }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
-                        self?.removeAllChildren()
-                        self?.removeAllActions()
-                        self?.removeFromParent()
-                    }
-                    
-                    
-                    
+              
+                
                 } else if name != "musicLabel" && name != "soundLabel" && name != "stickLabel" && name != "levelLabel" && name != "versusLabel" && name != "emojiLabel" {
                     let fadeIn = SKAction.fadeAlpha(to: 0.5, duration:TimeInterval(0.1))
                     let myDecay = SKAction.wait(forDuration: 0.1)
@@ -237,7 +248,7 @@ class GameMenu: SKScene {
                 sprite.position = childNode.position
                 sprite.position.x = sprite.position.x + -spc
                 sprite.name = spriteName
-                scene?.addChild(sprite)
+            	addChild(sprite)
                 
                 label.fontName = "Apple Color Emoji"
                 label.fontSize = fontSize
@@ -254,7 +265,7 @@ class GameMenu: SKScene {
                     label.xScale = -1
                 }
                 
-                scene?.addChild(label)
+                addChild(label)
                 
                 let spriteB  = SKSpriteNode(imageNamed: spriteNodeB)
                 
@@ -263,7 +274,7 @@ class GameMenu: SKScene {
                 spriteB.position = childNode.position
                 spriteB.position.x = sprite.position.x + (spc * 2)
                 spriteB.name = spriteNameB
-                scene?.addChild(spriteB)
+                addChild(spriteB)
                 
                 if let versusLabel = versusLabel {
                     versusLabel.name = "versusLabel"
@@ -273,7 +284,7 @@ class GameMenu: SKScene {
                     versusLabel.position = childNode.position
                     versusLabel.position.x = versusLabel.position.x + 28
                     
-                    scene?.addChild(versusLabel)
+                    addChild(versusLabel)
                 }
             }
         }
@@ -287,8 +298,8 @@ class GameMenu: SKScene {
         
         //🤾‍♀️🏏⚽️⚾️
         
-        if let pn = scene?.childNode(withName: "play") {
-            scene?.addChild(playNode)
+        if let pn = childNode(withName: "play") {
+            addChild(playNode)
             playNode.position = pn.position
             
             playNode.position.x = playNode.position.x + spc - 16
