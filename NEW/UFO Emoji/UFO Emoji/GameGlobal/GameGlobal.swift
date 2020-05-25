@@ -29,10 +29,7 @@ var KingQueenGlobalDie = 100
 
 ///
 
-protocol GameProtocol {
-    func runGameMenu()
-    func runGameLevel()
-}
+
 
 var gameDelegate : GameProtocol?
 

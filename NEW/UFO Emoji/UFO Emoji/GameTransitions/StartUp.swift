@@ -10,16 +10,16 @@ import SpriteKit
 
 class StartUp: SKScene {
     
-    var gd = gameDelegate
-    
+    weak var gd = gameDelegate
+
     override init(size: CGSize) {
-        
         super.init(size: size)
-      
     }
     
     
     deinit {
+        print("StartUp DeInit")
+
         if hasActions() {
             removeAllActions()
         }

@@ -11,8 +11,8 @@ import SpriteKit
 
 class GameOver: SKScene {
     
-	var gd = gameDelegate
-    
+    weak var gd = gameDelegate
+
     override init(size: CGSize ) {
         
         super.init(size: size)
@@ -20,6 +20,7 @@ class GameOver: SKScene {
     }
     
     deinit {
+        print("Game Over DeInit")
         if hasActions() {
             removeAllActions()
         }

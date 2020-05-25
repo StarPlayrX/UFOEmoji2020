@@ -25,6 +25,7 @@ class GameMenu: SKScene {
     private var lockDown = false
     
     deinit {
+        print("GameMenu DeInit")
         if hasActions() {
             removeAllActions()
         }

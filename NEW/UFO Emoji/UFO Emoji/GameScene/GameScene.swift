@@ -62,11 +62,11 @@
     private let laserBorder:UInt32         	 		=  4096
     private var scoreDict: [String:Int] = [:]
     
-    //private var laserbeak : GameProjectiles! = GameProjectiles(laserbeak: nil,🚞: nil)
+    private var laserbeak : GameProjectiles! = GameProjectiles(laserbeak: nil,🚞: nil)
     //we can swap these out if we use other emoji ships: 0 through 6
     
     deinit {
-        print("DEINIT!!!!")
+        print("GameScene DeINIT")
         print(scene?.children)
         if hasActions() {
             removeAllActions()
@@ -551,7 +551,7 @@
         
         
         
-        //laserbeak = GameProjectiles(laserbeak: laserbeam, 🚞: self)
+        laserbeak = GameProjectiles(laserbeak: laserbeam, 🚞: self)
         
         world = childNode(withName: "world")
         
@@ -933,21 +933,21 @@
             if let name = touchedNode.name {
                 
                 if name == "fire-right" {
-//laserbeak.hero(hero: (hero.position, hero.zRotation, heroVelocity), reverse:false)
-                   // laserbeak.firebomb(firebomb: firebutton)
+					laserbeak.hero(hero: (hero.position, hero.zRotation, heroVelocity), reverse:false)
+                    laserbeak.firebomb(firebomb: firebutton)
                 }
                 
                 if name == "fire-left" {
-                   // laserbeak.hero(hero: (hero.position, hero.zRotation, heroVelocity), reverse:true)
-                    //laserbeak.firebomb(firebomb: firebutton2)
+                   laserbeak.hero(hero: (hero.position, hero.zRotation, heroVelocity), reverse:true)
+                laserbeak.firebomb(firebomb: firebutton2)
                 }
                 
                 if name == "fire-down" {
-                   // GameProjectiles(bombsaway: laserbeam, 🚞: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse: false).firebomb(firebomb: bombsbutton)
+                   GameProjectiles(bombsaway: laserbeam, 🚞: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse: false).firebomb(firebomb: bombsbutton)
                 }
                 
                 if name == "fire-top" {
-                  //  GameProjectiles(bombsaway: laserbeam, 🚞: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse:true ).firebomb(firebomb: bombsbutton2)
+                  GameProjectiles(bombsaway: laserbeam, 🚞: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse:true ).firebomb(firebomb: bombsbutton2)
                 }
             }
         }
@@ -1537,7 +1537,7 @@
             let explosion = SKEmitterNode(fileNamed: "fireParticle.sks")!
             explosion.alpha = 0.5
             explosion.position = hero.position
-            scene?.addChild(explosion)
+            addChild(explosion)
             tractor.removeFromParent()
             hero.physicsBody?.affectedByGravity = true
             moving.speed = moving.speed / 2
@@ -1550,8 +1550,7 @@
                 explosion.removeAllChildren()
                 explosion.removeFromParent()
             	
-          
-            
+
                 let gameOverScene = GameOver( size: self.size )
                 gameOverScene.runner()
                 self.size = setSceneSizeForGame()
@@ -1570,31 +1569,10 @@
                 self.view?.preferredFramesPerSecond = 61
                 
                 self.view?.presentScene(gameOverScene)
-                
-                self.removeAllActions()
-                self.removeAllChildren()
-                self.world?.removeAllChildren()
+           
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self ] in
-                guard let self = self else { return }
-                self.backParalax.removeFromParent()
-                
-                print("PE-DE-INIT")
-                print(self.scene?.children)
-                if self.hasActions() {
-                    print("HAS ACTIONS")
-                    self.removeAllActions()
-                }
-                
-                if !self.children.isEmpty {
-                    print("HAS CHILDREN")
-                }
-                
-                self.removeFromParent()
-                
-                
-            }
+            
         }
         
         gameOver(world:world!, moving:moving, hero:hero, tractor:tractor)

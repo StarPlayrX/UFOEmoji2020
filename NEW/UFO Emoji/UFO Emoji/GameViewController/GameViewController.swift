@@ -9,6 +9,11 @@
 import UIKit
 import SpriteKit
 
+protocol GameProtocol: class {
+    func runGameMenu()
+    func runGameLevel()
+}
+
 class GameViewController: UIViewController, GameProtocol {
     
     func runGameMenu() {

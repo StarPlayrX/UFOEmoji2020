@@ -10,8 +10,8 @@ import SpriteKit
 
 class LevelUp: SKScene {
     
-     var gd : GameProtocol?
-    
+    weak var gd = gameDelegate
+
      override init(size: CGSize ) {
         
         super.init(size: size)
@@ -19,7 +19,8 @@ class LevelUp: SKScene {
     }
         
     deinit {
-        print("DEINIT!!!!!!!")
+        print("Level Up DeInit")
+
         if hasActions() {
             removeAllActions()
         }
