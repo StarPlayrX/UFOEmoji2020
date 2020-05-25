@@ -6,10 +6,6 @@
 //  Copyright © 2015 Todd Bruss. All rights reserved.
 //
 
-import SpriteKit
-
-//var mynode = SKReferenceNode()
-
 class GameStartup {
     
     static let gs = GameStartup()

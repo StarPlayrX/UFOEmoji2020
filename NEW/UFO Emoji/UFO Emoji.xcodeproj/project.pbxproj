@@ -80,7 +80,6 @@
 		5F6397AE247B8802007E4374 /* GameStartup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStartup.swift; sourceTree = "<group>"; };
 		5FC051A5247B03E7003C8201 /* UFO Emoji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UFO Emoji.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FC051A8247B03E7003C8201 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5FC051AE247B03E7003C8201 /* Reference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reference.swift; sourceTree = "<group>"; };
 		5FC051B0247B03E7003C8201 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		5FC051B3247B03E7003C8201 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FC051B5247B03E8003C8201 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -229,7 +228,6 @@
 				5F1CF8B2247B1689008DEC84 /* GameFileStorage */,
 				5F1CF8B7247B175C008DEC84 /* GameSettings */,
 				5F1CF8B0247B13B9008DEC84 /* GameFonts */,
-				5FC051AE247B03E7003C8201 /* Reference.swift */,
 				5FC051B5247B03E8003C8201 /* Assets.xcassets */,
 				5FC051BA247B03E8003C8201 /* Info.plist */,
 			);

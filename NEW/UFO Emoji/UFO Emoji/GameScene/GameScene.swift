@@ -25,20 +25,10 @@
         camera?.removeFromParent()
         camera?.removeAllActions()
         camera?.removeFromParent()
-        
-        scene?.removeAllActions()
-        scene?.removeAllChildren()
-        scene?.removeFromParent()
-        
-        self.removeAllActions()
-        self.removeAllChildren()
-        self.removeFromParent()
-        
+         
         removeAllActions()
         removeAllChildren()
         removeFromParent()
-        
-        
     }
     
     weak var firstBody : SKPhysicsBody!
@@ -508,16 +498,15 @@
     
     
     func setupLevel(tileMap: SKTileMapNode) {
-        
-        DispatchQueue.main.async { [weak tileMap] in
-            guard let tileMap = tileMap else { return }
-            let tmr = TMRX(TileMap: tileMap)
-            
+        let tmr = TMRX(TileMap: tileMap)
+        	tileMap.alpha = 0.0
             for col in (0 ..< tileMap.numberOfColumns) {
                 for row in (0 ..< tileMap.numberOfRows) {
                     let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
                     let center = tileMap.centerOfTile(atColumn: col, row: row)
-                    
+                    tileDefinition?.textures.removeAll()
+                    tileDefinition?.normalTextures.removeAll()
+
                     if let td = tileDefinition, let n = td.name, !n.isEmpty {
                         tmr.tileMapRun(tileDefinition: td, center: center)
                     }
@@ -527,9 +516,6 @@
             
             tileMap.removeAllChildren()
             tileMap.removeFromParent()
-            
-        }
-
     }
     
     override func update(_ currentTime: TimeInterval) {

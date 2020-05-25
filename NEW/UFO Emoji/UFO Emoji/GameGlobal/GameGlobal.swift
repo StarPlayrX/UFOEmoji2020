@@ -6,7 +6,6 @@
 //  Copyright © 2020 Todd Bruss. All rights reserved.
 //
 
-import Foundation
 import SpriteKit
 
 typealias appsettings =  (level: Int, highlevel: Int, emoji: Int, score: Int, highscore: Int, lives: Int, music: Bool, sound: Bool, stick: Bool, mode: Int)

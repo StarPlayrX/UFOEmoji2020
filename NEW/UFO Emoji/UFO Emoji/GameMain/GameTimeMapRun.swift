@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-//var earth = SKSpriteNode()
 
 class TMRX {
     
@@ -17,17 +16,16 @@ class TMRX {
         TileMap = nil
     }
 
-    weak var TileMap: SKTileMapNode!
+    private weak var TileMap: SKTileMapNode!
     
-    init(TileMap: SKTileMapNode) {
-        
+    init(TileMap: SKTileMapNode?) {
+        guard let TileMap = TileMap else { return }
         self.TileMap = TileMap
         
     }
     
     //Draw Coins
     func DrawCoinsX(TileNode: SKSpriteNode?, PhysicsBody: SKPhysicsBody?, Dynamic: Bool, Gravity: Bool, Category: UInt32, Collision: UInt32, Rotation: Bool, Emoji: String, Name: String, Contact: UInt32, Mass: CGFloat, Friction: CGFloat, NewItem: String, fliph: Bool, flipy: Bool) {
-        
         guard
             let TileNode = TileNode
             else { return }
@@ -317,7 +315,6 @@ class TMRX {
         }
         
         let tileData = tileDefinition.userData
-        
         
         var centerTexture = SKTexture()
         var newname = String()
