@@ -16,6 +16,7 @@ protocol GameProtocol: class {
 
 class GameViewController: UIViewController, GameProtocol {
     
+
     func runGameMenu() {
         gameMenu()
     }
@@ -28,6 +29,8 @@ class GameViewController: UIViewController, GameProtocol {
         super.viewDidLoad()
         gameDelegate = self
         gameMenu()
+        
+
     }
     
     
@@ -96,6 +99,8 @@ class GameViewController: UIViewController, GameProtocol {
             view.shouldCullNonVisibleNodes = true
             view.preferredFramesPerSecond = 61
             view.presentScene(scene)
+            laserbeak = GameProjectiles(laserbeak: nil, 🚞: nil)
+
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
@@ -129,6 +134,8 @@ class GameViewController: UIViewController, GameProtocol {
             view.shouldCullNonVisibleNodes = true
             view.preferredFramesPerSecond = 61
             view.presentScene(scene)
+            laserbeak = GameProjectiles(laserbeak: 64, 🚞: scene)
+
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in

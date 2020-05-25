@@ -30,6 +30,7 @@ var KingQueenGlobalDie = 100
 ///
 
 
+var laserbeak = GameProjectiles(laserbeak: 64, 🚞: nil)
 
 var gameDelegate : GameProtocol?
 
