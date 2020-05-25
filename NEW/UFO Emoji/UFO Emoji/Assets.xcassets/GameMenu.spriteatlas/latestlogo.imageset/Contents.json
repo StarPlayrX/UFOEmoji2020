@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "latestlogo.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
