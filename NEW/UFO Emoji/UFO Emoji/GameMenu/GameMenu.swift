@@ -25,8 +25,14 @@ class GameMenu: SKScene {
     private var lockDown = false
     
     deinit {
-        removeAllActions()
-        removeAllChildren()
+        if hasActions() {
+            removeAllActions()
+        }
+        
+        if !children.isEmpty {
+            removeAllChildren()
+        }
+    
         removeFromParent()
         
         
@@ -178,13 +184,27 @@ class GameMenu: SKScene {
                     playNode.run(SKAction.sequence([fadeIn,myDecay,fadeOut]))
                   
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.7) { [weak self] in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) { [weak self] in
                         guard let self = self else { return }
                       
                         let startup = StartUp( size: self.size )
                         startup.runner()
                         self.size = setSceneSizeForGame()
                         startup.scaleMode = .aspectFill
+                        
+                        self.view?.backgroundColor = .black
+
+                        self.view?.isMultipleTouchEnabled = true
+                        self.view?.allowsTransparency = false
+                        self.view?.isAsynchronous = true
+                        self.view?.isOpaque = true
+                        self.view?.clipsToBounds = true
+                        self.view?.ignoresSiblingOrder = true
+                        self.view?.showsFPS = true
+                        self.view?.showsNodeCount = true
+                        self.view?.shouldCullNonVisibleNodes = true
+                        self.view?.preferredFramesPerSecond = 61
+                        
                         self.view?.presentScene(startup)
                         
                         self.lockDown = false

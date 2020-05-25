@@ -70,7 +70,7 @@ class GameViewController: UIViewController, GameProtocol {
     func gameMenu() {
         guard
             let view = self.view as? SKView,
-            let scene = SKScene(fileNamed: "GameMenu")
+            let scene = GameMenu(fileNamed: "GameMenu")
             else { return }
         
         DispatchQueue.main.async  { [weak self] in
@@ -85,7 +85,7 @@ class GameViewController: UIViewController, GameProtocol {
             view.isAsynchronous = true
             view.isOpaque = true
             view.clipsToBounds = true
-            view. ignoresSiblingOrder = true
+            view.ignoresSiblingOrder = true
             view.showsFPS = true
             view.showsNodeCount = true
             view.shouldCullNonVisibleNodes = true
@@ -103,7 +103,7 @@ class GameViewController: UIViewController, GameProtocol {
     func gameLevel() {
         guard
             let view = self.view as? SKView,
-            let scene = SKScene(fileNamed: "GameScene")
+            let scene = GameScene(fileNamed: "GameScene")
             else { print("FAILED"); return }
         
         DispatchQueue.main.async  { [weak self] in

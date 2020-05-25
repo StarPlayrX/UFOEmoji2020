@@ -20,8 +20,14 @@ class StartUp: SKScene {
     
     
     deinit {
-        removeAllActions()
-        removeAllChildren()
+        if hasActions() {
+            removeAllActions()
+        }
+        
+        if !children.isEmpty {
+            removeAllChildren()
+        }
+        
         removeFromParent()
     }
     
@@ -29,10 +35,6 @@ class StartUp: SKScene {
         
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-          	
-            self.removeAllActions()
-            self.removeAllChildren()
-            self.removeFromParent()
         
             self.view?.isMultipleTouchEnabled = true
             self.view?.allowsTransparency = false
@@ -83,12 +85,6 @@ class StartUp: SKScene {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
             self?.gd?.runGameLevel()
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
-            self?.removeAllChildren()
-            self?.removeAllActions()
-            self?.removeFromParent()
         }
     }
     

@@ -9,32 +9,14 @@
  import SpriteKit
  import AVFoundation
  
+
  class GameScene: SKScene, ThumbPadProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
-    deinit {
-        backParalax.removeFromParent()
-        
-        world?.removeAllActions()
-        world?.removeAllChildren()
-        world?.removeFromParent()
-        
-        cam.removeAllActions()
-        cam.removeAllChildren()
-        cam.removeFromParent()
-        
-        world = nil
-    	camera = nil
-  
-        scene?.removeAllActions()
-        scene?.removeAllChildren()
-        scene?.removeFromParent()
-        
-        scene?.parent?.removeAllActions()
-        scene?.parent?.removeAllChildren()
-        scene?.parent?.removeFromParent()
-
-
-    }
+    var headsUpDisplay = SKReferenceNode()
+    var maxVelocity = CGFloat(0)
+    var backParalax =  SKNode()
+    
+    typealias Oreo =  (bombsbutton:SKSpriteNode?,firebutton:SKSpriteNode?,hero:SKSpriteNode?,canape:SKSpriteNode?,tractor:SKSpriteNode?,bombsbutton2:SKSpriteNode?,firebutton2:SKSpriteNode?)
     
     private weak var firstBody : SKPhysicsBody!
     private weak var secondBody : SKPhysicsBody!
@@ -47,7 +29,7 @@
     private weak var tractor:SKSpriteNode!
     private weak var world: SKNode!
     private var moving = SKNode()
-	
+    
     private var ThumbPad: JoyPad! = JoyPad()
     private var heroEmoji:SKLabelNode!
     private var audioPlayer: AVAudioPlayer!
@@ -80,9 +62,23 @@
     private let laserBorder:UInt32         	 		=  4096
     private var scoreDict: [String:Int] = [:]
     
-    private var laserbeak : GameProjectiles! = GameProjectiles(laserbeak: nil,🚞: nil)
+    //private var laserbeak : GameProjectiles! = GameProjectiles(laserbeak: nil,🚞: nil)
     //we can swap these out if we use other emoji ships: 0 through 6
-
+    
+    deinit {
+        print("DEINIT!!!!")
+        print(scene?.children)
+        if hasActions() {
+            removeAllActions()
+        }
+        
+        if !children.isEmpty {
+            removeAllChildren()
+        }
+        
+        removeFromParent()
+    }
+    
     
     func readyPlayerOne () -> Oreo? {
         
@@ -501,23 +497,23 @@
     
     func setupLevel(tileMap: SKTileMapNode) {
         let tmr = TMRX(TileMapTileSize: tileMap.tileSize, TileMapParent: tileMap.parent, TileMapRect: tileMap.scene?.frame)
-        	tileMap.alpha = 0.0
-            for col in (0 ..< tileMap.numberOfColumns) {
-                for row in (0 ..< tileMap.numberOfRows) {
-                    let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
-                    let center = tileMap.centerOfTile(atColumn: col, row: row)
-                    tileDefinition?.textures.removeAll()
-                    tileDefinition?.normalTextures.removeAll()
-
-                    if let td = tileDefinition, let n = td.name, !n.isEmpty {
-                        tmr.tileMapRun(tileDefinition: td, center: center)
-                    }
-                    
+        tileMap.alpha = 0.0
+        for col in (0 ..< tileMap.numberOfColumns) {
+            for row in (0 ..< tileMap.numberOfRows) {
+                let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
+                let center = tileMap.centerOfTile(atColumn: col, row: row)
+                tileDefinition?.textures.removeAll()
+                tileDefinition?.normalTextures.removeAll()
+                
+                if let td = tileDefinition, let n = td.name, !n.isEmpty {
+                    tmr.tileMapRun(tileDefinition: td, center: center)
                 }
+                
             }
-            
-            tileMap.removeAllChildren()
-            tileMap.removeFromParent()
+        }
+        
+        tileMap.removeAllChildren()
+        tileMap.removeFromParent()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -550,12 +546,12 @@
     }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+        print(children)
         
         
         
         
-        
-        laserbeak = GameProjectiles(laserbeak: laserbeam, 🚞: self)
+        //laserbeak = GameProjectiles(laserbeak: laserbeam, 🚞: self)
         
         world = childNode(withName: "world")
         
@@ -632,12 +628,12 @@
         tractor = gamestartup.tractor
         tractor.addGlow()
         
-    	bombsbutton = gamestartup.bombsbutton
+        bombsbutton = gamestartup.bombsbutton
         firebutton = gamestartup.firebutton
         bombsbutton2 = gamestartup.bombsbutton2
         firebutton2 = gamestartup.firebutton2
         
-        (level, highlevel, score, highscore, lives) = GameStartup.gs.loadScores()
+        (level, highlevel, score, highscore, lives) = GameStartup().loadScores()
         
         
         var background = ""
@@ -691,7 +687,7 @@
         } else {
             print("//*** Level not found: \(filename) ***//")
         }
-                
+        
         for node in self.children {
             if (node.name == "world") {
                 
@@ -748,7 +744,7 @@
                 }
             }
         }
-    
+        
         world?.addChild(moving)
         
         backParalax.removeFromParent()
@@ -769,18 +765,18 @@
             
             for i in -rounded...rounded  {
                 sprite.position = CGPoint(x: CGFloat(i) * 1440, y: 0)
-                backParalax.addChild(sprite.copy() as! SKSpriteNode )
+                self.backParalax.addChild(sprite.copy() as! SKSpriteNode )
             }
             
-            backParalax.zPosition = -243
+            self.backParalax.zPosition = -243
             sprite = SKSpriteNode()
             
-            backParalax.name = "backParalaxOriginal"
-            backParalax = backParalax.copy() as! SKNode
-            self.world?.addChild(backParalax)
+            self.backParalax.name = "backParalaxOriginal"
+            self.backParalax = self.backParalax.copy() as! SKNode
+            self.world?.addChild(self.backParalax)
             
         }
-            
+        
         world?.speed = 0
         moving.speed = 1
         
@@ -794,9 +790,9 @@
             let sw = scene?.frame.size.width
             else { return }
         
-            screenHeight = sh / 2 - 64
-            let sceneheight = sh / 2
-            let indent = ( sw / 2 ) - 7.5 * CGFloat(settings.mode)
+        screenHeight = sh / 2 - 64
+        let sceneheight = sh / 2
+        let indent = ( sw / 2 ) - 7.5 * CGFloat(settings.mode)
         
         let difference = CGFloat(20)
         let labelheight = sceneheight - difference
@@ -921,7 +917,7 @@
         guard
             let firebutton = firebutton,
             let firebutton2 = firebutton2,
-
+            
             let bombsbutton = bombsbutton,
             let bombsbutton2 = bombsbutton2,
             let heroVelocity = hero.physicsBody?.velocity
@@ -937,21 +933,21 @@
             if let name = touchedNode.name {
                 
                 if name == "fire-right" {
-                    laserbeak.hero(hero: (hero.position, hero.zRotation, heroVelocity), reverse:false)
-                    laserbeak.firebomb(firebomb: firebutton)
+//laserbeak.hero(hero: (hero.position, hero.zRotation, heroVelocity), reverse:false)
+                   // laserbeak.firebomb(firebomb: firebutton)
                 }
                 
                 if name == "fire-left" {
-                    laserbeak.hero(hero: (hero.position, hero.zRotation, heroVelocity), reverse:true)
-                    laserbeak.firebomb(firebomb: firebutton2)
+                   // laserbeak.hero(hero: (hero.position, hero.zRotation, heroVelocity), reverse:true)
+                    //laserbeak.firebomb(firebomb: firebutton2)
                 }
                 
                 if name == "fire-down" {
-                    GameProjectiles(bombsaway: laserbeam, 🚞: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse: false).firebomb(firebomb: bombsbutton)
+                   // GameProjectiles(bombsaway: laserbeam, 🚞: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse: false).firebomb(firebomb: bombsbutton)
                 }
                 
                 if name == "fire-top" {
-                    GameProjectiles(bombsaway: laserbeam, 🚞: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse:true ).firebomb(firebomb: bombsbutton2)
+                  //  GameProjectiles(bombsaway: laserbeam, 🚞: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse:true ).firebomb(firebomb: bombsbutton2)
                 }
             }
         }
@@ -1006,10 +1002,14 @@
     let shipMin = CGFloat(-500.0)
     
     
-    func TouchPad(velocity: CGVector, zRotation: CGFloat) {
-        
+    func TouchPad(velocity: CGVector?, zRotation: CGFloat?) {
         //MARK: reference to hero's physic's body - easier
-        guard let hero = hero, let pb = hero.physicsBody else { return }
+        guard
+            let hero = hero,
+            let pb = hero.physicsBody,
+            let velocity = velocity,
+         	let zRotation = zRotation
+        else { return }
         
         func rotateShip (_ t: TimeInterval, _ angle: CGFloat ) {
             let rot = SKAction.rotate(toAngle: angle, duration: t)
@@ -1372,7 +1372,7 @@
                     }
                 }
                 
-                GameStartup.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+                GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
                 
                 hero.physicsBody?.velocity = CGVector.zero
                 hero.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 0.0))
@@ -1407,21 +1407,28 @@
                     tractor.removeFromParent()
                     moving.speed = moving.speed / 2
                     world.speed =  world.speed / 2
-                                        
+                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
                         guard let self = self else { return }
                         let levelup = LevelUp( size: self.size )
                         levelup.runner()
                         self.size = setSceneSizeForGame()
                         levelup.scaleMode = .aspectFill
-                        self.view?.presentScene(levelup)
-                    }
                         
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
-                        guard let self = self else { return }
-                        self.removeAllChildren()
-                        self.removeAllActions()
-                        self.removeFromParent()
+                        self.view?.backgroundColor = .black
+                        
+                        self.view?.isMultipleTouchEnabled = true
+                        self.view?.allowsTransparency = false
+                        self.view?.isAsynchronous = true
+                        self.view?.isOpaque = true
+                        self.view?.clipsToBounds = true
+                        self.view?.ignoresSiblingOrder = true
+                        self.view?.showsFPS = true
+                        self.view?.showsNodeCount = true
+                        self.view?.shouldCullNonVisibleNodes = true
+                        self.view?.preferredFramesPerSecond = 61
+                        
+                        self.view?.presentScene(levelup)
                     }
                 }
                 
@@ -1462,7 +1469,7 @@
     
     func stopIt(secondBody: SKPhysicsBody, contactPoint: CGPoint) {
         //save first
-        GameStartup.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+        GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
         
         if moving.speed > 0 {
             
@@ -1513,7 +1520,7 @@
             livesLabelNode.text = String(livesDisplay[lives])
         }
         
-        GameStartup.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+        GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
     }
     
     
@@ -1522,7 +1529,7 @@
         print("ENDGAME")
         removeHero()
         removeGUI()
-        GameStartup.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+        GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
         
         //Loads the game over scene
         func gameOver(world:SKNode, moving:SKNode, hero: SKSpriteNode, tractor: SKSpriteNode) {
@@ -1538,15 +1545,55 @@
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
                 guard let self = self else { return }
+                
+                explosion.removeAllActions()
+                explosion.removeAllChildren()
+                explosion.removeFromParent()
+            	
+          
+            
                 let gameOverScene = GameOver( size: self.size )
                 gameOverScene.runner()
                 self.size = setSceneSizeForGame()
                 gameOverScene.scaleMode = .aspectFill
+                
+                self.view?.backgroundColor = .black
+                self.view?.isMultipleTouchEnabled = true
+                self.view?.allowsTransparency = false
+                self.view?.isAsynchronous = true
+                self.view?.isOpaque = true
+                self.view?.clipsToBounds = true
+                self.view?.ignoresSiblingOrder = true
+                self.view?.showsFPS = true
+                self.view?.showsNodeCount = true
+                self.view?.shouldCullNonVisibleNodes = true
+                self.view?.preferredFramesPerSecond = 61
+                
                 self.view?.presentScene(gameOverScene)
+                
+                self.removeAllActions()
+                self.removeAllChildren()
+                self.world?.removeAllChildren()
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-                backParalax.removeFromParent()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self ] in
+                guard let self = self else { return }
+                self.backParalax.removeFromParent()
+                
+                print("PE-DE-INIT")
+                print(self.scene?.children)
+                if self.hasActions() {
+                    print("HAS ACTIONS")
+                    self.removeAllActions()
+                }
+                
+                if !self.children.isEmpty {
+                    print("HAS CHILDREN")
+                }
+                
+                self.removeFromParent()
+                
+                
             }
         }
         
@@ -1603,7 +1650,7 @@
                     self.moving.speed       = 1
                     
                     guard let gamestartup = self.readyPlayerOne() else { return }
-                
+                    
                     self.hero = gamestartup.hero
                     self.canape = gamestartup.canape
                     self.tractor = gamestartup.tractor
@@ -1764,9 +1811,12 @@
         self.scoreLabelNode.text = String(self.score)
         
         if moving.speed == 0 {
-            GameStartup.gs.saveScores(level: self.level, highlevel: self.highlevel, score: self.score, hscore:self.highscore, lives: self.lives)
+            GameStartup().saveScores(level: self.level, highlevel: self.highlevel, score: self.score, hscore:self.highscore, lives: self.lives)
         }
     }
+    
+    
+ 
  }
  
  

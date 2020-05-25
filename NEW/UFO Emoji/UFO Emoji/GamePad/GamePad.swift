@@ -6,9 +6,10 @@
 
 import SpriteKit
 
-protocol ThumbPadProtocol {
-    func TouchPad(velocity: CGVector, zRotation: CGFloat)
+protocol ThumbPadProtocol: class {
+    func TouchPad(velocity: CGVector?, zRotation: CGFloat?)
 }
+ 
 
 class JoyPad: SKNode {
     var velocity = CGVector.zero
@@ -60,7 +61,7 @@ class JoyPad: SKNode {
         get { return (thumbNode.size.width / two) }
     }
     
-    var delegate: ThumbPadProtocol? {
+    weak var delegate: ThumbPadProtocol! {
         willSet {
             velocity = CGVector.zero
             recenter()
@@ -68,11 +69,11 @@ class JoyPad: SKNode {
             runtimeLoop?.add(to: RunLoop.current, forMode: RunLoop.Mode.common)
         }
     }
-
+    
     @objc func update() {
         
         delegate?.TouchPad(velocity: velocity, zRotation: CGFloat( velocity.dx / multiplier * dx ))
-    
+        
         if velocity != CGVector.zero {
             focus = true
         } else if focus {
@@ -105,7 +106,7 @@ class JoyPad: SKNode {
         setThumbImage(thumbImage, sizeToFit: true)
         backgroundImage(bgImage, sizeToFit: true)
         velocity = CGVector.zero
-  
+        
         addChild(backgroundNode)
         
         backgroundNode.isUserInteractionEnabled = false
@@ -128,7 +129,7 @@ class JoyPad: SKNode {
         }
     }
     
-
+    
     //MARK: Stick Moved (After)
     func stickMoved(location: CGPoint) {
         
@@ -139,9 +140,9 @@ class JoyPad: SKNode {
         
         //MARK: SnapToPoint (Up, Down, Left, Right)
         func snap (_ f: CGFloat, _ s: CGFloat ) -> CGFloat {
-                f == -thumbNodeRadius || f == thumbNodeRadius
-                    && -snapToPoint...snapToPoint ~= s
-                    ? zero : s
+            f == -thumbNodeRadius || f == thumbNodeRadius
+                && -snapToPoint...snapToPoint ~= s
+                ? zero : s
         }
         
         //MARK: clampX and Y
@@ -163,7 +164,7 @@ class JoyPad: SKNode {
     //MARK: Touches moved
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches as Set<UITouch>, with: event)
-    
+        
         if let location = touches.first?.location(in: self) {
             if location != CGPoint.zero  {
                 stickMoved(location: location)

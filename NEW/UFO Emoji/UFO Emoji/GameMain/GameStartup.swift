@@ -8,8 +8,6 @@
 
 class GameStartup {
     
-    static let gs = GameStartup()
-
     func loadScores() -> (level: Int, highlevel: Int, score: Int, hscore: Int, lives: Int) {
         let hscore = settings.highscore
         let highlevel = settings.highlevel

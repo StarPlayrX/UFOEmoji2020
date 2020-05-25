@@ -10,7 +10,7 @@ import SpriteKit
 
 class LevelUp: SKScene {
     
-    var gd = gameDelegate
+     var gd : GameProtocol?
     
      override init(size: CGSize ) {
         
@@ -19,8 +19,15 @@ class LevelUp: SKScene {
     }
         
     deinit {
-        removeAllActions()
-        removeAllChildren()
+        print("DEINIT!!!!!!!")
+        if hasActions() {
+            removeAllActions()
+        }
+        
+        if !children.isEmpty {
+            removeAllChildren()
+        }
+        
         removeFromParent()
     }
     
@@ -28,11 +35,7 @@ class LevelUp: SKScene {
           
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            
-            self.removeAllActions()
-            self.removeAllChildren()
-            self.removeFromParent()
-			
+     
             self.anchorPoint = CGPoint(x: 0.0, y: 0.0)
             
             self.view?.isMultipleTouchEnabled = true
@@ -46,7 +49,7 @@ class LevelUp: SKScene {
             self.view?.shouldCullNonVisibleNodes = true
             self.view?.preferredFramesPerSecond = 61
             
-            let lives = GameStartup.gs.loadScores().lives
+            let lives = GameStartup().loadScores().lives
             let heroMessage = levelarray[settings.level]
             let enemyMessage = antiarray[settings.level]
             let livesMessage = livesDisplay[ lives ]
@@ -84,15 +87,6 @@ class LevelUp: SKScene {
             guard let self = self else { return }
             self.gd?.runGameLevel()
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
-            guard let self = self else { return }
-            self.removeAllChildren()
-            self.removeAllActions()
-            self.removeFromParent()
-        }
-
-        
     }
         
  

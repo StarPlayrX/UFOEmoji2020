@@ -41,11 +41,3 @@ var gameDelegate : GameProtocol?
 
 
 
-
-var headsUpDisplay = SKReferenceNode()
-var maxVelocity = CGFloat(0)
-var backParalax =  SKNode()
-
-
-typealias Oreo =  (bombsbutton:SKSpriteNode?,firebutton:SKSpriteNode?,hero:SKSpriteNode?,canape:SKSpriteNode?,tractor:SKSpriteNode?,bombsbutton2:SKSpriteNode?,firebutton2:SKSpriteNode?)
-

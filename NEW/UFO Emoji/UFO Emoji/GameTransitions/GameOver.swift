@@ -20,9 +20,15 @@ class GameOver: SKScene {
     }
     
     deinit {
-        removeAllActions()
-        removeAllChildren()
-		removeFromParent()
+        if hasActions() {
+            removeAllActions()
+        }
+        
+        if !children.isEmpty {
+            removeAllChildren()
+        }
+        
+        removeFromParent()
     }
     
     func runner() {
@@ -47,7 +53,7 @@ class GameOver: SKScene {
             
             self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
 
-            let my = GameStartup.gs.loadScores()
+            let my = GameStartup().loadScores()
             var scorelabel = "🎲"
             
             if my.score == my.hscore {
@@ -82,16 +88,6 @@ class GameOver: SKScene {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
             self?.gd?.runGameMenu()
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) { [weak self] in
-            guard let self = self else { return }
-
-            self.removeAllChildren()
-            self.removeAllActions()
-            self.removeFromParent()
-        }
-    
-        
     }
     
     
