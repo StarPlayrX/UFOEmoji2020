@@ -10,9 +10,7 @@ import SpriteKit
 
 class TMRX {
     
-    
     deinit {
-        print("DEINIT TMRX")
         TileMapTileSize = nil
         TileMapParent   = nil
         TileMapRect     = nil
@@ -29,7 +27,7 @@ class TMRX {
             let TileMapRect     = TileMapRect
             else { return }
         
-        self.TileMapTileSize 		= TileMapTileSize
+        self.TileMapTileSiz = TileMapTileSize
         self.TileMapParent  = TileMapParent
         self.TileMapRect    = TileMapRect
     }

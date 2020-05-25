@@ -527,7 +527,6 @@
                 let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
                 let center = tileMap.centerOfTile(atColumn: col, row: row)
                 tileDefinition?.textures.removeAll()
-                tileDefinition?.normalTextures.removeAll()
                 if let td = tileDefinition, let n = td.name, !n.isEmpty {
                     tmr.tileMapRun(tileDefinition: td, center: center)
                 }
