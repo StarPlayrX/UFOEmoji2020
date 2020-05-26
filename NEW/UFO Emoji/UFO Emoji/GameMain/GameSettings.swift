@@ -1,12 +1,14 @@
 //
-//  GameStartup.swift
+//  GameSettings.swift
 //  UF Emoji
 //
-//  Created by todd on 12/3/15.
+//  Created by todd on May 25, 2020
 //  Copyright © 2015 Todd Bruss. All rights reserved.
 //
 
-class GameStartup {
+class GameSettings {
+    
+    static let gs = GameSettings()
     
     func loadScores() -> (level: Int, highlevel: Int, score: Int, hscore: Int, lives: Int) {
         let hscore = settings.highscore

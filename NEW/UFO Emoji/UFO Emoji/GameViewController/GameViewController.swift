@@ -33,6 +33,9 @@ class GameViewController: UIViewController, GameProtocol {
 
     }
     
+    deinit {
+        print("VC Deinited")
+    }
     
     func getDeviceSize() {
         // iPhone detection
@@ -78,7 +81,7 @@ class GameViewController: UIViewController, GameProtocol {
     func gameMenu() {
         guard
             let view = self.view as? SKView,
-            let scene = GameMenu(fileNamed: "GameMenu")
+            let scene = SKScene(fileNamed: "GameMenu")
             else { return }
         
         DispatchQueue.main.async  { [weak self] in
@@ -99,7 +102,8 @@ class GameViewController: UIViewController, GameProtocol {
             view.shouldCullNonVisibleNodes = true
             view.preferredFramesPerSecond = 61
             view.presentScene(scene)
-            laserbeak = GameProjectiles(laserbeak: nil, 🚞: nil)
+            laserbeak =  GameProjectiles.init(bombsaway: nil, 🚞: nil)
+            bombsaway = GameProjectiles.init(bombsaway: nil, 🚞: nil)
 
         }
         
@@ -113,7 +117,7 @@ class GameViewController: UIViewController, GameProtocol {
     func gameLevel() {
         guard
             let view = self.view as? SKView,
-            let scene = GameScene(fileNamed: "GameScene")
+            let scene = SKScene(fileNamed: "GameScene")
             else { print("FAILED"); return }
         
         DispatchQueue.main.async  { [weak self] in
@@ -134,7 +138,8 @@ class GameViewController: UIViewController, GameProtocol {
             view.shouldCullNonVisibleNodes = true
             view.preferredFramesPerSecond = 61
             view.presentScene(scene)
-            laserbeak = GameProjectiles(laserbeak: 64, 🚞: scene)
+            laserbeak = GameProjectiles.init(bombsaway: 64, 🚞: scene)
+            bombsaway = GameProjectiles.init(bombsaway: 64, 🚞: scene)
 
         }
         

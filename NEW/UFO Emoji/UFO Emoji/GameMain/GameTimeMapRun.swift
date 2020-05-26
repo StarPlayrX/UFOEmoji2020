@@ -27,7 +27,7 @@ class TMRX {
             let TileMapRect     = TileMapRect
             else { return }
         
-        self.TileMapTileSiz = TileMapTileSize
+        self.TileMapTileSize = TileMapTileSize
         self.TileMapParent  = TileMapParent
         self.TileMapRect    = TileMapRect
     }

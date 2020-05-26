@@ -30,10 +30,9 @@ class GameProjectiles {
     let 🍌 = "🍌"
 	let 🦸 = "laserbeam"
     let 🥾 = "super"
-    
-    
-    func hero (hero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool) {
-        
+   
+    func bullets (superhero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool) {
+        w
         let 🧵 = 🔋 ?  🥾 + 🦸 : 🦸
                 
         👁 = SKSpriteNode(texture: SKTexture(imageNamed: 🧵 ))
@@ -87,17 +86,17 @@ class GameProjectiles {
         👁.physicsBody?.applyImpulse(CGVector(dx: 100,dy: 0))
         👁.speed = CGFloat(0.8)
         👁.physicsBody?.usesPreciseCollisionDetection = false
-        let heroPositionX = hero.position.x
+        let superheroPositionX = superhero.position.x
         
         if doublelaser == 1 && settings.emoji != 2 {
-            👁.position = (CGPoint(x:heroPositionX, y:hero.position.y - 5))
+            👁.position = (CGPoint(x:superheroPositionX, y:superhero.position.y - 5))
         } else if doublelaser == 1 && settings.emoji == 2 {
-            👁.position = (CGPoint(x:heroPositionX, y:hero.position.y - 16))
+            👁.position = (CGPoint(x:superheroPositionX, y:superhero.position.y - 16))
         } else {
-            👁.position = hero.position
+            👁.position = superhero.position
         }
         
-        let rotateLaser = hero.zRotation * -3
+        let rotateLaser = superhero.zRotation * -3
         
         let constantX = CGFloat(750)
         let constantY = CGFloat(250)
@@ -105,49 +104,47 @@ class GameProjectiles {
         
         let d = reverse ? (x : -uno, y : uno) : (x : uno, y : -uno)
         
-        👁.physicsBody?.velocity = CGVector( dx: d.x * constantX + hero.velocity.dx, dy: rotateLaser * d.y * constantY )
+        👁.physicsBody?.velocity = CGVector( dx: d.x * constantX + superhero.velocity.dx, dy: rotateLaser * d.y * constantY )
         
-        👁.zRotation = hero.zRotation
+        👁.zRotation = superhero.zRotation
         
         if 👁.name!.isEmpty {
             print(👁 as Any)
         }
         
-        🚞.addChild(👁)
+        let laserDupe = 👁.copy() as! SKSpriteNode
+        🚞.addChild(laserDupe)
         
         if settings.emoji == 2 {
             let decay = SKAction.wait(forDuration: TimeInterval(0.6 * Double(settings.mode)))
             let spin = SKAction.rotate(byAngle: CGFloat.pi * 3.0 * 🍕, duration: 2)
             let remove = SKAction.removeFromParent()
-            👁.run(SKAction.sequence([spin,decay,remove]))
+            laserDupe.run(SKAction.sequence([spin,decay,remove]))
             
         } else {
             let decay = SKAction.wait(forDuration: TimeInterval(0.6 * Double(settings.mode)))
             let remove = SKAction.removeFromParent()
-            👁.run(SKAction.sequence([decay,remove]))
+            laserDupe.run(SKAction.sequence([decay,remove]))
         }
         
         //MARK: Power Up that lasts the entire level!
         if doublelaser == 1 {
             let laser2 = 👁.copy()
-            (laser2 as! SKSpriteNode).position = (CGPoint(x:heroPositionX, y:hero.position.y + 5))
+            (laser2 as! SKSpriteNode).position = (CGPoint(x:superheroPositionX, y:superhero.position.y + 5))
             🚞.addChild(laser2 as! SKSpriteNode)
         }
         
         if settings.sound {
             let fire: SKAction = SKAction.playSoundFileNamed(🚨, waitForCompletion: false)
-            👁.run(fire)
+            laserDupe.run(fire)
             
         }
     }
     
     deinit {
-     
         self.🚞.removeAllActions()
         self.🚞.removeAllChildren()
         self.🚞.removeFromParent()
-        
-        
     }
     
     init(laserbeak 🌞:UInt32?, 🚞:SKScene?) {
@@ -156,13 +153,19 @@ class GameProjectiles {
         self.🚞 = 🚞
     }
     
+    init(bombsaway 🌞:UInt32?, 🚞:SKScene?) {
+        guard let 🌞 = 🌞, let 🚞 = 🚞 else { return }
+        self.🌞 = 🌞
+        self.🚞 = 🚞
+    }
     
     
-    init(bombsaway 🌞:UInt32, 🚞:SKScene, hero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool ) {
+
+    func bomb (superhero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool ) {
         🛥 = !🛥
         
         💣 = SKSpriteNode()
-        💣.position = (CGPoint(x:hero.position.x, y:hero.position.y - 10))
+        💣.position = (CGPoint(x:superhero.position.x, y:superhero.position.y - 10))
         
         //MARK: How to assign values in an Elvis Operator
         🔱 ? (💣.name = "🔱") : (💣.name = "💣")
@@ -188,9 +191,9 @@ class GameProjectiles {
         let wait = 800
         
         if reverse {
-            💣.physicsBody?.velocity =  CGVector( dx: hero.velocity.dx / 4, dy: 350)
+            💣.physicsBody?.velocity =  CGVector( dx: superhero.velocity.dx / 4, dy: 350)
         } else {
-            💣.physicsBody?.velocity =  CGVector( dx: hero.velocity.dx / 4, dy: -350 )
+            💣.physicsBody?.velocity =  CGVector( dx: superhero.velocity.dx / 4, dy: -350 )
         }
         
         
@@ -206,15 +209,18 @@ class GameProjectiles {
         🧨.fontSize = 32
         💣.addChild(🧨)
         💣.speed = 200
-        🚞.addChild(💣)
+        
+        let DaBomb = 💣.copy() as! SKSpriteNode
+        🚞.addChild(DaBomb)
+        
         
         let decay = SKAction.wait(forDuration: TimeInterval(wait))
         let remove = SKAction.removeFromParent()
-        💣.run(SKAction.sequence([decay,remove]))
+        DaBomb.run(SKAction.sequence([decay,remove]))
         
         if settings.sound {
             let bombs: SKAction = SKAction.playSoundFileNamed(💥, waitForCompletion: false)
-            💣.run(bombs)
+            DaBomb.run(bombs)
         }
     }
     
@@ -226,7 +232,7 @@ class GameProjectiles {
     }
     
     
-    func getImageWithColor(color: UIColor, size: CGSize) -> UIImage
+    func getImageWithColorX(color: UIColor, size: CGSize) -> UIImage
     {
         let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: size.width, height: size.height))
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
@@ -235,9 +241,5 @@ class GameProjectiles {
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return image
-    }
-    
-    
-   
-    
+    } 
 }

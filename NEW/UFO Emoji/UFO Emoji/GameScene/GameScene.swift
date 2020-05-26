@@ -68,13 +68,27 @@
     
     deinit {
         //Just in Case our world is full.
-        
+        print("GameScene DeInit RAM")
         if referenceNode.hasActions() {
             referenceNode.removeAllActions()
         }
         
+    
+        if let level = referenceNode.children.first?.children {
+            //No longer hard encoded
+            for land in level {
+                if let name = land.name {
+                    if let middy = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode {
+                        print(middy)
+                        middy.removeAllActions()
+                        middy.removeAllChildren()
+                        middy.removeFromParent()
+                    }
+                }
+            }
+        }
+        
         if let rc = referenceNode?.children.first?.children {
-            print(rc)
 
             for i in rc {
                 i.removeAllActions()
@@ -87,9 +101,9 @@
             }
       
         }
-        
-        referenceNode.removeFromParent()
     
+        referenceNode.removeFromParent()
+       
         print("DeINIT Rest of Scene")
 
         if hasActions() {
@@ -101,6 +115,11 @@
         }
     
         removeFromParent()
+        
+        DispatchQueue.main.async { [ weak referenceNode ] in
+            guard let _ = referenceNode else { return }
+            referenceNode = nil
+        }
     }
     
     
@@ -536,7 +555,6 @@
         
         tileMap.removeAllActions()
         tileMap.removeAllChildren()
-        tileMap.removeFromParent()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -950,21 +968,23 @@
             if let name = touchedNode.name {
                 
                 if name == "fire-right" {
-                    laserbeak.hero(hero: (hero.position, hero.zRotation, heroVelocity), reverse:false)
+                    laserbeak.bullets(hero: (hero.position, hero.zRotation, heroVelocity), reverse:false)
                     laserbeak.firebomb(firebomb: firebutton)
                 }
                 
                 if name == "fire-left" {
-                    laserbeak.hero(hero: (hero.position, hero.zRotation, heroVelocity), reverse:true)
+                    laserbeak.bullets(hero: (hero.position, hero.zRotation, heroVelocity), reverse:true)
                     laserbeak.firebomb(firebomb: firebutton2)
                 }
                 
                 if name == "fire-down" {
-                    GameProjectiles(bombsaway: laserbeam, 🚞: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse: false).firebomb(firebomb: bombsbutton)
+                    bombsaway.bomb(hero: (hero.position, hero.zRotation, heroVelocity), reverse:false)
+                    bombsaway.firebomb(firebomb: bombsbutton)
                 }
                 
                 if name == "fire-top" {
-                   GameProjectiles(bombsaway: laserbeam, 🚞: self, hero: (hero.position, hero.zRotation, heroVelocity), reverse:true ).firebomb(firebomb: bombsbutton2)
+                    bombsaway.bomb(hero: (hero.position, hero.zRotation, heroVelocity), reverse:true)
+                    bombsaway.firebomb(firebomb: bombsbutton2)
                 }
             }
         }
