@@ -767,9 +767,9 @@
                         
                         if name != "Water" {
                             self.setupLevel( tileMap: middy)
-                            //middy.removeAllActions()
-                            //middy.removeAllChildren()
-                            //middy.removeFromParent()
+                            middy.removeAllActions()
+                            middy.removeAllChildren()
+                            middy.removeFromParent()
 
                         } else {
                             self.removeFromParent()
