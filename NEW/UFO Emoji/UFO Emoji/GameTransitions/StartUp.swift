@@ -55,6 +55,8 @@ class StartUp: SKScene {
             let goodGuy = levelarray[settings.level]
             let badGuy = antiarray[settings.level]
             
+            print(mainCharacter,goodGuy,badGuy,settings.level)
+            
             let label1 = SKLabelNode(fontNamed: "Apple Color Emoji")
             label1.fontSize = 72
             label1.text = mainCharacter

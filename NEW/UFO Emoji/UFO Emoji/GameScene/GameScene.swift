@@ -85,19 +85,20 @@
     //we can swap these out if we use other emoji ships: 0 through 6
     
     deinit {
+    	
+        backParalax.removeAllChildren()
+        backParalax.removeFromParent()
+        
         //Just in Case our world is full.
         print("GameScene DeInit RAM")
         if referenceNode.hasActions() {
             referenceNode.removeAllActions()
         }
-        
     
         if let level = referenceNode.children.first?.children {
-            //No longer hard encoded
             for land in level {
                 if let name = land.name {
                     if let middy = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode {
-                        print(middy)
                         middy.removeAllActions()
                         middy.removeAllChildren()
                         middy.removeFromParent()
@@ -107,7 +108,7 @@
         }
         
         if let rc = referenceNode?.children.first?.children {
-
+            print("Count:", rc.count)
             for i in rc {
                 i.removeAllActions()
                 i.removeAllChildren()
@@ -121,21 +122,60 @@
         }
     
         referenceNode.removeFromParent()
-       
+       	
+        
+        if let world = world {
+            print("DeInit World")
+            world.removeAllActions()
+            world.removeAllChildren()
+            world.removeFromParent()
+            world.parent?.removeAllChildren()
+            world.parent?.removeAllChildren()
+            world.parent?.removeFromParent()
+        }
+
+        if let cam = cam {
+            print("DeInit Cam")
+
+            cam.removeAllActions()
+            cam.removeAllChildren()
+            cam.removeFromParent()
+            cam.parent?.removeAllChildren()
+            cam.parent?.removeAllChildren()
+            cam.parent?.removeFromParent()
+        }
+        
+        if let camera = camera {
+            print("DeInit Camera")
+
+            camera.removeAllActions()
+            camera.removeAllChildren()
+            camera.removeFromParent()
+            camera.parent?.removeAllChildren()
+            camera.parent?.removeAllChildren()
+            camera.parent?.removeFromParent()
+        }
+        
+        
         print("DeINIT Rest of Scene")
 
         if hasActions() {
+            print("Actions Found")
             removeAllActions()
         }
         
         if !children.isEmpty {
+            print("Children Found")
             removeAllChildren()
         }
     
+		
         removeFromParent()
+
         
         DispatchQueue.main.async { [ weak referenceNode ] in
             guard let _ = referenceNode else { return }
+            print("Kill Refernece Node")
             referenceNode = nil
         }
     }
@@ -606,11 +646,7 @@
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         print(children)
-        
-        
-        
-        
-        
+    
         world = childNode(withName: "world")
         
         // This is the default of King, Queen Nationality
@@ -691,7 +727,7 @@
         bombsbutton2 = gamestartup.bombsbutton2
         firebutton2 = gamestartup.firebutton2
         
-        (level, highlevel, score, highscore, lives) = Score.gs.loadScores()
+        (level, highlevel, score, highscore, lives) = loadScores()
         
         
         var background = ""
@@ -727,10 +763,14 @@
             for land in level {
                 
                 if let name = land.name {
-                    if let midsection = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode {
+                    if let middy = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode {
                         
                         if name != "Water" {
-                            self.setupLevel( tileMap: midsection)
+                            self.setupLevel( tileMap: middy)
+                            //middy.removeAllActions()
+                            //middy.removeAllChildren()
+                            //middy.removeFromParent()
+
                         } else {
                             self.removeFromParent()
                             land.alpha = 0.4
@@ -739,7 +779,11 @@
                     }
                 }
             }
+            
         }
+        
+        
+        
         
         for node in self.children {
             if (node.name == "world") {
@@ -800,6 +844,7 @@
         
         world?.addChild(moving)
         
+        backParalax.removeAllChildren()
         backParalax.removeFromParent()
         self.world?.addChild(backParalax)
         
@@ -808,8 +853,8 @@
         texture.preload { [weak self] in
             guard
                 let self = self
-                
                 else { return }
+            
             let rounded = Int(round( self.rockBounds.width / 1440 / 2 ))
             var sprite = SKSpriteNode(texture: texture)
             sprite.name = String("BackTexture")
@@ -970,7 +1015,6 @@
         guard
             let firebutton = firebutton,
             let firebutton2 = firebutton2,
-            
             let bombsbutton = bombsbutton,
             let bombsbutton2 = bombsbutton2,
             let heroVelocity = hero.physicsBody?.velocity,
@@ -1017,9 +1061,10 @@
         guard
             let prize = prize,
             let body = prize.physicsBody,
-        	prize.name == "🌠"
+        	prize.name != "🌠"
             else { return }
         
+
         // send the collisions to neverLand
         // this way the score cannot be counted twice or more
         // any prize or coin can get sucked up
@@ -1208,14 +1253,9 @@
                 firstBody.applyImpulse(CGVector(dx: 10 * pos, dy: 0))
                 firstBody.angularVelocity = 15 * pos * turn
                 firstBody.applyTorque(3 * -pos * turn)
-                
-                
                 remove(body:secondBody)
             }
-            
         }
-        
-        
     }
     
     func laserVersusFloater(firstBody:SKPhysicsBody?,secondBody:SKPhysicsBody?) {
@@ -1445,7 +1485,7 @@
                     }
                 }
                 
-                Score.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+                saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
                 
                 hero.physicsBody?.velocity = CGVector.zero
                 hero.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 0.0))
@@ -1467,7 +1507,8 @@
                 //Loads the LevelUp Scene
                 func starPlayrOneLevelUpX(world:SKNode?, moving:SKNode?, hero: SKSpriteNode?, tractor: SKSpriteNode?) {
                     
-                    guard let world = world,
+                    guard
+                        let world = world,
                         let moving = moving,
                         let hero = hero,
                         let tractor = tractor
@@ -1496,8 +1537,14 @@
                         self.view?.isOpaque = true
                         self.view?.clipsToBounds = true
                         self.view?.ignoresSiblingOrder = true
-                        self.view?.showsFPS = true
-                        self.view?.showsNodeCount = true
+                        
+                        self.view?.showsFPS = showsFPS
+                        self.view?.showsNodeCount = showsNodeCount
+                        self.view?.showsPhysics = showsPhysics
+                        self.view?.showsFields = showsFields
+                        self.view?.showsDrawCount = showsDrawCount
+                        self.view?.showsQuadCount = showsQuadCount
+                        
                         self.view?.shouldCullNonVisibleNodes = true
                         self.view?.preferredFramesPerSecond = 61
                         
@@ -1542,7 +1589,7 @@
     
     func stopIt(secondBody: SKPhysicsBody, contactPoint: CGPoint) {
         //save first
-        Score.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+        saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
         
         if moving.speed > 0 {
             
@@ -1593,7 +1640,7 @@
             livesLabelNode.text = String(livesDisplay[lives])
         }
         
-        Score.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+        saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
     }
     
     
@@ -1602,7 +1649,7 @@
         print("ENDGAME")
         removeHero()
         removeGUI()
-        Score.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+        saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
         
         //Loads the game over scene
         func gameOver(world:SKNode, moving:SKNode, hero: SKSpriteNode, tractor: SKSpriteNode) {
@@ -1611,7 +1658,6 @@
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
                 guard let self = self else { return }
-                
                 
                 let gameOverScene = GameOver( size: self.size )
                 gameOverScene.runner()
@@ -1625,27 +1671,19 @@
                 self.view?.isOpaque = true
                 self.view?.clipsToBounds = true
                 self.view?.ignoresSiblingOrder = true
-                self.view?.showsFPS = true
-                self.view?.showsNodeCount = true
+                
+                self.view?.showsFPS = showsFPS
+                self.view?.showsNodeCount = showsNodeCount
+                self.view?.showsPhysics = showsPhysics
+                self.view?.showsFields = showsFields
+                self.view?.showsDrawCount = showsDrawCount
+                self.view?.showsQuadCount = showsQuadCount
+                
                 self.view?.shouldCullNonVisibleNodes = true
                 self.view?.preferredFramesPerSecond = 61
-                
                 self.view?.presentScene(gameOverScene)
                 
             }
-            
-            //clean up
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak world] in
-                guard let world = world else { return }
-                    world.removeAllActions()
-                    world.removeAllChildren()
-                	world.removeFromParent()
-                	world.parent?.removeAllChildren()
-                	world.parent?.removeAllChildren()
-                	world.parent?.removeFromParent()
-           
-            }
-            
         }
         
         gameOver(world:world!, moving:moving, hero:hero, tractor:tractor)
@@ -1864,7 +1902,7 @@
         self.scoreLabelNode.text = String(self.score)
         
         if moving.speed == 0 {
-            Score.gs.saveScores(level: self.level, highlevel: self.highlevel, score: self.score, hscore:self.highscore, lives: self.lives)
+            saveScores(level: self.level, highlevel: self.highlevel, score: self.score, hscore:self.highscore, lives: self.lives)
         }
     }
     
@@ -2057,7 +2095,7 @@
  
  
  extension SKSpriteNode {
-    func addGlow(radius: Float = 16) {
+    func addGlow(radius: Float = 64) {
         let effectNode = SKEffectNode()
         effectNode.addChild(SKSpriteNode(texture: texture))
         effectNode.filter = CIFilter( name: "CIMotionBlur", parameters: [ "inputRadius":radius,"inputAngle": CGFloat.pi / 2 ] )

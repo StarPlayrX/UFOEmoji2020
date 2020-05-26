@@ -25,7 +25,6 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
     
     TileNode.physicsBody?.categoryBitMask = Category //2
     TileNode.physicsBody?.affectedByGravity = false //2
-    //TileNode.physicsBody?.allowsRotation = false  //fals
     TileNode.physicsBody?.collisionBitMask = Collision //2
     TileNode.physicsBody?.contactTestBitMask = Contact
     TileNode.physicsBody?.allowsRotation = Rotation //true
@@ -35,9 +34,6 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
     TileNode.name = Name
     
     let homePosition = TileNode.position
-    //let name = TileMapNode.name
-    //let scene = TileMapNode.scene
-    //let world = scene?.childNode(withName: "world")?.childNode(withName: name!)
     
     TileMapParent.addChild(TileNode)
     
@@ -295,32 +291,12 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
             path1.addQuadCurve(to: point3b!, controlPoint: point2b! )
             path1.addQuadCurve(to: point0h, controlPoint: point1b! )
         }
-        //path1.addCurve(to: point0h, controlPoint1: CGPoint(x:point1b!.x - variant,y:point1b!.y + variant), controlPoint2: CGPoint(x:point1a!.x - variant,y:point1a!.y + variant))
-        //func addQuadCurve(to endPoint: CGPoint, controlPoint: CGPoint)
-        
-        
-        // let node1 = SKShapeNode(path:path1.cgPath)
-        //node1.strokeColor = UIColor.clear
-        // TileMapNode.parent?.addChild(node1)
-        //node1.position = point0h
-        //TileNode.position = CGPoint (x:node1.position.x - (point0h.x), y:node1.position.y - (point0h.y))
-        //node1.position = TileNode.position
-        
-        
-        // let removenode = SKAction.run {
-        //    node1.removeFromParent()
-        //}
-        
+
         let moveToCurve1 = SKAction.follow(path1.cgPath, asOffset: false, orientToPath: false, duration: TimeInterval(5))
         let rep = SKAction.sequence([moveToCurve1])
         
-        //if (TileNode.intersects(TileNode.parent!)) {
         TileNode.run(rep)
-        //}
-        
     }
-    
-    
     
     
     let wait = SKAction.wait(forDuration: TimeInterval(5))
@@ -334,8 +310,6 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
     spriteLabelNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
     spriteLabelNode.alpha = 1.0
     spriteLabelNode.position = CGPoint(x: 0, y: 0)
-    //spriteLabelNode.xScale = fliph ? -1 : 1
-    //spriteLabelNode.yScale = flipy ? -1 : 1
     spriteLabelNode.zPosition = 100
     
     spriteLabelNode.text = String(Emoji)

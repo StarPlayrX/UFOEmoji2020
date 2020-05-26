@@ -50,7 +50,7 @@ class LevelUp: SKScene {
             self.view?.shouldCullNonVisibleNodes = true
             self.view?.preferredFramesPerSecond = 61
             
-            let lives = Score.gs.loadScores().lives
+            let lives = loadScores().lives
             let heroMessage = levelarray[settings.level]
             let enemyMessage = antiarray[settings.level]
             let livesMessage = livesDisplay[ lives ]

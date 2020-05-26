@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5F18540A247C997400D7A03C /* LoadSaveScores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F185409247C997400D7A03C /* LoadSaveScores.swift */; };
-		5F1CF8BA247B18B2008DEC84 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8B8247B1770008DEC84 /* GameSettings.swift */; };
 		5F1CF8BB247B18BC008DEC84 /* FileDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8B6247B16A3008DEC84 /* FileDirectory.swift */; };
 		5F1CF8BC247B18BC008DEC84 /* FileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8B5247B16A3008DEC84 /* FileHelper.swift */; };
 		5F1CF8BD247B18BC008DEC84 /* FileLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8B4247B16A3008DEC84 /* FileLoad.swift */; };
@@ -53,7 +51,6 @@
 		5F1CF8E4247B18F7008DEC84 /* smokeParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FC051F4247B112C003C8201 /* smokeParticle.sks */; };
 		5F1CF8E5247B1904008DEC84 /* emulogic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F1CF8B1247B13C2008DEC84 /* emulogic.ttf */; };
 		5F1CF8EA247B1A32008DEC84 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8E9247B1A2F008DEC84 /* GameScene.swift */; };
-		5F1CF8EC247B1A88008DEC84 /* GameProjectiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8EB247B1A88008DEC84 /* GameProjectiles.swift */; };
 		5F1CF8EE247B1AA6008DEC84 /* GameBadGuyAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8ED247B1AA6008DEC84 /* GameBadGuyAI.swift */; };
 		5F1CF8F0247B1AAC008DEC84 /* GameTimeMapRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */; };
 		5FC051A9247B03E7003C8201 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051A8247B03E7003C8201 /* AppDelegate.swift */; };
@@ -67,15 +64,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5F185409247C997400D7A03C /* LoadSaveScores.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadSaveScores.swift; sourceTree = "<group>"; };
 		5F1CF8B1247B13C2008DEC84 /* emulogic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = emulogic.ttf; sourceTree = "<group>"; };
 		5F1CF8B3247B16A3008DEC84 /* FileSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSave.swift; sourceTree = "<group>"; };
 		5F1CF8B4247B16A3008DEC84 /* FileLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoad.swift; sourceTree = "<group>"; };
 		5F1CF8B5247B16A3008DEC84 /* FileHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileHelper.swift; sourceTree = "<group>"; };
 		5F1CF8B6247B16A3008DEC84 /* FileDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDirectory.swift; sourceTree = "<group>"; };
-		5F1CF8B8247B1770008DEC84 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		5F1CF8E9247B1A2F008DEC84 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		5F1CF8EB247B1A88008DEC84 /* GameProjectiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProjectiles.swift; sourceTree = "<group>"; };
 		5F1CF8ED247B1AA6008DEC84 /* GameBadGuyAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBadGuyAI.swift; sourceTree = "<group>"; };
 		5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimeMapRun.swift; sourceTree = "<group>"; };
 		5FC051A5247B03E7003C8201 /* UFO Emoji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UFO Emoji.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,15 +152,6 @@
 			path = GameFileStorage;
 			sourceTree = "<group>";
 		};
-		5F1CF8B7247B175C008DEC84 /* GameSettings */ = {
-			isa = PBXGroup;
-			children = (
-				5F185409247C997400D7A03C /* LoadSaveScores.swift */,
-				5F1CF8B8247B1770008DEC84 /* GameSettings.swift */,
-			);
-			path = GameSettings;
-			sourceTree = "<group>";
-		};
 		5F1CF8B9247B1883008DEC84 /* GameGlobal */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,7 +163,6 @@
 		5F1CF8E6247B19D7008DEC84 /* GameMain */ = {
 			isa = PBXGroup;
 			children = (
-				5F1CF8EB247B1A88008DEC84 /* GameProjectiles.swift */,
 				5F1CF8ED247B1AA6008DEC84 /* GameBadGuyAI.swift */,
 				5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */,
 			);
@@ -188,8 +172,8 @@
 		5F1CF8F5247B3D03008DEC84 /* GameScene */ = {
 			isa = PBXGroup;
 			children = (
-				5FC051DB247B0E6C003C8201 /* GameScene.sks */,
 				5F1CF8E9247B1A2F008DEC84 /* GameScene.swift */,
+				5FC051DB247B0E6C003C8201 /* GameScene.sks */,
 			);
 			path = GameScene;
 			sourceTree = "<group>";
@@ -226,7 +210,6 @@
 				5FC051D1247B0CEA003C8201 /* GameMusic */,
 				5FC051C8247B0CB5003C8201 /* GameSounds */,
 				5F1CF8B2247B1689008DEC84 /* GameFileStorage */,
-				5F1CF8B7247B175C008DEC84 /* GameSettings */,
 				5F1CF8B0247B13B9008DEC84 /* GameFonts */,
 				5FC051B5247B03E8003C8201 /* Assets.xcassets */,
 				5FC051BA247B03E8003C8201 /* Info.plist */,
@@ -449,11 +432,9 @@
 			files = (
 				5F1CF8BB247B18BC008DEC84 /* FileDirectory.swift in Sources */,
 				5F1CF8CF247B18E8008DEC84 /* LevelUp.swift in Sources */,
-				5F18540A247C997400D7A03C /* LoadSaveScores.swift in Sources */,
 				5FC051C4247B057C003C8201 /* GameMenu.swift in Sources */,
 				5F1CF8EE247B1AA6008DEC84 /* GameBadGuyAI.swift in Sources */,
 				5F1CF8BC247B18BC008DEC84 /* FileHelper.swift in Sources */,
-				5F1CF8BA247B18B2008DEC84 /* GameSettings.swift in Sources */,
 				5F1CF8F0247B1AAC008DEC84 /* GameTimeMapRun.swift in Sources */,
 				5FC051B1247B03E7003C8201 /* GameViewController.swift in Sources */,
 				5F1CF8BE247B18BC008DEC84 /* FileSave.swift in Sources */,
@@ -462,7 +443,6 @@
 				5F1CF8BD247B18BC008DEC84 /* FileLoad.swift in Sources */,
 				5F1CF8D0247B18E8008DEC84 /* StartUp.swift in Sources */,
 				5FC051C7247B0882003C8201 /* GameGlobal.swift in Sources */,
-				5F1CF8EC247B1A88008DEC84 /* GameProjectiles.swift in Sources */,
 				5F1CF8EA247B1A32008DEC84 /* GameScene.swift in Sources */,
 				5FC051A9247B03E7003C8201 /* AppDelegate.swift in Sources */,
 			);

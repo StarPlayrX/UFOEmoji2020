@@ -37,45 +37,13 @@ class GameViewController: UIViewController, GameProtocol {
         print("VC Deinited")
     }
     
-    func getDeviceSize() {
-        // iPhone detection
-        let screenWidth = Int(UIScreen.main.bounds.size.width)
-        let screenHeight = Int(UIScreen.main.bounds.size.height)
-        let screenMax = Int(max(screenWidth,screenHeight))
-        let iPhone = screenMax == 568 || screenMax == 667 || screenMax == 736
-        let iPhoneX = screenMax == 812 || screenMax == 896
-        
-        settings.mode = 1 // iPad
-        
-        if iPhone {
-            settings.mode = 2
-        } else if iPhoneX {
-            settings.mode = 4
-        }
-    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         view.backgroundColor = .red
     }
     
-    func setSceneSizeForGame() -> CGSize  {
-        //loadGameSettings()
-        
-        getDeviceSize()
-        
-        //Put this in a common area
-        if (settings.mode == 2 ) {
-            //regular iPhone style
-            return CGSize(width: 626, height: 352)
-            
-        } else if (settings.mode == 4) {
-            // iPhone X style
-            return CGSize(width: 762, height: 352)
-            
-        } else {
-            return CGSize(width: 470, height: 352)
-        }
-    }
+
     
     
     func gameMenu() {
@@ -84,11 +52,10 @@ class GameViewController: UIViewController, GameProtocol {
             let scene = SKScene(fileNamed: "GameMenu")
             else { return }
         
-        DispatchQueue.main.async  { [weak self] in
-            guard let self = self else { return }
+        DispatchQueue.main.async  {
             
             scene.scaleMode = .aspectFill
-            scene.size = self.setSceneSizeForGame()
+            scene.size = setSceneSizeForGame()
             scene.scaleMode = .aspectFill
             scene.backgroundColor = SKColor.init(displayP3Red: 0, green: 20 / 255, blue: 80 / 255, alpha: 1.0)
             view.isMultipleTouchEnabled = true
@@ -97,8 +64,14 @@ class GameViewController: UIViewController, GameProtocol {
             view.isOpaque = true
             view.clipsToBounds = true
             view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
+           
+            view.showsFPS = showsFPS
+            view.showsNodeCount = showsNodeCount
+            view.showsPhysics = showsPhysics
+            view.showsFields = showsFields
+            view.showsDrawCount = showsDrawCount
+            view.showsQuadCount = showsQuadCount
+            
             view.shouldCullNonVisibleNodes = true
             view.preferredFramesPerSecond = 61
             view.presentScene(scene)
@@ -118,21 +91,28 @@ class GameViewController: UIViewController, GameProtocol {
             let scene = SKScene(fileNamed: "GameScene")
             else { print("FAILED"); return }
         
-        DispatchQueue.main.async  { [weak self] in
-            guard let self = self else { return }
-            
+        DispatchQueue.main.async  {
             scene.scaleMode = .aspectFill
-            scene.size = self.setSceneSizeForGame()
+            scene.size = setSceneSizeForGame()
             scene.scaleMode = .aspectFill
             scene.backgroundColor = SKColor.black
             view.isMultipleTouchEnabled = true
             view.allowsTransparency = false
             view.isAsynchronous = true
+            
             view.isOpaque = true
             view.clipsToBounds = true
             view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
+            
+            view.showsFPS = showsFPS
+            view.showsNodeCount = showsNodeCount
+            view.showsPhysics = showsPhysics
+            view.showsFields = showsFields
+            view.showsDrawCount = showsDrawCount
+            view.showsQuadCount = showsQuadCount
+            
+            view.showsLargeContentViewer = false
+            
             view.shouldCullNonVisibleNodes = true
             view.preferredFramesPerSecond = 61
             view.presentScene(scene)

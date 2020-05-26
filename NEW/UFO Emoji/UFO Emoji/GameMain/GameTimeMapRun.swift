@@ -200,7 +200,7 @@ class TMRX {
         }
         
         //if the item is on the left side and this is a center section, flip it
-        if TileNode.position.x < 0 && NewItem != "🛸"  {
+        if TileNode.position.x < 0 && NewItem != "🛸"  && Emoji != "🌈"  {
             spriteLabelNode.xScale *= -1
         }
         
@@ -212,7 +212,7 @@ class TMRX {
         if (str == "💰" || str == "🎰" || str == "💵"  || str == "🤑") {
             spriteLabelNode.xScale = 1
         }
-        
+
         TileNode.addChild(spriteLabelNode)
         
         // = Field

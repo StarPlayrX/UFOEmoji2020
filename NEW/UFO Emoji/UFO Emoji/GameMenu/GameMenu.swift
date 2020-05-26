@@ -86,6 +86,7 @@ class GameMenu: SKScene {
                 }
                 
                 if name == "level-right" || name == "levelLabel" || name == "versusLabel" {
+                    
                     if settings.level <= settings.highlevel {
                         settings.level = settings.level + 1
                     }
@@ -98,6 +99,7 @@ class GameMenu: SKScene {
                         levelLabel.text = levelarray[settings.level]
                         versusLabel.text = antiarray[settings.level ]
                     }
+                    print(settings.level)
                 }
                 
                 
@@ -114,6 +116,8 @@ class GameMenu: SKScene {
                         levelLabel.text = levelarray[settings.level]
                         versusLabel.text = antiarray[settings.level ]
                     }
+                    print(settings.level)
+
                 }
                 
                 
@@ -201,8 +205,14 @@ class GameMenu: SKScene {
                         self.view?.isOpaque = true
                         self.view?.clipsToBounds = true
                         self.view?.ignoresSiblingOrder = true
-                        self.view?.showsFPS = true
-                        self.view?.showsNodeCount = true
+                        
+                        self.view?.showsFPS = showsFPS
+                        self.view?.showsNodeCount = showsNodeCount
+                        self.view?.showsPhysics = showsPhysics
+                        self.view?.showsFields = showsFields
+                        self.view?.showsDrawCount = showsDrawCount
+                        self.view?.showsQuadCount = showsQuadCount
+                        
                         self.view?.shouldCullNonVisibleNodes = true
                         self.view?.preferredFramesPerSecond = 61
                         
@@ -227,22 +237,18 @@ class GameMenu: SKScene {
         backgroundColor = SKColor.init(displayP3Red: 0, green: 15 / 255, blue: 70 / 255, alpha: 1.0)
         
         
-        loadGameSettings()
         
         if settings.level > maxlevel {
             settings.level = 1
             settings.highlevel = 9
-            saveGameSettings()
             
         }
         settings.highlevel = 10 //cheat to get all levels available
-        saveGameSettings()
         
         //print(settings)
         settings.lives = 1; // may be less when power ups are added
         settings.score = 0;
         
-        saveGameSettings()
         
         musicLabel.text =  settings.music  ? "🎷🔈" : "🎷🔇"
         soundLabel.text =  settings.sound ? "💥🔔" : "💥🔕"
