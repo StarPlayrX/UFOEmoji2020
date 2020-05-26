@@ -673,7 +673,7 @@
         bombsbutton2 = gamestartup.bombsbutton2
         firebutton2 = gamestartup.firebutton2
         
-        (level, highlevel, score, highscore, lives) = GameStartup().loadScores()
+        (level, highlevel, score, highscore, lives) = Score.gs.loadScores()
         
         
         var background = ""
@@ -734,7 +734,7 @@
                         rockBounds = node.frame
                         
                         
-                        scene?.physicsWorld.gravity = CGVector(dx: 0.0, dy: -3) //mini
+                        physicsWorld.gravity = CGVector(dx: 0.0, dy: -3) //mini
                         scene?.physicsWorld.contactDelegate = self
                         node.physicsBody = SKPhysicsBody(edgeLoopFrom: rockBounds)
                         
@@ -968,22 +968,22 @@
             if let name = touchedNode.name {
                 
                 if name == "fire-right" {
-                    laserbeak.bullets(hero: (hero.position, hero.zRotation, heroVelocity), reverse:false)
+                    laserbeak.bullets(superhero: (hero.position, hero.zRotation, heroVelocity), reverse:false)
                     laserbeak.firebomb(firebomb: firebutton)
                 }
                 
                 if name == "fire-left" {
-                    laserbeak.bullets(hero: (hero.position, hero.zRotation, heroVelocity), reverse:true)
+                    laserbeak.bullets(superhero: (hero.position, hero.zRotation, heroVelocity), reverse:true)
                     laserbeak.firebomb(firebomb: firebutton2)
                 }
                 
                 if name == "fire-down" {
-                    bombsaway.bomb(hero: (hero.position, hero.zRotation, heroVelocity), reverse:false)
+                    bombsaway.bomb(superhero: (hero.position, hero.zRotation, heroVelocity), reverse:false)
                     bombsaway.firebomb(firebomb: bombsbutton)
                 }
                 
                 if name == "fire-top" {
-                    bombsaway.bomb(hero: (hero.position, hero.zRotation, heroVelocity), reverse:true)
+                    bombsaway.bomb(superhero: (hero.position, hero.zRotation, heroVelocity), reverse:true)
                     bombsaway.firebomb(firebomb: bombsbutton2)
                 }
             }
@@ -1425,7 +1425,7 @@
                     }
                 }
                 
-                GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+                Score.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
                 
                 hero.physicsBody?.velocity = CGVector.zero
                 hero.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 0.0))
@@ -1522,7 +1522,7 @@
     
     func stopIt(secondBody: SKPhysicsBody, contactPoint: CGPoint) {
         //save first
-        GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+        Score.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
         
         if moving.speed > 0 {
             
@@ -1573,7 +1573,7 @@
             livesLabelNode.text = String(livesDisplay[lives])
         }
         
-        GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+        Score.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
     }
     
     
@@ -1582,7 +1582,7 @@
         print("ENDGAME")
         removeHero()
         removeGUI()
-        GameStartup().saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+        Score.gs.saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
         
         //Loads the game over scene
         func gameOver(world:SKNode, moving:SKNode, hero: SKSpriteNode, tractor: SKSpriteNode) {
@@ -1844,7 +1844,7 @@
         self.scoreLabelNode.text = String(self.score)
         
         if moving.speed == 0 {
-            GameStartup().saveScores(level: self.level, highlevel: self.highlevel, score: self.score, hscore:self.highscore, lives: self.lives)
+            Score.gs.saveScores(level: self.level, highlevel: self.highlevel, score: self.score, hscore:self.highscore, lives: self.lives)
         }
     }
     

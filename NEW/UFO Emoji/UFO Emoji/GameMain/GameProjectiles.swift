@@ -32,7 +32,7 @@ class GameProjectiles {
     let 🥾 = "super"
    
     func bullets (superhero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool) {
-        w
+    
         let 🧵 = 🔋 ?  🥾 + 🦸 : 🦸
                 
         👁 = SKSpriteNode(texture: SKTexture(imageNamed: 🧵 ))
@@ -141,12 +141,7 @@ class GameProjectiles {
         }
     }
     
-    deinit {
-        self.🚞.removeAllActions()
-        self.🚞.removeAllChildren()
-        self.🚞.removeFromParent()
-    }
-    
+  
     init(laserbeak 🌞:UInt32?, 🚞:SKScene?) {
         guard let 🌞 = 🌞, let 🚞 = 🚞 else { return }
         self.🌞 = 🌞

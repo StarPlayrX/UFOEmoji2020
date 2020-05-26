@@ -6,9 +6,9 @@
 //  Copyright © 2015 Todd Bruss. All rights reserved.
 //
 
-class GameSettings {
+class Score {
     
-    static let gs = GameSettings()
+    static let gs = Score()
     
     func loadScores() -> (level: Int, highlevel: Int, score: Int, hscore: Int, lives: Int) {
         let hscore = settings.highscore

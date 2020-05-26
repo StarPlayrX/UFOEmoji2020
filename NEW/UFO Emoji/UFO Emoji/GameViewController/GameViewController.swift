@@ -102,8 +102,6 @@ class GameViewController: UIViewController, GameProtocol {
             view.shouldCullNonVisibleNodes = true
             view.preferredFramesPerSecond = 61
             view.presentScene(scene)
-            laserbeak =  GameProjectiles.init(bombsaway: nil, 🚞: nil)
-            bombsaway = GameProjectiles.init(bombsaway: nil, 🚞: nil)
 
         }
         
