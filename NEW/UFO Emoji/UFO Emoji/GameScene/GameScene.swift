@@ -837,7 +837,7 @@
             
             //skyMtns
             case 1..<100:
-                background = "waterWorld"
+                background = "blue_mtns"
             case 6..<9:
                 ()
             case 10:
@@ -946,11 +946,12 @@
         moving = SKNode()
         
         world?.addChild(moving)
-        
         backParalax = SKNode()
-        
+
         backParalax.removeAllChildren()
         backParalax.removeFromParent()
+        
+   
         
         self.world?.addChild(backParalax)
         
@@ -960,17 +961,38 @@
             guard
                 let self = self
                 else { return }
-            
-            let factor = CGFloat(4.0) //PDF Textures are 25% scaled up 400% to save memory while retained a decent look
-            let width = texture.size().width * factor
-            let rounded = Int(round( self.rockBounds.width / width / 2 ))
+            let factor = CGFloat(1.0) //PDF Textures are 25% scaled up 400% to save memory while retained a decent look
+            let xFactor = CGFloat(4.0) //PDF Textures are 25% scaled up 400% to save memory while retained a decent look
+
+            let width = texture.size().width
+            let height = texture.size().height
+
             var sprite = SKSpriteNode(texture: texture)
-            sprite.name = String("BackTexture")
+            sprite.name = String("texture")
             sprite.xScale = factor
             sprite.yScale = factor
             
             //Place from Center
-            for i in -rounded...rounded  {
+            for i in [0,-1,1,-2,2]  {
+                
+                if i == 0 {
+                    let bg = SKTexture(imageNamed: "blue_bkgd")
+                    let x = CGFloat(UIScreen.main.bounds.size.width)
+                    let y = CGFloat(UIScreen.main.bounds.size.height)
+
+                    let sp = SKSpriteNode(texture: bg)
+                    
+                    let xScale = xFactor * ( x / width )
+                    let yScale = xFactor * ( y / height )
+                    
+                    print(xScale,yScale)
+                    sp.xScale = xScale
+                    sp.yScale = yScale
+                    sp.name = "background_cam"
+                    sp.zPosition = -10000
+                    self.cam.addChild(sp)
+                    
+                }
                 sprite.position = CGPoint(x: CGFloat(i) * width, y: 0)
                 self.backParalax.addChild(sprite.copy() as! SKSpriteNode )
             }
