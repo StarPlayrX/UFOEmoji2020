@@ -1,33 +1,41 @@
 //
-//  GamePad ]|[ the Ultimate Touch Screen Precision Game Controller
+//  GTFlightYoke ]|[ the Ultimate Precision Touch Screen Gaming Flight Stick
 //
-//  by Todd Bruss (c) 2020
+//  by GT | Todd Bruss (c) 2020
 //
 
 import SpriteKit
 
-protocol ThumbPadProtocol: class {
-    func TouchPad(velocity: CGVector?, zRotation: CGFloat?)
+protocol FlightYokeProtocol: class {
+    func FlightYokePilot(velocity: CGVector?, zRotation: CGFloat?)
 }
  
 
-class JoyPad: SKNode {
-    var velocity = CGVector.zero
-    var runtimeLoop: CADisplayLink?
-    var ease : TimeInterval = 0.04
-    var anchor = CGPoint.zero
-    let thumbNode: SKSpriteNode
-    let backgroundNode: SKSpriteNode
-    let thumbSpring: TimeInterval = 0.08
-    let multiplier = CGFloat(10)
-    let dx = CGFloat(-0.003)
-    let play = CGFloat(2)
-    let zindex = CGFloat(1000)
-    let snapToPoint = CGFloat(16)
-    let zero = CGFloat(0.0)
-    let two = CGFloat(2.0)
+class GTFlightYoke: SKNode {
     
-    var focus = false
+    deinit {
+        print("Game Pad De-Init!!!!!!!")
+        //Should not De-Init until it quits
+    }
+    
+    private var velocity = CGVector.zero
+    private var runtimeLoop: CADisplayLink?
+    private let ease : TimeInterval = 0.04
+    private let anchor = CGPoint.zero
+    private var thumbNode = SKSpriteNode()
+    private var backgroundNode = SKSpriteNode()
+    private let thumbSpring: TimeInterval = 0.08
+    private let multiplier = CGFloat(10)
+    private let dx = CGFloat(-0.003)
+    private let play = CGFloat(2)
+    private let zindex = CGFloat(1000)
+    private let snapToPoint = CGFloat(16)
+    private let zero = CGFloat(0.0)
+    private let two = CGFloat(2.0)
+    private var focus = false
+
+    private weak var thumbImage : UIImage!
+    private weak var bgImage : UIImage!
     
     func setThumbImage(_ image: UIImage?, sizeToFit: Bool) {
         if let img: UIImage = UIImage(named: "bg-stick") {
@@ -47,32 +55,34 @@ class JoyPad: SKNode {
         }
     }
     
-    var backgroundImageWidth: CGFloat {
+    private var backgroundImageWidth: CGFloat! {
         get { return backgroundNode.size.width }
         set { backgroundNode.size = CGSize(width: newValue, height: newValue) }
     }
     
-    var thumbNodeWidth: CGFloat {
+    private var thumbNodeWidth: CGFloat! {
         get { return thumbNode.size.width }
         set { thumbNode.size = CGSize(width: newValue, height: newValue) }
     }
     
-    var thumbNodeRadius: CGFloat {
+    private var thumbNodeRadius: CGFloat! {
         get { return (thumbNode.size.width / two) }
     }
     
-    weak var delegate: ThumbPadProtocol! {
-        willSet {
+    weak var delegate: FlightYokeProtocol! {
+        didSet {
             velocity = CGVector.zero
             recenter()
             runtimeLoop = CADisplayLink(target: self, selector: #selector(update))
             runtimeLoop?.add(to: RunLoop.current, forMode: RunLoop.Mode.common)
+            
+            
         }
     }
     
     @objc func update() {
         
-        delegate?.TouchPad(velocity: velocity, zRotation: CGFloat( velocity.dx / multiplier * dx ))
+        delegate?.FlightYokePilot(velocity: velocity, zRotation: CGFloat( velocity.dx / multiplier * dx ))
         
         if velocity != CGVector.zero {
             focus = true
@@ -97,18 +107,12 @@ class JoyPad: SKNode {
         self.init(thumbImage: nil, bgImage: nil)
     }
     
-    init(thumbImage: UIImage?, bgImage: UIImage?) {
-        thumbNode = SKSpriteNode()
-        backgroundNode = SKSpriteNode()
-        
-        super.init()
-        
+    func startup() {
         setThumbImage(thumbImage, sizeToFit: true)
         backgroundImage(bgImage, sizeToFit: true)
         velocity = CGVector.zero
         
         addChild(backgroundNode)
-        
         backgroundNode.isUserInteractionEnabled = false
         
         addChild(thumbNode)
@@ -116,6 +120,19 @@ class JoyPad: SKNode {
         isUserInteractionEnabled = true
         thumbNode.zPosition = zindex
         thumbNode.isUserInteractionEnabled = false
+    }
+	
+    func shutdown() {
+        guard let runtime = runtimeLoop else { return }
+        runtime.invalidate()
+    }
+    
+    init(thumbImage: UIImage?, bgImage: UIImage?) {
+        self.thumbImage = thumbImage
+        self.bgImage = bgImage
+        
+        super.init()
+       
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -158,8 +175,6 @@ class JoyPad: SKNode {
         moveToLocation.timingMode = .easeOut
         thumbNode.run( moveToLocation )
     }
-    
-    
     
     //MARK: Touches moved
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {

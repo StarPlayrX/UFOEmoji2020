@@ -10,12 +10,60 @@
  import AVFoundation
  
  
- class GameScene: SKScene, ThumbPadProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
+ class GameScene: SKScene, FlightYokeProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
+   
+    //MARK: Flight Stick
+    let zero = CGFloat(0.0), dampZero = CGFloat(0.0), dampMax = CGFloat(40.0)
+    let ease = TimeInterval(0.08), shipduration = TimeInterval(0.005)
+    let shipMax = CGFloat(500.0)
+    let shipCtr = CGFloat(250.0)
+    let shipMin = CGFloat(-500.0)
     
-    var headsUpDisplay = SKReferenceNode()
-    var maxVelocity = CGFloat(0)
-    var backParalax =  SKNode()
+    func FlightYokePilot(velocity: CGVector?, zRotation: CGFloat?) {
+        //MARK: reference to hero's physic's body - easier
+        guard
+            let hero = hero,
+            let pb = hero.physicsBody,
+            let velocity = velocity,
+            let zRotation = zRotation
+            else { return }
+        
+        func rotateShip (_ t: TimeInterval, _ angle: CGFloat ) {
+            let rot = SKAction.rotate(toAngle: angle, duration: t)
+            rot.timingMode = .easeInEaseOut
+            hero.run(rot)
+        }
+        
+        if velocity == CGVector.zero {
+            
+            pb.linearDamping = dampMax
+            pb.velocity = velocity
+            
+            rotateShip(ease, zRotation)
+        } else {
+            
+            pb.linearDamping = CGFloat(dampZero)
+            pb.velocity = velocity
+            
+            //MARK: Clamp using min max
+            func clamp (_ f: CGFloat) -> CGFloat {
+                min(max(f, shipMin), shipMax)
+            }
+            
+            //MARK: Add a little extra to our ships movement
+            pb.applyImpulse(CGVector( dx: velocity.dx / shipCtr, dy: velocity.dy / shipMax))
+            
+            //MARK: make sure we don't exceed 500 - Impulse is an accelerant
+            pb.velocity.dx = clamp(pb.velocity.dx)
+            pb.velocity.dy = clamp(pb.velocity.dy)
+            
+            rotateShip(shipduration, zRotation)
+        }
+    }
     
+    private var QuadFireBombHUD : SKReferenceNode!
+    private var AlienYokeDpdHUD = SKNode()
+    private var backParalax : SKNode!
     private var referenceNode : SKReferenceNode!
     
     typealias Oreo = (bombsbutton:SKSpriteNode?,firebutton:SKSpriteNode?,hero:SKSpriteNode?,canape:SKSpriteNode?,tractor:SKSpriteNode?,bombsbutton2:SKSpriteNode?,firebutton2:SKSpriteNode?)
@@ -30,25 +78,28 @@
     private weak var canape:SKSpriteNode!
     private weak var tractor:SKSpriteNode!
     private weak var world: SKNode!
-    private var moving = SKNode()
-    
-    private var ThumbPad: JoyPad! = JoyPad()
+    private var FlightYoke : GTFlightYoke!
+
     private var heroEmoji:SKLabelNode!
     private var audioPlayer: AVAudioPlayer!
     private var cam : SKCameraNode!
-    private var rockBounds = CGRect()
     private var scoreLabelNode:SKLabelNode!
     private var highScoreLabelNode:SKLabelNode!
     private var highScoreLabel:SKLabelNode!
     private var livesLabel:SKLabelNode!
     private var livesLabelNode:SKLabelNode!
     
-    private var screenHeight = CGFloat()  // MARK: may get rid of this
-    private var score = Int()
-    private var level = Int()
-    private var highscore = Int()
-    private var lives = Int()
-    private var highlevel = Int()
+    private var screenHeight : CGFloat!
+    private var score : Int!
+    private lazy var level = Int()
+    private var highscore : Int!
+    private var lives : Int!
+    private var highlevel : Int!
+    private var moving : SKNode!
+    private var rockBounds : CGRect!
+    private lazy var scoreDict: [String:Int] = [:]
+
+    private var maxVelocity = CGFloat(0)
     private let heroCategory:UInt32         		=  1
     private let worldCategory:UInt32        		=  2
     private let bombBoundsCategory:UInt32   		=  4
@@ -62,34 +113,31 @@
     private let charmsCategory:UInt32      			=  1024
     private let levelupCategory:UInt32      		=  2048
     private let laserBorder:UInt32         	 		=  4096
-    private var scoreDict: [String:Int] = [:]
     
     //Game Projectiles
-    var 🛥 = true
-    var 🍕 = CGFloat(1)
-    var 👁: SKSpriteNode!
-    var 💣: SKSpriteNode!
-    let 🦞 = SKPhysicsBody(circleOfRadius: 16);
-    let 🧨: SKLabelNode! = SKLabelNode(fontNamed:"Apple Color Emoji")
-    var 💩 = "💩"
-    var 🚨 = "fire.m4a"
-    var 💥 = "wah2.m4a"
-    var 🌞 = UInt32(32)
-    var 🚞 = SKScene()
-    let 🍺 = CGFloat(16)
-    let 🍎 = "Apple Color Emoji"
-    let 🍌 = "🍌"
-    let 🦸 = "laserbeam"
-    let 🥾 = "super"
+    private var 🛥 = true
+    private var 🍕 = CGFloat(1)
+    private var 👁: SKSpriteNode!
+    private var 💣: SKSpriteNode!
+    private let 🦞 = SKPhysicsBody(circleOfRadius: 16)
+    private let 🧨: SKLabelNode! = SKLabelNode(fontNamed:"Apple Color Emoji")
+    private var 💩 = "💩"
+    private var 🚨 = "fire.m4a"
+    private var 💥 = "wah2.m4a"
+    private var 🌞 = UInt32(32)
+    private var 🚞 = SKScene()
+    private let 🍺 = CGFloat(16)
+    private let 🍎 = "Apple Color Emoji"
+    private let 🍌 = "🍌"
+    private let 🦸 = "laserbeam"
+    private let 🥾 = "super"
     
     //we can swap these out if we use other emoji ships: 0 through 6
     
     deinit {
-    	
         backParalax.removeAllChildren()
         backParalax.removeFromParent()
         
-        //Just in Case our world is full.
         print("GameScene DeInit RAM")
         if referenceNode.hasActions() {
             referenceNode.removeAllActions()
@@ -166,27 +214,33 @@
         
         if !children.isEmpty {
             print("Children Found")
+            print(children)
             removeAllChildren()
         }
-    
-		
+        
         removeFromParent()
 
-        
-        DispatchQueue.main.async { [ weak referenceNode ] in
-            guard let _ = referenceNode else { return }
-            print("Kill Refernece Node")
+        DispatchQueue.main.async { [weak cam, weak referenceNode, weak audioPlayer, weak backParalax] in
+            guard
+                let _ = cam,
+                let _ = referenceNode,
+            	let _ = audioPlayer,
+            	let _ = backParalax
+                else { return }
+            cam = nil
             referenceNode = nil
+            audioPlayer = nil
+            backParalax = nil
         }
     }
     
     
-    func readyPlayerOne () -> Oreo? {
+    func readyPlayerOne() -> Oreo? {
         
         var rocket = "aliensaucer"
         var glass = "aliencanape"
-        var offset = 0;
-        var size = 24;
+        var offset = 0
+        var size = 24
         
         //alien
         if settings.emoji == 1 {
@@ -292,7 +346,7 @@
                 sprite.isUserInteractionEnabled = false
             }
             
-            headsUpDisplay.addChild(sprite)
+            QuadFireBombHUD.addChild(sprite)
             
             var xAdjust = CGFloat(1.0)
             var yAdjust = CGFloat(1.0)
@@ -305,12 +359,12 @@
             
             /* move the button to where we want them */
             if btnLoc == "L" {
-                headsUpDisplay.position = CGPoint(
+                QuadFireBombHUD.position = CGPoint(
                     x: CGFloat(frame.size.width / -2 + (85 * xAdjust) ) ,
                     y: CGFloat(frame.size.height / -2 + (85 * yAdjust ) )
                 )
             } else {
-                headsUpDisplay.position = CGPoint(
+                QuadFireBombHUD.position = CGPoint(
                     x: CGFloat(frame.size.width / 2 - (85 * xAdjust)  ) ,
                     y: CGFloat(frame.size.height / -2 + (85 * yAdjust ) )
                 )
@@ -319,12 +373,12 @@
             if settings.mode == 1 {
                 
                 if btnLoc == "L" {
-                    headsUpDisplay.position = CGPoint(x: CGFloat(frame.size.width / -2 + (87 * 0.75) ) ,y:  CGFloat(frame.size.height / -2 + (87 * 0.75)) )
+                    QuadFireBombHUD.position = CGPoint(x: CGFloat(frame.size.width / -2 + (87 * 0.75) ) ,y:  CGFloat(frame.size.height / -2 + (87 * 0.75)) )
                 } else {
-                    headsUpDisplay.position = CGPoint(x: CGFloat(frame.size.width / 2 - (87 * 0.75) ) ,y:  CGFloat(frame.size.height / -2 + (87 * 0.75)) )
+                    QuadFireBombHUD.position = CGPoint(x: CGFloat(frame.size.width / 2 - (87 * 0.75) ) ,y:  CGFloat(frame.size.height / -2 + (87 * 0.75)) )
                 }
                 
-                headsUpDisplay.setScale(0.75)
+                QuadFireBombHUD.setScale(0.75)
                 
             }
             
@@ -524,28 +578,29 @@
         
         
         func createHeroJoint() {
-            
-            
-            let bodyA = hero.physicsBody!
-            let bodyB = tractor.physicsBody!
+            guard
+                let bodyA = hero.physicsBody,
+                let bodyB = tractor.physicsBody,
+                let anchor = hero.position as CGPoint?
+                else { return }
             bodyA.density = 1.0
-            let joint = SKPhysicsJointPin.joint(withBodyA: bodyA,  bodyB:bodyB, anchor: hero.position)
+            let joint = SKPhysicsJointPin.joint(withBodyA: bodyA, bodyB: bodyB, anchor: anchor)
             physicsWorld.add(joint)
         }
         
         func createCanapeJoint() {
+            guard
+                let bodyA = hero.physicsBody,
+                let bodyB = canape.physicsBody,
+                let anchor = hero.position as CGPoint?
+                else { return }
             
-            
-            let bodyA = hero.physicsBody!
-            let bodyB = canape.physicsBody!
-            let joint = SKPhysicsJointPin.joint(withBodyA: bodyA,  bodyB:bodyB, anchor: hero.position)
+            let joint = SKPhysicsJointPin.joint(withBodyA: bodyA, bodyB: bodyB, anchor: anchor)
             joint.rotationSpeed = 1.0
             physicsWorld.add(joint)
         }
         
-        func arcadeJoyPad() {
-            
-            
+        func gtFlightYoke() {
             let stick = settings.stick ? "L" : "R"
             
             var xAdjust = CGFloat(1.0)
@@ -558,38 +613,49 @@
             
             /* move the stick to where we want it */
             if stick == "L" {
-                ThumbPad.position = CGPoint(
+                FlightYoke.position = CGPoint(
                     x: CGFloat(frame.size.width / -2 + (85 * xAdjust) ) ,
                     y: CGFloat(frame.size.height / -2 + (85 * yAdjust ) )
                 )
             } else {
-                ThumbPad.position = CGPoint(
+                FlightYoke.position = CGPoint(
                     x: CGFloat(frame.size.width / 2 - (85 * xAdjust)  ) ,
                     y: CGFloat(frame.size.height / -2 + (85 * yAdjust ) )
                 )
             }
             
-            ThumbPad.delegate = self
-            cam.addChild(ThumbPad)
-            ThumbPad.zPosition = 1000
-            ThumbPad.name = "ArcadeJoyPad"
+            FlightYoke.delegate = self
+            AlienYokeDpdHUD.addChild(FlightYoke)
+            print("AP",anchorPoint)
+            print("A",AlienYokeDpdHUD.position)
+            print("F",FlightYoke.position)
+            print("S",size)
+            FlightYoke.zPosition = 1000
+            FlightYoke.name = "ArcadeJoyPad"
             
             if settings.mode == 1 {
-                ThumbPad.setScale(0.75)
+                FlightYoke.setScale(0.75)
                 
                 if stick == "L" {
-                    ThumbPad.position = CGPoint(x: CGFloat(frame.size.width / -2 + (87 * 0.75) ) ,y:  CGFloat(frame.size.height / -2 + (87 * 0.75)) )
+                    FlightYoke.position = CGPoint(x: CGFloat(frame.size.width / -2 + (87 * 0.75) ) ,y:  CGFloat(frame.size.height / -2 + (87 * 0.75)) )
                 } else {
-                    ThumbPad.position = CGPoint(x: CGFloat(frame.size.width / 2 - (87 * 0.75) ) ,y:  CGFloat(frame.size.height / -2 + (87 * 0.75)) )
+                    FlightYoke.position = CGPoint(x: CGFloat(frame.size.width / 2 - (87 * 0.75) ) ,y:  CGFloat(frame.size.height / -2 + (87 * 0.75)) )
                 }
             }
+            
+            print("AP2",anchorPoint)
+            print("A2",AlienYokeDpdHUD.position)
+            print("F2",FlightYoke.position)
+            print("S",size)
+
+            
         }
         
         
         
         createCanapeJoint()
         createHeroJoint()
-        arcadeJoyPad()
+        gtFlightYoke()
         
         return (bombsbutton,firebutton,hero,canape,tractor,bombsbutton2,firebutton2)
     }
@@ -645,8 +711,9 @@
     }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        print(children)
-    
+    	
+		FlightYoke = GTFlightYoke()
+        FlightYoke.startup()
         world = childNode(withName: "world")
         
         // This is the default of King, Queen Nationality
@@ -675,9 +742,15 @@
         addChild(cam)
         cam.zPosition = 100
         
-        headsUpDisplay.name = "HeadsUpDisplay"
-        cam.addChild(headsUpDisplay)
-        headsUpDisplay.zRotation = CGFloat(Double.pi/4)
+        //AlienYokeDpdHUD = SKReferenceNode()
+        QuadFireBombHUD = SKReferenceNode()
+
+        AlienYokeDpdHUD.name = "AlienYokeDpdHUD"
+        QuadFireBombHUD.name = "QuadFireBombHUD"
+        cam.addChild(AlienYokeDpdHUD)
+        cam.addChild(QuadFireBombHUD)
+        
+        QuadFireBombHUD.zRotation = CGFloat(Double.pi/4)
         
         guard let gamestartup = readyPlayerOne() else { return }
         
@@ -842,27 +915,35 @@
             }
         }
         
+        moving = SKNode()
+        
         world?.addChild(moving)
+        
+        backParalax = SKNode()
         
         backParalax.removeAllChildren()
         backParalax.removeFromParent()
+        
         self.world?.addChild(backParalax)
         
         let texture = SKTexture(imageNamed: background)
-        texture.filteringMode = .linear
+        texture.filteringMode = .nearest
         texture.preload { [weak self] in
             guard
                 let self = self
                 else { return }
             
-            let rounded = Int(round( self.rockBounds.width / 1440 / 2 ))
+            let factor = CGFloat(4.0) //PDF Textures are 25% scaled up 400% to save memory while retained a decent look
+            let width = texture.size().width * factor
+        	let rounded = Int(round( self.rockBounds.width / width / 2 ))
             var sprite = SKSpriteNode(texture: texture)
             sprite.name = String("BackTexture")
-            sprite.xScale = 4
-            sprite.yScale = 4
+            sprite.xScale = factor
+            sprite.yScale = factor
             
+            //Place from Center
             for i in -rounded...rounded  {
-                sprite.position = CGPoint(x: CGFloat(i) * 1440, y: 0)
+                sprite.position = CGPoint(x: CGFloat(i) * width, y: 0)
                 self.backParalax.addChild(sprite.copy() as! SKSpriteNode )
             }
             
@@ -870,7 +951,7 @@
             sprite = SKSpriteNode()
             
             self.backParalax.name = "backParalaxOriginal"
-            self.backParalax = self.backParalax.copy() as! SKNode
+            self.backParalax.removeFromParent()
             self.world?.addChild(self.backParalax)
             
         }
@@ -1090,55 +1171,6 @@
         prize.run(SKAction.sequence([scale,removeFromParent]))
     }
     
-    
-    //MARK: Flight Stick
-    let zero = CGFloat(0.0), dampZero = CGFloat(0.0), dampMax = CGFloat(40.0)
-    let ease = TimeInterval(0.08), shipduration = TimeInterval(0.005)
-    let shipMax = CGFloat(500.0)
-    let shipCtr = CGFloat(250.0)
-    let shipMin = CGFloat(-500.0)
-    
-    func TouchPad(velocity: CGVector?, zRotation: CGFloat?) {
-        //MARK: reference to hero's physic's body - easier
-        guard
-            let hero = hero,
-            let pb = hero.physicsBody,
-            let velocity = velocity,
-            let zRotation = zRotation
-            else { return }
-        
-        func rotateShip (_ t: TimeInterval, _ angle: CGFloat ) {
-            let rot = SKAction.rotate(toAngle: angle, duration: t)
-            rot.timingMode = .easeInEaseOut
-            hero.run(rot)
-        }
-        
-        if velocity == CGVector.zero {
-            
-            pb.linearDamping = dampMax
-            pb.velocity = velocity
-            
-            rotateShip(ease, zRotation)
-        } else {
-            
-            pb.linearDamping = CGFloat(dampZero)
-            pb.velocity = velocity
-            
-            //MARK: Clamp using min max
-            func clamp (_ f: CGFloat) -> CGFloat {
-                min(max(f, shipMin), shipMax)
-            }
-            
-            //MARK: Add a little extra to our ships movement
-            pb.applyImpulse(CGVector( dx: velocity.dx / shipCtr, dy: velocity.dy / shipMax))
-            
-            //MARK: make sure we don't exceed 500 - Impulse is an accelerant
-            pb.velocity.dx = clamp(pb.velocity.dx)
-            pb.velocity.dy = clamp(pb.velocity.dy)
-            
-            rotateShip(shipduration, zRotation)
-        }
-    }
     
     
     func blueZ (pos: CGPoint) {
@@ -1492,8 +1524,8 @@
                 
                 let easeOut: SKAction = SKAction.move(to: CGPoint.zero, duration: 0.0)
                 easeOut.timingMode = SKActionTimingMode.easeOut
-                ThumbPad.run(easeOut)
-                TouchPad(velocity: CGVector.zero, zRotation: 0.0)
+                FlightYoke.run(easeOut)
+                FlightYokePilot(velocity: CGVector.zero, zRotation: 0.0)
                 
                 removeHero()
                 removeGUI()
@@ -1553,10 +1585,7 @@
                 }
                 
                 starPlayrOneLevelUpX(world:world, moving:moving, hero: hero, tractor: tractor)
-            
-            
-            
-            
+
             case heroCategory | worldCategory, heroCategory | badGuyCategory, heroCategory | badFishCategory :
                 
                 if ( shield ) {
@@ -1566,21 +1595,7 @@
                 stopIt(secondBody: secondBody, contactPoint: contact.contactPoint)
             default :
                 return
-            /*
-             //used for debugging
-             print(String("** begin unexpected contact ->"))
-             
-             if let _ = firstBody.node as? SKSpriteNode  {
-             print(String(describing: firstBody.node?.name))
-             }
-             
-             if let _ = secondBody.node as? SKSpriteNode  {
-             print(String(describing: secondBody.node?.name))
-             }
-             
-             print(String("<- end unexpected contact **"))
-             */
-            
+
         }
         
     }
@@ -1614,11 +1629,9 @@
     }
     
     func removeGUI() {
-        if let pad = cam.childNode(withName: "ArcadeJoyPad"), let hud = cam.childNode(withName: "HeadsUpDisplay")  {
-            pad.removeFromParent()
-            hud.removeAllChildren()
-            hud.removeFromParent()
-        }
+        QuadFireBombHUD.removeAllChildren()
+        AlienYokeDpdHUD.removeAllChildren()
+        FlightYoke.shutdown()
     }
     
     func LostLife(contactPoint: CGPoint) {
@@ -1646,7 +1659,6 @@
     
     
     func EndGame() {
-        print("ENDGAME")
         removeHero()
         removeGUI()
         saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
@@ -1780,12 +1792,10 @@
     func tallyPoints(name:String?) -> Int {
         
         guard let name = name else {
-            print("No name is present.")
             return(0)
         }
         
         if name.isEmpty {
-            print("Name is Empty.")
             return(0)
         }
         

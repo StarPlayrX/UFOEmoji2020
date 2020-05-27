@@ -37,21 +37,30 @@ class GameMenu: SKScene {
         removeFromParent()
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+        DispatchQueue.main.async {
             [ weak musicLabel, weak soundLabel, weak stickLabel, weak levelLabel, weak versusLabel, weak emojiLabel, weak playLabel1, weak playLabel2, weak playNode] in
             guard
                 let _  = musicLabel,
-            	let _  = soundLabel,
-            	let _  = stickLabel,
-            	let _  = levelLabel,
-            	let _  = versusLabel,
-            	let _  = emojiLabel,
-            	let _  = playLabel1,
-            	let _  = playLabel2,
-            	let _    = playNode
-
+                let _  = soundLabel,
+                let _  = stickLabel,
+                let _  = levelLabel,
+                let _  = versusLabel,
+                let _  = emojiLabel,
+                let _  = playLabel1,
+                let _  = playLabel2,
+                let _  = playNode
+                
                 else { return }
-
+            
+            musicLabel = nil
+            soundLabel = nil
+            stickLabel = nil
+            levelLabel = nil
+            versusLabel = nil
+            emojiLabel = nil
+            playLabel1 = nil
+            playLabel2 = nil
+            playNode = nil
         }
     }
     
@@ -245,8 +254,7 @@ class GameMenu: SKScene {
         }
         settings.highlevel = 10 //cheat to get all levels available
         
-        //print(settings)
-        settings.lives = 1; // may be less when power ups are added
+        settings.lives = 5; // may be less when power ups are added
         settings.score = 0;
         
         

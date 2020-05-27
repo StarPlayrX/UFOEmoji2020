@@ -52,8 +52,8 @@ class GameViewController: UIViewController, GameProtocol {
             let scene = SKScene(fileNamed: "GameMenu")
             else { return }
         
-        DispatchQueue.main.async  {
-            
+        DispatchQueue.main.async  { [weak view] in
+            guard let view = view else { return }
             scene.scaleMode = .aspectFill
             scene.size = setSceneSizeForGame()
             scene.scaleMode = .aspectFill
@@ -78,10 +78,10 @@ class GameViewController: UIViewController, GameProtocol {
 
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+      /*  DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
             guard let self = self else { return }
             self.removeFromParent()
-        }
+        }*/
         
     }
     
@@ -91,7 +91,7 @@ class GameViewController: UIViewController, GameProtocol {
             let scene = SKScene(fileNamed: "GameScene")
             else { print("FAILED"); return }
         
-        DispatchQueue.main.async  {
+        DispatchQueue.main.async  { 
             scene.scaleMode = .aspectFill
             scene.size = setSceneSizeForGame()
             scene.scaleMode = .aspectFill
@@ -119,10 +119,10 @@ class GameViewController: UIViewController, GameProtocol {
 
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+       /* DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
             guard let self = self else { return }
             self.removeFromParent()
-        }
+        }*/
     }
     
     

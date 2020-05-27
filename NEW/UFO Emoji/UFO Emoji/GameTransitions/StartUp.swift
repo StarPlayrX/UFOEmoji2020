@@ -42,8 +42,14 @@ class StartUp: SKScene {
             self.view?.isOpaque = true
             self.view?.clipsToBounds = true
             self.view?.ignoresSiblingOrder = true
-            self.view?.showsFPS = true
-            self.view?.showsNodeCount = true
+           	
+            self.view?.showsFPS = showsFPS
+            self.view?.showsNodeCount = showsNodeCount
+            self.view?.showsPhysics = showsPhysics
+            self.view?.showsFields = showsFields
+            self.view?.showsDrawCount = showsDrawCount
+            self.view?.showsQuadCount = showsQuadCount
+            
             self.view?.shouldCullNonVisibleNodes = true
             self.view?.preferredFramesPerSecond = 61
             

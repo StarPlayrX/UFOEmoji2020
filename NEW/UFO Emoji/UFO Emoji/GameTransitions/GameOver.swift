@@ -14,9 +14,12 @@ class GameOver: SKScene {
     weak var gd = gameDelegate
 
     override init(size: CGSize ) {
-        
+       
         super.init(size: size)
         
+        self.removeAllActions()
+        self.removeAllChildren()
+        self.removeFromParent()
     }
     
     deinit {
@@ -32,23 +35,26 @@ class GameOver: SKScene {
         removeFromParent()
     }
     
+    
     func runner() {
         
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
 
-            self.removeAllActions()
-            self.removeAllChildren()
-            self.removeFromParent()
-            
             self.view?.isMultipleTouchEnabled = true
             self.view?.allowsTransparency = false
             self.view?.isAsynchronous = true
             self.view?.isOpaque = true
             self.view?.clipsToBounds = true
             self.view?.ignoresSiblingOrder = true
-            self.view?.showsFPS = true
-            self.view?.showsNodeCount = true
+            
+            self.view?.showsFPS = showsFPS
+            self.view?.showsNodeCount = showsNodeCount
+            self.view?.showsPhysics = showsPhysics
+            self.view?.showsFields = showsFields
+            self.view?.showsDrawCount = showsDrawCount
+            self.view?.showsQuadCount = showsQuadCount
+            
             self.view?.shouldCullNonVisibleNodes = true
             self.view?.preferredFramesPerSecond = 61
             
@@ -86,7 +92,7 @@ class GameOver: SKScene {
             self.addChild(label2)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) { [weak self] in
             self?.gd?.runGameMenu()
         }
     }
