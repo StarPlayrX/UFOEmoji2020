@@ -1122,6 +1122,7 @@
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard
+            let hero = hero,
             let firebutton = firebutton,
             let firebutton2 = firebutton2,
             let bombsbutton = bombsbutton,
