@@ -741,6 +741,7 @@
         
         FlightYoke = GTFlightYoke()
         FlightYoke.startup()
+        print("HELLO WORLD!")
         world = childNode(withName: "world")
         
         // This is the default of King, Queen Nationality
@@ -1656,12 +1657,20 @@
     }
     
     func removeGUI() {
+        FlightYoke.alpha = 0 // turn off, update offscreen
+        QuadFireBombHUD.alpha = 0
         FlightYoke.recenter()
-        FlightYoke.alpha = 0
-        QuadFireBombHUD.removeAllChildren()
-        AlienYokeDpdHUD.removeAllChildren()
-        FlightYoke.alpha = 1
-        FlightYoke.shutdown()
+        FlightYoke.stickMoved(location: CGPoint.zero)
+
+        //MARK: Fixed stick issue offscreen
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            guard let self = self else { return }
+            self.QuadFireBombHUD.removeAllChildren()
+            self.AlienYokeDpdHUD.removeAllChildren()
+            self.QuadFireBombHUD.alpha = 1
+            self.FlightYoke.alpha = 1 //turn back on before shutdown
+            self.FlightYoke.shutdown()
+        }
     }
     
     func LostLife(contactPoint: CGPoint) {
