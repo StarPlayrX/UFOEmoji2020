@@ -91,7 +91,8 @@ class GameViewController: UIViewController, GameProtocol {
             let scene = SKScene(fileNamed: "GameScene")
             else { print("FAILED"); return }
         
-        DispatchQueue.main.async  { 
+        DispatchQueue.main.async  {  [weak view] in
+            guard let view = view else { return }
             scene.scaleMode = .aspectFill
             scene.size = setSceneSizeForGame()
             scene.scaleMode = .aspectFill
@@ -112,7 +113,6 @@ class GameViewController: UIViewController, GameProtocol {
             view.showsQuadCount = showsQuadCount
             
             view.showsLargeContentViewer = false
-            
             view.shouldCullNonVisibleNodes = true
             view.preferredFramesPerSecond = 61
             view.presentScene(scene)

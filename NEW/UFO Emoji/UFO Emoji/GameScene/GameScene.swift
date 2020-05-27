@@ -11,7 +11,7 @@
  
  
  class GameScene: SKScene, FlightYokeProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
-   
+    
     //MARK: Flight Stick
     let zero = CGFloat(0.0), dampZero = CGFloat(0.0), dampMax = CGFloat(40.0)
     let ease = TimeInterval(0.08), shipduration = TimeInterval(0.005)
@@ -62,7 +62,7 @@
     }
     
     private var QuadFireBombHUD : SKReferenceNode!
-    private var AlienYokeDpdHUD = SKNode()
+    private var AlienYokeDpdHUD : SKReferenceNode!
     private var backParalax : SKNode!
     private var referenceNode : SKReferenceNode!
     
@@ -79,7 +79,7 @@
     private weak var tractor:SKSpriteNode!
     private weak var world: SKNode!
     private var FlightYoke : GTFlightYoke!
-
+    
     private var heroEmoji:SKLabelNode!
     private var audioPlayer: AVAudioPlayer!
     private var cam : SKCameraNode!
@@ -97,8 +97,8 @@
     private var highlevel : Int!
     private var moving : SKNode!
     private var rockBounds : CGRect!
-    private lazy var scoreDict: [String:Int] = [:]
-
+    private lazy var scoreDict: [String:Int]! = [:]
+    
     private var maxVelocity = CGFloat(0)
     private let heroCategory:UInt32         		=  1
     private let worldCategory:UInt32        		=  2
@@ -135,23 +135,38 @@
     //we can swap these out if we use other emoji ships: 0 through 6
     
     deinit {
-        backParalax.removeAllChildren()
-        backParalax.removeFromParent()
         
-        print("GameScene DeInit RAM")
+        if !backParalax.children.isEmpty {
+            print("Remove Back Paralax")
+            backParalax.removeAllChildren()
+            backParalax.removeFromParent()
+            backParalax = nil
+        }
+        
+        
         if referenceNode.hasActions() {
+            print("Removing Actions from SKReference Node")
             referenceNode.removeAllActions()
         }
-    
+        
         if let level = referenceNode.children.first?.children {
             for land in level {
                 if let name = land.name {
-                    if let middy = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode {
+                    if var middy = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode {
                         middy.removeAllActions()
                         middy.removeAllChildren()
                         middy.removeFromParent()
+                        middy = SKTileMapNode.init()
                     }
                 }
+            }
+        }
+        
+        if let rc = referenceNode?.children.first?.children {
+            if !rc.isEmpty {
+                referenceNode.removeAllActions()
+                referenceNode.removeAllChildren()
+                referenceNode.removeFromParent()
             }
         }
         
@@ -162,76 +177,90 @@
                 i.removeAllChildren()
                 i.removeFromParent()
             }
-            
-            if !rc.isEmpty {
-                referenceNode.removeAllChildren()
-            }
-      
         }
-    
-        referenceNode.removeFromParent()
-       	
         
-        if let world = world {
+        if let w = world {
             print("DeInit World")
-            world.removeAllActions()
-            world.removeAllChildren()
-            world.removeFromParent()
-            world.parent?.removeAllChildren()
-            world.parent?.removeAllChildren()
-            world.parent?.removeFromParent()
+            w.removeAllActions()
+            w.removeAllChildren()
+            w.removeFromParent()
+            w.parent?.removeAllChildren()
+            w.parent?.removeAllChildren()
+            w.parent?.removeFromParent()
+            world = nil
         }
-
-        if let cam = cam {
+        
+        if let c = cam {
             print("DeInit Cam")
-
-            cam.removeAllActions()
-            cam.removeAllChildren()
-            cam.removeFromParent()
-            cam.parent?.removeAllChildren()
-            cam.parent?.removeAllChildren()
-            cam.parent?.removeFromParent()
+            c.removeAllActions()
+            c.removeAllChildren()
+            c.removeFromParent()
+            c.parent?.removeAllChildren()
+            c.parent?.removeAllChildren()
+            c.parent?.removeFromParent()
+            cam = nil
         }
         
-        if let camera = camera {
+        if let cm = camera {
             print("DeInit Camera")
-
-            camera.removeAllActions()
-            camera.removeAllChildren()
-            camera.removeFromParent()
-            camera.parent?.removeAllChildren()
-            camera.parent?.removeAllChildren()
-            camera.parent?.removeFromParent()
+            cm.removeAllActions()
+            cm.removeAllChildren()
+            cm.removeFromParent()
+            cm.parent?.removeAllChildren()
+            cm.parent?.removeAllChildren()
+            cm.parent?.removeFromParent()
+            camera = nil
         }
         
         
-        print("DeINIT Rest of Scene")
-
         if hasActions() {
             print("Actions Found")
             removeAllActions()
         }
         
         if !children.isEmpty {
-            print("Children Found")
+            print("DeINIT Rest of Scene")
+            print("Destroy the remaining childen.")
             print(children)
             removeAllChildren()
         }
         
         removeFromParent()
-
-        DispatchQueue.main.async { [weak cam, weak referenceNode, weak audioPlayer, weak backParalax] in
-            guard
-                let _ = cam,
-                let _ = referenceNode,
-            	let _ = audioPlayer,
-            	let _ = backParalax
-                else { return }
-            cam = nil
-            referenceNode = nil
-            audioPlayer = nil
-            backParalax = nil
-        }
+        
+        audioPlayer = nil
+        
+        referenceNode = nil
+        QuadFireBombHUD = nil
+        AlienYokeDpdHUD = nil
+        backParalax = nil
+        referenceNode = nil
+        firstBody = nil
+        secondBody = nil
+        bombsbutton = nil
+        firebutton = nil
+        bombsbutton2 = nil
+        firebutton2 = nil
+        hero = nil
+        canape = nil
+        tractor = nil
+        world = nil
+        FlightYoke = nil
+        heroEmoji = nil
+        audioPlayer = nil
+        cam = nil
+        scoreLabelNode = nil
+        highScoreLabelNode = nil
+        highScoreLabel = nil
+        livesLabel = nil
+        livesLabelNode = nil
+        screenHeight = nil
+        score = nil
+        highscore = nil
+        lives = nil
+        highlevel = nil
+        moving = nil
+        rockBounds = nil
+        scoreDict = nil
     }
     
     
@@ -626,10 +655,7 @@
             
             FlightYoke.delegate = self
             AlienYokeDpdHUD.addChild(FlightYoke)
-            print("AP",anchorPoint)
-            print("A",AlienYokeDpdHUD.position)
-            print("F",FlightYoke.position)
-            print("S",size)
+            
             FlightYoke.zPosition = 1000
             FlightYoke.name = "ArcadeJoyPad"
             
@@ -642,13 +668,6 @@
                     FlightYoke.position = CGPoint(x: CGFloat(frame.size.width / 2 - (87 * 0.75) ) ,y:  CGFloat(frame.size.height / -2 + (87 * 0.75)) )
                 }
             }
-            
-            print("AP2",anchorPoint)
-            print("A2",AlienYokeDpdHUD.position)
-            print("F2",FlightYoke.position)
-            print("S",size)
-
-            
         }
         
         
@@ -711,8 +730,8 @@
     }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-    	
-		FlightYoke = GTFlightYoke()
+        
+        FlightYoke = GTFlightYoke()
         FlightYoke.startup()
         world = childNode(withName: "world")
         
@@ -742,9 +761,9 @@
         addChild(cam)
         cam.zPosition = 100
         
-        //AlienYokeDpdHUD = SKReferenceNode()
+        AlienYokeDpdHUD = SKReferenceNode()
         QuadFireBombHUD = SKReferenceNode()
-
+        
         AlienYokeDpdHUD.name = "AlienYokeDpdHUD"
         QuadFireBombHUD.name = "QuadFireBombHUD"
         cam.addChild(AlienYokeDpdHUD)
@@ -843,7 +862,7 @@
                             middy.removeAllActions()
                             middy.removeAllChildren()
                             middy.removeFromParent()
-
+                            
                         } else {
                             self.removeFromParent()
                             land.alpha = 0.4
@@ -935,7 +954,7 @@
             
             let factor = CGFloat(4.0) //PDF Textures are 25% scaled up 400% to save memory while retained a decent look
             let width = texture.size().width * factor
-        	let rounded = Int(round( self.rockBounds.width / width / 2 ))
+            let rounded = Int(round( self.rockBounds.width / width / 2 ))
             var sprite = SKSpriteNode(texture: texture)
             sprite.name = String("BackTexture")
             sprite.xScale = factor
@@ -1100,7 +1119,7 @@
             let bombsbutton2 = bombsbutton2,
             let heroVelocity = hero.physicsBody?.velocity,
             let herozRotation = hero.zRotation as CGFloat?,
-        	let heroPosition = hero.position as CGPoint?
+            let heroPosition = hero.position as CGPoint?
             else
         { return }
         
@@ -1124,7 +1143,7 @@
                 
                 if name == "fire-down" {
                     bombaway(superhero: (heroPosition, herozRotation, heroVelocity), reverse:false)
-                	firebomb(firebomb: bombsbutton)
+                    firebomb(firebomb: bombsbutton)
                 }
                 
                 if name == "fire-top" {
@@ -1142,10 +1161,10 @@
         guard
             let prize = prize,
             let body = prize.physicsBody,
-        	prize.name != "🌠"
+            prize.name != "🌠"
             else { return }
         
-
+        
         // send the collisions to neverLand
         // this way the score cannot be counted twice or more
         // any prize or coin can get sucked up
@@ -1351,7 +1370,7 @@
             let extraPoints = tallyPoints(name: fbname)
             updateScore(extraPoints:extraPoints )
         }
-
+        
         smokeM(pos: contactPoint)
         remove(body: firstBody)
         remove(body: secondBody)
@@ -1389,7 +1408,7 @@
             let extraPoints = tallyPoints(name: sbnn)
             updateScore(extraPoints:extraPoints )
         }
-
+        
         magicParticle(pos: contactPoint)
         remove(body: firstBody)
         remove(body: secondBody)
@@ -1466,7 +1485,7 @@
                     baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
                 } else {
                     worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
-            	}
+            }
             
             case badFishCategory | laserbeam :
                 
@@ -1474,41 +1493,41 @@
                     baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
                 } else {
                     worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
-            	}
+            }
             
             case badGuyCategory | laserbeam :
                 
                 baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
             
             case laserbeam | itemCategory :
-               
+                
                 if secondBody.isDynamic || (🔋 && firstBody.node?.name == "💠") {
                     goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-                
+                    
                 } else {
                     laserVersusFloater(firstBody: firstBody, secondBody: secondBody)
-            	}
+            }
             
             case laserbeam | fishCategory :
-               
+                
                 if secondBody.isDynamic || (🔋 && firstBody.node?.name == "💠") {
                     goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
                 } else {
                     laserVersusFloater(firstBody: firstBody, secondBody: secondBody)
-            	}
+            }
             
             case laserbeam | charmsCategory :
-               
+                
                 goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
             
             case tractorCategory | itemCategory, tractorCategory | charmsCategory, tractorCategory | fishCategory :
                 
                 if let prize = secondBody.node as? SKSpriteNode {
                     tractorBeamedThisItem(prize: prize)
-            	}
+            }
             
             case heroCategory | levelupCategory :
-                                
+                
                 levelUpHelper()
                 
                 if secondBody.node?.name == "🌀" {
@@ -1585,7 +1604,7 @@
                 }
                 
                 starPlayrOneLevelUpX(world:world, moving:moving, hero: hero, tractor: tractor)
-
+            
             case heroCategory | worldCategory, heroCategory | badGuyCategory, heroCategory | badFishCategory :
                 
                 if ( shield ) {
@@ -1595,7 +1614,7 @@
                 stopIt(secondBody: secondBody, contactPoint: contact.contactPoint)
             default :
                 return
-
+            
         }
         
     }
@@ -2000,7 +2019,7 @@
         }
         
         let laserDupe = 👁.copy() as! SKSpriteNode
-    	addChild(laserDupe)
+        addChild(laserDupe)
         
         if settings.emoji == 2 {
             let decay = SKAction.wait(forDuration: TimeInterval(0.6 * Double(settings.mode)))
@@ -2027,7 +2046,7 @@
             
         }
     }
-
+    
     
     func bombaway (superhero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool ) {
         🛥 = !🛥
