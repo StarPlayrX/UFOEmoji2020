@@ -212,6 +212,15 @@
             camera = nil
         }
         
+        if let scene = scene {
+            print("DeInit Scene")
+            scene.removeAllActions()
+            scene.removeAllChildren()
+            scene.removeFromParent()
+            scene.parent?.removeAllChildren()
+            scene.parent?.removeAllChildren()
+        }
+        
         
         if hasActions() {
             print("Actions Found")
@@ -219,8 +228,7 @@
         }
         
         if !children.isEmpty {
-            print("DeINIT Rest of Scene")
-            print("Destroy the remaining childen.")
+            print("Destroy the remaining characters!")
             print(children)
             removeAllChildren()
         }
@@ -1648,8 +1656,11 @@
     }
     
     func removeGUI() {
+        FlightYoke.recenter()
+        FlightYoke.alpha = 0
         QuadFireBombHUD.removeAllChildren()
         AlienYokeDpdHUD.removeAllChildren()
+        FlightYoke.alpha = 1
         FlightYoke.shutdown()
     }
     
