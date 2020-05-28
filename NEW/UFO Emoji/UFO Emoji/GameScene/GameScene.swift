@@ -653,42 +653,41 @@
     
     
     func setupLevel(tileMap: SKTileMapNode!) -> SKTileMapNode? {
-        guard var tileMap : SKTileMapNode? = tileMap, let columns = tileMap?.numberOfColumns, let rows = tileMap?.numberOfRows else { return nil }
-        let tmr = TMRX(TileMapTileSize: tileMap?.tileSize, TileMapParent: tileMap?.parent?.parent, TileMapRect: tileMap?.scene?.frame)
-        for col in (0 ..< columns) {
-            for row in (0 ..< rows) {
-                let tileDefinition = tileMap?.tileDefinition(atColumn: col, row: row)
+        guard let tileMap : SKTileMapNode = tileMap else { return nil }
+        let tmr = TMRX(TileMapTileSize: tileMap.tileSize, TileMapParent: tileMap.parent?.parent, TileMapRect: tileMap.scene?.frame)
+        for col in (0 ..< tileMap.numberOfColumns) {
+            for row in (0 ..< tileMap.numberOfRows) {
+                let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
                 tileDefinition?.textures.removeAll()
                 tileDefinition?.size.width = 0
                 tileDefinition?.size.height = 0
                 tileDefinition?.placementWeight = 0
                 tileDefinition?.timePerFrame = 0
-                if let td = tileDefinition, let n = td.name, !n.isEmpty, var center : CGPoint? = tileMap?.centerOfTile(atColumn: col, row: row) {
-                    tmr.tileMapRun(tileDefinition: td, center: center!)
-                    center = nil
+                if let td = tileDefinition, let n = td.name, !n.isEmpty {
+                    
+                    
+                    tmr.tileMapRun(tileDefinition: td, center: tileMap.centerOfTile(atColumn: col, row: row))
+                    
                     let tileGroup : SKTileGroup! = SKTileGroup.init()
                     let tileDef : SKTileDefinition! = SKTileDefinition.init()
-                    tileMap?.setTileGroup(tileGroup, andTileDefinition: tileDef, forColumn: col, row: row)
-
+                    tileMap.setTileGroup(tileGroup, andTileDefinition: tileDef, forColumn: col, row: row)
                     
                 } else {
                     tileDefinition?.userData = nil
                     let tileGroup : SKTileGroup! = SKTileGroup.init()
                     let tileDef : SKTileDefinition! = SKTileDefinition.init()
-                    tileMap?.setTileGroup(tileGroup, andTileDefinition: tileDef, forColumn: col, row: row)
+                    tileMap.setTileGroup(tileGroup, andTileDefinition: tileDef, forColumn: col, row: row)
                 }
-                
-            
             }
         }
         
-        tileMap?.tileSet = SKTileSet.init()
-        tileMap?.tileSize = CGSize.zero
-        tileMap?.numberOfRows = 0
-        tileMap?.numberOfColumns = 0
-        tileMap?.removeAllChildren()
-        tileMap?.removeFromParent()
-        tileMap = nil; return tileMap
+        tileMap.tileSet = SKTileSet.init()
+        tileMap.tileSize = CGSize.zero
+        tileMap.numberOfRows = 0
+        tileMap.numberOfColumns = 0
+        tileMap.removeAllChildren()
+        tileMap.removeFromParent()
+        return nil
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -2120,7 +2119,7 @@
         }
         
         
-        🛥 ? (💣.zPosition = 100) : (💣.zPosition = -100)
+        🛥 ? (💣.zPosition = -100) : (💣.zPosition = -100)
         
         🧨.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         🧨.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
