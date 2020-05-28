@@ -143,6 +143,42 @@
             backParalax = nil
         }
         
+        if referenceNode.hasActions() {
+            print("Removing Actions from SKReference Node")
+            referenceNode.removeAllActions()
+        }
+        
+        if let level = referenceNode.children.first?.children {
+            for land in level {
+                if let name = land.name {
+                    if var middy = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode {
+                        middy.removeAllActions()
+                        middy.removeAllChildren()
+                        middy.removeFromParent()
+                        middy = SKTileMapNode.init()
+                    }
+                }
+            }
+        }
+        
+        if let rc = referenceNode?.children.first?.children {
+            if !rc.isEmpty {
+                referenceNode.removeAllActions()
+                referenceNode.removeAllChildren()
+                referenceNode.removeFromParent()
+            }
+        }
+        
+        if let rc = referenceNode?.children.first?.children {
+            print("Count:", rc.count)
+            for i in rc {
+                i.removeAllActions()
+                i.removeAllChildren()
+                i.removeFromParent()
+            }
+        }
+            
+        
         if let w = world {
             print("DeInit World")
             w.removeAllActions()
@@ -204,7 +240,6 @@
         QuadFireBombHUD = nil
         AlienYokeDpdHUD = nil
         backParalax = nil
-        referenceNode = nil
         firstBody = nil
         secondBody = nil
         bombsbutton = nil
@@ -836,39 +871,50 @@
         
         filename = "level1"
         
-        //Check if level exists first (safe)MR
-        referenceNode = SKReferenceNode(fileNamed: filename)
-        referenceNode.name = "🥶🥶🥶"
-        referenceNode.position = CGPoint(x:0,y:0)
-        referenceNode.zPosition = -150
-        addChild(referenceNode)
-        referenceNode.isPaused = true
-        
-        if var level = referenceNode.children.first?.children {
-            //Noue longer hard encoded
-            for var land in level {
-                
-                if let name = land.name, let m = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode, var md = self.setupLevel( tileMap: m) {
-                    
-                    md.tileSet = SKTileSet.init()
-                    md = SKTileMapNode.init()
-                    
-                    md.name = "erased: \(name)"
-                    md.tileSize = CGSize.zero
-                    md.tileSet.tileGroups = []
-                    md.tileSet.defaultTileSize = CGSize.zero
-                    md.numberOfColumns = 0
-                    md.numberOfColumns = 0
-                    land = md
-                    land.removeAllChildren()
-                    land.removeFromParent()
-                }
-              
-            }
+        func setupGameLevel() {
+            //Check if level exists first (safe)MR
+            referenceNode = SKReferenceNode(fileNamed: filename)
+            referenceNode.name = "🥶🥶🥶"
+            referenceNode.position = CGPoint(x:0,y:0)
+            referenceNode.zPosition = -150
+            addChild(referenceNode)
+            referenceNode.isPaused = true
             
-            level.removeAll()
+            if var level = referenceNode.children.first?.children {
+                //Noue longer hard encoded
+                for var land in level {
+                    
+                    if let name = land.name, let m = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode, var md = self.setupLevel( tileMap: m) {
+                        
+                        md.tileSet = SKTileSet.init()
+                        md = SKTileMapNode.init()
+                        
+                        md.name = "erased: \(name)"
+                        md.tileSize = CGSize.zero
+                        md.tileSet.tileGroups = []
+                        md.tileSet.defaultTileSize = CGSize.zero
+                        md.numberOfColumns = 0
+                        md.numberOfColumns = 0
+                        land = md
+                        land.removeAllChildren()
+                        land.removeFromParent()
+                    }
+                    
+                }
+                
+                level.removeAll()
+            }
+            globalRefNode = referenceNode
+            referenceNode.isPaused = false
         }
-        referenceNode.isPaused = false
+        if let g = globalRefNode {
+            referenceNode = globalRefNode
+            addChild(referenceNode)
+
+        } else {
+        	setupGameLevel()
+        }
+
         
         //print(referenceNode.children)
         

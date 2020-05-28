@@ -90,3 +90,5 @@ func setSceneSizeForGame() -> CGSize  {
     }
 }
     
+
+var globalRefNode : SKReferenceNode!
