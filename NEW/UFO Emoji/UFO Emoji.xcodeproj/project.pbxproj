@@ -61,6 +61,7 @@
 		5FC051C3247B057C003C8201 /* GameMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FC051C1247B057C003C8201 /* GameMenu.sks */; };
 		5FC051C4247B057C003C8201 /* GameMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051C2247B057C003C8201 /* GameMenu.swift */; };
 		5FC051C7247B0882003C8201 /* GameGlobal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051C6247B0882003C8201 /* GameGlobal.swift */; };
+		5FF9EB21247ED207004916FB /* empty.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FF9EB20247ED207004916FB /* empty.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +121,7 @@
 		5FC051F2247B112C003C8201 /* blackHole.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = blackHole.sks; sourceTree = "<group>"; };
 		5FC051F3247B112C003C8201 /* grayParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = grayParticle.sks; sourceTree = "<group>"; };
 		5FC051F4247B112C003C8201 /* smokeParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = smokeParticle.sks; sourceTree = "<group>"; };
+		5FF9EB20247ED207004916FB /* empty.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = empty.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -294,6 +296,7 @@
 				5FC051E2247B0EA8003C8201 /* things.sks */,
 				5FC051E0247B0EA8003C8201 /* ugly.sks */,
 				5FC051E4247B0EA8003C8201 /* water.sks */,
+				5FF9EB20247ED207004916FB /* empty.sks */,
 			);
 			path = GameTileSets;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				5F1CF8E1247B18F7008DEC84 /* grayParticle.sks in Resources */,
 				5F1CF8D4247B18F2008DEC84 /* eats.sks in Resources */,
 				5F1CF8CD247B18E0008DEC84 /* level01.sks in Resources */,
+				5FF9EB21247ED207004916FB /* empty.sks in Resources */,
 				5F1CF8DC247B18F2008DEC84 /* water.sks in Resources */,
 				5F1CF8DF247B18F7008DEC84 /* blueParticle.sks in Resources */,
 				5F1CF8D5247B18F2008DEC84 /* elements.sks in Resources */,

@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "blu_bkgd.pdf",
+      "filename" : "blu_mtnz.pdf",
       "idiom" : "universal"
     }
   ],
@@ -10,6 +10,7 @@
     "version" : 1
   },
   "properties" : {
+    "compression-type" : "gpu-optimized-smallest",
     "preserves-vector-representation" : true
   }
 }

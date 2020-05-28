@@ -75,7 +75,7 @@ class TMRX {
         
         TileMapParent.addChild(TileNode)
         if NewItem == "🐟" || Emoji == "🐝" || NewItem == "🦀" || NewItem == "🛸"  {
-            var random = Int(arc4random_uniform(6)) + 1
+            var random = Int(arc4random_uniform(3)) + 1
             let r2 = Int(arc4random_uniform(1))
             
             var mov = -1
@@ -88,15 +88,28 @@ class TMRX {
                 random = random / 2
             }
             
-            let moveAmount = 32 * random
+            let moveAmount = 48 * random
             let moveright = SKAction.move(by: CGVector(dx: moveAmount * mov, dy: 0), duration: TimeInterval(random))
-            let wait = SKAction.wait(forDuration: TimeInterval(random))
-            let flip1 = SKAction.scaleX(to: CGFloat(mov), duration: 0.5)
-            let flip2 = SKAction.scaleX(to: CGFloat(-mov), duration: 0.5)
             let moveleft = SKAction.move(by: CGVector(dx: moveAmount * -mov, dy: 0), duration: TimeInterval(random))
+            let wait = SKAction.wait(forDuration: TimeInterval(random))
+
+            if TileNode.position.x < 0 {
+                let flip1 = SKAction.scaleX(to: CGFloat(-mov), duration: 0.25)
+                let flip2 = SKAction.scaleX(to: CGFloat(mov), duration: 0.25)
+                let rep = SKAction.repeatForever(SKAction.sequence([flip2,moveright,wait,flip1,wait,moveleft,wait]))
+
+                TileNode.run(rep)
+                
+            } else {
+                let flip1 = SKAction.scaleX(to: CGFloat(mov), duration: 0.25)
+                let flip2 = SKAction.scaleX(to: CGFloat(-mov), duration: 0.25)
+                let rep = SKAction.repeatForever(SKAction.sequence([flip2,moveright,wait,flip1,wait,moveleft,wait]))
+
+                TileNode.run(rep)
+            }
+           
             
-            let rep = SKAction.repeatForever(SKAction.sequence([flip2,moveright,wait,flip1,wait,moveleft,wait]))
-            TileNode.run(rep)
+           
         }
         
         let spriteLabelNode = SKLabelNode(fontNamed:"Apple Color Emoji")
@@ -307,6 +320,60 @@ class TMRX {
             }
         }
     }
+    
+    func DrawSprites(TileNode: SKSpriteNode?, PhysicsBody: SKPhysicsBody?, Name: String, Attribute: Int) {
+        
+        guard
+            let TileNode = TileNode
+            else { return }
+        
+        if PhysicsBody == nil {
+            TileNode.physicsBody = SKPhysicsBody()
+        } else {
+            TileNode.physicsBody = PhysicsBody
+        }
+        
+        TileNode.physicsBody = PhysicsBody
+        
+        if Name == "dirt" || Name == "land" || Name == "gold" {
+            TileNode.physicsBody?.categoryBitMask = 2 as UInt32 //2
+            TileNode.physicsBody?.collisionBitMask = 2 + 128 as UInt32  //2
+            TileNode.physicsBody?.contactTestBitMask = 0 as UInt32
+        } else if Name == "stone" {
+            TileNode.physicsBody?.categoryBitMask = 2 as UInt32 //2
+            TileNode.physicsBody?.collisionBitMask = 2 + 128 as UInt32  //2
+            TileNode.physicsBody?.contactTestBitMask = 0 as UInt32
+        } else {
+            TileNode.physicsBody?.categoryBitMask = 256 //2
+            TileNode.physicsBody?.collisionBitMask = 258 + 128 //2
+            TileNode.physicsBody?.contactTestBitMask = 0
+        }
+        
+        //small stuff gets blasted
+        //if ( Attribute == 6 ) {
+        //   TileNode.physicsBody?.isDynamic = true //false
+        //    TileNode.physicsBody?.affectedByGravity = false //true
+        
+        //} else {
+        TileNode.physicsBody?.isDynamic = false //false
+        TileNode.physicsBody?.affectedByGravity = true //true
+        //}
+        
+        TileNode.physicsBody?.fieldBitMask =  0
+        TileNode.physicsBody?.allowsRotation = true //true
+        TileNode.physicsBody?.pinned = false  //false
+        TileNode.physicsBody?.restitution = 0.1 * CGFloat(Attribute)
+        TileNode.physicsBody?.isResting = true
+        TileNode.physicsBody?.friction = 0.0
+        TileNode.physicsBody?.mass = 1
+        TileNode.physicsBody?.density = 0.1 * CGFloat(Attribute)
+        TileNode.zPosition = 70
+        TileNode.name = Name
+        
+        TileMapParent.addChild(TileNode)
+        // TileNode = SKSpriteNode()
+    }
+    
     
     //Tile Map Run
     func tileMapRun(tileDefinition: SKTileDefinition, center: CGPoint, leftside: Bool = false
@@ -1315,51 +1382,7 @@ class TMRX {
     }
     
     
-    func DrawSprites(TileNode: SKSpriteNode?, PhysicsBody: SKPhysicsBody?, Name: String, Attribute: Int) {
-        
-        guard var TileNode = TileNode, let PhysicsBody = PhysicsBody else { return }
-        
-        TileNode.physicsBody = PhysicsBody
-        
-        if Name == "dirt" || Name == "land" || Name == "gold" {
-            TileNode.physicsBody?.categoryBitMask = 2 as UInt32 //2
-            TileNode.physicsBody?.collisionBitMask = 2 + 128 as UInt32  //2
-            TileNode.physicsBody?.contactTestBitMask = 0 as UInt32
-        } else if Name == "stone" {
-            TileNode.physicsBody?.categoryBitMask = 2 as UInt32 //2
-            TileNode.physicsBody?.collisionBitMask = 2 + 128 as UInt32  //2
-            TileNode.physicsBody?.contactTestBitMask = 0 as UInt32
-        } else {
-            TileNode.physicsBody?.categoryBitMask = 256 //2
-            TileNode.physicsBody?.collisionBitMask = 258 + 128 //2
-            TileNode.physicsBody?.contactTestBitMask = 0
-        }
-        
-        //small stuff gets blasted
-        //if ( Attribute == 6 ) {
-        //   TileNode.physicsBody?.isDynamic = true //false
-        //    TileNode.physicsBody?.affectedByGravity = false //true
-        
-        //} else {
-        TileNode.physicsBody?.isDynamic = false //false
-        TileNode.physicsBody?.affectedByGravity = true //true
-        //}
-        
-        TileNode.physicsBody?.fieldBitMask =  0
-        TileNode.physicsBody?.allowsRotation = true //true
-        TileNode.physicsBody?.pinned = false  //false
-        TileNode.physicsBody?.restitution = 0.1 * CGFloat(Attribute)
-        TileNode.physicsBody?.isResting = true
-        TileNode.physicsBody?.friction = 0.0
-        TileNode.physicsBody?.mass = 1
-        TileNode.physicsBody?.density = 0.1 * CGFloat(Attribute)
-        TileNode.zPosition = 70
-        TileNode.name = Name
-        
-        TileMapParent.addChild(TileNode)
-        TileNode = SKSpriteNode()
-    }
-    
+   
 }
 
 

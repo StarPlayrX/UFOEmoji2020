@@ -63,7 +63,7 @@
     
     private var QuadFireBombHUD : SKReferenceNode!
     private var AlienYokeDpdHUD : SKReferenceNode!
-    private var backParalax : SKNode!
+    private var backParalax : SKReferenceNode!
     private var referenceNode : SKReferenceNode!
     
     typealias Oreo = (bombsbutton:SKSpriteNode?,firebutton:SKSpriteNode?,hero:SKSpriteNode?,canape:SKSpriteNode?,tractor:SKSpriteNode?,bombsbutton2:SKSpriteNode?,firebutton2:SKSpriteNode?)
@@ -77,7 +77,7 @@
     private weak var hero:SKSpriteNode!
     private weak var canape:SKSpriteNode!
     private weak var tractor:SKSpriteNode!
-    private weak var world: SKNode!
+    private weak var world: SKReferenceNode!
     private var FlightYoke : GTFlightYoke!
     
     private var heroEmoji:SKLabelNode!
@@ -95,7 +95,7 @@
     private var highscore : Int!
     private var lives : Int!
     private var highlevel : Int!
-    private var moving : SKNode!
+    private var moving : SKReferenceNode!
     private var rockBounds : CGRect!
     private lazy var scoreDict: [String:Int]! = [:]
     
@@ -141,42 +141,6 @@
             backParalax.removeAllChildren()
             backParalax.removeFromParent()
             backParalax = nil
-        }
-        
-        
-        if referenceNode.hasActions() {
-            print("Removing Actions from SKReference Node")
-            referenceNode.removeAllActions()
-        }
-        
-        if let level = referenceNode.children.first?.children {
-            for land in level {
-                if let name = land.name {
-                    if var middy = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode {
-                        middy.removeAllActions()
-                        middy.removeAllChildren()
-                        middy.removeFromParent()
-                        middy = SKTileMapNode.init()
-                    }
-                }
-            }
-        }
-        
-        if let rc = referenceNode?.children.first?.children {
-            if !rc.isEmpty {
-                referenceNode.removeAllActions()
-                referenceNode.removeAllChildren()
-                referenceNode.removeFromParent()
-            }
-        }
-        
-        if let rc = referenceNode?.children.first?.children {
-            print("Count:", rc.count)
-            for i in rc {
-                i.removeAllActions()
-                i.removeAllChildren()
-                i.removeFromParent()
-            }
         }
         
         if let w = world {
@@ -236,7 +200,6 @@
         removeFromParent()
         
         audioPlayer = nil
-        
         referenceNode = nil
         QuadFireBombHUD = nil
         AlienYokeDpdHUD = nil
@@ -689,23 +652,43 @@
     
     
     
-    func setupLevel(tileMap: SKTileMapNode) {
-        let tmr = TMRX(TileMapTileSize: tileMap.tileSize, TileMapParent: tileMap.parent, TileMapRect: tileMap.scene?.frame)
-        tileMap.alpha = 0.0
-        for col in (0 ..< tileMap.numberOfColumns) {
-            for row in (0 ..< tileMap.numberOfRows) {
-                let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
-                let center = tileMap.centerOfTile(atColumn: col, row: row)
+    func setupLevel(tileMap: SKTileMapNode!) -> SKTileMapNode? {
+        guard var tileMap : SKTileMapNode? = tileMap, let columns = tileMap?.numberOfColumns, let rows = tileMap?.numberOfRows else { return nil }
+        let tmr = TMRX(TileMapTileSize: tileMap?.tileSize, TileMapParent: tileMap?.parent?.parent, TileMapRect: tileMap?.scene?.frame)
+        for col in (0 ..< columns) {
+            for row in (0 ..< rows) {
+                let tileDefinition = tileMap?.tileDefinition(atColumn: col, row: row)
                 tileDefinition?.textures.removeAll()
-                if let td = tileDefinition, let n = td.name, !n.isEmpty {
-                    tmr.tileMapRun(tileDefinition: td, center: center)
+                tileDefinition?.size.width = 0
+                tileDefinition?.size.height = 0
+                tileDefinition?.placementWeight = 0
+                tileDefinition?.timePerFrame = 0
+                if let td = tileDefinition, let n = td.name, !n.isEmpty, var center : CGPoint? = tileMap?.centerOfTile(atColumn: col, row: row) {
+                    tmr.tileMapRun(tileDefinition: td, center: center!)
+                    center = nil
+                    let tileGroup : SKTileGroup! = SKTileGroup.init()
+                    let tileDef : SKTileDefinition! = SKTileDefinition.init()
+                    tileMap?.setTileGroup(tileGroup, andTileDefinition: tileDef, forColumn: col, row: row)
+
+                    
+                } else {
+                    tileDefinition?.userData = nil
+                    let tileGroup : SKTileGroup! = SKTileGroup.init()
+                    let tileDef : SKTileDefinition! = SKTileDefinition.init()
+                    tileMap?.setTileGroup(tileGroup, andTileDefinition: tileDef, forColumn: col, row: row)
                 }
                 
+            
             }
         }
         
-        tileMap.removeAllActions()
-        tileMap.removeAllChildren()
+        tileMap?.tileSet = SKTileSet.init()
+        tileMap?.tileSize = CGSize.zero
+        tileMap?.numberOfRows = 0
+        tileMap?.numberOfColumns = 0
+        tileMap?.removeAllChildren()
+        tileMap?.removeFromParent()
+        tileMap = nil; return tileMap
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -738,11 +721,10 @@
     }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        
         FlightYoke = GTFlightYoke()
         FlightYoke.startup()
         print("HELLO WORLD!")
-        world = childNode(withName: "world")
+        world = childNode(withName: "world") as? SKReferenceNode
         
         // This is the default of King, Queen Nationality
         KingQueenGlobalDie = 100
@@ -837,7 +819,7 @@
             
             //skyMtns
             case 1..<100:
-                background = "blue_mtns"
+                background = "blu_mtns"
             case 6..<9:
                 ()
             case 10:
@@ -851,40 +833,46 @@
         
         filename = "level1"
         
-        //Check if level exists first (safe)
-        referenceNode = SKReferenceNode.init(fileNamed: filename)
-        referenceNode.name = "😀😀😀"
+        //Check if level exists first (safe)MR
+        referenceNode = SKReferenceNode(fileNamed: filename)
         addChild(referenceNode)
+        referenceNode.name = "🥶🥶🥶"
         referenceNode.position = CGPoint(x:0,y:0)
-        
+        referenceNode.zPosition = -150
         //self.isPaused = true
         
-        if let level = referenceNode.children.first?.children {
-            //No longer hard encoded
-            for land in level {
+        if var level = referenceNode.children.first?.children {
+            //Noue longer hard encoded
+            for var land in level {
                 
-                if let name = land.name {
-                    if let middy = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode {
-                        
-                        if name != "Water" {
-                            self.setupLevel( tileMap: middy)
-                            middy.removeAllActions()
-                            middy.removeAllChildren()
-                            middy.removeFromParent()
-                            
-                        } else {
-                            self.removeFromParent()
-                            land.alpha = 0.4
-                            land.zPosition = 1000
-                        }
-                    }
+                if let name = land.name, let m = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode, var md = self.setupLevel( tileMap: m) {
+                    
+                    md.tileSet = SKTileSet.init()
+                    md = SKTileMapNode.init()
+                    
+                    md.name = "erased: \(name)"
+                    md.tileSize = CGSize.zero
+                    md.tileSet.tileGroups = []
+                    md.tileSet.defaultTileSize = CGSize.zero
+                    md.numberOfColumns = 0
+                    md.numberOfColumns = 0
                 }
+                
+                land.removeAllChildren()
+                land.removeFromParent()
+                land = SKTileMapNode()
+                land.name = "erased"
             }
             
+            level.removeAll()
         }
         
         
+        //print(referenceNode.children)
         
+        //addChild(referenceNode.copy() as! SKReferenceNode)
+        //referenceNode.removeFromParent()
+        //referenceNode = nil
         
         for node in self.children {
             if (node.name == "world") {
@@ -896,11 +884,9 @@
                         node.zPosition = 50
                         rockBounds = node.frame
                         
-                        
                         physicsWorld.gravity = CGVector(dx: 0.0, dy: -3) //mini
-                        scene?.physicsWorld.contactDelegate = self
+                        physicsWorld.contactDelegate = self
                         node.physicsBody = SKPhysicsBody(edgeLoopFrom: rockBounds)
-                        
                         node.physicsBody?.categoryBitMask = wallCategory //2 + 8 + 128 + 256 + 512 + 1024
                         node.physicsBody?.collisionBitMask = 0
                         node.physicsBody?.restitution = 0.02
@@ -915,7 +901,7 @@
                         
                         addnode.physicsBody = SKPhysicsBody(edgeLoopFrom: bombBounds)
                         addnode.physicsBody?.categoryBitMask = bombBoundsCategory;
-                        addChild(addnode)
+                        self.cam.addChild(addnode)
                         
                         let node = SKNode()
                         
@@ -938,21 +924,21 @@
                         node.speed = 0
                         node.yScale = 1.5
                         self.cam.addChild(node)
+                        
                     }
                 }
+                
+                
             }
+            
+            
         }
         
-        moving = SKNode()
-        
+        moving = SKReferenceNode()
         world?.addChild(moving)
-        backParalax = SKNode()
-
+        backParalax = SKReferenceNode()
         backParalax.removeAllChildren()
         backParalax.removeFromParent()
-        
-   
-        
         self.world?.addChild(backParalax)
         
         let texture = SKTexture(imageNamed: background)
@@ -961,43 +947,49 @@
             guard
                 let self = self
                 else { return }
-            let factor = CGFloat(1.0) //PDF Textures are 25% scaled up 400% to save memory while retained a decent look
-            let xFactor = CGFloat(4.0) //PDF Textures are 25% scaled up 400% to save memory while retained a decent look
-
+            let xFactor = CGFloat(8.0) //PDF Textures are 25% scaled up 400% to save memory while retained a decent look
+            
             let width = texture.size().width
-            let height = texture.size().height
-
+            
             var sprite = SKSpriteNode(texture: texture)
             sprite.name = String("texture")
-            sprite.xScale = factor
-            sprite.yScale = factor
+            sprite.xScale = 1
+            sprite.yScale = 1
             
             //Place from Center
             for i in [0,-1,1,-2,2]  {
                 
                 if i == 0 {
-                    let bg = SKTexture(imageNamed: "blue_bkgd")
+                    let bg = SKTexture(imageNamed: "blu_bkgd")
                     let x = CGFloat(UIScreen.main.bounds.size.width)
-                    let y = CGFloat(UIScreen.main.bounds.size.height)
-
+                    
                     let sp = SKSpriteNode(texture: bg)
                     
                     let xScale = xFactor * ( x / width )
-                    let yScale = xFactor * ( y / height )
                     
-                    print(xScale,yScale)
                     sp.xScale = xScale
-                    sp.yScale = yScale
+                    sp.yScale = 8
                     sp.name = "background_cam"
-                    sp.zPosition = -10000
                     self.cam.addChild(sp)
+                    sp.zPosition = -10000
+                    
+                    let bg2 = SKTexture(imageNamed: "blu_water")
+                    let sp2 = SKSpriteNode(texture: bg2)
+                    
+                    sp2.xScale = xFactor * ( x / width )
+                    sp2.yScale = 8
+                    sp2.name = "watercam"
+                    sp2.zPosition = -100
+                    sp2.alpha = 0.4
+                    self.cam.addChild(sp2)
                     
                 }
                 sprite.position = CGPoint(x: CGFloat(i) * width, y: 0)
+                
                 self.backParalax.addChild(sprite.copy() as! SKSpriteNode )
             }
             
-            self.backParalax.zPosition = -243
+            self.backParalax.zPosition = -300
             sprite = SKSpriteNode()
             
             self.backParalax.name = "backParalaxOriginal"
@@ -1092,6 +1084,7 @@
             self.audioPlayer?.stop()
             self.audioPlayer?.volume = 0.0
         }
+        
     }
     
     override func didSimulatePhysics() {
@@ -1588,7 +1581,7 @@
                 
                 
                 //Loads the LevelUp Scene
-                func starPlayrOneLevelUpX(world:SKNode?, moving:SKNode?, hero: SKSpriteNode?, tractor: SKSpriteNode?) {
+                func starPlayrOneLevelUpX(world:SKReferenceNode?, moving:SKReferenceNode?, hero: SKSpriteNode?, tractor: SKSpriteNode?) {
                     
                     guard
                         let world = world,
@@ -1684,7 +1677,7 @@
         QuadFireBombHUD.alpha = 0
         FlightYoke.recenter()
         FlightYoke.stickMoved(location: CGPoint.zero)
-
+        
         //MARK: Fixed stick issue offscreen
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             guard let self = self else { return }
@@ -1726,7 +1719,7 @@
         saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
         
         //Loads the game over scene
-        func gameOver(world:SKNode, moving:SKNode, hero: SKSpriteNode, tractor: SKSpriteNode) {
+        func gameOver(world:SKReferenceNode?, moving:SKReferenceNode, hero: SKSpriteNode, tractor: SKSpriteNode) {
             
             Explosion()
             

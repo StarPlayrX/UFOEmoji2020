@@ -13,15 +13,15 @@ class GameMenu: SKScene {
     private var minlevel = 1
     private var maxEmoji = 3
     private var minEmoji = 1
-    private var musicLabel 	=  SKLabelNode()
-    private var soundLabel 	=  SKLabelNode()
-    private var stickLabel 	=  SKLabelNode()
-    private var levelLabel 	=  SKLabelNode()
-    private var versusLabel =  SKLabelNode()
-    private var emojiLabel 	=  SKLabelNode()
-    private var playLabel1 	=  SKLabelNode()
-    private var playLabel2 	=  SKLabelNode()
-    private var playNode = SKNode()
+    private var musicLabel : SKLabelNode!  =  SKLabelNode()
+    private var soundLabel : SKLabelNode!  =  SKLabelNode()
+    private var stickLabel : SKLabelNode!  =  SKLabelNode()
+    private var levelLabel : SKLabelNode!  =  SKLabelNode()
+    private var versusLabel: SKLabelNode!  =  SKLabelNode()
+    private var emojiLabel : SKLabelNode!  =  SKLabelNode()
+    private var playLabel1 : SKLabelNode!  =  SKLabelNode()
+    private var playLabel2 : SKLabelNode!  =  SKLabelNode()
+    private var playNode :   SKNode! = SKNode()
     private var lockDown = false
     
     deinit {
@@ -33,36 +33,21 @@ class GameMenu: SKScene {
         if !children.isEmpty {
             removeAllChildren()
         }
-    
+        
         removeFromParent()
         
+        playNode = nil
+        musicLabel = nil
+        soundLabel = nil
+        stickLabel = nil
+    	levelLabel = nil
+    	versusLabel = nil
+    	emojiLabel = nil
+    	playLabel1 = nil
+    	playLabel2 = nil
         
-        DispatchQueue.main.async {
-            [ weak musicLabel, weak soundLabel, weak stickLabel, weak levelLabel, weak versusLabel, weak emojiLabel, weak playLabel1, weak playLabel2, weak playNode] in
-            guard
-                let _  = musicLabel,
-                let _  = soundLabel,
-                let _  = stickLabel,
-                let _  = levelLabel,
-                let _  = versusLabel,
-                let _  = emojiLabel,
-                let _  = playLabel1,
-                let _  = playLabel2,
-                let _  = playNode
-                
-                else { return }
-            
-            musicLabel = nil
-            soundLabel = nil
-            stickLabel = nil
-            levelLabel = nil
-            versusLabel = nil
-            emojiLabel = nil
-            playLabel1 = nil
-            playLabel2 = nil
-            playNode = nil
-        }
     }
+    
     
     internal override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -126,7 +111,7 @@ class GameMenu: SKScene {
                         versusLabel.text = antiarray[settings.level ]
                     }
                     print(settings.level)
-
+                    
                 }
                 
                 
@@ -179,7 +164,7 @@ class GameMenu: SKScene {
                     if settings.level == 0 {
                         settings.level = 1
                     }
-                                
+                    
                     if settings.emoji == 2 {
                         livesDisplay = ["", "🐵","🐵🐵","🐵🐵🐵","🐵🐵🐵🐵","🐵🐵🐵🐵🐵","🐵🐵🐵🐵🐵🐵",
                                         "🐵🐵🐵🐵🐵🐵🐵","🐵🐵🐵🐵🐵🐵🐵🐵","🐵🐵🐵🐵🐵🐵🐵🐵🐵", "🐵🐵🐵🐵🐵🐵🐵🐵🐵🐵"]
@@ -188,7 +173,7 @@ class GameMenu: SKScene {
                                         "👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽👽"]
                     }
                     
-                  
+                    
                     
                     let fadeIn = SKAction.fadeAlpha(to: 0.5, duration:TimeInterval(0.3))
                     let myDecay = SKAction.wait(forDuration: 0.2)
@@ -196,18 +181,18 @@ class GameMenu: SKScene {
                     
                     print("-> level:" + String(settings.level))
                     playNode.run(SKAction.sequence([fadeIn,myDecay,fadeOut]))
-                  
+                    
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) { [weak self] in
                         guard let self = self else { return }
-                      
+                        
                         let startup = StartUp( size: self.size )
                         startup.runner()
                         self.size = setSceneSizeForGame()
                         startup.scaleMode = .aspectFill
                         
                         self.view?.backgroundColor = .black
-
+                        
                         self.view?.isMultipleTouchEnabled = true
                         self.view?.allowsTransparency = false
                         self.view?.isAsynchronous = true
@@ -229,8 +214,8 @@ class GameMenu: SKScene {
                         
                         self.lockDown = false
                     }
-              
-                
+                    
+                    
                 } else if name != "musicLabel" && name != "soundLabel" && name != "stickLabel" && name != "levelLabel" && name != "versusLabel" && name != "emojiLabel" {
                     let fadeIn = SKAction.fadeAlpha(to: 0.5, duration:TimeInterval(0.1))
                     let myDecay = SKAction.wait(forDuration: 0.1)
@@ -283,7 +268,7 @@ class GameMenu: SKScene {
                 sprite.position = childNode.position
                 sprite.position.x = sprite.position.x + -spc
                 sprite.name = spriteName
-            	addChild(sprite)
+                addChild(sprite)
                 
                 label.fontName = "Apple Color Emoji"
                 label.fontSize = fontSize
