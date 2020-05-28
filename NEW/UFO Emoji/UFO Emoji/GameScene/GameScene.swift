@@ -720,6 +720,7 @@
     }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+        
         FlightYoke = GTFlightYoke()
         FlightYoke.startup()
         print("HELLO WORLD!")
@@ -804,6 +805,9 @@
         tractor = gamestartup.tractor
         tractor.addGlow()
         
+        Explosion2()
+
+        
         bombsbutton = gamestartup.bombsbutton
         firebutton = gamestartup.firebutton
         bombsbutton2 = gamestartup.bombsbutton2
@@ -834,11 +838,11 @@
         
         //Check if level exists first (safe)MR
         referenceNode = SKReferenceNode(fileNamed: filename)
-        addChild(referenceNode)
         referenceNode.name = "🥶🥶🥶"
         referenceNode.position = CGPoint(x:0,y:0)
         referenceNode.zPosition = -150
-        //self.isPaused = true
+        addChild(referenceNode)
+        referenceNode.isPaused = true
         
         if var level = referenceNode.children.first?.children {
             //Noue longer hard encoded
@@ -855,17 +859,16 @@
                     md.tileSet.defaultTileSize = CGSize.zero
                     md.numberOfColumns = 0
                     md.numberOfColumns = 0
+                    land = md
+                    land.removeAllChildren()
+                    land.removeFromParent()
                 }
-                
-                land.removeAllChildren()
-                land.removeFromParent()
-                land = SKTileMapNode()
-                land.name = "erased"
+              
             }
             
             level.removeAll()
         }
-        
+        referenceNode.isPaused = false
         
         //print(referenceNode.children)
         
@@ -1777,11 +1780,33 @@
             ]))
         }
         
-        moving.speed *= 0.5
+     /*   moving.speed *= 0.5
         
         if let w = world {
             w.speed *= 0.5
             w.removeAllActions()
+        } */
+    }
+    
+    func Explosion2() {
+        if let explosion = SKEmitterNode(fileNamed: "fireParticle.sks") {
+            explosion.alpha = 0.5
+            explosion.zPosition = 175
+            explosion.position = hero.position
+            addChild(explosion)
+            
+            explosion.run(SKAction.sequence([
+                SKAction.scale(to: -1.5, duration: 0.5),
+            ]))
+            
+            explosion.run(SKAction.sequence([
+                SKAction.scale(to: 0.5, duration: 0.5),
+                SKAction.fadeAlpha(to: 0, duration: 0.5),
+                SKAction.wait(forDuration: 1.5),
+                SKAction.run {
+                    explosion.removeFromParent()
+                }
+            ]))
         }
     }
     

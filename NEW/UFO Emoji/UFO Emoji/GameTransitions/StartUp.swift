@@ -10,7 +10,7 @@ import SpriteKit
 
 class StartUp: SKScene {
     
-    weak var gd = gameDelegate
+    weak var gd = gameDelegate!
 
     override init(size: CGSize) {
         super.init(size: size)
@@ -29,12 +29,12 @@ class StartUp: SKScene {
         }
         
         removeFromParent()
+        
+        gd = nil
     }
     
     func runner() {
         
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
         
             self.view?.isMultipleTouchEnabled = true
             self.view?.allowsTransparency = false
@@ -89,10 +89,10 @@ class StartUp: SKScene {
             self.addChild(label3)
             
             
-        }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-            self?.gd?.runGameLevel()
+            guard let self = self else { return }
+            self.gd?.runGameLevel()
         }
     }
     

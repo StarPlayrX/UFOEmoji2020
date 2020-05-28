@@ -11,15 +11,10 @@ import SpriteKit
 
 class GameOver: SKScene {
     
-    weak var gd = gameDelegate
+    weak var gd = gameDelegate!
 
     override init(size: CGSize ) {
-       
         super.init(size: size)
-        
-        self.removeAllActions()
-        self.removeAllChildren()
-        self.removeFromParent()
     }
     
     deinit {
@@ -33,14 +28,14 @@ class GameOver: SKScene {
         }
         
         removeFromParent()
+        gd = nil
+
     }
     
     
     func runner() {
         
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-
+     
             self.view?.isMultipleTouchEnabled = true
             self.view?.allowsTransparency = false
             self.view?.isAsynchronous = true
@@ -90,11 +85,12 @@ class GameOver: SKScene {
             
             self.addChild(label)
             self.addChild(label2)
-        }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) { [weak self] in
-            self?.gd?.runGameMenu()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            guard let self = self  else { return }
+            self.gd?.runGameMenu()
         }
+    
     }
     
     

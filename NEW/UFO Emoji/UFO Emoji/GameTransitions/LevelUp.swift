@@ -10,16 +10,10 @@ import SpriteKit
 
 class LevelUp: SKScene {
     
-    weak var gd = gameDelegate
+    weak var gd = gameDelegate!
 
-     override init(size: CGSize ) {
-        
+     override init(size: CGSize ) {        
         super.init(size: size)
-        
-        self.removeAllActions()
-        self.removeAllChildren()
-        self.removeFromParent()
-        
     }
         
     deinit {
@@ -34,12 +28,12 @@ class LevelUp: SKScene {
         }
         
         removeFromParent()
+        gd = nil
+
     }
     
     func runner () {
           
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
      
             self.anchorPoint = CGPoint(x: 0.0, y: 0.0)
             
@@ -92,10 +86,9 @@ class LevelUp: SKScene {
             label2.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2 - 72)
             self.addChild(label2)
                
-        }
 		
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-            guard let self = self else { return }
+            guard let self = self  else { return }
             self.gd?.runGameLevel()
         }
     }

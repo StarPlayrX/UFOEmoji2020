@@ -46,25 +46,27 @@ class GameViewController: UIViewController, GameProtocol {
 
     
     
+   
     func gameMenu() {
         guard
             let view = self.view as? SKView,
-            let scene = SKScene(fileNamed: "GameMenu")
-            else { return }
+            let scene = GameMenu(fileNamed: "GameMenu")
+            else { print("FAILED"); return }
         
-        DispatchQueue.main.async  { [weak view] in
+        DispatchQueue.main.async  {  [weak view] in
             guard let view = view else { return }
             scene.scaleMode = .aspectFill
             scene.size = setSceneSizeForGame()
             scene.scaleMode = .aspectFill
-            scene.backgroundColor = SKColor.init(displayP3Red: 0, green: 20 / 255, blue: 80 / 255, alpha: 1.0)
+            scene.backgroundColor = SKColor.black
             view.isMultipleTouchEnabled = true
             view.allowsTransparency = false
             view.isAsynchronous = true
+            
             view.isOpaque = true
             view.clipsToBounds = true
             view.ignoresSiblingOrder = true
-           
+            
             view.showsFPS = showsFPS
             view.showsNodeCount = showsNodeCount
             view.showsPhysics = showsPhysics
@@ -72,10 +74,11 @@ class GameViewController: UIViewController, GameProtocol {
             view.showsDrawCount = showsDrawCount
             view.showsQuadCount = showsQuadCount
             
+            view.showsLargeContentViewer = false
             view.shouldCullNonVisibleNodes = true
             view.preferredFramesPerSecond = 61
             view.presentScene(scene)
-
+            
         }
         
       /*  DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
@@ -88,7 +91,7 @@ class GameViewController: UIViewController, GameProtocol {
     func gameLevel() {
         guard
             let view = self.view as? SKView,
-            let scene = SKScene(fileNamed: "GameScene")
+            let scene = GameScene(fileNamed: "GameScene")
             else { print("FAILED"); return }
         
         DispatchQueue.main.async  {  [weak view] in
