@@ -8,9 +8,10 @@
 
 import SpriteKit
 
-class TMRX {
+class GameTileMapRun {
     
     deinit {
+        print("TimeMapRun Deinit!")
         TileMapTileSize = nil
         TileMapParent   = nil
         TileMapRect     = nil
@@ -46,7 +47,6 @@ class TMRX {
         
         TileNode.zPosition = 75
         TileNode.physicsBody?.restitution = 0.5
-        
         
         if NewItem == "🐟" || Name == "💢" || Name == "🛑" || Name == "♨️" || Emoji == "🐝" || NewItem == "🦀" || Emoji == "🌈" {
             TileNode.zPosition = -20
@@ -90,6 +90,12 @@ class TMRX {
             
             let moveAmount = 48 * random
             let moveright = SKAction.move(by: CGVector(dx: moveAmount * mov, dy: 0), duration: TimeInterval(random))
+<<<<<<< HEAD
+=======
+            let wait = SKAction.wait(forDuration: TimeInterval(random))
+            let flip1 = SKAction.scaleX(to: CGFloat(mov), duration: 0.25)
+            let flip2 = SKAction.scaleX(to: CGFloat(-mov), duration: 0.25)
+>>>>>>> 1.1.6X
             let moveleft = SKAction.move(by: CGVector(dx: moveAmount * -mov, dy: 0), duration: TimeInterval(random))
             let wait = SKAction.wait(forDuration: TimeInterval(random))
 
@@ -109,7 +115,19 @@ class TMRX {
             }
            
             
+<<<<<<< HEAD
            
+=======
+            if TileNode.position.x < 0 {
+                let rep = SKAction.repeatForever(SKAction.sequence([flip1,moveright,wait,flip2,wait,moveleft,wait]))
+                TileNode.run(rep)
+                
+            } else {
+                let rep = SKAction.repeatForever(SKAction.sequence([flip2,moveright,wait,flip1,wait,moveleft,wait]))
+                TileNode.run(rep)
+            }
+        
+>>>>>>> 1.1.6X
         }
         
         let spriteLabelNode = SKLabelNode(fontNamed:"Apple Color Emoji")

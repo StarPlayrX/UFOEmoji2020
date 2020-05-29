@@ -51,7 +51,11 @@ class GameViewController: UIViewController, GameProtocol {
         guard
             let view = self.view as? SKView,
             let scene = GameMenu(fileNamed: "GameMenu")
+<<<<<<< HEAD
             else { print("FAILED"); return }
+=======
+            else { return }
+>>>>>>> 1.1.6X
         
         DispatchQueue.main.async  {  [weak view] in
             guard let view = view else { return }
