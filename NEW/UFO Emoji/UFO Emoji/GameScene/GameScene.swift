@@ -63,9 +63,8 @@
     
     private var QuadFireBombHUD : SKReferenceNode!
     private var AlienYokeDpdHUD : SKReferenceNode!
-    private var backParalax : SKNode!
-    private var referenceNode : SKReferenceNode!
-    
+    private var parallax = SKReferenceNode()
+        
     typealias Oreo = (bombsbutton:SKSpriteNode?,firebutton:SKSpriteNode?,hero:SKSpriteNode?,canape:SKSpriteNode?,tractor:SKSpriteNode?,bombsbutton2:SKSpriteNode?,firebutton2:SKSpriteNode?)
     
     private weak var firstBody : SKPhysicsBody!
@@ -95,7 +94,6 @@
     private var highscore : Int!
     private var lives : Int!
     private var highlevel : Int!
-    private var moving : SKNode!
     private var rockBounds : CGRect!
     private lazy var scoreDict: [String:Int]! = [:]
     
@@ -136,48 +134,16 @@
     
     deinit {
         
-        if !backParalax.children.isEmpty {
-            print("Remove Back Paralax")
-            backParalax.removeAllChildren()
-            backParalax.removeFromParent()
-            backParalax = nil
-        }
+            parallax.removeAllChildren()
+            parallax.removeFromParent()
         
         
-        if referenceNode.hasActions() {
+        
+        if world.children[1].hasActions() {
             print("Removing Actions from SKReference Node")
-            referenceNode.removeAllActions()
+             world.children[1].removeAllActions()
         }
         
-        if let level = referenceNode.children.first?.children {
-            for land in level {
-                if let name = land.name {
-                    if var middy = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode {
-                        middy.removeAllActions()
-                        middy.removeAllChildren()
-                        middy.removeFromParent()
-                        middy = SKTileMapNode.init()
-                    }
-                }
-            }
-        }
-        
-        if let rc = referenceNode?.children.first?.children {
-            if !rc.isEmpty {
-                referenceNode.removeAllActions()
-                referenceNode.removeAllChildren()
-                referenceNode.removeFromParent()
-            }
-        }
-        
-        if let rc = referenceNode?.children.first?.children {
-            print("Count:", rc.count)
-            for i in rc {
-                i.removeAllActions()
-                i.removeAllChildren()
-                i.removeFromParent()
-            }
-        }
         
         if let w = world {
             print("DeInit World")
@@ -187,7 +153,6 @@
             w.parent?.removeAllChildren()
             w.parent?.removeAllChildren()
             w.parent?.removeFromParent()
-            world = nil
         }
         
         if let c = cam {
@@ -198,7 +163,6 @@
             c.parent?.removeAllChildren()
             c.parent?.removeAllChildren()
             c.parent?.removeFromParent()
-            cam = nil
         }
         
         if let cm = camera {
@@ -209,7 +173,6 @@
             cm.parent?.removeAllChildren()
             cm.parent?.removeAllChildren()
             cm.parent?.removeFromParent()
-            camera = nil
         }
         
         if let scene = scene {
@@ -236,12 +199,11 @@
         removeFromParent()
         
         audioPlayer = nil
-        
-        referenceNode = nil
+        world = nil
+        cam = nil
+
         QuadFireBombHUD = nil
         AlienYokeDpdHUD = nil
-        backParalax = nil
-        referenceNode = nil
         firstBody = nil
         secondBody = nil
         bombsbutton = nil
@@ -251,7 +213,6 @@
         hero = nil
         canape = nil
         tractor = nil
-        world = nil
         FlightYoke = nil
         heroEmoji = nil
         audioPlayer = nil
@@ -266,7 +227,6 @@
         highscore = nil
         lives = nil
         highlevel = nil
-        moving = nil
         rockBounds = nil
         scoreDict = nil
     }
@@ -688,25 +648,7 @@
     }
     
     
-    
-    func setupLevel(tileMap: SKTileMapNode) {
-        let tmr = TMRX(TileMapTileSize: tileMap.tileSize, TileMapParent: tileMap.parent, TileMapRect: tileMap.scene?.frame)
-        tileMap.alpha = 0.0
-        for col in (0 ..< tileMap.numberOfColumns) {
-            for row in (0 ..< tileMap.numberOfRows) {
-                let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
-                let center = tileMap.centerOfTile(atColumn: col, row: row)
-                tileDefinition?.textures.removeAll()
-                if let td = tileDefinition, let n = td.name, !n.isEmpty {
-                    tmr.tileMapRun(tileDefinition: td, center: center)
-                }
-                
-            }
-        }
-        
-        tileMap.removeAllActions()
-        tileMap.removeAllChildren()
-    }
+
     
     override func update(_ currentTime: TimeInterval) {
         guard let hero = hero else { return }
@@ -850,40 +792,17 @@
         var filename = "" //default
         
         filename = "level1"
+         
+        world.isPaused = true
+        world.isHidden = true
+    
+        let gameWorld = GameWorld(world: world)
         
-        //Check if level exists first (safe)
-        referenceNode = SKReferenceNode.init(fileNamed: filename)
-        referenceNode.name = "😀😀😀"
-        addChild(referenceNode)
-        referenceNode.position = CGPoint(x:0,y:0)
+        world = gameWorld.gameLevel(filename: filename)
         
-        //self.isPaused = true
-        
-        if let level = referenceNode.children.first?.children {
-            //No longer hard encoded
-            for land in level {
-                
-                if let name = land.name {
-                    if let middy = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode {
-                        
-                        if name != "Water" {
-                            self.setupLevel( tileMap: middy)
-                            middy.removeAllActions()
-                            middy.removeAllChildren()
-                            middy.removeFromParent()
-                            
-                        } else {
-                            self.removeFromParent()
-                            land.alpha = 0.4
-                            land.zPosition = 1000
-                        }
-                    }
-                }
-            }
-            
-        }
-        
-        
+        print(world.children[1])
+        world.isPaused = false
+        world.isHidden = false
         
         
         for node in self.children {
@@ -895,7 +814,6 @@
                     if(node.name == "Rocky") {
                         node.zPosition = 50
                         rockBounds = node.frame
-                        
                         
                         physicsWorld.gravity = CGVector(dx: 0.0, dy: -3) //mini
                         scene?.physicsWorld.contactDelegate = self
@@ -943,49 +861,14 @@
             }
         }
         
-        moving = SKNode()
-        
-        world?.addChild(moving)
-        
-        backParalax = SKNode()
-        
-        backParalax.removeAllChildren()
-        backParalax.removeFromParent()
-        
-        self.world?.addChild(backParalax)
-        
-        let texture = SKTexture(imageNamed: background)
-        texture.filteringMode = .nearest
-        texture.preload { [weak self] in
-            guard
-                let self = self
-                else { return }
-            
-            let factor = CGFloat(4.0) //PDF Textures are 25% scaled up 400% to save memory while retained a decent look
-            let width = texture.size().width * factor
-            let rounded = Int(round( self.rockBounds.width / width / 2 ))
-            var sprite = SKSpriteNode(texture: texture)
-            sprite.name = String("BackTexture")
-            sprite.xScale = factor
-            sprite.yScale = factor
-            
-            //Place from Center
-            for i in -rounded...rounded  {
-                sprite.position = CGPoint(x: CGFloat(i) * width, y: 0)
-                self.backParalax.addChild(sprite.copy() as! SKSpriteNode )
-            }
-            
-            self.backParalax.zPosition = -243
-            sprite = SKSpriteNode()
-            
-            self.backParalax.name = "backParalaxOriginal"
-            self.backParalax.removeFromParent()
-            self.world?.addChild(self.backParalax)
-            
-        }
-        
-        world?.speed = 0
-        moving.speed = 1
+
+        let gameParallax = GameParallax(parallax: parallax, bounds: rockBounds)
+        parallax = gameParallax.setParallax(texture: SKTexture(imageNamed: background))
+        world.addChild(parallax)
+
+       
+     
+        world?.speed = 1
         
         if settings.emoji == 2 {
             emojiAnimation(emojis:["🙈","🙊","🙉","🐵"])
@@ -1088,7 +971,7 @@
         
         // adds depth to the scene
         // by moving the backgorund slower
-        backParalax.position.x = cam.position.x * 0.334
+        parallax.position.x = cam.position.x * 0.334
     }
     
     
@@ -1440,7 +1323,7 @@
             level = 1
         }
         
-        moving.speed = 0
+        world?.speed = 0
         tractor.speed = 0
         
         
@@ -1566,11 +1449,10 @@
                 
                 
                 //Loads the LevelUp Scene
-                func starPlayrOneLevelUpX(world:SKNode?, moving:SKNode?, hero: SKSpriteNode?, tractor: SKSpriteNode?) {
+                func starPlayrOneLevelUpX(world:SKNode?, hero: SKSpriteNode?, tractor: SKSpriteNode?) {
                     
                     guard
                         let world = world,
-                        let moving = moving,
                         let hero = hero,
                         let tractor = tractor
                         else { return }
@@ -1580,8 +1462,7 @@
                     hero.speed = 0
                     hero.removeFromParent()
                     tractor.removeFromParent()
-                    moving.speed = moving.speed / 2
-                    world.speed =  world.speed / 2
+                    world.speed = 0
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
                         guard let self = self else { return }
@@ -1613,7 +1494,7 @@
                     }
                 }
                 
-                starPlayrOneLevelUpX(world:world, moving:moving, hero: hero, tractor: tractor)
+                starPlayrOneLevelUpX(world:world, hero: hero, tractor: tractor)
             
             case heroCategory | worldCategory, heroCategory | badGuyCategory, heroCategory | badFishCategory :
                 
@@ -1635,7 +1516,7 @@
         //save first
         saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
         
-        if moving.speed > 0 {
+        if let world = world, world.speed > 0 {
             
             remove(body:secondBody)
             removeGUI()
@@ -1677,7 +1558,7 @@
     func LostLife(contactPoint: CGPoint) {
         
         smokeM(pos: contactPoint)
-        moving.speed = 0
+        world?.speed = 0
         
         removeGUI()
         
@@ -1699,13 +1580,13 @@
     
     
     func EndGame() {
+        guard let world = world else { return }
         removeHero()
         removeGUI()
         saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
-        
+
         //Loads the game over scene
-        func gameOver(world:SKNode, moving:SKNode, hero: SKSpriteNode, tractor: SKSpriteNode) {
-            
+        func gameOver(world:SKNode, hero: SKSpriteNode, tractor: SKSpriteNode) {
             Explosion()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
@@ -1738,7 +1619,7 @@
             }
         }
         
-        gameOver(world:world!, moving:moving, hero:hero, tractor:tractor)
+        gameOver(world:world, hero:hero, tractor:tractor)
     }
     
     
@@ -1763,12 +1644,6 @@
             ]))
         }
         
-        moving.speed *= 0.5
-        
-        if let w = world {
-            w.speed *= 0.5
-            w.removeAllActions()
-        }
     }
     
     
@@ -1780,8 +1655,7 @@
             SKAction.wait(forDuration: 2.0),
             SKAction.run() {
                 
-                self.moving.speed = 1
-                self.world?.speed = 0
+                self.world?.speed = 1
                 
                 let runResetWorld = SKAction.run() {
                     let resetWorld = SKAction.moveTo(x: (self.world?.position.x)!, duration: 0)
@@ -1790,7 +1664,6 @@
                 }
                 
                 let runWorld = SKAction.run() {
-                    self.moving.speed       = 1
                     
                     guard let gamestartup = self.readyPlayerOne() else { return }
                     
@@ -1951,7 +1824,7 @@
         
         self.scoreLabelNode.text = String(self.score)
         
-        if moving.speed == 0 {
+        if world?.speed == 0 {
             saveScores(level: self.level, highlevel: self.highlevel, score: self.score, hscore:self.highscore, lives: self.lives)
         }
     }
