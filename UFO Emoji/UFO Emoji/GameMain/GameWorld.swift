@@ -38,7 +38,7 @@ class GameWorld : SKNode {
         
         world.addChild(referenceNode )
         
-        for land in level {
+        for var land in level {
             
             if let name = land.name {
                 if var tileMap = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode {
@@ -52,9 +52,11 @@ class GameWorld : SKNode {
                         tileMap = SKTileMapNode()
                         tileMap.tileSet = SKTileSet.init()
                         tileMap.tileSize = CGSize.zero
+                        
                         land.removeAllActions()
                         land.removeAllChildren()
                         land.removeFromParent()
+                        land = SKNode()
                     } else {
                         tileMap.removeAllActions()
                         land.removeAllActions()

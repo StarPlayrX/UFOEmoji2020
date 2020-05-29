@@ -75,7 +75,7 @@ class GameTileMapRun {
         
         TileMapParent.addChild(TileNode)
         if NewItem == "🐟" || Emoji == "🐝" || NewItem == "🦀" || NewItem == "🛸"  {
-            var random = Int(arc4random_uniform(6)) + 1
+            var random = Int(arc4random_uniform(3)) + 1
             let r2 = Int(arc4random_uniform(1))
             
             var mov = -1
@@ -88,19 +88,41 @@ class GameTileMapRun {
                 random = random / 2
             }
             
-            let moveAmount = 48 * random
-            let moveright = SKAction.move(by: CGVector(dx: moveAmount * mov, dy: 0), duration: TimeInterval(random))
-            let wait = SKAction.wait(forDuration: TimeInterval(0.5))
+            let a = Int(arc4random_uniform(8)) +  6
+            let b = Int(arc4random_uniform(8)) +  5
+            let c = Int(arc4random_uniform(16)) + 4
+            let d = Int(arc4random_uniform(16)) + 3
+            let e = Int(arc4random_uniform(32)) + 2
+            let f = Int(arc4random_uniform(32)) + 1
+
+            let moveAmount = a + b + c + d + e + f
+            let time = Int(moveAmount / 20)
+            
+            let a1 = Int(arc4random_uniform(8)) + 6
+            let b1 = Int(arc4random_uniform(8)) + 5
+            let c1 = Int(arc4random_uniform(16)) + 4
+            let d1 = Int(arc4random_uniform(16)) + 3
+            let e1 = Int(arc4random_uniform(32)) + 2
+            let f1 = Int(arc4random_uniform(32)) + 1
+
+            let moveAmount1 = a1 + b1 + c1 + d1 + e1 + f1
+            let time1 = Int(moveAmount1 / 20)
+            
+            
+            let moveright = SKAction.move(by: CGVector(dx: moveAmount * mov, dy: 0), duration: TimeInterval(time))
+            let wait = SKAction.wait(forDuration: TimeInterval(time / 20 ))
+            let wait2 = SKAction.wait(forDuration: TimeInterval(time1 / 20 ))
+
             let flip1 = SKAction.scaleX(to: CGFloat(mov), duration: 0.25)
             let flip2 = SKAction.scaleX(to: CGFloat(-mov), duration: 0.25)
-            let moveleft = SKAction.move(by: CGVector(dx: moveAmount * -mov, dy: 0), duration: TimeInterval(random))
+            let moveleft = SKAction.move(by: CGVector(dx: moveAmount1 * -mov, dy: 0), duration: TimeInterval(time1))
             
             if TileNode.position.x < 0 {
-                let rep = SKAction.repeatForever(SKAction.sequence([flip1,wait,moveright,flip2,wait,moveleft]))
+                let rep = SKAction.repeatForever(SKAction.sequence([flip1,wait,moveright,flip2,wait2,moveleft]))
                 TileNode.run(rep)
                 
             } else {
-                let rep = SKAction.repeatForever(SKAction.sequence([flip2,wait,moveright,flip1,wait,moveleft]))
+                let rep = SKAction.repeatForever(SKAction.sequence([flip2,wait2,moveright,flip1,wait,moveleft]))
                 TileNode.run(rep)
             }
             

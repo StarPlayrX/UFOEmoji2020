@@ -284,8 +284,8 @@
                 sprite.physicsBody?.isDynamic = dynamic
                 sprite.physicsBody?.allowsRotation = allowRotation
                 sprite.physicsBody?.affectedByGravity = affectedGravity
-                sprite.physicsBody?.velocity = CGVector( dx: 0, dy: 0 )
-                sprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 0.0))
+                sprite.physicsBody?.velocity = CGVector.zero
+                sprite.physicsBody?.applyImpulse(CGVector.zero)
                 sprite.name = name
                 
                 sprite.zPosition = zPosition
@@ -387,7 +387,7 @@
             dynamic: true,
             allowRotation: false,
             affectedGravity: false,
-            zPosition: 15000,
+            zPosition: 150,
             alpha: 1.0,
             speed: 1,
             alphaThreshold: 0.0
@@ -1017,22 +1017,22 @@
             if let name = touchedNode.name {
                 
                 if name == "fire-right" {
-                    laserbeak(superhero: (heroPosition, herozRotation, heroVelocity), reverse:false)
+                    laserbeak(superhero: (heroPosition, herozRotation, heroVelocity), reverse: false)
                     firebomb(firebomb: firebutton)
                 }
                 
                 if name == "fire-left" {
-                    laserbeak(superhero: (heroPosition, herozRotation, heroVelocity), reverse:true)
+                    laserbeak(superhero: (heroPosition, herozRotation, heroVelocity), reverse: true)
                     firebomb(firebomb: firebutton2)
                 }
                 
                 if name == "fire-down" {
-                    bombaway(superhero: (heroPosition, herozRotation, heroVelocity), reverse:false)
+                    bombaway(superhero: (heroPosition, herozRotation, heroVelocity), reverse: false)
                     firebomb(firebomb: bombsbutton)
                 }
                 
                 if name == "fire-top" {
-                    bombaway(superhero: (heroPosition, herozRotation, heroVelocity), reverse:true)
+                    bombaway(superhero: (heroPosition, herozRotation, heroVelocity), reverse: true)
                     firebomb(firebomb: bombsbutton2)
                 }
             }
@@ -1424,7 +1424,7 @@
                 saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
                 
                 hero.physicsBody?.velocity = CGVector.zero
-                hero.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 0.0))
+                hero.physicsBody?.applyImpulse(CGVector.zero)
                 
                 let easeOut: SKAction = SKAction.move(to: CGPoint.zero, duration: 0.0)
                 easeOut.timingMode = SKActionTimingMode.easeOut
@@ -1449,8 +1449,8 @@
                         let tractor = tractor
                         else { return }
                     
-                    hero.physicsBody?.velocity = CGVector( dx: 0, dy: 0 )
-                    hero.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 0.0))
+                    hero.physicsBody?.velocity = CGVector.zero
+                    hero.physicsBody?.applyImpulse(CGVector.zero)
                     hero.speed = 0
                     hero.removeFromParent()
                     tractor.removeFromParent()
