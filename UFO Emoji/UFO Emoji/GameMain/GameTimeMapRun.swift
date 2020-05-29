@@ -16,11 +16,11 @@ class GameTileMapRun {
         TileMapParent   = nil
         TileMapRect     = nil
     }
-
+    
     private weak var TileMapParent   : SKNode!
     private var 	 TileMapTileSize : CGSize!
     private var      TileMapRect     : CGRect!
-
+    
     init( TileMapTileSize: CGSize?, TileMapParent: SKNode?, TileMapRect: CGRect? ) {
         guard
             let TileMapTileSize = TileMapTileSize,
@@ -90,20 +90,20 @@ class GameTileMapRun {
             
             let moveAmount = 48 * random
             let moveright = SKAction.move(by: CGVector(dx: moveAmount * mov, dy: 0), duration: TimeInterval(random))
-            let wait = SKAction.wait(forDuration: TimeInterval(random))
+            let wait = SKAction.wait(forDuration: TimeInterval(0.5))
             let flip1 = SKAction.scaleX(to: CGFloat(mov), duration: 0.25)
             let flip2 = SKAction.scaleX(to: CGFloat(-mov), duration: 0.25)
             let moveleft = SKAction.move(by: CGVector(dx: moveAmount * -mov, dy: 0), duration: TimeInterval(random))
             
             if TileNode.position.x < 0 {
-                let rep = SKAction.repeatForever(SKAction.sequence([flip1,moveright,wait,flip2,wait,moveleft,wait]))
+                let rep = SKAction.repeatForever(SKAction.sequence([flip1,wait,moveright,flip2,wait,moveleft]))
                 TileNode.run(rep)
                 
             } else {
-                let rep = SKAction.repeatForever(SKAction.sequence([flip2,moveright,wait,flip1,wait,moveleft,wait]))
+                let rep = SKAction.repeatForever(SKAction.sequence([flip2,wait,moveright,flip1,wait,moveleft]))
                 TileNode.run(rep)
             }
-        
+            
         }
         
         let spriteLabelNode = SKLabelNode(fontNamed:"Apple Color Emoji")
@@ -219,7 +219,7 @@ class GameTileMapRun {
         if (str == "💰" || str == "🎰" || str == "💵"  || str == "🤑") {
             spriteLabelNode.xScale = 1
         }
-
+        
         TileNode.addChild(spriteLabelNode)
         
         // = Field

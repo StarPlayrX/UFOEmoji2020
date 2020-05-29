@@ -11,8 +11,8 @@ import SpriteKit
 
 class GameParallax : SKNode {
     
-    weak var parallax: SKReferenceNode!
-    var bounds: CGRect!
+    private weak var parallax: SKReferenceNode!
+    private var bounds: CGRect!
     
     init (parallax: SKReferenceNode, bounds: CGRect) {
         super.init()

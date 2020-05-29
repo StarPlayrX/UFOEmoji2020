@@ -10,8 +10,8 @@ import SpriteKit
 
 class GameWorld : SKNode {
     
-    weak var world : SKNode!
-    var gameTileMapRun : GameTileMapRun!
+    private weak var world : SKNode!
+    private var gameTileMapRun : GameTileMapRun!
     
     init(world: SKNode ) {
         super.init()

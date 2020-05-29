@@ -134,10 +134,8 @@
     
     deinit {
         
-            parallax.removeAllChildren()
-            parallax.removeFromParent()
-        
-        
+        parallax.removeAllChildren()
+        parallax.removeFromParent()
         
         if world.children[1].hasActions() {
             print("Removing Actions from SKReference Node")
@@ -151,7 +149,6 @@
             w.removeAllChildren()
             w.removeFromParent()
             w.parent?.removeAllChildren()
-            w.parent?.removeAllChildren()
             w.parent?.removeFromParent()
         }
         
@@ -160,7 +157,6 @@
             c.removeAllActions()
             c.removeAllChildren()
             c.removeFromParent()
-            c.parent?.removeAllChildren()
             c.parent?.removeAllChildren()
             c.parent?.removeFromParent()
         }
@@ -171,7 +167,6 @@
             cm.removeAllChildren()
             cm.removeFromParent()
             cm.parent?.removeAllChildren()
-            cm.parent?.removeAllChildren()
             cm.parent?.removeFromParent()
         }
         
@@ -180,7 +175,6 @@
             scene.removeAllActions()
             scene.removeAllChildren()
             scene.removeFromParent()
-            scene.parent?.removeAllChildren()
             scene.parent?.removeAllChildren()
         }
         
@@ -201,7 +195,6 @@
         audioPlayer = nil
         world = nil
         cam = nil
-
         QuadFireBombHUD = nil
         AlienYokeDpdHUD = nil
         firstBody = nil
@@ -244,7 +237,7 @@
             rocket = "aliensaucer"
             glass = "aliencanape"
             offset = 10
-            size = 26;
+            size = 26
             //monkey
         } else if settings.emoji == 2 {
             rocket = "monkeyrocket"
@@ -264,45 +257,44 @@
             
             let sprite = SKSpriteNode(imageNamed: texture)
             
-            if name == "canape" {
-                let radius = sprite.size.width / 2 - 12
-                sprite.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
-                sprite.physicsBody?.restitution = 0
-                sprite.position = CGPoint(x:sprite.position.x, y: sprite.position.y + 30)
-            } else if name == "hero" {
-                let radius = sprite.size.width / 4 - 6
-                sprite.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
-                sprite.physicsBody?.restitution = 0
-                sprite.position = CGPoint(x:sprite.position.x, y: sprite.position.y + 30)
-            } else if name == "tractorbeam" {
-                let radius = sprite.size
-                sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: radius.width + 5, height: radius.height + 5))
-                sprite.physicsBody?.restitution = 0
-                sprite.position = CGPoint(x:sprite.position.x, y: sprite.position.y - 25)
-            } else {
-                sprite.physicsBody = SKPhysicsBody(texture: sprite.texture!, alphaThreshold: alphaThreshold, size: sprite.size)
+            sprite.texture?.preload { [ weak self ] in
+                if name == "canape" {
+                    let radius = sprite.size.width / 2 - 12
+                    sprite.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
+                    sprite.physicsBody?.restitution = 0
+                    sprite.position = CGPoint(x:sprite.position.x, y: sprite.position.y + 30)
+                } else if name == "hero" {
+                    let radius = sprite.size.width / 4 - 6
+                    sprite.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
+                    sprite.physicsBody?.restitution = 0
+                    sprite.position = CGPoint(x:sprite.position.x, y: sprite.position.y + 30)
+                } else if name == "tractorbeam" {
+                    let radius = sprite.size
+                    sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: radius.width + 5, height: radius.height + 5))
+                    sprite.physicsBody?.restitution = 0
+                    sprite.position = CGPoint(x:sprite.position.x, y: sprite.position.y - 25)
+                } else {
+                    sprite.physicsBody = SKPhysicsBody(texture: sprite.texture!, alphaThreshold: alphaThreshold, size: sprite.size)
+                }
+                
+                sprite.physicsBody?.categoryBitMask = category
+                sprite.physicsBody?.collisionBitMask = collision
+                sprite.physicsBody?.contactTestBitMask = contact
+                sprite.physicsBody?.fieldBitMask = field
+                sprite.physicsBody?.isDynamic = dynamic
+                sprite.physicsBody?.allowsRotation = allowRotation
+                sprite.physicsBody?.affectedByGravity = affectedGravity
+                sprite.physicsBody?.velocity = CGVector( dx: 0, dy: 0 )
+                sprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 0.0))
+                sprite.name = name
+                
+                sprite.zPosition = zPosition
+                sprite.alpha = alpha
+                sprite.speed = speed
+                sprite.zRotation = 0.0
+                sprite.isUserInteractionEnabled = false
+                self?.addChild(sprite)
             }
-            
-            sprite.physicsBody?.categoryBitMask = category
-            sprite.physicsBody?.collisionBitMask = collision
-            sprite.physicsBody?.contactTestBitMask = contact
-            sprite.physicsBody?.fieldBitMask = field
-            sprite.physicsBody?.isDynamic = dynamic
-            sprite.physicsBody?.allowsRotation = allowRotation
-            sprite.physicsBody?.affectedByGravity = affectedGravity
-            sprite.physicsBody?.velocity = CGVector( dx: 0, dy: 0 )
-            sprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 0.0))
-            sprite.name = name
-            
-            sprite.zPosition = zPosition
-            sprite.alpha = alpha
-            sprite.speed = speed
-            sprite.zRotation = 0.0
-            sprite.isUserInteractionEnabled = false
-            addChild(sprite)
-            sprite.texture?.preload {
-            }
-            
             
             return sprite
         }
