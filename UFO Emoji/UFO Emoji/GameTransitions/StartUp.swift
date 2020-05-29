@@ -91,7 +91,7 @@ class StartUp: SKScene {
             
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             self?.gd?.runGameLevel()
         }
     }

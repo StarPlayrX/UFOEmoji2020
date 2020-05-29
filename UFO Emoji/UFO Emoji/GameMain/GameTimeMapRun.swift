@@ -11,7 +11,6 @@ import SpriteKit
 class GameTileMapRun {
     
     deinit {
-        print("TimeMapRun Deinit!")
         TileMapTileSize = nil
         TileMapParent   = nil
         TileMapRect     = nil
@@ -75,7 +74,6 @@ class GameTileMapRun {
         
         TileMapParent.addChild(TileNode)
         if NewItem == "🐟" || Emoji == "🐝" || NewItem == "🦀" || NewItem == "🛸"  {
-            var random = Int(arc4random_uniform(3)) + 1
             let r2 = Int(arc4random_uniform(1))
             
             var mov = -1
@@ -83,20 +81,16 @@ class GameTileMapRun {
             if r2 == 1 {
                 mov = 1
             }
+          
             
-            if Name == "🐝" || Name == "🛸" {
-                random = random / 2
-            }
-            
-            let a = Int(arc4random_uniform(8)) +  6
-            let b = Int(arc4random_uniform(8)) +  5
-            let c = Int(arc4random_uniform(16)) + 4
-            let d = Int(arc4random_uniform(16)) + 3
-            let e = Int(arc4random_uniform(32)) + 2
-            let f = Int(arc4random_uniform(32)) + 1
+            let a2 = Int(arc4random_uniform(8)) +  6
+            let b2 = Int(arc4random_uniform(8)) +  5
+            let c2 = Int(arc4random_uniform(16)) + 4
+            let d2 = Int(arc4random_uniform(16)) + 3
+            let e2 = Int(arc4random_uniform(32)) + 2
+            let f2 = Int(arc4random_uniform(32)) + 1
 
-            let moveAmount = a + b + c + d + e + f
-            let time = Int(moveAmount / 20)
+            let moveAmount2 = a2 + b2 + c2 + d2 + e2 + f2
             
             let a1 = Int(arc4random_uniform(8)) + 6
             let b1 = Int(arc4random_uniform(8)) + 5
@@ -106,11 +100,16 @@ class GameTileMapRun {
             let f1 = Int(arc4random_uniform(32)) + 1
 
             let moveAmount1 = a1 + b1 + c1 + d1 + e1 + f1
+            
+           
             let time1 = Int(moveAmount1 / 20)
+            let time2 = Int(moveAmount2 / 20)
+
             
+      
             
-            let moveright = SKAction.move(by: CGVector(dx: moveAmount * mov, dy: 0), duration: TimeInterval(time))
-            let wait = SKAction.wait(forDuration: TimeInterval(time / 20 ))
+            let moveright = SKAction.move(by: CGVector(dx: moveAmount2 * mov, dy: 0), duration: TimeInterval(time2))
+            let wait = SKAction.wait(forDuration: TimeInterval(time2 / 20 ))
             let wait2 = SKAction.wait(forDuration: TimeInterval(time1 / 20 ))
 
             let flip1 = SKAction.scaleX(to: CGFloat(mov), duration: 0.25)
