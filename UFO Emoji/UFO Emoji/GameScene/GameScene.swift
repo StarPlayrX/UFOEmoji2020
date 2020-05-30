@@ -971,22 +971,25 @@
         
         guard let emojiLab = hero.children[0] as? SKLabelNode else { return }
         
+        let wait = SKAction.wait(forDuration: 1.0)
+      
+        let one = SKAction.run() { [weak emojiLab ] in emojiLab?.text = emojis[0]
+            
+        }
         let runemoji = (SKAction.sequence([
+            wait,
+            ,
             SKAction.wait(forDuration: 1.0),
-            SKAction.run() {
-                emojiLab.text = emojis[0]
+            SKAction.run() {  [weak emojiLab ] in
+                emojiLab?.text = emojis[1]
             },
             SKAction.wait(forDuration: 1.0),
-            SKAction.run() {
-                emojiLab.text = emojis[1]
+            SKAction.run() {  [weak emojiLab ] in
+                emojiLab?.text = emojis[2]
             },
             SKAction.wait(forDuration: 1.0),
-            SKAction.run() {
-                emojiLab.text = emojis[2]
-            },
-            SKAction.wait(forDuration: 1.0),
-            SKAction.run() {
-                emojiLab.text = emojis[3]
+            SKAction.run() {  [weak emojiLab ] in
+                emojiLab?.text = emojis[3]
             }
             
         ]))
@@ -1503,22 +1506,31 @@
     }
     
     
+    var runForestRun = true
     
     func stopIt(secondBody: SKPhysicsBody, contactPoint: CGPoint) {
+        Explosion()
+        removeHero()
+        removeGUI()
+
         //save first
         saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
         
-        if let world = world, world.speed > 0 {
-            
+        if let world = world, world.speed == 1 && runForestRun {
+            world.speed /= 2
+            runForestRun = false
             remove(body:secondBody)
-            removeGUI()
             LostLife(contactPoint: contactPoint)
-            Explosion()
-            if lives <= 0 {
-                EndGame()
-            } else {
-                RestartLevel()
+            saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+
+            let wait = SKAction.wait(forDuration: 1.5)
+            let run = SKAction.run { [ weak self ] in
+                guard let self = self else { return }
+                self.lives <= 0 ? self.EndGame() : self.RestartLevel()
             }
+            
+            world.run( SKAction.sequence([wait,run]))
+           
         }
     }
     
@@ -1533,26 +1545,31 @@
     func removeGUI() {
         FlightYoke.alpha = 0 // turn off, update offscreen
         QuadFireBombHUD.alpha = 0
+        QuadFireBombHUD.speed = 10
         FlightYoke.recenter()
         FlightYoke.stickMoved(location: CGPoint.zero)
 
-        //MARK: Fixed stick issue offscreen
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+        let wait = SKAction.wait(forDuration: 1.0)
+        let run = SKAction.run { [ weak self ] in
             guard let self = self else { return }
             self.QuadFireBombHUD.removeAllChildren()
             self.AlienYokeDpdHUD.removeAllChildren()
             self.QuadFireBombHUD.alpha = 1
             self.FlightYoke.alpha = 1 //turn back on before shutdown
             self.FlightYoke.shutdown()
+            self.QuadFireBombHUD.speed = 0
         }
+    
+        
+       
+	world.run( SKAction.sequence([wait,run]))
+        
+        
     }
     
     func LostLife(contactPoint: CGPoint) {
         
         smokeM(pos: contactPoint)
-        world?.speed = 0
-        
-        removeGUI()
         
         if settings.music {
             audioPlayer?.numberOfLoops = 0
@@ -1560,7 +1577,7 @@
             audioPlayer?.volume = 0.0
         }
         
-        lives = lives - 1
+        lives -= 1
         
         if lives >= 0 {
             livesLabelNode.text = String(livesDisplay[lives])
@@ -1572,50 +1589,41 @@
     
     
     func EndGame() {
-        guard let world = world else { return }
-        removeHero()
-        removeGUI()
-        saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
 
-        //Loads the game over scene
-        func gameOver(world:SKNode, hero: SKSpriteNode, tractor: SKSpriteNode) {
-            Explosion()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            guard let self = self else { return }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
-                guard let self = self else { return }
-                
-                let gameOverScene = GameOver( size: self.size )
-                gameOverScene.runner()
-                self.size = setSceneSizeForGame()
-                gameOverScene.scaleMode = .aspectFill
-                
-                self.view?.backgroundColor = .black
-                self.view?.isMultipleTouchEnabled = true
-                self.view?.allowsTransparency = false
-                self.view?.isAsynchronous = true
-                self.view?.isOpaque = true
-                self.view?.clipsToBounds = true
-                self.view?.ignoresSiblingOrder = true
-                
-                self.view?.showsFPS = showsFPS
-                self.view?.showsNodeCount = showsNodeCount
-                self.view?.showsPhysics = showsPhysics
-                self.view?.showsFields = showsFields
-                self.view?.showsDrawCount = showsDrawCount
-                self.view?.showsQuadCount = showsQuadCount
-                
-                self.view?.shouldCullNonVisibleNodes = true
-                self.view?.preferredFramesPerSecond = 61
-                self.view?.presentScene(gameOverScene)
-                
-            }
+            let gameOverScene = GameOver( size: self.size )
+            gameOverScene.runner()
+            self.size = setSceneSizeForGame()
+            gameOverScene.scaleMode = .aspectFill
+            
+            self.view?.backgroundColor = .black
+            self.view?.isMultipleTouchEnabled = true
+            self.view?.allowsTransparency = false
+            self.view?.isAsynchronous = true
+            self.view?.isOpaque = true
+            self.view?.clipsToBounds = true
+            self.view?.ignoresSiblingOrder = true
+            
+            self.view?.showsFPS = showsFPS
+            self.view?.showsNodeCount = showsNodeCount
+            self.view?.showsPhysics = showsPhysics
+            self.view?.showsFields = showsFields
+            self.view?.showsDrawCount = showsDrawCount
+            self.view?.showsQuadCount = showsQuadCount
+            
+            self.view?.shouldCullNonVisibleNodes = true
+            self.view?.preferredFramesPerSecond = 61
+            self.view?.presentScene(gameOverScene)
+            
         }
-        
-        gameOver(world:world, hero:hero, tractor:tractor)
     }
     
     
     func Explosion() {
+        guard let hero = hero else { return }
+        
         if let explosion = SKEmitterNode(fileNamed: "fireParticle.sks") {
             explosion.alpha = 0.5
             explosion.zPosition = 175
@@ -1630,65 +1638,69 @@
                 SKAction.scale(to: 0.5, duration: 0.5),
                 SKAction.fadeAlpha(to: 0, duration: 0.5),
                 SKAction.wait(forDuration: 1.5),
-                SKAction.run {
+                SKAction.run { [weak explosion ] in
+                    guard let explosion = explosion else { return }
                     explosion.removeFromParent()
                 }
             ]))
         }
-        
     }
     
     
     func RestartLevel() {
         
         removeHero()
+        world.speed = 1
+
+        let runResetWorld = SKAction.run() { [ weak self ] in
+            guard
+                let self = self,
+                let world = self.world
+                else { return }
+            
+            let resetWorld = SKAction.moveTo(x: world.position.x, duration: 0.5)
+            world.run(resetWorld)
+            world.speed = 1
+        }
         
-        scene?.run(SKAction.sequence([
-            SKAction.wait(forDuration: 2.0),
-            SKAction.run() {
-                
-                self.world?.speed = 1
-                
-                let runResetWorld = SKAction.run() {
-                    let resetWorld = SKAction.moveTo(x: (self.world?.position.x)!, duration: 0)
-                    self.scene?.childNode(withName: "world")!.run(resetWorld)
-                    self.scene?.childNode(withName: "world")!.speed = 1
-                }
-                
-                let runWorld = SKAction.run() {
-                    
-                    guard let gamestartup = self.readyPlayerOne() else { return }
-                    
-                    self.hero = gamestartup.hero
-                    self.canape = gamestartup.canape
-                    self.tractor = gamestartup.tractor
-                    
-                    if settings.emoji == 2 {
-                        self.emojiAnimation(emojis:["🙈","🙊","🙉","🐵"])
-                    }
-                    
-                    self.bombsbutton 	=  gamestartup.bombsbutton
-                    self.firebutton 	= gamestartup.firebutton
-                    self.bombsbutton2 	= gamestartup.bombsbutton2
-                    self.firebutton2 	= gamestartup.firebutton2
-                    
-                    if settings.music {
-                        self.audioPlayer?.numberOfLoops = -1
-                        self.audioPlayer?.play()
-                        self.audioPlayer?.volume = 1.0
-                    } else {
-                        self.audioPlayer?.numberOfLoops = 0
-                        self.audioPlayer?.stop()
-                        self.audioPlayer?.volume = 0.0
-                    }
-                    
-                    self.scene?.childNode(withName: "world")!.speed = 1
-                }
-                
-                //Reset Game Action Sequence
-                self.scene?.run(SKAction.sequence([runResetWorld,runWorld]))
+        let runWorld = SKAction.run() {  [ weak self ] in
+            guard
+                let self = self,
+                let world = self.world,
+            	let gamestartup = self.readyPlayerOne()
+                else { return }
+                        
+            self.hero = gamestartup.hero
+            self.canape = gamestartup.canape
+            self.tractor = gamestartup.tractor
+            
+            if settings.emoji == 2 {
+                self.emojiAnimation(emojis:["🙈","🙊","🙉","🐵"])
             }
-        ]))
+            
+            self.bombsbutton     =  gamestartup.bombsbutton
+            self.firebutton     = gamestartup.firebutton
+            self.bombsbutton2     = gamestartup.bombsbutton2
+            self.firebutton2     = gamestartup.firebutton2
+            
+            if settings.music {
+                self.audioPlayer?.numberOfLoops = -1
+                self.audioPlayer?.play()
+                self.audioPlayer?.volume = 1.0
+            } else {
+                self.audioPlayer?.numberOfLoops = 0
+                self.audioPlayer?.stop()
+                self.audioPlayer?.volume = 0.0
+            }
+            
+            world.speed = 1
+            
+            self.runForestRun = true
+        }
+        
+        let wait = SKAction.wait(forDuration: 0.5)
+        world.run(SKAction.sequence([wait,runResetWorld,wait,runWorld]))
+
     }
     
     
@@ -1806,7 +1818,7 @@
     
     //MARK: UpdateScore
     func updateScore(extraPoints:Int) {
-        //let updateScore = SKAction.run() {
+
         self.score = self.score + extraPoints
         
         if self.score >= self.highscore {
