@@ -973,22 +973,21 @@
         
         let wait = SKAction.wait(forDuration: 1.0)
       
-        let one = SKAction.run() { [weak emojiLab ] in emojiLab?.text = emojis[0]
-            
-        }
         let runemoji = (SKAction.sequence([
             wait,
-            ,
-            SKAction.wait(forDuration: 1.0),
-            SKAction.run() {  [weak emojiLab ] in
+            SKAction.run() { [weak emojiLab ] in
+                emojiLab?.text = emojis[0]
+            },
+            wait,
+            SKAction.run() { [weak emojiLab ] in
                 emojiLab?.text = emojis[1]
             },
-            SKAction.wait(forDuration: 1.0),
-            SKAction.run() {  [weak emojiLab ] in
+            wait,
+            SKAction.run() { [weak emojiLab ] in
                 emojiLab?.text = emojis[2]
             },
-            SKAction.wait(forDuration: 1.0),
-            SKAction.run() {  [weak emojiLab ] in
+            wait,
+            SKAction.run() { [weak emojiLab ] in
                 emojiLab?.text = emojis[3]
             }
             
