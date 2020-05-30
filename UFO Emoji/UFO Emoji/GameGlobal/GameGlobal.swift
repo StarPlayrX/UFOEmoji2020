@@ -31,9 +31,9 @@ var KingQueenGlobalDie = 100
 
 var gameDelegate : GameProtocol?
 
-let showsFPS = false
-let showsNodeCount = false
-let showsPhysics = false
+let showsFPS = true
+let showsNodeCount = true
+let showsPhysics = true
 let showsFields = false
 let showsDrawCount = false
 let showsQuadCount = false

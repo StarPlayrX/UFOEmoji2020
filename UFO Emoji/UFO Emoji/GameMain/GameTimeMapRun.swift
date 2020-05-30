@@ -47,7 +47,7 @@ class GameTileMapRun {
         TileNode.zPosition = 75
         TileNode.physicsBody?.restitution = 0.5
         
-        if NewItem == "🐟" || Name == "💢" || Name == "🛑" || Name == "♨️" || Emoji == "🐝" || NewItem == "🦀" || Emoji == "🌈" {
+        if NewItem == "🐟" || Name == "💢" || Name == "🛑" || Name == "♨️" || Emoji == "🐝" || NewItem == "🦀" || Emoji == "🌈" || Emoji == "☄️" {
             TileNode.zPosition = -20
             TileNode.physicsBody?.affectedByGravity = false //true
             TileNode.physicsBody?.isDynamic = false //false
@@ -116,14 +116,21 @@ class GameTileMapRun {
             let flip2 = SKAction.scaleX(to: CGFloat(-mov), duration: 0.25)
             let moveleft = SKAction.move(by: CGVector(dx: moveAmount1 * -mov, dy: 0), duration: TimeInterval(time1))
             
-            if TileNode.position.x < 0 {
-                let rep = SKAction.repeatForever(SKAction.sequence([flip1,wait,moveright,flip2,wait2,moveleft]))
-                TileNode.run(rep)
-                
+            //MARK: Don't flip the Crab/Lobster emoji as it doesn't look right being vertical
+            if NewItem != "🦀" && Emoji != "🦀" {
+                if TileNode.position.x < 0 {
+                    let rep = SKAction.repeatForever(SKAction.sequence([flip1,wait,moveright,flip2,wait2,moveleft]))
+                    TileNode.run(rep)
+                    
+                } else {
+                    let rep = SKAction.repeatForever(SKAction.sequence([flip2,wait2,moveright,flip1,wait,moveleft]))
+                    TileNode.run(rep)
+                }
             } else {
-                let rep = SKAction.repeatForever(SKAction.sequence([flip2,wait2,moveright,flip1,wait,moveleft]))
+                let rep = SKAction.repeatForever(SKAction.sequence([wait,moveright,wait2,moveleft]))
                 TileNode.run(rep)
             }
+
             
         }
         
@@ -166,7 +173,30 @@ class GameTileMapRun {
             case "🐌":
                 spriteLabelNode.xScale = -1
             case "☄️":
-                spriteLabelNode.zRotation = CGFloat(-Double.pi/4)
+                
+                let moveToX = TileMapParent.frame.size.width - (TileMapParent.scene!.size.width / 2) / 2
+                let time = Double(32.00)
+				var action = SKAction()
+                let fade = SKAction.fadeAlpha(to: 0, duration: 1.5)
+                let remove = SKAction.removeFromParent()
+
+                if TileNode.position.x < 0 {
+                    spriteLabelNode.zRotation = CGFloat(-Double.pi/4)
+                    spriteLabelNode.xScale = 1
+                    
+                    action = SKAction.moveTo(x: moveToX, duration: time)
+                    TileNode.run(action)
+                    
+                } else {
+                    spriteLabelNode.zRotation = CGFloat(Double.pi/4)
+                    action = SKAction.moveTo(x: -moveToX, duration: time)
+                    spriteLabelNode.xScale = 1
+
+                }
+                
+                TileNode.name = "☄️"
+                TileNode.run(SKAction.sequence([action,fade,remove]))
+
             case "🦔":
                 spriteLabelNode.fontSize = 40
                 spriteLabelNode.yScale = 1.25

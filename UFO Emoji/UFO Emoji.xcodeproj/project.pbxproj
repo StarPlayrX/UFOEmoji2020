@@ -169,10 +169,10 @@
 		5F1CF8E6247B19D7008DEC84 /* GameMain */ = {
 			isa = PBXGroup;
 			children = (
-				5F5A0EC324807FCC0034FDBF /* GameWorld.swift */,
-				5F1169BA2480A1B8000A159C /* GameParallax.swift */,
 				5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */,
 				5F1CF8ED247B1AA6008DEC84 /* GameBadGuyAI.swift */,
+				5F5A0EC324807FCC0034FDBF /* GameWorld.swift */,
+				5F1169BA2480A1B8000A159C /* GameParallax.swift */,
 			);
 			path = GameMain;
 			sourceTree = "<group>";
