@@ -641,16 +641,37 @@
     
     
 
-    
+    //MARK: Function Update
     override func update(_ currentTime: TimeInterval) {
-        guard let hero = hero else { return }
-        if(hero.position.y > screenHeight  ) {
+        
+        guard
+            let hero = hero,
+            let canape = canape,
+            let pos = hero.position as CGPoint?
+            else { return }
+        
+        cam.position.x = hero.position.x
+        canape.zRotation = hero.zRotation
+        parallax.position.x = cam.position.x * 0.334
+        
+        if pos.y > screenHeight && highScoreLabelNode.alpha > 0.0 {
+            
             highScoreLabelNode.run(SKAction.fadeAlpha(to: 0.0, duration: 0.25))
             highScoreLabel.run(SKAction.fadeAlpha(to: 0.0, duration: 0.25))
+            
         } else if (highScoreLabelNode.alpha < 0.4) {
+            
             highScoreLabelNode.run(SKAction.fadeAlpha(to: 0.4, duration: 0.25))
             highScoreLabel.run(SKAction.fadeAlpha(to: 0.4, duration: 0.25))
         }
+        
+        func guidedMissle() {
+            world.children.first?.enumerateChildNodes(withName: "XXX") { node, _   in
+                node.position.y = pos.y + 32
+            }
+        }
+        
+        guidedMissle()
     }
     
     
@@ -804,17 +825,23 @@
                 for node in node.children {
                     
                     if(node.name == "Rocky") {
-                        node.zPosition = 50
+                        
+                        let gameBoundsNode = SKNode()
+                        
+                        
+                        gameBoundsNode.zPosition = 50
                         rockBounds = node.frame
                         
-                        physicsWorld.gravity = CGVector(dx: 0.0, dy: -3) //mini
-                        scene?.physicsWorld.contactDelegate = self
-                        node.physicsBody = SKPhysicsBody(edgeLoopFrom: rockBounds)
+                        physicsWorld.gravity = CGVector(dx: 0.0, dy: -3)
+                        physicsWorld.contactDelegate = self
+                        gameBoundsNode.physicsBody = SKPhysicsBody(edgeLoopFrom: rockBounds)
                         
-                        node.physicsBody?.categoryBitMask = wallCategory //2 + 8 + 128 + 256 + 512 + 1024
-                        node.physicsBody?.collisionBitMask = 0
-                        node.physicsBody?.restitution = 0.02
-                        node.physicsBody?.contactTestBitMask = 0
+                        gameBoundsNode.physicsBody?.categoryBitMask = wallCategory //2 + 8 + 128 + 256 + 512 + 1024
+                        gameBoundsNode.physicsBody?.collisionBitMask = 0
+                        gameBoundsNode.physicsBody?.restitution = 0.2
+                        gameBoundsNode.physicsBody?.contactTestBitMask = 0
+                        
+                        addChild(gameBoundsNode)
                         
                         //container for bombBounds
                         let bombBounds = CGRect(x: node.frame.origin.x ,y: node.frame.origin.y, width: node.frame.width, height: node.frame.height + 128)
@@ -827,45 +854,41 @@
                         addnode.physicsBody?.categoryBitMask = bombBoundsCategory;
                         addChild(addnode)
                         
-                        let node = SKNode()
+                        let laserBoundsNode = SKNode()
                         
-                        if  let x = scene?.frame.origin.x,
-                            let y = scene?.frame.origin.y,
-                            let w = scene?.frame.width,
-                            let h = scene?.frame.height {
+                        let x = frame.origin.x
+                        let y = frame.origin.y
+                        let w = frame.width
+                        let h = frame.height
                             
-                            let laserBounds = CGRect(x: x - 5, y: y, width: w + 10, height: h)
-                            node.physicsBody = SKPhysicsBody(edgeLoopFrom: laserBounds )
-                        }
+                        let laserBounds = CGRect(x: x - 5, y: y, width: w + 10, height: h)
+                        laserBoundsNode.physicsBody = SKPhysicsBody(edgeLoopFrom: laserBounds )
                         
-                        node.name = "🔲"
-                        node.physicsBody?.categoryBitMask = laserBorder
-                        node.physicsBody?.collisionBitMask = 0
-                        node.physicsBody?.contactTestBitMask = 0
-                        node.physicsBody?.isDynamic = false
-                        node.physicsBody?.affectedByGravity = false
-                        node.physicsBody?.restitution = 0
-                        node.speed = 0
-                        node.yScale = 1.5
-                        self.cam.addChild(node)
+                        laserBoundsNode.name = "🔲"
+                        laserBoundsNode.physicsBody?.categoryBitMask = laserBorder
+                        laserBoundsNode.physicsBody?.collisionBitMask = 0
+                        laserBoundsNode.physicsBody?.contactTestBitMask = 0
+                        laserBoundsNode.physicsBody?.isDynamic = false
+                        laserBoundsNode.physicsBody?.affectedByGravity = false
+                        laserBoundsNode.physicsBody?.restitution = 0
+                        laserBoundsNode.speed = 0
+                        laserBoundsNode.yScale = 1.5
+                        self.cam.addChild(laserBoundsNode)
+                        
+                        node.removeFromParent()
                     }
                 }
             }
         }
-        
-
+    
         let gameParallax = GameParallax(parallax: parallax, bounds: rockBounds)
         parallax = gameParallax.setParallax(texture: SKTexture(imageNamed: background))
         world.addChild(parallax)
-
-       
-     
         world?.speed = 1
         
         if settings.emoji == 2 {
             emojiAnimation(emojis:["🙈","🙊","🙉","🐵"])
         }
-        
         
         guard
             let sh = scene?.frame.size.height,
@@ -875,7 +898,6 @@
         screenHeight = sh / 2 - 64
         let sceneheight = sh / 2
         let indent = ( sw / 2 ) - 7.5 * CGFloat(settings.mode)
-        
         let difference = CGFloat(20)
         let labelheight = sceneheight - difference
         let scoreheight = sceneheight - (difference * CGFloat(2))
@@ -947,7 +969,7 @@
         }
     }
     
-    override func didSimulatePhysics() {
+   /* override func didSimulatePhysics() {
         
         guard
             let h = hero,
@@ -964,37 +986,27 @@
         // adds depth to the scene
         // by moving the backgorund slower
         parallax.position.x = cam.position.x * 0.334
-    }
+    }*/
     
     
     public func emojiAnimation(emojis:Array<String>) {
-        
-        guard let emojiLab = hero.children[0] as? SKLabelNode else { return }
+
+        guard
+            let hero = hero,
+            let emojiNode = hero.children.first as? SKLabelNode
+            else { return }
         
         let wait = SKAction.wait(forDuration: 1.0)
-      
-        let runemoji = (SKAction.sequence([
-            wait,
-            SKAction.run() { [weak emojiLab ] in
-                emojiLab?.text = emojis[0]
-            },
-            wait,
-            SKAction.run() { [weak emojiLab ] in
-                emojiLab?.text = emojis[1]
-            },
-            wait,
-            SKAction.run() { [weak emojiLab ] in
-                emojiLab?.text = emojis[2]
-            },
-            wait,
-            SKAction.run() { [weak emojiLab ] in
-                emojiLab?.text = emojis[3]
-            }
-            
-        ]))
         
-        run(SKAction.repeatForever(runemoji))
+        var animationSeqArr = [SKAction]()
+
+        for x in 1..<emojis.count {
+            let emoji = SKAction.run() { [weak emojiNode ] in emojiNode?.text = emojis[x] }
+            animationSeqArr.append(wait)
+            animationSeqArr.append(emoji)
+        }
         
+        hero.run(SKAction.repeatForever( SKAction.sequence( animationSeqArr ) ))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

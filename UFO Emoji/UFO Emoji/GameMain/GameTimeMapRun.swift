@@ -174,26 +174,24 @@ class GameTileMapRun {
                 spriteLabelNode.xScale = -1
             case "☄️":
                 
-                let moveToX = TileMapParent.frame.size.width - (TileMapParent.scene!.size.width / 2) / 2
-                let time = Double(32.00)
 				var action = SKAction()
                 let fade = SKAction.fadeAlpha(to: 0, duration: 1.5)
                 let remove = SKAction.removeFromParent()
 
                 if TileNode.position.x < 0 {
+                    let moveToX = (TileMapParent.frame.size.width - TileNode.position.x) / 4
                     spriteLabelNode.zRotation = CGFloat(-Double.pi/4)
-                    spriteLabelNode.xScale = 1
-                    
-                    action = SKAction.moveTo(x: moveToX, duration: time)
-                    TileNode.run(action)
-                    
-                } else {
-                    spriteLabelNode.zRotation = CGFloat(Double.pi/4)
-                    action = SKAction.moveTo(x: -moveToX, duration: time)
-                    spriteLabelNode.xScale = 1
+                    action = SKAction.moveTo(x: -moveToX, duration: Double(moveToX / 20.0))
 
+                } else {
+                    let moveToX = ( TileNode.position.x - TileMapParent.frame.size.width) / 4
+
+                    spriteLabelNode.zRotation = CGFloat(Double.pi/4)
+                    action = SKAction.moveTo(x: moveToX, duration: Double(moveToX / 20.0))
                 }
                 
+                TileNode.run(action)
+                spriteLabelNode.xScale = 1
                 TileNode.name = "☄️"
                 TileNode.run(SKAction.sequence([action,fade,remove]))
 
