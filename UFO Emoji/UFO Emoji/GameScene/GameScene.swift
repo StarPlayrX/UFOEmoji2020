@@ -663,7 +663,11 @@
             highScoreLabel.run(SKAction.fadeAlpha(to: 0.4, duration: 0.25))
         }
         
-        func firebomb() {
+        
+        /**
+         Used by Asteriods and Chopper I
+         */
+        func movingObjectI() {
             world.children.first?.enumerateChildNodes(withName: "☄️") { node, _ in
                 guard let body = node.physicsBody else { return }
                 
@@ -675,9 +679,29 @@
             }
         }
         
-        if settings.level == 1 {
-            firebomb()
-        }
+      
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      	movingObjectI()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
     }
     
@@ -824,7 +848,7 @@
         
         world = gameWorld.gameLevel(filename: filename)
         
-        print(world.children[1])
+        //print(world.children[1])
         world.isPaused = false
         world.isHidden = false
         
@@ -1388,13 +1412,18 @@
             }
             
             case worldCategory | laserbeam :
-                
-                if firstBody.node?.name == "stone" && !firstBody.isDynamic && secondBody.node?.name != "🔱" && secondBody.node?.name != "💠" && !🔋   {
+                if  firstBody.node?.name == "stone" && (secondBody.node?.name == "🔱" || secondBody.node?.name == "💠") {
+                    print("AA")
+                    baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                } else if firstBody.node?.name == "stone"   {
                     stoneVersusLaser(secondBody: secondBody, contactPoint: contact.contactPoint)
+                    print("A")
                 } else if firstBody.isDynamic || (🔋 && secondBody.node?.name == "💠") {
                     baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                    print("B")
                 } else {
                     worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
+                    print("C")
             }
             
             case badFishCategory | laserbeam :
@@ -1765,7 +1794,7 @@
             shield = true
             
             if var l = livesLabel.text, !l.contains("🛡") {
-                l += "🛡"
+                 livesLabel.text! += "🛡"
                 
                 hero.alpha = 0.75
                 
@@ -1791,8 +1820,8 @@
         if name == "🔫" || name == "‼️"  {
             doublelaser = 1
             
-            if var l = livesLabel.text, !l.contains("🔫") {
-                l += "🔫"
+            if let l = livesLabel.text, !l.contains("🔫") {
+                livesLabel.text! += "🔫"
             }
             
             if settings.sound {
@@ -1801,12 +1830,12 @@
             }
         }
         
-        //gives our ship double lasers
+        //gives our ship superman lasers
         if name == "💠" {
             🔋 = true
             
-            if var l = livesLabel.text, !l.contains("💠") {
-                l += "💠"
+            if let l = livesLabel.text, !l.contains("💠") {
+                 livesLabel.text! += "💠"
             }
             
             if settings.sound {
@@ -1819,8 +1848,8 @@
         if name == "🔱" {
             🔱 = true
             
-            if var l = livesLabel.text, !l.contains("🔱") {
-                l += "🔱"
+            if let l = livesLabel.text, !l.contains("🔱") {
+                livesLabel.text! += "🔱"
             }
             
             if settings.sound {

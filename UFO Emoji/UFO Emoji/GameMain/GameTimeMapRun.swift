@@ -14,12 +14,17 @@ class GameTileMapRun {
         TileMapTileSize = nil
         TileMapParent   = nil
         TileMapRect     = nil
+        numbers 		= nil
+        largeInt 		= nil
     }
     
     private weak var TileMapParent   : SKNode!
     private var 	 TileMapTileSize : CGSize!
     private var      TileMapRect     : CGRect!
     
+    private var numbers  : [(a:UInt32,b:Double)]! = [(a:UInt32,b:Double)]()
+    private var largeInt : UInt32! = UInt32(64)
+
     init( TileMapTileSize: CGSize?, TileMapParent: SKNode?, TileMapRect: CGRect? ) {
         guard
             let TileMapTileSize = TileMapTileSize,
@@ -47,7 +52,10 @@ class GameTileMapRun {
         TileNode.zPosition = 75
         TileNode.physicsBody?.restitution = 0.5
         
-        if NewItem == "🐟" || Name == "💢" || Name == "🛑" || Name == "♨️" || Emoji == "🐝" || NewItem == "🦀" || Emoji == "🌈" || Emoji == "☄️" {
+        let n = Name
+        let e = Emoji
+        let w = NewItem
+        if w == "🐟" || n == "💢" || n == "🛑" || n == "♨️" || e == "🐝" || w == "🦀" || e == "🌈" || e == "☄️" || e == "🚁" {
             TileNode.zPosition = -20
             TileNode.physicsBody?.affectedByGravity = false //true
             TileNode.physicsBody?.isDynamic = false //false
@@ -73,51 +81,58 @@ class GameTileMapRun {
         TileNode.name = Name
         
         TileMapParent.addChild(TileNode)
-        if NewItem == "🐟" || Emoji == "🐝" || NewItem == "🦀" || NewItem == "🛸"  {
+        if NewItem == "🐟" || NewItem == "🦀" || NewItem == "🛸"  {
             let r2 = Int(arc4random_uniform(1))
+            let divider = Double(20.0)
+            let mov = r2 > 0 ? 1 : -1
             
-            var mov = -1
-            
-            if r2 == 1 {
-                mov = 1
+        	//MARK: Determines how far a character can venture
+            func spaceX() -> Double {
+                
+                for i in (3...5).reversed() {
+                    largeInt /= 2
+                    numbers.append( (a: largeInt, b: Double( i )     ))
+                    numbers.append( (a: largeInt, b: Double( i - 2 ) ))
+                }
+                
+                // MARK: Generates Todd's spacial algorithm
+                // [(a: 32, b: 5.0), (a: 32, b: 3.0), (a: 16, b: 4.0), (a: 16, b: 2.0), (a: 8, b: 3.0), (a: 8, b: 1.0)]
+                
+                var randomAmount : Double! = Double(0)
+                
+                for (a,b) in numbers {
+                    randomAmount += Double(arc4random_uniform(a)) + b
+                }
+                
+                //MARK: Random numbers
+                //37.0 //86.0 //76.0 //54.0...
+                
+                
+                return randomAmount
             }
-          
             
-            let a2 = Int(arc4random_uniform(8)) +  6
-            let b2 = Int(arc4random_uniform(8)) +  5
-            let c2 = Int(arc4random_uniform(16)) + 4
-            let d2 = Int(arc4random_uniform(16)) + 3
-            let e2 = Int(arc4random_uniform(32)) + 2
-            let f2 = Int(arc4random_uniform(32)) + 1
+            let moveAmount1 = spaceX()
+            let moveAmount2 = spaceX()
 
-            let moveAmount2 = a2 + b2 + c2 + d2 + e2 + f2
+            let time1 = Double(moveAmount1 / divider)
+            let time2 = Double(moveAmount2 / divider)
             
-            let a1 = Int(arc4random_uniform(8)) + 6
-            let b1 = Int(arc4random_uniform(8)) + 5
-            let c1 = Int(arc4random_uniform(16)) + 4
-            let d1 = Int(arc4random_uniform(16)) + 3
-            let e1 = Int(arc4random_uniform(32)) + 2
-            let f1 = Int(arc4random_uniform(32)) + 1
-
-            let moveAmount1 = a1 + b1 + c1 + d1 + e1 + f1
-            
-           
-            let time1 = Int(moveAmount1 / 20)
-            let time2 = Int(moveAmount2 / 20)
-
-            
-      
-            
-            let moveright = SKAction.move(by: CGVector(dx: moveAmount2 * mov, dy: 0), duration: TimeInterval(time2))
-            let wait = SKAction.wait(forDuration: TimeInterval(time2 / 20 ))
-            let wait2 = SKAction.wait(forDuration: TimeInterval(time1 / 20 ))
+            let moveright = SKAction.move(by: CGVector(dx: Int(moveAmount2) * mov, dy: 0), duration: TimeInterval(time2))
+            let wait = SKAction.wait(forDuration: time1 / divider)
+            let wait2 = SKAction.wait(forDuration: time2 / divider)
 
             let flip1 = SKAction.scaleX(to: CGFloat(mov), duration: 0.25)
             let flip2 = SKAction.scaleX(to: CGFloat(-mov), duration: 0.25)
-            let moveleft = SKAction.move(by: CGVector(dx: moveAmount1 * -mov, dy: 0), duration: TimeInterval(time1))
+            let moveleft = SKAction.move(by: CGVector(dx: Int(moveAmount2) * -mov, dy: 0), duration: TimeInterval(time1))
             
             //MARK: Don't flip the Crab/Lobster emoji as it doesn't look right being vertical
-            if NewItem != "🦀" && Emoji != "🦀" {
+            
+            func crabby() {
+                let rep = SKAction.repeatForever(SKAction.sequence([wait,moveright,wait2,moveleft]))
+                TileNode.run(rep)
+            }
+            
+            func notCrabby() {
                 if TileNode.position.x < 0 {
                     let rep = SKAction.repeatForever(SKAction.sequence([flip1,wait,moveright,flip2,wait2,moveleft]))
                     TileNode.run(rep)
@@ -126,12 +141,9 @@ class GameTileMapRun {
                     let rep = SKAction.repeatForever(SKAction.sequence([flip2,wait2,moveright,flip1,wait,moveleft]))
                     TileNode.run(rep)
                 }
-            } else {
-                let rep = SKAction.repeatForever(SKAction.sequence([wait,moveright,wait2,moveleft]))
-                TileNode.run(rep)
             }
-
             
+            Emoji == "🦀" ? crabby() : notCrabby()
         }
         
         let spriteLabelNode = SKLabelNode(fontNamed:"Apple Color Emoji")
@@ -141,7 +153,6 @@ class GameTileMapRun {
         spriteLabelNode.position = CGPoint(x: 0, y: 0)
         spriteLabelNode.xScale = fliph ? -1 : 1
         spriteLabelNode.yScale = flipy ? -1 : 1
-        
         
         var str = Emoji //may include variants at random or for holidays
         spriteLabelNode.fontSize = 32
@@ -172,8 +183,9 @@ class GameTileMapRun {
                 TileNode.physicsBody?.friction = 1
             case "🐌":
                 spriteLabelNode.xScale = -1
-            case "☄️":
+            case "☄️", "🚁", "🐝":
                 
+            
 				var action = SKAction()
                 let fade = SKAction.fadeAlpha(to: 0, duration: 1.5)
                 let remove = SKAction.removeFromParent()
@@ -194,7 +206,18 @@ class GameTileMapRun {
                 spriteLabelNode.xScale = 1
                 TileNode.name = "☄️"
                 TileNode.run(SKAction.sequence([action,fade,remove]))
-
+				
+                if Emoji == "🚁" {
+                    spriteLabelNode.zRotation = 0
+                } else if Emoji == "🐝" {
+                    if TileNode.position.x < 0 {
+                        spriteLabelNode.zRotation = CGFloat(-Double.pi/8)
+                    } else {
+                        spriteLabelNode.zRotation = CGFloat(Double.pi/8)
+                    }
+                }
+            
+				
             case "🦔":
                 spriteLabelNode.fontSize = 40
                 spriteLabelNode.yScale = 1.25
@@ -245,7 +268,7 @@ class GameTileMapRun {
                 str = coinToss ? "⛩" : "🏯"
             case "💢", "🎇", "🌀", "♨️", "🛑":
                 str = "" // No Emoji
-            case "‼️","🔫":
+            case "🔫":
                 str = "🔫" // Gun
             case "🦎":
                 spriteLabelNode.xScale = -1
@@ -260,13 +283,26 @@ class GameTileMapRun {
             spriteLabelNode.xScale *= -1
         }
         
-        
         spriteLabelNode.text = str
         
-        //We don't want to flip stuff with writing on it
-        //Because it's backwards
-        if (str == "💰" || str == "🎰" || str == "💵"  || str == "🤑") {
-            spriteLabelNode.xScale = 1
+        /**
+         We don't want to flight these sprite, usually for write or to direct out bad guys and good guys in a certain direction
+         */
+        switch str {
+            case "💰","🎰","🤑","💵","🏧","💸","🏦","🏪","🎫","🤬","💴","💶","💷","📟","🚕":
+                spriteLabelNode.xScale = 1
+            
+            default:
+                ()
+        }
+        
+        switch NewItem {
+            case "⁉️":
+                spriteLabelNode.xScale = -1
+            case "‼️":
+                spriteLabelNode.xScale = 1
+            default:
+                ()
         }
         
         TileNode.addChild(spriteLabelNode)
@@ -420,7 +456,7 @@ class GameTileMapRun {
                     badguyai[newitem + String(badguyArray[i])] = pos // we are now setting the home position, but we are storing this for the drive Letter
                     
                     let gravity = false;
-                    let radius = TileMapTileSize.width / 2.0 - 2.0
+                    let radius = TileMapTileSize.width / 2.0 //- 2.0
                     let physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
                     let rotation = true;
                     
@@ -1278,7 +1314,7 @@ class GameTileMapRun {
             
             let gravity = true;
             
-            let radius = TileMapTileSize.width / 2.0 - 2.0
+            let radius = TileMapTileSize.width / 2.0 //- 2.0
             let physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
             
             //let mysize = CGSize(width: 30, height: 30)
@@ -1322,9 +1358,14 @@ class GameTileMapRun {
                     col = 2 + 128 + 256 + 1024 as UInt32
                     con = 32 as UInt32
                     cat = 1024 as UInt32
+                    
+                    if newemoji == "⁉️" || newemoji == "‼️" {
+                        newitem = newemoji
+                    }
+                    
                     newemoji = String(levelarray[settings.level])
                 
-                case "❣️", "‼️", "🔱", "💠", "🛡", "🔫":
+                case "❣️", "🔱", "💠", "🛡", "🔫":
                     col = 2 + 128 + 256 + 1024 as UInt32
                     con = 32 as UInt32
                     cat = 1024 as UInt32
@@ -1333,6 +1374,11 @@ class GameTileMapRun {
                     col = 2 + 128 + 256 + 1024 as UInt32
                     con = 1 + 64 as UInt32
                     cat = 2 as UInt32
+                    
+                    if newemoji == "⁉️" || newemoji == "‼️" {
+                        newitem = newemoji
+                    }
+                    
                     newemoji = String(antiarray[settings.level])
                 
                 // This should work now
