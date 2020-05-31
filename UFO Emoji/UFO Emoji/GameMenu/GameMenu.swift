@@ -10,19 +10,19 @@ import SpriteKit
 
 
 class GameMenu: SKScene {
-    private var minlevel = 1
-    private var maxEmoji = 3
-    private var minEmoji = 1
-    private var musicLabel 	=  SKLabelNode()
-    private var soundLabel 	=  SKLabelNode()
-    private var stickLabel 	=  SKLabelNode()
-    private var levelLabel 	=  SKLabelNode()
-    private var versusLabel =  SKLabelNode()
-    private var emojiLabel 	=  SKLabelNode()
-    private var playLabel1 	=  SKLabelNode()
-    private var playLabel2 	=  SKLabelNode()
-    private var playNode = SKNode()
-    private var lockDown = false
+    private var minlevel : Int! = 1
+    private var maxEmoji : Int! = 3
+    private var minEmoji : Int! = 1
+    private var musicLabel  : SKLabelNode! = SKLabelNode()
+    private var soundLabel 	: SKLabelNode! = SKLabelNode()
+    private var stickLabel 	: SKLabelNode! = SKLabelNode()
+    private var levelLabel 	: SKLabelNode! = SKLabelNode()
+    private var versusLabel : SKLabelNode! = SKLabelNode()
+    private var emojiLabel 	: SKLabelNode! = SKLabelNode()
+    private var playLabel1 	: SKLabelNode! = SKLabelNode()
+    private var playLabel2 	: SKLabelNode! = SKLabelNode()
+    private var playNode  : SKNode! = SKNode()
+    private var lockDown : Bool! = false
     
     deinit {
         print("GameMenu DeInit")
@@ -36,32 +36,19 @@ class GameMenu: SKScene {
     
         removeFromParent()
         
-        
-        DispatchQueue.main.async {
-            [ weak musicLabel, weak soundLabel, weak stickLabel, weak levelLabel, weak versusLabel, weak emojiLabel, weak playLabel1, weak playLabel2, weak playNode] in
-            guard
-                let _  = musicLabel,
-                let _  = soundLabel,
-                let _  = stickLabel,
-                let _  = levelLabel,
-                let _  = versusLabel,
-                let _  = emojiLabel,
-                let _  = playLabel1,
-                let _  = playLabel2,
-                let _  = playNode
-                
-                else { return }
-            
-            musicLabel = nil
-            soundLabel = nil
-            stickLabel = nil
-            levelLabel = nil
-            versusLabel = nil
-            emojiLabel = nil
-            playLabel1 = nil
-            playLabel2 = nil
-            playNode = nil
-        }
+        minlevel    = nil
+        maxEmoji    = nil
+        minEmoji    = nil
+        musicLabel 	= nil
+        soundLabel 	= nil
+        stickLabel 	= nil
+        levelLabel 	= nil
+        versusLabel = nil
+        emojiLabel 	= nil
+        playLabel1 	= nil
+        playLabel2 	= nil
+        playNode 	= nil
+        lockDown    = nil
     }
     
     internal override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

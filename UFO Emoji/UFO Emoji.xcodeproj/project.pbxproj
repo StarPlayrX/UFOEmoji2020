@@ -56,6 +56,7 @@
 		5F1CF8EE247B1AA6008DEC84 /* GameBadGuyAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8ED247B1AA6008DEC84 /* GameBadGuyAI.swift */; };
 		5F1CF8F0247B1AAC008DEC84 /* GameTimeMapRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */; };
 		5F5A0EC424807FCC0034FDBF /* GameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5A0EC324807FCC0034FDBF /* GameWorld.swift */; };
+		5F66648624833D3100AC2B52 /* level3.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F66648524833D3100AC2B52 /* level3.sks */; };
 		5FC051A9247B03E7003C8201 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051A8247B03E7003C8201 /* AppDelegate.swift */; };
 		5FC051B1247B03E7003C8201 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051B0247B03E7003C8201 /* GameViewController.swift */; };
 		5FC051B4247B03E7003C8201 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FC051B2247B03E7003C8201 /* Main.storyboard */; };
@@ -79,6 +80,7 @@
 		5F1CF8ED247B1AA6008DEC84 /* GameBadGuyAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBadGuyAI.swift; sourceTree = "<group>"; };
 		5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimeMapRun.swift; sourceTree = "<group>"; };
 		5F5A0EC324807FCC0034FDBF /* GameWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameWorld.swift; sourceTree = "<group>"; };
+		5F66648524833D3100AC2B52 /* level3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level3.sks; sourceTree = "<group>"; };
 		5FC051A5247B03E7003C8201 /* UFO Emoji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UFO Emoji.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FC051A8247B03E7003C8201 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5FC051B0247B03E7003C8201 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 		5FC051D6247B0E41003C8201 /* GameLevels */ = {
 			isa = PBXGroup;
 			children = (
+				5F66648524833D3100AC2B52 /* level3.sks */,
 				5F1C9C002481F7770047CDB7 /* level1.sks */,
 				5F1C9BFE2481DF250047CDB7 /* level0000000000.sks */,
 				5FC051D9247B0E6C003C8201 /* level0.sks */,
@@ -416,6 +419,7 @@
 				5F1CF8C1247B18C8008DEC84 /* boomFire1.m4a in Resources */,
 				5FC051C3247B057C003C8201 /* GameMenu.sks in Resources */,
 				5F1CF8E5247B1904008DEC84 /* emulogic.ttf in Resources */,
+				5F66648624833D3100AC2B52 /* level3.sks in Resources */,
 				5F1CF8BF247B18C2008DEC84 /* music1.mp3 in Resources */,
 				5FC051B9247B03E8003C8201 /* LaunchScreen.storyboard in Resources */,
 				5F1C9BFF2481DF250047CDB7 /* level0000000000.sks in Resources */,

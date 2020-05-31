@@ -137,9 +137,12 @@
         parallax.removeAllChildren()
         parallax.removeFromParent()
         
-        if world.children[1].hasActions() {
+        
+        if let first = world.children.first, first.hasActions() {
             print("Removing Actions from SKReference Node")
-             world.children[1].removeAllActions()
+            first.removeAllActions()
+            first.removeAllChildren()
+            first.removeFromParent()
         }
         
         
@@ -259,7 +262,7 @@
             
             sprite.texture?.preload { [ weak self ] in
                 if name == "canape" {
-                    let radius = sprite.size.width / 2 - 12
+                    let radius = sprite.size.width / 2 - 18
                     sprite.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
                     sprite.physicsBody?.restitution = 0
                     sprite.position = CGPoint(x:sprite.position.x, y: sprite.position.y + 30)
@@ -273,9 +276,9 @@
                     sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: radius.width + 5, height: radius.height + 5))
                     sprite.physicsBody?.restitution = 0
                     sprite.position = CGPoint(x:sprite.position.x, y: sprite.position.y - 25)
-                } else {
-                    sprite.physicsBody = SKPhysicsBody(texture: sprite.texture!, alphaThreshold: alphaThreshold, size: sprite.size)
-                }
+                } //else {
+                  //  sprite.physicsBody = SKPhysicsBody(texture: sprite.texture!, alphaThreshold: alphaThreshold, size: sprite.size)
+                //}
                 
                 sprite.physicsBody?.categoryBitMask = category
                 sprite.physicsBody?.collisionBitMask = collision
@@ -390,7 +393,7 @@
             zPosition: 150,
             alpha: 1.0,
             speed: 1,
-            alphaThreshold: 0.0
+            alphaThreshold: 1.0
         )
         
         heroEmoji = SKLabelNode(fontNamed:"Apple Color Emoji")
@@ -646,14 +649,9 @@
         
         guard
             let hero = hero,
-            let canape = canape,
             let pos = hero.position as CGPoint?
             else { return }
-        
-        cam.position.x = hero.position.x
-        canape.zRotation = hero.zRotation
-        parallax.position.x = cam.position.x * 0.334
-        
+                
         if pos.y > screenHeight && highScoreLabelNode.alpha > 0.0 {
             
             highScoreLabelNode.run(SKAction.fadeAlpha(to: 0.0, duration: 0.25))
@@ -665,13 +663,22 @@
             highScoreLabel.run(SKAction.fadeAlpha(to: 0.4, duration: 0.25))
         }
         
-        func guidedMissle() {
-            world.children.first?.enumerateChildNodes(withName: "XXX") { node, _   in
-                node.position.y = pos.y + 32
+        func firebomb() {
+            world.children.first?.enumerateChildNodes(withName: "☄️") { node, _ in
+                guard let body = node.physicsBody else { return }
+                
+                if body.isDynamic {
+                    node.name = "💰"
+                    let move = SKAction.moveTo(y: self.position.y, duration: 2.0)
+                    node.run(move)
+                }
             }
         }
         
-        guidedMissle()
+        if settings.level == 1 {
+            firebomb()
+        }
+        
     }
     
     
@@ -737,8 +744,8 @@
         
         guard let gamestartup = readyPlayerOne() else { return }
         
-        doublelaser = 0;
-        scoreDict[""] = 0
+        doublelaser = 0
+        scoreDict[""] = 1
         scoreDict["🐽"] = 5
         scoreDict["🌸"] = 10
         scoreDict["🥛"] = 15
@@ -756,7 +763,9 @@
         scoreDict["❌"] = 75 //villians
         scoreDict["😱"] = 80 //super villians
         scoreDict["😳"] = 90 //super villians
+        scoreDict["☄️"] = 95 // Meteor
         scoreDict["🤯"] = 100 //super villian leader
+        scoreDict["💰"] = 105 //rare
         scoreDict["💎"] = 110 //rare
         scoreDict["👑"] = 115 //rare
         scoreDict["❣️"] = 120 //extra life (displays him/herself in the game)
@@ -765,14 +774,16 @@
         scoreDict["‼️"] = 130 //super rare shields (cloaked ghost, move through walls)
         scoreDict["🛡"] = 150 //super rare shields (cloaked ghost, move through walls)
         scoreDict["💠"] = 150 //super rare shields (cloaked ghost, move through walls)
-        scoreDict["gold"] 	= 16
+        
         scoreDict["land"] 	= 1
         scoreDict["dirt"] 	= 1
         scoreDict["grass"] 	= 2
-        scoreDict["desert"] = 2
+        scoreDict["desert"] = 4
         scoreDict["sand"] 	= 4
         scoreDict["stone"] 	= 8
-        
+        scoreDict["gold"]   = 16
+        scoreDict["straw"]  = 16
+
         hero = gamestartup.hero
         canape = gamestartup.canape
         tractor = gamestartup.tractor
@@ -969,7 +980,7 @@
         }
     }
     
-   /* override func didSimulatePhysics() {
+    override func didSimulatePhysics() {
         
         guard
             let h = hero,
@@ -986,7 +997,7 @@
         // adds depth to the scene
         // by moving the backgorund slower
         parallax.position.x = cam.position.x * 0.334
-    }*/
+    }
     
     
     public func emojiAnimation(emojis:Array<String>) {
