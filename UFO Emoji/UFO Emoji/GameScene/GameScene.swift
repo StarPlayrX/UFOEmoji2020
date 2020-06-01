@@ -1793,8 +1793,8 @@
             /* Power Ups */
             shield = true
             
-            if var l = livesLabel.text, !l.contains("🛡") {
-                 livesLabel.text! += "🛡"
+            if let l = livesLabel.text, !l.contains("🛡") {
+                 livesLabel.text? += "🛡"
                 
                 hero.alpha = 0.75
                 
@@ -1824,6 +1824,8 @@
                 livesLabel.text! += "🔫"
             }
             
+            
+            
             if settings.sound {
                 let fire: SKAction = SKAction.playSoundFileNamed("doublelaser.m4a", waitForCompletion: false)
                 self.run(fire)
@@ -1849,9 +1851,9 @@
             🔱 = true
             
             if let l = livesLabel.text, !l.contains("🔱") {
-                livesLabel.text! += "🔱"
+                livesLabel.text? += ("🔱")
             }
-            
+                
             if settings.sound {
                 let fire: SKAction = SKAction.playSoundFileNamed("doublelaser.m4a", waitForCompletion: false)
                 self.run(fire)
