@@ -297,10 +297,8 @@ class GameTileMapRun {
         }
         
         switch NewItem {
-            case "⁉️":
-                spriteLabelNode.xScale = -1
-            case "‼️":
-                spriteLabelNode.xScale = 1
+            case "⁉️", "‼️":
+                spriteLabelNode.xScale *= -1 //Do the opposite
             default:
                 ()
         }

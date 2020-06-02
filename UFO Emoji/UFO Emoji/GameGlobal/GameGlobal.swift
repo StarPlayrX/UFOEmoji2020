@@ -24,8 +24,8 @@ var livesDisplay = ["", "👽","👽👽","👽👽👽","👽👽👽👽","�
 var maxlevel = 10
 var doublelaser = 0
 var 🔱 = false
-var shield = false
-var 🔋 = false
+var 🛡 = false
+var 💠 = false
 
 var KingQueenGlobalDie = 100
 

@@ -113,22 +113,21 @@
     private let laserBorder:UInt32         	 		=  4096
     
     //Game Projectiles
-    private var 🛥 = true
-    private var 🍕 = CGFloat(1)
-    private var 👁: SKSpriteNode!
-    private var 💣: SKSpriteNode!
+    private var 🛥 : Bool! = true
+    private var 🍕 : CGFloat! = CGFloat(1)
+    private lazy var 👁: SKSpriteNode! = SKSpriteNode()
+    private lazy var 💣: SKSpriteNode! = SKSpriteNode()
     private let 🦞 = SKPhysicsBody(circleOfRadius: 16)
     private let 🧨: SKLabelNode! = SKLabelNode(fontNamed:"Apple Color Emoji")
-    private var 💩 = "💩"
-    private var 🚨 = "fire.m4a"
-    private var 💥 = "wah2.m4a"
-    private var 🌞 = UInt32(32)
-    private var 🚞 = SKScene()
-    private let 🍺 = CGFloat(16)
-    private let 🍎 = "Apple Color Emoji"
-    private let 🍌 = "🍌"
-    private let 🦸 = "laserbeam"
-    private let 🥾 = "super"
+    private var 💩 : String! = "💩"
+    private var 🚨 : String! = "fire.m4a"
+    private var 💥 : String! = "wah2.m4a"
+    private var 🌞 : UInt32! = UInt32(32)
+    private let 🍺 : CGFloat! = CGFloat(16)
+    private let 🍎 : String! = "Apple Color Emoji"
+    private let 🍌 : String! = "🍌"
+    private let 🦸 : String! = "laserbeam"
+    private let 🥾 : String! = "super"
     
     //we can swap these out if we use other emoji ships: 0 through 6
     
@@ -708,8 +707,8 @@
     
     func demoMode() {
         /* demo mode */
-        shield = true
-        🔋 = true
+        🛡 = true
+        💠 = true
         🔱 = true
         let logonode = SKSpriteNode(texture: SKTexture(imageNamed: "UFOEmojiLogoLarge"))
         self.cam.addChild(logonode)
@@ -734,8 +733,8 @@
         KingQueenGlobalDie = 100
         
         🔱 = false
-        🔋 = false
-        shield = false
+        💠 = false
+        🛡 = false
         
         doublelaser = 0
         
@@ -795,7 +794,7 @@
         scoreDict["❣️"] = 120 //extra life (displays him/herself in the game)
         scoreDict["🔫"] = 130 //super rare marker for double laser beams
         scoreDict["🔱"] = 140 //super rare trident (super bomb)
-        scoreDict["‼️"] = 130 //super rare shields (cloaked ghost, move through walls)
+        scoreDict["‼️"] = 130 //Hero Villians not flipped
         scoreDict["🛡"] = 150 //super rare shields (cloaked ghost, move through walls)
         scoreDict["💠"] = 150 //super rare shields (cloaked ghost, move through walls)
         
@@ -1412,23 +1411,26 @@
             }
             
             case worldCategory | laserbeam :
-                if  firstBody.node?.name == "stone" && (secondBody.node?.name == "🔱" || secondBody.node?.name == "💠") {
-                    print("AA")
+                if firstBody.node?.name == "stone" && (secondBody.node?.name == "🔱" || secondBody.node?.name == "💠") {
                     baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                    print("A")
                 } else if firstBody.node?.name == "stone"   {
                     stoneVersusLaser(secondBody: secondBody, contactPoint: contact.contactPoint)
-                    print("A")
-                } else if firstBody.isDynamic || (🔋 && secondBody.node?.name == "💠") {
-                    baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
                     print("B")
+
+                } else if firstBody.isDynamic {
+                    baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                    print("C")
+
                 } else {
                     worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
-                    print("C")
+                    print("D")
+
             }
             
             case badFishCategory | laserbeam :
                 
-                if firstBody.isDynamic || (🔋 && secondBody.node?.name == "💠") {
+                if firstBody.isDynamic {
                     baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
                 } else {
                     worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
@@ -1440,7 +1442,7 @@
             
             case laserbeam | itemCategory :
                 
-                if secondBody.isDynamic || (🔋 && firstBody.node?.name == "💠") {
+                if secondBody.isDynamic {
                     goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
                     
                 } else {
@@ -1449,7 +1451,7 @@
             
             case laserbeam | fishCategory :
                 
-                if secondBody.isDynamic || (🔋 && firstBody.node?.name == "💠") {
+                if secondBody.isDynamic  {
                     goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
                 } else {
                     laserVersusFloater(firstBody: firstBody, secondBody: secondBody)
@@ -1544,7 +1546,7 @@
             
             case heroCategory | worldCategory, heroCategory | badGuyCategory, heroCategory | badFishCategory :
                 
-                if ( shield ) {
+                if ( 🛡 ) {
                     return
                 }
                 
@@ -1791,7 +1793,7 @@
         //gives our ship shields
         if name == "🛡"  {
             /* Power Ups */
-            shield = true
+            🛡 = true
             
             if let l = livesLabel.text, !l.contains("🛡") {
                  livesLabel.text? += "🛡"
@@ -1834,7 +1836,7 @@
         
         //gives our ship superman lasers
         if name == "💠" {
-            🔋 = true
+            💠 = true
             
             if let l = livesLabel.text, !l.contains("💠") {
                  livesLabel.text! += "💠"
@@ -1890,7 +1892,7 @@
     
     func laserbeak (superhero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool) {
         
-        let 🧵 = 🔋 ?  🥾 + 🦸 : 🦸
+        guard let 🧵 = 💠 ? 🥾 + 🦸 : 🦸 else { return }
         
         👁 = SKSpriteNode(texture: SKTexture(imageNamed: 🧵 ))
         
@@ -1923,7 +1925,7 @@
         }
         
         
-        if !🔋 {
+        if !💠 {
             👁.name = "🚩"
         } else {
             👁.name = "💠"
