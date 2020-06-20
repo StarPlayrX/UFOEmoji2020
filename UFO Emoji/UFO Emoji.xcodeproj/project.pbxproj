@@ -21,7 +21,6 @@
 		5F1CF8C7247B18C8008DEC84 /* murrmurr.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5FC051D0247B0CCD003C8201 /* murrmurr.m4a */; };
 		5F1CF8C8247B18C8008DEC84 /* wah2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5FC051CC247B0CCD003C8201 /* wah2.m4a */; };
 		5F1CF8C9247B18E0008DEC84 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FC051DB247B0E6C003C8201 /* GameScene.sks */; };
-		5F1CF8CA247B18E0008DEC84 /* level-1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FC051D9247B0E6C003C8201 /* level-1.sks */; };
 		5F1CF8CB247B18E0008DEC84 /* level2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FC051D7247B0E6C003C8201 /* level2.sks */; };
 		5F1CF8CD247B18E0008DEC84 /* level6.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FC051D8247B0E6C003C8201 /* level6.sks */; };
 		5F1CF8CE247B18E8008DEC84 /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051EA247B10EC003C8201 /* GameOver.swift */; };
@@ -53,6 +52,16 @@
 		5F1CF8F0247B1AAC008DEC84 /* GameTimeMapRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */; };
 		5F5A0EC424807FCC0034FDBF /* GameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5A0EC324807FCC0034FDBF /* GameWorld.swift */; };
 		5F66648624833D3100AC2B52 /* level5.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F66648524833D3100AC2B52 /* level5.sks */; };
+		5F7CFB4A249E901400AFCB4C /* n1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F7CFB49249E901400AFCB4C /* n1.sks */; };
+		5F8BA012249EAF9800A08816 /* n2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F8BA009249EAF9700A08816 /* n2.sks */; };
+		5F8BA013249EAF9800A08816 /* n0.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F8BA00A249EAF9700A08816 /* n0.sks */; };
+		5F8BA014249EAF9800A08816 /* n7.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F8BA00B249EAF9700A08816 /* n7.sks */; };
+		5F8BA015249EAF9800A08816 /* n6.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F8BA00C249EAF9700A08816 /* n6.sks */; };
+		5F8BA016249EAF9800A08816 /* n9.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F8BA00D249EAF9700A08816 /* n9.sks */; };
+		5F8BA017249EAF9800A08816 /* n3.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F8BA00E249EAF9800A08816 /* n3.sks */; };
+		5F8BA018249EAF9800A08816 /* n5.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F8BA00F249EAF9800A08816 /* n5.sks */; };
+		5F8BA019249EAF9800A08816 /* n4.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F8BA010249EAF9800A08816 /* n4.sks */; };
+		5F8BA01A249EAF9800A08816 /* n8.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F8BA011249EAF9800A08816 /* n8.sks */; };
 		5FA0C9C324845B6100A46B03 /* level4.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FA0C9C224845B6100A46B03 /* level4.sks */; };
 		5FC051A9247B03E7003C8201 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051A8247B03E7003C8201 /* AppDelegate.swift */; };
 		5FC051B1247B03E7003C8201 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051B0247B03E7003C8201 /* GameViewController.swift */; };
@@ -75,6 +84,16 @@
 		5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimeMapRun.swift; sourceTree = "<group>"; };
 		5F5A0EC324807FCC0034FDBF /* GameWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameWorld.swift; sourceTree = "<group>"; };
 		5F66648524833D3100AC2B52 /* level5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level5.sks; sourceTree = "<group>"; };
+		5F7CFB49249E901400AFCB4C /* n1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = n1.sks; sourceTree = "<group>"; };
+		5F8BA009249EAF9700A08816 /* n2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = n2.sks; sourceTree = "<group>"; };
+		5F8BA00A249EAF9700A08816 /* n0.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = n0.sks; sourceTree = "<group>"; };
+		5F8BA00B249EAF9700A08816 /* n7.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = n7.sks; sourceTree = "<group>"; };
+		5F8BA00C249EAF9700A08816 /* n6.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = n6.sks; sourceTree = "<group>"; };
+		5F8BA00D249EAF9700A08816 /* n9.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = n9.sks; sourceTree = "<group>"; };
+		5F8BA00E249EAF9800A08816 /* n3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = n3.sks; sourceTree = "<group>"; };
+		5F8BA00F249EAF9800A08816 /* n5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = n5.sks; sourceTree = "<group>"; };
+		5F8BA010249EAF9800A08816 /* n4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = n4.sks; sourceTree = "<group>"; };
+		5F8BA011249EAF9800A08816 /* n8.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = n8.sks; sourceTree = "<group>"; };
 		5FA0C9C224845B6100A46B03 /* level4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level4.sks; sourceTree = "<group>"; };
 		5FC051A5247B03E7003C8201 /* UFO Emoji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UFO Emoji.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FC051A8247B03E7003C8201 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,7 +118,6 @@
 		5FC051D5247B0D31003C8201 /* GTFlightYoke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTFlightYoke.swift; sourceTree = "<group>"; };
 		5FC051D7247B0E6C003C8201 /* level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level2.sks; sourceTree = "<group>"; };
 		5FC051D8247B0E6C003C8201 /* level6.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level6.sks; sourceTree = "<group>"; };
-		5FC051D9247B0E6C003C8201 /* level-1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = "level-1.sks"; sourceTree = "<group>"; };
 		5FC051DB247B0E6C003C8201 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		5FC051DD247B0EA8003C8201 /* eats.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = eats.sks; sourceTree = "<group>"; };
 		5FC051DE247B0EA8003C8201 /* actors.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = actors.sks; sourceTree = "<group>"; };
@@ -171,6 +189,41 @@
 				5FC051DB247B0E6C003C8201 /* GameScene.sks */,
 			);
 			path = GameScene;
+			sourceTree = "<group>";
+		};
+		5F7CFB47249E8F2C00AFCB4C /* old_ */ = {
+			isa = PBXGroup;
+			children = (
+				5FC051E0247B0EA8003C8201 /* ugly.sks */,
+				5FC051E2247B0EA8003C8201 /* things.sks */,
+				5FC051DF247B0EA8003C8201 /* powerups.sks */,
+				5FC051DE247B0EA8003C8201 /* actors.sks */,
+				5FC051E1247B0EA8003C8201 /* animals.sks */,
+				5FC051DD247B0EA8003C8201 /* eats.sks */,
+				5FC051E5247B0EA8003C8201 /* elements.sks */,
+			);
+			path = old_;
+			sourceTree = "<group>";
+		};
+		5F7CFB48249E8F3300AFCB4C /* new_ */ = {
+			isa = PBXGroup;
+			children = (
+				5F8BA00A249EAF9700A08816 /* n0.sks */,
+				5F7CFB49249E901400AFCB4C /* n1.sks */,
+				5F8BA009249EAF9700A08816 /* n2.sks */,
+				5F8BA00E249EAF9800A08816 /* n3.sks */,
+				5F8BA010249EAF9800A08816 /* n4.sks */,
+				5F8BA00F249EAF9800A08816 /* n5.sks */,
+				5F8BA00C249EAF9700A08816 /* n6.sks */,
+				5F8BA00B249EAF9700A08816 /* n7.sks */,
+				5F8BA011249EAF9800A08816 /* n8.sks */,
+				5F8BA00D249EAF9700A08816 /* n9.sks */,
+				5FC051E3247B0EA8003C8201 /* end.sks */,
+				5FC051E7247B0EA8003C8201 /* gold.sks */,
+				5FC051E6247B0EA8003C8201 /* land.sks */,
+				5FC051E4247B0EA8003C8201 /* water.sks */,
+			);
+			path = new_;
 			sourceTree = "<group>";
 		};
 		5FC0519C247B03E7003C8201 = {
@@ -272,7 +325,6 @@
 				5FA0C9C224845B6100A46B03 /* level4.sks */,
 				5F66648524833D3100AC2B52 /* level5.sks */,
 				5FD0885B24985EDE00C23852 /* levelXXXX copy.sks */,
-				5FC051D9247B0E6C003C8201 /* level-1.sks */,
 				5FC051D8247B0E6C003C8201 /* level6.sks */,
 			);
 			path = GameLevels;
@@ -281,17 +333,8 @@
 		5FC051DC247B0E8D003C8201 /* GameTileSets */ = {
 			isa = PBXGroup;
 			children = (
-				5FC051DE247B0EA8003C8201 /* actors.sks */,
-				5FC051E1247B0EA8003C8201 /* animals.sks */,
-				5FC051DD247B0EA8003C8201 /* eats.sks */,
-				5FC051E5247B0EA8003C8201 /* elements.sks */,
-				5FC051E3247B0EA8003C8201 /* end.sks */,
-				5FC051E7247B0EA8003C8201 /* gold.sks */,
-				5FC051E6247B0EA8003C8201 /* land.sks */,
-				5FC051DF247B0EA8003C8201 /* powerups.sks */,
-				5FC051E2247B0EA8003C8201 /* things.sks */,
-				5FC051E0247B0EA8003C8201 /* ugly.sks */,
-				5FC051E4247B0EA8003C8201 /* water.sks */,
+				5F7CFB48249E8F3300AFCB4C /* new_ */,
+				5F7CFB47249E8F2C00AFCB4C /* old_ */,
 			);
 			path = GameTileSets;
 			sourceTree = "<group>";
@@ -379,20 +422,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F8BA018249EAF9800A08816 /* n5.sks in Resources */,
+				5F7CFB4A249E901400AFCB4C /* n1.sks in Resources */,
 				5F1CF8C7247B18C8008DEC84 /* murrmurr.m4a in Resources */,
 				5F1CF8D2247B18F2008DEC84 /* actors.sks in Resources */,
 				5F1CF8D8247B18F2008DEC84 /* land.sks in Resources */,
-				5F1CF8CA247B18E0008DEC84 /* level-1.sks in Resources */,
+				5F8BA019249EAF9800A08816 /* n4.sks in Resources */,
 				5FC051B4247B03E7003C8201 /* Main.storyboard in Resources */,
 				5F1CF8E0247B18F7008DEC84 /* fireParticle.sks in Resources */,
 				5F1CF8C8247B18C8008DEC84 /* wah2.m4a in Resources */,
 				5F1CF8D3247B18F2008DEC84 /* animals.sks in Resources */,
 				5F1CF8C9247B18E0008DEC84 /* GameScene.sks in Resources */,
+				5F8BA012249EAF9800A08816 /* n2.sks in Resources */,
 				5FC051B6247B03E8003C8201 /* Assets.xcassets in Resources */,
 				5F1CF8CB247B18E0008DEC84 /* level2.sks in Resources */,
+				5F8BA016249EAF9800A08816 /* n9.sks in Resources */,
 				5F1C9C012481F7770047CDB7 /* level1.sks in Resources */,
 				5F1CF8C3247B18C8008DEC84 /* doublelaser.m4a in Resources */,
 				5F1CF8C2247B18C8008DEC84 /* boomFire2.m4a in Resources */,
+				5F8BA013249EAF9800A08816 /* n0.sks in Resources */,
+				5F8BA015249EAF9800A08816 /* n6.sks in Resources */,
 				5F1CF8C4247B18C8008DEC84 /* Explosion1.m4a in Resources */,
 				5F1CF8E4247B18F7008DEC84 /* smokeParticle.sks in Resources */,
 				5F1CF8DB247B18F2008DEC84 /* ugly.sks in Resources */,
@@ -412,8 +461,11 @@
 				5F1C9BFF2481DF250047CDB7 /* level3.sks in Resources */,
 				5F1CF8E1247B18F7008DEC84 /* grayParticle.sks in Resources */,
 				5F1CF8D4247B18F2008DEC84 /* eats.sks in Resources */,
+				5F8BA01A249EAF9800A08816 /* n8.sks in Resources */,
 				5FA0C9C324845B6100A46B03 /* level4.sks in Resources */,
+				5F8BA014249EAF9800A08816 /* n7.sks in Resources */,
 				5F1CF8CD247B18E0008DEC84 /* level6.sks in Resources */,
+				5F8BA017249EAF9800A08816 /* n3.sks in Resources */,
 				5F1CF8DC247B18F2008DEC84 /* water.sks in Resources */,
 				5F1CF8DF247B18F7008DEC84 /* blueParticle.sks in Resources */,
 				5F1CF8D5247B18F2008DEC84 /* elements.sks in Resources */,
