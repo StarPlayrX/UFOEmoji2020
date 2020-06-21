@@ -1819,7 +1819,7 @@
         
         
         //gives our ship double lasers
-        if name == "🔫" || name == "‼️"  {
+        if name == "🔫" {
             doublelaser = 1
             
             if let l = livesLabel.text, !l.contains("🔫") {
