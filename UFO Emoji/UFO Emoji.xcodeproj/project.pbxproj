@@ -52,7 +52,6 @@
 		5F1CF8F0247B1AAC008DEC84 /* GameTimeMapRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */; };
 		5F5A0EC424807FCC0034FDBF /* GameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5A0EC324807FCC0034FDBF /* GameWorld.swift */; };
 		5F66648624833D3100AC2B52 /* level5.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F66648524833D3100AC2B52 /* level5.sks */; };
-		5F7CFB4A249E901400AFCB4C /* n1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F7CFB49249E901400AFCB4C /* n1.sks */; };
 		5FA0C9C324845B6100A46B03 /* level4.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FA0C9C224845B6100A46B03 /* level4.sks */; };
 		5FC051A9247B03E7003C8201 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051A8247B03E7003C8201 /* AppDelegate.swift */; };
 		5FC051B1247B03E7003C8201 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051B0247B03E7003C8201 /* GameViewController.swift */; };
@@ -63,6 +62,7 @@
 		5FC051C4247B057C003C8201 /* GameMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051C2247B057C003C8201 /* GameMenu.swift */; };
 		5FC051C7247B0882003C8201 /* GameGlobal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051C6247B0882003C8201 /* GameGlobal.swift */; };
 		5FD0885C24985EDE00C23852 /* levelXXXX copy.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FD0885B24985EDE00C23852 /* levelXXXX copy.sks */; };
+		5FF6326824A0005A00758CA2 /* groupTileSet1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FF6326724A0005A00758CA2 /* groupTileSet1.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,7 +75,6 @@
 		5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimeMapRun.swift; sourceTree = "<group>"; };
 		5F5A0EC324807FCC0034FDBF /* GameWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameWorld.swift; sourceTree = "<group>"; };
 		5F66648524833D3100AC2B52 /* level5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level5.sks; sourceTree = "<group>"; };
-		5F7CFB49249E901400AFCB4C /* n1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = n1.sks; sourceTree = "<group>"; };
 		5FA0C9C224845B6100A46B03 /* level4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level4.sks; sourceTree = "<group>"; };
 		5FC051A5247B03E7003C8201 /* UFO Emoji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UFO Emoji.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FC051A8247B03E7003C8201 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -124,6 +123,7 @@
 		5FC051F3247B112C003C8201 /* grayParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = grayParticle.sks; sourceTree = "<group>"; };
 		5FC051F4247B112C003C8201 /* smokeParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = smokeParticle.sks; sourceTree = "<group>"; };
 		5FD0885B24985EDE00C23852 /* levelXXXX copy.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = "levelXXXX copy.sks"; sourceTree = "<group>"; };
+		5FF6326724A0005A00758CA2 /* groupTileSet1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = groupTileSet1.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,7 +191,7 @@
 		5F7CFB48249E8F3300AFCB4C /* new_ */ = {
 			isa = PBXGroup;
 			children = (
-				5F7CFB49249E901400AFCB4C /* n1.sks */,
+				5FF6326724A0005A00758CA2 /* groupTileSet1.sks */,
 				5FC051E7247B0EA8003C8201 /* gold.sks */,
 				5FC051E6247B0EA8003C8201 /* land.sks */,
 				5FC051E4247B0EA8003C8201 /* water.sks */,
@@ -395,7 +395,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F7CFB4A249E901400AFCB4C /* n1.sks in Resources */,
 				5F1CF8C7247B18C8008DEC84 /* murrmurr.m4a in Resources */,
 				5F1CF8D2247B18F2008DEC84 /* actors.sks in Resources */,
 				5F1CF8D8247B18F2008DEC84 /* land.sks in Resources */,
@@ -427,6 +426,7 @@
 				5FC051B9247B03E8003C8201 /* LaunchScreen.storyboard in Resources */,
 				5F1C9BFF2481DF250047CDB7 /* level3.sks in Resources */,
 				5F1CF8E1247B18F7008DEC84 /* grayParticle.sks in Resources */,
+				5FF6326824A0005A00758CA2 /* groupTileSet1.sks in Resources */,
 				5F1CF8D4247B18F2008DEC84 /* eats.sks in Resources */,
 				5FA0C9C324845B6100A46B03 /* level4.sks in Resources */,
 				5F1CF8CD247B18E0008DEC84 /* level6.sks in Resources */,

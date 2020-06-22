@@ -661,8 +661,7 @@
             highScoreLabelNode.run(SKAction.fadeAlpha(to: 0.4, duration: 0.25))
             highScoreLabel.run(SKAction.fadeAlpha(to: 0.4, duration: 0.25))
         }
-        
-        
+    
         /**
          Used by Asteriods and Chopper I
          */
@@ -677,31 +676,8 @@
                 }
             }
         }
-        
-      
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+    
       	movingObjectI()
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     

@@ -1357,7 +1357,7 @@ class GameTileMapRun {
                     con = 32 as UInt32
                     cat = 1024 as UInt32
                     
-                    if newemoji == "⁉️" || newemoji == "‼️" {
+                    if newemoji == "⁉️" {
                         newitem = newemoji
                     }
                     
@@ -1373,7 +1373,7 @@ class GameTileMapRun {
                     con = 1 + 64 as UInt32
                     cat = 2 as UInt32
                     
-                    if newemoji == "⁉️" || newemoji == "‼️" {
+                    if newemoji == "‼️" {
                         newitem = newemoji
                     }
                     
