@@ -801,10 +801,10 @@
         switch level {
             
             //skyMtns
-            case 1..<100:
+            case 1...5:
                 background = "waterWorld"
-            case 6..<9:
-                ()
+            case 6...10:
+                background = "desertMtns"
             case 10:
                 ()
             default :

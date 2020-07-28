@@ -112,7 +112,11 @@ class GameViewController: UIViewController, GameProtocol {
             view.showsDrawCount = showsDrawCount
             view.showsQuadCount = showsQuadCount
             
-            view.showsLargeContentViewer = false
+            if #available(iOS 13.0, *) {
+                view.showsLargeContentViewer = false
+            } else {
+                // Fallback on earlier versions
+            }
             view.shouldCullNonVisibleNodes = true
             view.preferredFramesPerSecond = 61
             view.presentScene(scene)
