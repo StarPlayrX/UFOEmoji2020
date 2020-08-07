@@ -118,13 +118,13 @@
     private lazy var 👁: SKSpriteNode! = SKSpriteNode()
     private lazy var 💣: SKSpriteNode! = SKSpriteNode()
     private let 🦞 = SKPhysicsBody(circleOfRadius: 16)
-    private let 🧨: SKLabelNode! = SKLabelNode(fontNamed:"Apple Color Emoji")
+    private let 🧨: SKLabelNode! = SKLabelNode(fontNamed:emojifontname)
     private var 💩 : String! = "💩"
     private var 🚨 : String! = "fire.m4a"
     private var 💥 : String! = "wah2.m4a"
     private var 🌞 : UInt32! = UInt32(32)
     private let 🍺 : CGFloat! = CGFloat(16)
-    private let 🍎 : String! = "Apple Color Emoji"
+    private let 🍎 : String! = emojifontname
     private let 🍌 : String! = "🍌"
     private let 🦸 : String! = "laserbeam"
     private let 🥾 : String! = "super"
@@ -395,7 +395,7 @@
             alphaThreshold: 1.0
         )
         
-        heroEmoji = SKLabelNode(fontNamed:"Apple Color Emoji")
+        heroEmoji = SKLabelNode(fontNamed:emojifontname) //"Apple Color Emoji"
         heroEmoji.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         heroEmoji.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         heroEmoji.alpha = 1.0
@@ -802,10 +802,10 @@
             
             //skyMtns
             case 1...5:
-                background = "waterWorld"
+                background = "waterWorld" //waterWorld
             case 6...10:
-                background = "desertMtns"
-            case 10:
+                background = "miniDesert"
+            case 11:
                 ()
             default :
                 ()
@@ -814,7 +814,7 @@
         
         var filename = "" //default
         
-        filename = "level1"
+        filename = "level\(level)"
          
         world.isPaused = true
         world.isHidden = true
@@ -1891,7 +1891,7 @@
             //let texture = SKTexture.init(image: self.transparentimage)
             👁 = SKSpriteNode()
             👨‍🔬 = SKPhysicsBody(circleOfRadius: 🍺);
-            let 🔫: SKLabelNode = SKLabelNode(fontNamed:🍎)
+            let 🔫: SKLabelNode = SKLabelNode(fontNamed:emojifontname)
             
             🔫.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
             🔫.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center

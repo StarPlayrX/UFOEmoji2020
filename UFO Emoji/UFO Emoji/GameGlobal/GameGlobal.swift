@@ -13,8 +13,8 @@ import SpriteKit
 typealias appsettings =  (level: Int, highlevel: Int, emoji: Int, score: Int, highscore: Int, lives: Int, music: Bool, sound: Bool, stick: Bool, mode: Int)
 var settings : appsettings = (level: 1, highlevel: 9, emoji: 1, score: 0, highscore: 0, lives: 6, music: true, sound: true, stick: true, mode: 0)
 
-var levelarray: Array = ["🦕","🦕","🦎","🐢","🦋", "📡", "🕊","🦆","🍀","🐯", "🧟‍♀️", "🐿","💐","🦄","🐴","🐶","💐","🐌","🐄","🐄"]
-var antiarray : Array = ["🦖","🦖","🐊","🐇","🐛", "🛰", "🐍","🦅","🎱","🦁", "🧟‍♂️", "🦔","🍄","🐺","🐗","🐱","🍄","🦂","🐓","🐓"]
+var levelarray: Array = ["🦕","🦕","🦎","🐢","🦋", "📡", "🕊","🦆","🍀","🕸", "🥥", "🐿","💐","🦄","🐴","🐶","💐","🐌","🐄","🐄"]
+var antiarray : Array = ["🦖","🦖","🐊","🐇","🐛", "🛰", "🐍","🦅","🎱","🕷", "🌴", "🦔","🍄","🐺","🐗","🐱","🍄","🦂","🐓","🐓"]
 
 var heroArray: Array = ["👽","👽","🐵","💩","👾"]
 var heroDisplay: Array = ["🛸👽","🛸👽","🚀🐵","🚀💩","👾"]
@@ -28,12 +28,12 @@ var 🛡 = false
 var 💠 = false
 
 var KingQueenGlobalDie = 100
-
+var emojifontname = "Apple Color Emoji" //"Segoe UI Emoji"
 var gameDelegate : GameProtocol?
 
-let showsFPS = true
-let showsNodeCount = true
-let showsPhysics = true
+let showsFPS = false
+let showsNodeCount = false
+let showsPhysics = false
 let showsFields = false
 let showsDrawCount = false
 let showsQuadCount = false

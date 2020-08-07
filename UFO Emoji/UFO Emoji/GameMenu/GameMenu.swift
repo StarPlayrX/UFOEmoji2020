@@ -13,14 +13,14 @@ class GameMenu: SKScene {
     private var minlevel : Int! = 1
     private var maxEmoji : Int! = 3
     private var minEmoji : Int! = 1
-    private var musicLabel  : SKLabelNode! = SKLabelNode()
-    private var soundLabel 	: SKLabelNode! = SKLabelNode()
-    private var stickLabel 	: SKLabelNode! = SKLabelNode()
-    private var levelLabel 	: SKLabelNode! = SKLabelNode()
-    private var versusLabel : SKLabelNode! = SKLabelNode()
-    private var emojiLabel 	: SKLabelNode! = SKLabelNode()
-    private var playLabel1 	: SKLabelNode! = SKLabelNode()
-    private var playLabel2 	: SKLabelNode! = SKLabelNode()
+    private var musicLabel  : SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var soundLabel 	: SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var stickLabel 	: SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var levelLabel 	: SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var versusLabel : SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var emojiLabel 	: SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var playLabel1 	: SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var playLabel2 	: SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
     private var playNode  : SKNode! = SKNode()
     private var lockDown : Bool! = false
     
@@ -272,7 +272,7 @@ class GameMenu: SKScene {
                 sprite.name = spriteName
             	addChild(sprite)
                 
-                label.fontName = "Apple Color Emoji"
+                label.fontName = emojifontname
                 label.fontSize = fontSize
                 label.name = emojiName
                 label.horizontalAlignmentMode = .center
@@ -325,7 +325,7 @@ class GameMenu: SKScene {
             playNode.position = pn.position
             
             playNode.position.x = playNode.position.x + spc - 16
-            let playLabel = SKLabelNode(fontNamed: "Apple Color Emoji")
+            let playLabel = SKLabelNode(fontNamed: emojifontname)
             playLabel.text = "🎮"
             playLabel.fontSize = 48
             playLabel.horizontalAlignmentMode = .center

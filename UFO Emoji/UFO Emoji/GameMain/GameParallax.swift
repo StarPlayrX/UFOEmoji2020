@@ -38,9 +38,9 @@ class GameParallax : SKNode {
                 let self = self
                 else { return }
             
-            let factor = CGFloat(4.0) //PDF Textures are 25% scaled up 400% to save memory while retaining a decent look
+            let factor = CGFloat(2.0) //PDF Textures are 50% scaled up 200% to save memory while retaining a decent look
             let width = t.size().width * factor
-            let interations = Int(round( self.bounds.width / width / 2 ))
+            let interations = Int(round( self.bounds.width / width / factor ))
             var sprite = SKSpriteNode(texture: t)
             sprite.name = String("parallaxSprite")
             sprite.xScale = factor

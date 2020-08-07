@@ -55,7 +55,7 @@ class GameTileMapRun {
         let n = Name
         let e = Emoji
         let w = NewItem
-        if w == "🐟" || n == "💢" || n == "🛑" || n == "♨️" || e == "🐝" || w == "🦀" || e == "🌈" || e == "☄️" || e == "🚁" {
+        if w == "🐟" || n == "💢" || n == "🛑" || n == "♨️" || e == "🐝" || e == "🛸" || w == "🦀" || e == "🌈" || e == "☄️" || e == "🚁" {
             TileNode.zPosition = -20
             TileNode.physicsBody?.affectedByGravity = false //true
             TileNode.physicsBody?.isDynamic = false //false
@@ -64,7 +64,7 @@ class GameTileMapRun {
             TileNode.physicsBody?.isDynamic = true //false
             TileNode.physicsBody?.fieldBitMask = 16384
             TileNode.physicsBody?.restitution = 1.0
-        } else if NewItem == "🛸" {
+        } else if NewItem == "🛸xxx" {
             TileNode.zPosition = 91
             TileNode.physicsBody?.affectedByGravity = true //true
             TileNode.physicsBody?.isDynamic = false //false
@@ -146,7 +146,7 @@ class GameTileMapRun {
             Emoji == "🦀" ? crabby() : notCrabby()
         }
         
-        let spriteLabelNode = SKLabelNode(fontNamed:"Apple Color Emoji")
+        let spriteLabelNode = SKLabelNode(fontNamed:emojifontname)
         spriteLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         spriteLabelNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         spriteLabelNode.alpha = 1.0
@@ -161,7 +161,7 @@ class GameTileMapRun {
             
             case "🐟":
                 spriteLabelNode.zPosition = -20
-            case "☄️":
+            case "☄️", "🛸":
                 spriteLabelNode.fontSize = 40
             default:
                 spriteLabelNode.fontSize = 36
@@ -172,10 +172,6 @@ class GameTileMapRun {
             case "🚀":
                 spriteLabelNode.zRotation = CGFloat(Double.pi/4)
                 spriteLabelNode.xScale = -1
-            case "🛸":
-                spriteLabelNode.xScale = -1
-                spriteLabelNode.zRotation = CGFloat(Double.pi/9)
-                spriteLabelNode.fontSize = 50
             case "🧟‍♀️","🧟‍♂️":
                 spriteLabelNode.fontSize = 42
             case "🎱","🥚","💀","⚽️","🏈","🍊","🍏","🍎","🍅","🍈","🍋","🍑","🍓","🥥","🍩":
@@ -183,9 +179,10 @@ class GameTileMapRun {
                 TileNode.physicsBody?.friction = 1
             case "🐌":
                 spriteLabelNode.xScale = -1
-            case "☄️", "🚁", "🐝":
+            case "☄️", "🚁", "🐝", "🛸":
                 
-            
+              
+                            
 				var action = SKAction()
                 let fade = SKAction.fadeAlpha(to: 0, duration: 1.5)
                 let remove = SKAction.removeFromParent()
@@ -216,7 +213,19 @@ class GameTileMapRun {
                         spriteLabelNode.zRotation = CGFloat(Double.pi/8)
                     }
                 }
-            
+            	
+                if Emoji == "🛸" {
+                    spriteLabelNode.xScale = -1
+                    
+                    if TileNode.position.x < 0 {
+                        spriteLabelNode.zRotation = CGFloat(-Double.pi/9)
+                    } else {
+                        spriteLabelNode.zRotation = CGFloat(Double.pi/9)
+                    }
+                    
+                    
+                    spriteLabelNode.fontSize = 50
+            	}
 				
             case "🦔":
                 spriteLabelNode.fontSize = 40
@@ -1337,7 +1346,7 @@ class GameTileMapRun {
                     col = 2 + 128 + 256 + 1024  as UInt32
                     con = 32 as UInt32
                     cat = 1024 as UInt32
-                case "☄️" :
+                case "☄️", "🛸" :
                     col = 0  as UInt32
                     con = 1 + 64 as UInt32
                     cat = 16 as UInt32
@@ -1389,7 +1398,7 @@ class GameTileMapRun {
                     con = 1 + 64 as UInt32
                     cat = 8 as UInt32
                 
-                case "🛸" :
+                case "🛸xxxs" :
                     col = 2 + 64 + 128 + 256 + 1024 as UInt32
                     con = 1 + 64 as UInt32
                     cat = 2 as UInt32
