@@ -155,7 +155,7 @@ class GameMenu: SKScene {
                     }
                 }
                 
-                if name == "play" && !lockDown {
+                if (name == "play" || name == "playbutton") && !lockDown {
                     
                     lockDown = true
                     
@@ -361,8 +361,9 @@ class GameMenu: SKScene {
             subtext.position = CGPoint(x:-(spc / 2) - 19.25,y:1.5)
             
             let sprite = SKSpriteNode(imageNamed: "playbutton")
-            sprite.alpha = 0.25
+            sprite.alpha = 1.0
             playNode.addChild(sprite)
+            sprite.name = "playbutton"
             sprite.position = CGPoint(x:0,y:0)
             playNode.addChild(playLabel1)
             playNode.addChild(playLabel2)

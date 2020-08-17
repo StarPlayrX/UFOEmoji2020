@@ -25,7 +25,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>emulogic.ttf</string>
-		<string>openemoji.ttf</string>
+		<string>Toddmoji.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -49,5 +49,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string>UFO Emoji</string>
 </dict>
 </plist>

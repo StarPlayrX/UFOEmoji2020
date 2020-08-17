@@ -67,7 +67,7 @@ class LevelUp: SKScene {
             
             self.backgroundColor = SKColor.black
             
-            let label = SKLabelNode(fontNamed: "Apple Color Emoji")
+            let label = SKLabelNode(fontNamed: emojifontname)
             label.text = heroMessage
             label.fontSize = 72
             label.horizontalAlignmentMode = .center
@@ -76,7 +76,7 @@ class LevelUp: SKScene {
             label.position = CGPoint(x: self.size.width / 2 - 48, y: self.size.height / 2 + 72)
             self.addChild(label)
             
-            let label3 = SKLabelNode(fontNamed: "Apple Color Emoji")
+            let label3 = SKLabelNode(fontNamed: emojifontname)
             label3.text = enemyMessage
             label3.fontSize = 72
             label3.horizontalAlignmentMode = .center
@@ -84,7 +84,7 @@ class LevelUp: SKScene {
             label3.position = CGPoint(x: self.size.width/2 + 48, y: self.size.height / 2 + 72)
             self.addChild(label3)
             
-            let label2 = SKLabelNode(fontNamed: "Apple Color Emoji")
+            let label2 = SKLabelNode(fontNamed: emojifontname)
             label2.text = livesMessage
             label2.fontSize = 64
             label2.horizontalAlignmentMode = .center

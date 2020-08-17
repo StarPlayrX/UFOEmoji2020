@@ -14,17 +14,12 @@ class GameTileMapRun {
         TileMapTileSize = nil
         TileMapParent   = nil
         TileMapRect     = nil
-        numbers 		= nil
-        largeInt 		= nil
     }
     
     private weak var TileMapParent   : SKNode!
     private var 	 TileMapTileSize : CGSize!
     private var      TileMapRect     : CGRect!
     
-    private var numbers  : [(a:UInt32,b:Double)]! = [(a:UInt32,b:Double)]()
-    private var largeInt : UInt32! = UInt32(64)
-
     init( TileMapTileSize: CGSize?, TileMapParent: SKNode?, TileMapRect: CGRect? ) {
         guard
             let TileMapTileSize = TileMapTileSize,
@@ -52,10 +47,16 @@ class GameTileMapRun {
         TileNode.zPosition = 75
         TileNode.physicsBody?.restitution = 0.5
         
-        let n = Name
+     
+        var n = Name
         let e = Emoji
         let w = NewItem
-        if w == "🐟" || n == "💢" || n == "🛑" || n == "♨️" || e == "🐝" || e == "🛸" || w == "🦀" || e == "🌈" || e == "☄️" || e == "🚁" {
+        
+        if e == "🛡" {
+            n = "🛡"
+        }
+        
+        if e == "⛵️" || e == "🛥" || e == "🚤" || e == "🐳" || w == "🐟" || n == "💢" || n == "🛑" || n == "♨️" || e == "🐝" || e == "🛸" || w == "🦀" || e == "🌈" || e == "🤯" || e == "🚁" {
             TileNode.zPosition = -20
             TileNode.physicsBody?.affectedByGravity = false //true
             TileNode.physicsBody?.isDynamic = false //false
@@ -78,37 +79,17 @@ class GameTileMapRun {
         TileNode.physicsBody?.isResting = false
         TileNode.physicsBody?.friction = Friction
         TileNode.physicsBody?.mass = Mass
-        TileNode.name = Name
+        TileNode.name = n
         
         TileMapParent.addChild(TileNode)
-        if NewItem == "🐟" || NewItem == "🦀" || NewItem == "🛸"  {
+        if NewItem == "🐟" || NewItem == "🦀" || NewItem == "🛸" || e == "⛵️" || e == "🛥" || e == "🚤"  {
             let r2 = Int(arc4random_uniform(1))
             let divider = Double(20.0)
             let mov = r2 > 0 ? 1 : -1
             
-        	//MARK: Determines how far a character can venture
+            //MARK: Determines how far a character can venture
             func spaceX() -> Double {
-                
-                for i in (3...5).reversed() {
-                    largeInt /= 2
-                    numbers.append( (a: largeInt, b: Double( i )     ))
-                    numbers.append( (a: largeInt, b: Double( i - 2 ) ))
-                }
-                
-                // MARK: Generates Todd's spacial algorithm
-                // [(a: 32, b: 5.0), (a: 32, b: 3.0), (a: 16, b: 4.0), (a: 16, b: 2.0), (a: 8, b: 3.0), (a: 8, b: 1.0)]
-                
-                var randomAmount : Double! = Double(0)
-                
-                for (a,b) in numbers {
-                    randomAmount += Double(arc4random_uniform(a)) + b
-                }
-                
-                //MARK: Random numbers
-                //37.0 //86.0 //76.0 //54.0...
-                
-                
-                return randomAmount
+                return  Double.random(in: 32...96)
             }
             
             let moveAmount1 = spaceX()
@@ -123,7 +104,7 @@ class GameTileMapRun {
 
             let flip1 = SKAction.scaleX(to: CGFloat(mov), duration: 0.25)
             let flip2 = SKAction.scaleX(to: CGFloat(-mov), duration: 0.25)
-            let moveleft = SKAction.move(by: CGVector(dx: Int(moveAmount2) * -mov, dy: 0), duration: TimeInterval(time1))
+            let moveleft = SKAction.move(by: CGVector(dx: Int(moveAmount1) * -mov, dy: 0), duration: TimeInterval(time1))
             
             //MARK: Don't flip the Crab/Lobster emoji as it doesn't look right being vertical
             
@@ -161,7 +142,7 @@ class GameTileMapRun {
             
             case "🐟":
                 spriteLabelNode.zPosition = -20
-            case "☄️", "🛸":
+            case "🤯", "🛸":
                 spriteLabelNode.fontSize = 40
             default:
                 spriteLabelNode.fontSize = 36
@@ -179,17 +160,29 @@ class GameTileMapRun {
                 TileNode.physicsBody?.friction = 1
             case "🐌":
                 spriteLabelNode.xScale = -1
-            case "☄️", "🚁", "🐝", "🛸":
+            case "🤯", "🚁", "🐝", "🛸":
                 
               
                             
 				var action = SKAction()
+                var rotateAction = SKAction()
+                var yAction = SKAction()
+
                 let fade = SKAction.fadeAlpha(to: 0, duration: 1.5)
                 let remove = SKAction.removeFromParent()
 
                 if TileNode.position.x < 0 {
                     let moveToX = (TileMapParent.frame.size.width - TileNode.position.x) / 4
                     spriteLabelNode.zRotation = CGFloat(-Double.pi/4)
+                    
+                    if Emoji == "🤯" {
+                        //rotate the Asteroid while moving
+                        rotateAction = SKAction.rotate(byAngle: 22, duration:  Double(moveToX / 20.0))
+                        
+                        //lower Asteroid 1 space over the total distance
+                        yAction = SKAction.moveBy(x: 0, y: -32, duration:  Double(moveToX / 20.0 ))
+                    }
+                    
                     action = SKAction.moveTo(x: -moveToX, duration: Double(moveToX / 20.0))
 
                 } else {
@@ -197,13 +190,29 @@ class GameTileMapRun {
 
                     spriteLabelNode.zRotation = CGFloat(Double.pi/4)
                     action = SKAction.moveTo(x: moveToX, duration: Double(moveToX / 20.0))
+                    
+                    if Emoji == "🤯" {
+                        //rotate the Asteroid while moving
+                        rotateAction = SKAction.rotate(byAngle: 22, duration:  Double(moveToX / 20.0))
+                        
+                        //lower Asteroid 1 space over the total distance
+                        yAction = SKAction.moveBy(x: 0, y: -32, duration:  Double(moveToX / 20.0 ))
+                    }
+
                 }
+                
                 
                 TileNode.run(action)
                 spriteLabelNode.xScale = 1
-                TileNode.name = "☄️"
+                TileNode.name = "🤯"
                 TileNode.run(SKAction.sequence([action,fade,remove]))
-				
+                
+                if Emoji == "🤯" {
+                    TileNode.run(rotateAction)
+                    TileNode.run(yAction)
+                }
+           
+
                 if Emoji == "🚁" {
                     spriteLabelNode.zRotation = 0
                 } else if Emoji == "🐝" {
@@ -279,6 +288,10 @@ class GameTileMapRun {
                 str = "" // No Emoji
             case "🔫":
                 str = "🔫" // Gun
+            case "🕹":
+                str = "🕹" // Gun
+            case "🛡":
+                str = "🛡" // Gun
             case "🦎":
                 spriteLabelNode.xScale = -1
             case "❣️":
@@ -1346,7 +1359,7 @@ class GameTileMapRun {
                     col = 2 + 128 + 256 + 1024  as UInt32
                     con = 32 as UInt32
                     cat = 1024 as UInt32
-                case "☄️", "🛸" :
+                case "🤯", "🛸" :
                     col = 0  as UInt32
                     con = 1 + 64 as UInt32
                     cat = 16 as UInt32
@@ -1372,7 +1385,7 @@ class GameTileMapRun {
                     
                     newemoji = String(levelarray[settings.level])
                 
-                case "❣️", "🔱", "💠", "🛡", "🔫":
+                case "❣️", "🔱", "💠", "🛡", "🔫", "🕹":
                     col = 2 + 128 + 256 + 1024 as UInt32
                     con = 32 as UInt32
                     cat = 1024 as UInt32

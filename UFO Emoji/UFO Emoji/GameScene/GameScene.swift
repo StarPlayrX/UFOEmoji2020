@@ -666,7 +666,7 @@
          Used by Asteriods and Chopper I
          */
         func movingObjectI() {
-            world.children.first?.enumerateChildNodes(withName: "☄️") { node, _ in
+            world.children.first?.enumerateChildNodes(withName: "🤯") { node, _ in
                 guard let body = node.physicsBody else { return }
                 
                 if body.isDynamic {
@@ -686,6 +686,8 @@
         🛡 = true
         💠 = true
         🔱 = true
+        🕹 = true
+        
         let logonode = SKSpriteNode(texture: SKTexture(imageNamed: "UFOEmojiLogoLarge"))
         self.cam.addChild(logonode)
         logonode.setScale(0.1875)
@@ -711,7 +713,7 @@
         🔱 = false
         💠 = false
         🛡 = false
-        
+        🕹 = false
         doublelaser = 0
         
         if (settings.level >= 1 && settings.level <= 10) {
@@ -759,21 +761,23 @@
         scoreDict["😰"] = 60 //super villians
         scoreDict["😨"] = 70 //super villians
         scoreDict["⭕️"] = 75 //heroes
-        scoreDict["❌"] = 75 //villians
+        scoreDict["⁉️"] = 80 //heroes not flipped
+        scoreDict["❌"] = 85 //villians
+        scoreDict["‼️"] = 90 //Hero Villians not flipped
+
         scoreDict["😱"] = 80 //super villians
         scoreDict["😳"] = 90 //super villians
-        scoreDict["☄️"] = 95 // Meteor
-        scoreDict["🤯"] = 100 //super villian leader
+        scoreDict["🤯"] = 100 // Meteor (was super villian)
         scoreDict["💰"] = 105 //rare
         scoreDict["💎"] = 110 //rare
         scoreDict["👑"] = 115 //rare
         scoreDict["❣️"] = 120 //extra life (displays him/herself in the game)
         scoreDict["🔫"] = 130 //super rare marker for double laser beams
         scoreDict["🔱"] = 140 //super rare trident (super bomb)
-        scoreDict["‼️"] = 130 //Hero Villians not flipped
         scoreDict["🛡"] = 150 //super rare shields (cloaked ghost, move through walls)
-        scoreDict["💠"] = 150 //super rare shields (cloaked ghost, move through walls)
-        
+        scoreDict["💠"] = 160 //super rare shields (cloaked ghost, move through walls)
+        scoreDict["🕹"] = 170 //super rare shields (cloaked ghost, move through walls)
+
         scoreDict["land"] 	= 1
         scoreDict["dirt"] 	= 1
         scoreDict["grass"] 	= 2
@@ -822,8 +826,6 @@
         let gameWorld = GameWorld(world: world)
         
         world = gameWorld.gameLevel(filename: filename)
-        
-        //print(world.children[1])
         world.isPaused = false
         world.isHidden = false
         
@@ -1010,7 +1012,7 @@
         
         var animationSeqArr = [SKAction]()
 
-        for x in 1..<emojis.count {
+        for x in 0..<emojis.count {
             let emoji = SKAction.run() { [weak emojiNode ] in emojiNode?.text = emojis[x] }
             animationSeqArr.append(wait)
             animationSeqArr.append(emoji)
@@ -1040,22 +1042,24 @@
             
             if let name = touchedNode.name {
                 
-                if name == "fire-right" {
+                
+                
+                if name == "fire-right" || 🕹 {
                     laserbeak(superhero: (heroPosition, herozRotation, heroVelocity), reverse: false)
                     firebomb(firebomb: firebutton)
                 }
                 
-                if name == "fire-left" {
+                if name == "fire-left"  || 🕹 {
                     laserbeak(superhero: (heroPosition, herozRotation, heroVelocity), reverse: true)
                     firebomb(firebomb: firebutton2)
                 }
                 
-                if name == "fire-down" {
+                if name == "fire-down"  || 🕹 {
                     bombaway(superhero: (heroPosition, herozRotation, heroVelocity), reverse: false)
                     firebomb(firebomb: bombsbutton)
                 }
                 
-                if name == "fire-top" {
+                if name == "fire-top"  || 🕹 {
                     bombaway(superhero: (heroPosition, herozRotation, heroVelocity), reverse: true)
                     firebomb(firebomb: bombsbutton2)
                 }
@@ -1838,6 +1842,21 @@
             }
         }
         
+        //gives our trident bombs
+        if name == "🕹" {
+            🕹 = true
+            doublelaser = 1
+
+            if let l = livesLabel.text, !l.contains("🕹") {
+                livesLabel.text? += ("🕹")
+            }
+            
+            if settings.sound {
+                let fire: SKAction = SKAction.playSoundFileNamed("doublelaser.m4a", waitForCompletion: false)
+                self.run(fire)
+            }
+        }
+        
         /* guard did not stop from crashing, so using this instead */
         if let score = (scoreDict[name]) {
             return score
@@ -1985,7 +2004,8 @@
         
         //MARK: How to assign values in an Elvis Operator
         🔱 ? (💣.name = "🔱") : (💣.name = "💣")
-        
+        🕹 ? (💣.name = "🔱") : (💣.name = "💣")
+
         
         💣.isUserInteractionEnabled = false
         💣.physicsBody = 🦞

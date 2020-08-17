@@ -43,7 +43,6 @@
 		5F1CF8EE247B1AA6008DEC84 /* GameBadGuyAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8ED247B1AA6008DEC84 /* GameBadGuyAI.swift */; };
 		5F1CF8F0247B1AAC008DEC84 /* GameTimeMapRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */; };
 		5F29537D24DA4BA6001C0229 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F29537C24DA4BA6001C0229 /* Default-568h@2x.png */; };
-		5F29538224DB5D4C001C0229 /* openemoji.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F29538124DB5D1A001C0229 /* openemoji.ttf */; };
 		5F5A0EC424807FCC0034FDBF /* GameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5A0EC324807FCC0034FDBF /* GameWorld.swift */; };
 		5F66648624833D3100AC2B52 /* level5.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F66648524833D3100AC2B52 /* level5.sks */; };
 		5F7A6F4724D3B35400D27FBC /* level000.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F7A6F4624D3B35300D27FBC /* level000.sks */; };
@@ -65,6 +64,7 @@
 		5FED3AF124CFC37B0065CEAE /* level7.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FED3AEF24CFC37B0065CEAE /* level7.sks */; };
 		5FED3AF224CFC37B0065CEAE /* levelY1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FED3AF024CFC37B0065CEAE /* levelY1.sks */; };
 		5FF6326824A0005A00758CA2 /* groupTileSet1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FF6326724A0005A00758CA2 /* groupTileSet1.sks */; };
+		5FF6A20F24DF0CE2006FA292 /* Toddmoji.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FF6A20E24DF0CE2006FA292 /* Toddmoji.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,7 +76,6 @@
 		5F1CF8ED247B1AA6008DEC84 /* GameBadGuyAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBadGuyAI.swift; sourceTree = "<group>"; };
 		5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimeMapRun.swift; sourceTree = "<group>"; };
 		5F29537C24DA4BA6001C0229 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		5F29538124DB5D1A001C0229 /* openemoji.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = openemoji.ttf; sourceTree = "<group>"; };
 		5F5A0EC324807FCC0034FDBF /* GameWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameWorld.swift; sourceTree = "<group>"; };
 		5F66648524833D3100AC2B52 /* level5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level5.sks; sourceTree = "<group>"; };
 		5F7A6F4624D3B35300D27FBC /* level000.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level000.sks; sourceTree = "<group>"; };
@@ -128,6 +127,7 @@
 		5FED3AEF24CFC37B0065CEAE /* level7.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level7.sks; sourceTree = "<group>"; };
 		5FED3AF024CFC37B0065CEAE /* levelY1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = levelY1.sks; sourceTree = "<group>"; };
 		5FF6326724A0005A00758CA2 /* groupTileSet1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = groupTileSet1.sks; sourceTree = "<group>"; };
+		5FF6A20E24DF0CE2006FA292 /* Toddmoji.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Toddmoji.otf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,7 +144,7 @@
 		5F1CF8B0247B13B9008DEC84 /* GameFonts */ = {
 			isa = PBXGroup;
 			children = (
-				5F29538124DB5D1A001C0229 /* openemoji.ttf */,
+				5FF6A20E24DF0CE2006FA292 /* Toddmoji.otf */,
 				5F1CF8B1247B13C2008DEC84 /* emulogic.ttf */,
 			);
 			path = GameFonts;
@@ -215,8 +215,8 @@
 				5FC051D6247B0E41003C8201 /* GameLevels */,
 				5FC051C0247B0562003C8201 /* GameMenu */,
 				5FC051E8247B10CF003C8201 /* GameTransitions */,
-				5FC051D4247B0D23003C8201 /* GTFlightYoke */,
 				5FC051DC247B0E8D003C8201 /* GameTileSets */,
+				5FC051D4247B0D23003C8201 /* GTFlightYoke */,
 				5FC051EC247B111F003C8201 /* GameParticles */,
 				5FC051D1247B0CEA003C8201 /* GameMusic */,
 				5FC051C8247B0CB5003C8201 /* GameSounds */,
@@ -411,6 +411,7 @@
 				5F1CF8C4247B18C8008DEC84 /* Explosion1.m4a in Resources */,
 				5F1CF8E4247B18F7008DEC84 /* smokeParticle.sks in Resources */,
 				5F1CF8E2247B18F7008DEC84 /* magicParticle.sks in Resources */,
+				5FF6A20F24DF0CE2006FA292 /* Toddmoji.otf in Resources */,
 				5F1CF8C5247B18C8008DEC84 /* extralife.m4a in Resources */,
 				5F1CF8DE247B18F7008DEC84 /* blackHole.sks in Resources */,
 				5FED3AEC24CFC2D50065CEAE /* level6.sks in Resources */,
@@ -432,7 +433,6 @@
 				5F1CF8CD247B18E0008DEC84 /* level6___.sks in Resources */,
 				5F1CF8DC247B18F2008DEC84 /* water.sks in Resources */,
 				5FED3AED24CFC2D50065CEAE /* levelX1.sks in Resources */,
-				5F29538224DB5D4C001C0229 /* openemoji.ttf in Resources */,
 				5F1CF8DF247B18F7008DEC84 /* blueParticle.sks in Resources */,
 				5F1CF8D7247B18F2008DEC84 /* gold.sks in Resources */,
 				5FED3AEE24CFC2D50065CEAE /* levelX2.sks in Resources */,
@@ -536,7 +536,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -590,7 +590,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
