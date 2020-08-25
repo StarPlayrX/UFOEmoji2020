@@ -56,7 +56,7 @@ class GameTileMapRun {
             n = "🛡"
         }
         
-        if e == "⛵️" || e == "🛥" || e == "🚤" || e == "🐳" || w == "🐟" || n == "💢" || n == "🛑" || n == "♨️" || e == "🐝" || e == "🛸" || w == "🦀" || e == "🌈" || e == "🤯" || e == "🚁" {
+        if e == "🐙" || e == "🐋" || e == "🐊" || e == "🦑" || e == "🦈" || e == "⛵️" || e == "🛥" || e == "🚤" || e == "🐳" || w == "🐟" || n == "💢" || n == "🛑" || n == "♨️" || e == "🐝" || e == "🛸" || w == "🦀" || e == "🌈" || e == "🤯" || e == "🚁" {
             TileNode.zPosition = -20
             TileNode.physicsBody?.affectedByGravity = false //true
             TileNode.physicsBody?.isDynamic = false //false
@@ -82,7 +82,7 @@ class GameTileMapRun {
         TileNode.name = n
         
         TileMapParent.addChild(TileNode)
-        if NewItem == "🐟" || NewItem == "🦀" || NewItem == "🛸" || e == "⛵️" || e == "🛥" || e == "🚤"  {
+        if NewItem == "🐍" || NewItem == "🐟" || NewItem == "🦀" || NewItem == "🛸" || e == "⛵️" || e == "🛥" || e == "🚤"  {
             let r2 = Int(arc4random_uniform(1))
             let divider = Double(20.0)
             let mov = r2 > 0 ? 1 : -1
