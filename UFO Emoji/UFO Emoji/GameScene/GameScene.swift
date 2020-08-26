@@ -1042,8 +1042,6 @@
             
             if let name = touchedNode.name {
                 
-                
-                
                 if name == "fire-right" || 🕹 {
                     laserbeak(superhero: (heroPosition, herozRotation, heroVelocity), reverse: false)
                     firebomb(firebomb: firebutton)
@@ -1815,7 +1813,7 @@
         }
         
         //gives our ship superman lasers
-        if name == "💠" {
+        if name == "💠" || name == "💎" {
             💠 = true
             
             if let l = livesLabel.text, !l.contains("💠") {
@@ -2003,9 +2001,8 @@
         💣.position = (CGPoint(x:superhero.position.x, y:superhero.position.y - 10))
         
         //MARK: How to assign values in an Elvis Operator
-        🔱 ? (💣.name = "🔱") : (💣.name = "💣")
-        🕹 ? (💣.name = "🔱") : (💣.name = "💣")
 
+        🔱 ? (💣.name = "🔱") : (💣.name = "💣")
         
         💣.isUserInteractionEnabled = false
         💣.physicsBody = 🦞

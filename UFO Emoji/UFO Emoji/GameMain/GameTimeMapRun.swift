@@ -81,8 +81,21 @@ class GameTileMapRun {
         TileNode.physicsBody?.mass = Mass
         TileNode.name = n
         
+        if e == "🔱" {
+            TileNode.name = "🔱"
+        }
+        
+        if e == "💠" {
+            TileNode.name = "💠"
+        }
+        
+        if e == "💎" {
+            TileNode.name = "💎"
+        }
+        
+        
         TileMapParent.addChild(TileNode)
-        if NewItem == "🐍" || NewItem == "🐟" || NewItem == "🦀" || NewItem == "🛸" || e == "⛵️" || e == "🛥" || e == "🚤"  {
+        if NewItem == "🐍" || NewItem == "🐟" || NewItem == "🦀" || NewItem == "🛸" || e == "⛵️" || e == "🛥" || e == "🚤" || e == "🕷"  {
             let r2 = Int(arc4random_uniform(1))
             let divider = Double(20.0)
             let mov = r2 > 0 ? 1 : -1
@@ -124,7 +137,7 @@ class GameTileMapRun {
                 }
             }
             
-            Emoji == "🦀" ? crabby() : notCrabby()
+            Emoji == "🦀" || Emoji == "🕷" ? crabby() : notCrabby()
         }
         
         let spriteLabelNode = SKLabelNode(fontNamed:emojifontname)
