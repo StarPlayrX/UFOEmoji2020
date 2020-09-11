@@ -43,9 +43,12 @@
 		5F1CF8EE247B1AA6008DEC84 /* GameBadGuyAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8ED247B1AA6008DEC84 /* GameBadGuyAI.swift */; };
 		5F1CF8F0247B1AAC008DEC84 /* GameTimeMapRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */; };
 		5F29537D24DA4BA6001C0229 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F29537C24DA4BA6001C0229 /* Default-568h@2x.png */; };
+		5F493BF92502F5B8006AB05F /* enemies.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F493BF82502F5B8006AB05F /* enemies.sks */; };
+		5F493BFB25032910006AB05F /* level11.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F493BFA25032910006AB05F /* level11.sks */; };
 		5F5A0EC424807FCC0034FDBF /* GameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5A0EC324807FCC0034FDBF /* GameWorld.swift */; };
 		5F66648624833D3100AC2B52 /* level5.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F66648524833D3100AC2B52 /* level5.sks */; };
 		5F7A6F4724D3B35400D27FBC /* level000.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F7A6F4624D3B35300D27FBC /* level000.sks */; };
+		5F7AE94324F9DC4E0023A235 /* level12.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F7AE94224F9DC4E0023A235 /* level12.sks */; };
 		5FA0C9C324845B6100A46B03 /* level4.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FA0C9C224845B6100A46B03 /* level4.sks */; };
 		5FC051A9247B03E7003C8201 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051A8247B03E7003C8201 /* AppDelegate.swift */; };
 		5FC051B1247B03E7003C8201 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC051B0247B03E7003C8201 /* GameViewController.swift */; };
@@ -76,9 +79,12 @@
 		5F1CF8ED247B1AA6008DEC84 /* GameBadGuyAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBadGuyAI.swift; sourceTree = "<group>"; };
 		5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimeMapRun.swift; sourceTree = "<group>"; };
 		5F29537C24DA4BA6001C0229 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		5F493BF82502F5B8006AB05F /* enemies.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = enemies.sks; sourceTree = "<group>"; };
+		5F493BFA25032910006AB05F /* level11.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level11.sks; sourceTree = "<group>"; };
 		5F5A0EC324807FCC0034FDBF /* GameWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameWorld.swift; sourceTree = "<group>"; };
 		5F66648524833D3100AC2B52 /* level5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level5.sks; sourceTree = "<group>"; };
 		5F7A6F4624D3B35300D27FBC /* level000.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level000.sks; sourceTree = "<group>"; };
+		5F7AE94224F9DC4E0023A235 /* level12.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level12.sks; sourceTree = "<group>"; };
 		5FA0C9C224845B6100A46B03 /* level4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level4.sks; sourceTree = "<group>"; };
 		5FC051A5247B03E7003C8201 /* UFO Emoji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UFO Emoji.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FC051A8247B03E7003C8201 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -182,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				5FF6326724A0005A00758CA2 /* groupTileSet1.sks */,
+				5F493BF82502F5B8006AB05F /* enemies.sks */,
 				5FC051E7247B0EA8003C8201 /* gold.sks */,
 				5FC051E6247B0EA8003C8201 /* land.sks */,
 				5FC051E4247B0EA8003C8201 /* water.sks */,
@@ -293,6 +300,8 @@
 				5FC75C8124D5F46300F324F3 /* level8.sks */,
 				5FC75C8024D5F46300F324F3 /* level9.sks */,
 				5FC75C8224D5F46300F324F3 /* level10.sks */,
+				5F493BFA25032910006AB05F /* level11.sks */,
+				5F7AE94224F9DC4E0023A235 /* level12.sks */,
 				5FC051D8247B0E6C003C8201 /* level6___.sks */,
 				5F7A6F4624D3B35300D27FBC /* level000.sks */,
 				5FED3AEA24CFC2D50065CEAE /* levelX1.sks */,
@@ -430,9 +439,12 @@
 				5F1CF8E1247B18F7008DEC84 /* grayParticle.sks in Resources */,
 				5FF6326824A0005A00758CA2 /* groupTileSet1.sks in Resources */,
 				5FA0C9C324845B6100A46B03 /* level4.sks in Resources */,
+				5F493BFB25032910006AB05F /* level11.sks in Resources */,
 				5F1CF8CD247B18E0008DEC84 /* level6___.sks in Resources */,
 				5F1CF8DC247B18F2008DEC84 /* water.sks in Resources */,
 				5FED3AED24CFC2D50065CEAE /* levelX1.sks in Resources */,
+				5F493BF92502F5B8006AB05F /* enemies.sks in Resources */,
+				5F7AE94324F9DC4E0023A235 /* level12.sks in Resources */,
 				5F1CF8DF247B18F7008DEC84 /* blueParticle.sks in Resources */,
 				5F1CF8D7247B18F2008DEC84 /* gold.sks in Resources */,
 				5FED3AEE24CFC2D50065CEAE /* levelX2.sks in Resources */,

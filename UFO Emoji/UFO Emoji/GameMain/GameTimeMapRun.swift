@@ -54,9 +54,7 @@ class GameTileMapRun {
         
         if e == "🛡" {
             n = "🛡"
-        }
-        
-        if e == "🐙" || e == "🐋" || e == "🐊" || e == "🦑" || e == "🦈" || e == "⛵️" || e == "🛥" || e == "🚤" || e == "🐳" || w == "🐟" || n == "💢" || n == "🛑" || n == "♨️" || e == "🐝" || e == "🛸" || w == "🦀" || e == "🌈" || e == "🤯" || e == "🚁" {
+        } else if e == "🐙" || e == "🐋" || e == "🐊" || e == "🦑" || e == "🦈" || e == "⛵️" || e == "🛥" || e == "🚤" || e == "🐳" || w == "🐟" || n == "💢" || n == "🛑" || n == "♨️" || e == "🐝" || e == "🛸" || w == "🦀" || e == "🌈" || e == "🤯" || e == "🚁" || e == "🦇" {
             TileNode.zPosition = -20
             TileNode.physicsBody?.affectedByGravity = false //true
             TileNode.physicsBody?.isDynamic = false //false
@@ -65,10 +63,6 @@ class GameTileMapRun {
             TileNode.physicsBody?.isDynamic = true //false
             TileNode.physicsBody?.fieldBitMask = 16384
             TileNode.physicsBody?.restitution = 1.0
-        } else if NewItem == "🛸xxx" {
-            TileNode.zPosition = 91
-            TileNode.physicsBody?.affectedByGravity = true //true
-            TileNode.physicsBody?.isDynamic = false //false
         }
         
         TileNode.physicsBody?.categoryBitMask = Category //2
@@ -83,18 +77,14 @@ class GameTileMapRun {
         
         if e == "🔱" {
             TileNode.name = "🔱"
-        }
-        
-        if e == "💠" {
+        } else if e == "💠" {
             TileNode.name = "💠"
-        }
-        
-        if e == "💎" {
+        } else if e == "💎" {
             TileNode.name = "💎"
         }
         
-        
         TileMapParent.addChild(TileNode)
+        
         if NewItem == "🐍" || NewItem == "🐟" || NewItem == "🦀" || NewItem == "🛸" || e == "⛵️" || e == "🛥" || e == "🚤" || e == "🕷"  {
             let r2 = Int(arc4random_uniform(1))
             let divider = Double(20.0)
@@ -482,14 +472,14 @@ class GameTileMapRun {
             tileNode =  SKSpriteNode()
             tileNode.position = center
             
-            for i in 1...100 {
+            for i in 1...52 {
                 //print("i: " + String(i))
                 if badguyai[newitem + String(badguyArray[i])] == nil {
                     let pos = tileNode.position
                     badguyai[newitem + String(badguyArray[i])] = pos // we are now setting the home position, but we are storing this for the drive Letter
                     
                     let gravity = false;
-                    let radius = TileMapTileSize.width / 2.0 //- 2.0
+                    let radius = TileMapTileSize.width / 5.0 //- 2.0
                     let physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
                     let rotation = true;
                     
@@ -506,8 +496,8 @@ class GameTileMapRun {
                     // 😡 = Lieutenant and three routes
                     // 🤬 = Private and three routes
                     if newitem == "😠" || newitem == "😡" || newitem == "🤬" {
-                        bgroutes = 3 //tileData?["routes"] as! Int
-                        bgnodes = 3 //tileData?["nodes"] as! Int
+                        bgroutes = 5 //tileData?["routes"] as! Int
+                        bgnodes = 5 //tileData?["nodes"] as! Int
                     }
                     
                     //Item determines routes and nodes

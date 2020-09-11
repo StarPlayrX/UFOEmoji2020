@@ -175,8 +175,6 @@ class GameMenu: SKScene {
                                         "👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽👽"]
                     }
                     
-                  
-                    
                     let fadeIn = SKAction.fadeAlpha(to: 0.5, duration:TimeInterval(0.3))
                     let myDecay = SKAction.wait(forDuration: 0.2)
                     let fadeOut = SKAction.fadeAlpha(to: 1.0, duration:TimeInterval(0.3))
@@ -232,19 +230,16 @@ class GameMenu: SKScene {
         KingQueenGlobalDie = 100
         backgroundColor = SKColor.init(displayP3Red: 0, green: 15 / 255, blue: 70 / 255, alpha: 1.0)
         
-        
-        
         if settings.level > maxlevel {
             settings.level = 1
             settings.highlevel = 9
             
         }
-        settings.highlevel = 10 //cheat to get all levels available
+        settings.highlevel = maxlevel //cheat to get all levels available
         
         settings.lives = 5; // may be less when power ups are added
         settings.score = 0;
-        
-        
+    
         musicLabel.text =  settings.music  ? "🎷🔈" : "🎷🔇"
         soundLabel.text =  settings.sound ? "💥🔔" : "💥🔕"
         stickLabel.text =  "👉🕹"
@@ -256,8 +251,6 @@ class GameMenu: SKScene {
         let spc 	 =  CGFloat(100)
         let alphaDog = 	CGFloat(0.25)
         let fontSize =  CGFloat(48.0)
-        
-        
         
         //MARK: Draw Menu replaces our Struct (So we don't have the carry the Scene in to the Struct)
         func drawMenu(_ name: String, label: SKLabelNode, spriteNode: String, spriteName: String, emojiName: String, spriteNodeB: String, spriteNameB: String, versusLabel: SKLabelNode? = nil) {

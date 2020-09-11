@@ -10,11 +10,11 @@
 import SpriteKit
 
 var badguyai: [String:CGPoint] = [:] // we clear this out later
-var badguyArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-var badGuySecond = ["1","2"]
-var badGuyThird =  ["2","3"]
-var badGuyFourth = ["3","4"]
-var badGuyFifth = ["4","5"]
+var badguyArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1","2","3","4","5","6","7","8","9","0","Ω","≈","ç","√","∫","˜","µ","å","ß","∂","ƒ","©","˙","∆","˚","¬"]
+var badGuySecond = ["2","3"]
+var badGuyThird =  ["3","5"]
+var badGuyFourth = ["6","7"]
+var badGuyFifth = ["8","9"]
 //var badGuyCount = Int(0)
 
 
@@ -52,9 +52,9 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
             TileNode.zPosition = 72
             TileNode.alpha = 1.0
             //smile out
-            
-            if Routes >= 2 {
-                for _ in 1...100 {
+        	print(Routes)
+            if Routes == 2 {
+                for _ in 0...1000 {
                     let second1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
                     if  ( second1 != loop1 ) {
                         badGuySecond[0] = second1
@@ -63,7 +63,7 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
                 }
                 
                 //smile in
-                for _ in 1...100 {
+                for _ in 0...1000 {
                     let second2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
                     if  ( second2 != loop2 ) {
                         badGuySecond[1] = second2
@@ -72,9 +72,9 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
                 }
             }
             
-            if Routes >= 3 {
+            if Routes == 3 {
                 //alien out
-                for _ in 1...100 {
+                for _ in 0...1000 {
                     let third1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
                     if  ( third1 != badGuySecond[0] && third1 != loop1  ) {
                         badGuyThird[0] = third1
@@ -83,7 +83,7 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
                 }
                 
                 //alien in
-                for _ in 1...100 {
+                for _ in 0...1000 {
                     let third2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
                     if  ( third2 != badGuySecond[1] && third2 != loop2  ) {
                         badGuyThird[1] = third2
@@ -92,9 +92,9 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
                 }
             }
             
-            if Routes >= 4 {
+            if Routes == 4 {
                 //alien out
-                for _ in 1...100 {
+                for _ in 0...1000 {
                     let fourth1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
                     if  (  fourth1 != badGuyThird[0] && fourth1 != badGuySecond[0] && fourth1 != loop1  ) {
                         badGuyFourth[0] = fourth1
@@ -103,7 +103,7 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
                 }
                 
                 //alien in
-                for _ in 1...100 {
+                for _ in 0...1000 {
                     let forth2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
                     if  (  forth2 != badGuyThird[1] && forth2 != badGuySecond[1] && forth2 != loop2  ) {
                         badGuyFourth[1] = forth2
@@ -112,9 +112,9 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
                 }
             }
             
-            if Routes >= 5 {
+            if Routes == 5 {
                 //alien out
-                for _ in 1...100 {
+                for _ in 0...1000 {
                     let fifth1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
                     if  (  fifth1 != badGuyFourth[0] && fifth1 != badGuyThird[0] && fifth1 != badGuySecond[0] && fifth1 != loop1  ) {
                         badGuyFifth[0] = fifth1
@@ -123,7 +123,7 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
                 }
                 
                 //alien in
-                for _ in 1...100 {
+                for _ in 0...1000 {
                     let fifth2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
                     if  (  fifth2 != badGuyFourth[1] && fifth2 != badGuyThird[1] && fifth2 != badGuySecond[1] && fifth2 != loop2  ) {
                         badGuyFifth[1] = fifth2
@@ -145,10 +145,10 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
         
         
         // 😨 = General and five routes
-        let Generals = ["X","😨"]
+        let Generals = ["😨","🥶"]
         
         // 😰 = Private and five routes
-        let Privates = ["😰"]
+        let Privates = ["😰", "🥵"]
         
         if Name == Colonels[0] || Name ==  Colonels[1] {
             TileNode.zPosition = 74
@@ -167,7 +167,7 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
             
             loop1 = badGuyFourth[0]
             loop2 = badGuyFourth[1]
-        } else if Name == Privates[0]  {
+        } else if Name == Privates[0] || Name == Privates[1]  {
             TileNode.zPosition = 76
             
             loop1 = badGuyFifth[0]
@@ -182,29 +182,28 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
         let path1 = UIBezierPath()
         
         
-        
         if let _ = badguyai[String("📈") + loop1 + "1" + String(Letter)] {
             
         } else {
-            //print ("missing pt: " + String("📈") + loop1 + "1" + String(Letter))
+            print ("missing pt: " + String("📈") + loop1 + "1" + String(Letter))
             return
         }
         
         if let _  = badguyai[String("📈") + loop1 + "2" + String(Letter)] {
         } else {
-            // print ("missing pt: " + String("📈") + loop1 + "2" + String(Letter))
+             print ("missing pt: " + String("📈") + loop1 + "2" + String(Letter))
             return
         }
         
         if let _  = badguyai[String("📈") + loop1 + "3" + String(Letter)] {
         } else {
-            // print ("missing pt: " + String("📈") + loop1 + "3" + String(Letter))
+             print ("missing pt: " + String("📈") + loop1 + "3" + String(Letter))
             return
         }
         
         if let _  = badguyai[String("📈") + loop1 + "4" + String(Letter)] {
         } else {
-            // print ("missing pt: " + String("📈") + loop1 + "4" + String(Letter))
+            print ("missing pt: " + String("📈") + loop1 + "4" + String(Letter))
             return
         }
         
@@ -212,42 +211,42 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
             
         } else {
             print ("missing pt: " + String("📈") + loop1 + "5" + String(Letter))
-            print(badguyai)
+            //print(badguyai)
             return
         }
         
         if let _  = badguyai[String("📈") + loop2 + "5" + String(Letter)] {
         } else {
             print ("missing pt: " + String("📈") + loop1 + "5" + String(Letter))
-            print(badguyai)
+            //print(badguyai)
             
             return
         }
         
         if let _  = badguyai[String("📈") + loop2 + "4" + String(Letter)] {
         } else {
-            //print ("missing pt: " + String("📈") + loop2 + "4" + String(Letter))
+            print ("missing pt: " + String("📈") + loop2 + "4" + String(Letter))
             
             return
         }
         
         if let _  = badguyai[String("📈") + loop2 + "3" + String(Letter)] {
         } else {
-            //print ("missing pt: " + String("📈") + loop2 + "3" + String(Letter))
+            print ("missing pt: " + String("📈") + loop2 + "3" + String(Letter))
             
             return
         }
         
         if let _  = badguyai[String("📈") + loop2 + "2" + String(Letter)] {
         } else {
-            //print ("missing pt: " + String("📈") + loop2 + "2" + String(Letter))
+            print ("missing pt: " + String("📈") + loop2 + "2" + String(Letter))
             
             return
         }
         
         if let _  = badguyai[String("📈") + loop2 + "1" + String(Letter)] {
         } else {
-            //print ("missing pt: " + String("📈") + loop2 + "1" + String(Letter))
+            print ("missing pt: " + String("📈") + loop2 + "1" + String(Letter))
             
             return
         }
@@ -291,7 +290,8 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
             path1.addQuadCurve(to: point3b!, controlPoint: point2b! )
             path1.addQuadCurve(to: point0h, controlPoint: point1b! )
         }
-
+	
+        //print(Nodes)
         let moveToCurve1 = SKAction.follow(path1.cgPath, asOffset: false, orientToPath: false, duration: TimeInterval(5))
         let rep = SKAction.sequence([moveToCurve1])
         

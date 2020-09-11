@@ -138,7 +138,7 @@
         
         
         if let first = world.children.first, first.hasActions() {
-            print("Removing Actions from SKReference Node")
+            //print("Removing Actions from SKReference Node")
             first.removeAllActions()
             first.removeAllChildren()
             first.removeFromParent()
@@ -146,7 +146,7 @@
         
         
         if let w = world {
-            print("DeInit World")
+            //print("DeInit World")
             w.removeAllActions()
             w.removeAllChildren()
             w.removeFromParent()
@@ -155,7 +155,7 @@
         }
         
         if let c = cam {
-            print("DeInit Cam")
+            //print("DeInit Cam")
             c.removeAllActions()
             c.removeAllChildren()
             c.removeFromParent()
@@ -164,7 +164,7 @@
         }
         
         if let cm = camera {
-            print("DeInit Camera")
+            //print("DeInit Camera")
             cm.removeAllActions()
             cm.removeAllChildren()
             cm.removeFromParent()
@@ -173,7 +173,7 @@
         }
         
         if let scene = scene {
-            print("DeInit Scene")
+            //print("DeInit Scene")
             scene.removeAllActions()
             scene.removeAllChildren()
             scene.removeFromParent()
@@ -182,13 +182,13 @@
         
         
         if hasActions() {
-            print("Actions Found")
+            //print("Actions Found")
             removeAllActions()
         }
         
         if !children.isEmpty {
-            print("Destroy the remaining characters!")
-            print(children)
+            //print("Destroy the remaining characters!")
+            //print(children)
             removeAllChildren()
         }
         
@@ -704,7 +704,7 @@
         
         FlightYoke = GTFlightYoke()
         FlightYoke.startup()
-        print("HELLO WORLD!")
+        //print("HELLO WORLD!")
         world = childNode(withName: "world")
         
         // This is the default of King, Queen Nationality
@@ -716,7 +716,7 @@
         🕹 = false
         doublelaser = 0
         
-        if (settings.level >= 1 && settings.level <= 10) {
+        if (settings.level >= 1 && settings.level <= maxlevel) {
             if let soundURL: URL = Bundle.main.url(forResource: "music1", withExtension: "mp3") {
                 audioPlayer = try? AVAudioPlayer(contentsOf: soundURL)
             }
@@ -765,9 +765,13 @@
         scoreDict["❌"] = 85 //villians
         scoreDict["‼️"] = 90 //Hero Villians not flipped
 
-        scoreDict["😱"] = 80 //super villians
-        scoreDict["😳"] = 90 //super villians
-        scoreDict["🤯"] = 100 // Meteor (was super villian)
+        scoreDict["😡"] = 100 //super villians
+        scoreDict["🤬"] = 110 //super villians
+        scoreDict["😳"] = 120 //super villians
+        scoreDict["😱"] = 130 //super villians
+        scoreDict["🤯"] = 140 // Meteor or super villian
+        scoreDict["😠"] = 150 // Meteor or super villian
+
         scoreDict["💰"] = 105 //rare
         scoreDict["💎"] = 110 //rare
         scoreDict["👑"] = 115 //rare
@@ -809,8 +813,8 @@
                 background = "waterWorld" //waterWorld
             case 6...10:
                 background = "miniDesert"
-            case 11:
-                ()
+            case 11...15:
+                background = "skyMtns"
             default :
                 ()
         }
@@ -1389,22 +1393,29 @@
             }
             
             case worldCategory | laserbeam :
-                if firstBody.node?.name == "stone" && (secondBody.node?.name == "🔱" || secondBody.node?.name == "💠") {
-                    baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-                    print("A")
-                } else if firstBody.node?.name == "stone"   {
-                    stoneVersusLaser(secondBody: secondBody, contactPoint: contact.contactPoint)
-                    print("B")
-
-                } else if firstBody.isDynamic {
-                    baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-                    print("C")
-
+                
+                if firstBody.node?.name == "stone" {
+                    
+                    if !firstBody.isDynamic && (secondBody.node?.name == "🔱" || secondBody.node?.name == "💠") {
+                        worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
+                    } else if firstBody.isDynamic && (secondBody.node?.name == "🔱" || secondBody.node?.name == "💠") {
+                        baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                    } else {
+                        stoneVersusLaser(secondBody: secondBody, contactPoint: contact.contactPoint)
+                    }
+                    
                 } else {
-                    worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
-                    print("D")
-
-            }
+                    
+                	if !firstBody.isDynamic {
+                	    worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
+                	} else if firstBody.isDynamic {
+                	    baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                	} else {
+                 	   worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
+            		}
+                }
+        
+                
             
             case badFishCategory | laserbeam :
                 
@@ -1961,7 +1972,7 @@
         👁.zRotation = superhero.zRotation
         
         if 👁.name!.isEmpty {
-            print(👁 as Any)
+            //print(👁 as Any)
         }
         
         let laserDupe = 👁.copy() as! SKSpriteNode
