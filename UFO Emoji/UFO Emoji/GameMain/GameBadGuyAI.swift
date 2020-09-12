@@ -11,14 +11,14 @@ import SpriteKit
 
 var badguyai: [String:CGPoint] = [:] // we clear this out later
 var badguyArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1","2","3","4","5","6","7","8","9","0","Ω","≈","ç","√","∫","˜","µ","å","ß","∂","ƒ","©","˙","∆","˚","¬"]
-var badGuySecond = ["2","3"]
-var badGuyThird =  ["3","5"]
-var badGuyFourth = ["6","7"]
-var badGuyFifth = ["8","9"]
+var badGuySecond = ["1","2"]
+var badGuyThird =  ["3", "4"]
+var badGuyFourth = ["5", "4"]
+var badGuyFifth = ["3","2"]
 //var badGuyCount = Int(0)
 
 
-func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SKPhysicsBody, Dynamic: Bool, Gravity: Bool, Category: UInt32, Collision: UInt32, Rotation: Bool, Emoji: String, Name: String, Contact: UInt32, Mass: CGFloat, Friction: CGFloat, Letter:String, Routes:Int, Nodes:Int ) {
+func DrawBadGuxAIX(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SKPhysicsBody, Dynamic: Bool, Gravity: Bool, Category: UInt32, Collision: UInt32, Rotation: Bool, Emoji: String, Name: String, Contact: UInt32, Mass: CGFloat, Friction: CGFloat, Letter:String, Routes:Int, Nodes:Int ) {
  
     TileNode.physicsBody = PhysicsBody
     TileNode.zPosition = 70
@@ -39,116 +39,48 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
     
     let codeaction = SKAction.run {
         
-        var loop1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-        var loop2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
+        var loop1 = 1
+        var loop2 = 2
         
-        // 😠 = Leader and three routes
-        // 🤯 = Leader and five routes
+       	print("loop1",loop1,"loop2",loop2)
         
-        let leaders = ["😠","🤯"]
+        let leaders = ["🤬","X"]
         
         if ( Name == leaders[0] || Name == leaders[1]) {
             
             TileNode.zPosition = 72
             TileNode.alpha = 1.0
-            //smile out
-        	print(Routes)
-            if Routes == 2 {
-                for _ in 0...1000 {
-                    let second1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  ( second1 != loop1 ) {
-                        badGuySecond[0] = second1
-                        break
-                    }
-                }
-                
-                //smile in
-                for _ in 0...1000 {
-                    let second2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  ( second2 != loop2 ) {
-                        badGuySecond[1] = second2
-                        break
-                    }
+            
+            for _ in 0...1000 {
+                let fifth1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
+                if  (  fifth1 != badGuyFourth[0] && fifth1 != badGuyThird[0] && fifth1 != badGuySecond[0] && fifth1 != loop1  ) {
+                    badGuyFifth[0] = fifth1
+                    break
                 }
             }
             
-            if Routes == 3 {
-                //alien out
-                for _ in 0...1000 {
-                    let third1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  ( third1 != badGuySecond[0] && third1 != loop1  ) {
-                        badGuyThird[0] = third1
-                        break
-                    }
-                }
-                
-                //alien in
-                for _ in 0...1000 {
-                    let third2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  ( third2 != badGuySecond[1] && third2 != loop2  ) {
-                        badGuyThird[1] = third2
-                        break
-                    }
+            //alien in
+            for _ in 0...1000 {
+                let fifth2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
+                if  (  fifth2 != badGuyFourth[1] && fifth2 != badGuyThird[1] && fifth2 != badGuySecond[1] && fifth2 != loop2  ) {
+                    badGuyFifth[1] = fifth2
+                    break
                 }
             }
-            
-            if Routes == 4 {
-                //alien out
-                for _ in 0...1000 {
-                    let fourth1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  (  fourth1 != badGuyThird[0] && fourth1 != badGuySecond[0] && fourth1 != loop1  ) {
-                        badGuyFourth[0] = fourth1
-                        break
-                    }
-                }
-                
-                //alien in
-                for _ in 0...1000 {
-                    let forth2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  (  forth2 != badGuyThird[1] && forth2 != badGuySecond[1] && forth2 != loop2  ) {
-                        badGuyFourth[1] = forth2
-                        break
-                    }
-                }
-            }
-            
-            if Routes == 5 {
-                //alien out
-                for _ in 0...1000 {
-                    let fifth1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  (  fifth1 != badGuyFourth[0] && fifth1 != badGuyThird[0] && fifth1 != badGuySecond[0] && fifth1 != loop1  ) {
-                        badGuyFifth[0] = fifth1
-                        break
-                    }
-                }
-                
-                //alien in
-                for _ in 0...1000 {
-                    let fifth2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  (  fifth2 != badGuyFourth[1] && fifth2 != badGuyThird[1] && fifth2 != badGuySecond[1] && fifth2 != loop2  ) {
-                        badGuyFifth[1] = fifth2
-                        break
-                    }
-                }
-            }
-            
             
         }
         
-        // 😡 = Colonel and three routes
-        // 😳 = Colonel and five routes
-        let Colonels = ["😡","😳"]
+        // 😡 = Colonel
+        let Colonels = ["🤯","X"]
         
-        // 🤬 = Lieutenant and three routes
-        // 😱 = Lieutenant and five routes
-        let Lieutenants = ["🤬","😱"]
+        // 🤬 = Lieutenant
+        let Lieutenants = ["😠","X"]
         
-        
-        // 😨 = General and five routes
-        let Generals = ["😨","🥶"]
+        // 😨 = General
+        let Generals = ["😡","X"]
         
         // 😰 = Private and five routes
-        let Privates = ["😰", "🥵"]
+        let Privates = ["😨", "X"]
         
         if Name == Colonels[0] || Name ==  Colonels[1] {
             TileNode.zPosition = 74
@@ -207,18 +139,18 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
             return
         }
         
-        if let _  = badguyai[String("📈") + loop1 + "5" + String(Letter)] {
+        if let _  = badguyai["📈\(loop1)5\(Letter)"] {
             
         } else {
-            print ("missing pt: " + String("📈") + loop1 + "5" + String(Letter))
-            //print(badguyai)
+            print ("missing pt: 📈\(loop1)5\(Letter)")
+            print(badguyai)
             return
         }
         
-        if let _  = badguyai[String("📈") + loop2 + "5" + String(Letter)] {
+        if let _  =  badguyai["📈\(loop2)5\(Letter)"] {
         } else {
-            print ("missing pt: " + String("📈") + loop1 + "5" + String(Letter))
-            //print(badguyai)
+            print ("missing pt: 📈\(loop2)5\(Letter)")
+            print(badguyai)
             
             return
         }
@@ -292,6 +224,15 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
         }
 	
         //print(Nodes)
+        
+        let shape = SKShapeNode()
+        shape.path = path1.cgPath
+        shape.fillColor = UIColor.clear
+        shape.strokeColor = UIColor.white
+        shape.lineWidth = 1
+        TileMapParent.addChild(shape)
+        
+        
         let moveToCurve1 = SKAction.follow(path1.cgPath, asOffset: false, orientToPath: false, duration: TimeInterval(5))
         let rep = SKAction.sequence([moveToCurve1])
         
@@ -303,7 +244,7 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
     let seq = SKAction.sequence([codeaction,wait])
     let rep = SKAction.repeatForever(seq)
     
-    TileNode.run(rep)
+    //TileNode.run(rep)
     
     let spriteLabelNode = SKLabelNode(fontNamed:"Apple Color Emoji")
     spriteLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center

@@ -465,21 +465,39 @@ class GameTileMapRun {
         
         //* This is the symbol of our baddie *//
         
+        if ( newname == "📈" ) {
+            
+            for i in 0...10 {
+                
+                if badguyai[(name) + String(badguyArray[i])] == nil {
+                    let pos = tileNode.position
+                    badguyai[(name) + String(badguyArray[i])] = pos
+                    
+                    print ((name) + String(badguyArray[i]))
+                    break;
+                }
+            }
+            
+            
+            
         // 👾 = BadyGuy
-        if ( newname == "👾" ) {
+        } else if ( newname == "👾" ) {
             
             centerTexture = SKTexture()
             tileNode =  SKSpriteNode()
             tileNode.position = center
             
-            for i in 1...52 {
+            for i in 0...10 {
                 //print("i: " + String(i))
-                if badguyai[newitem + String(badguyArray[i])] == nil {
+                if badguyai[newitem + String(badguyArray[i])] == nil || badguyai[newitem + String(badguyArray[i])] == tileNode.position  {
+                    
+                    print ((name) + String(badguyArray[i]))
+
                     let pos = tileNode.position
                     badguyai[newitem + String(badguyArray[i])] = pos // we are now setting the home position, but we are storing this for the drive Letter
                     
                     let gravity = false;
-                    let radius = TileMapTileSize.width / 5.0 //- 2.0
+                    let radius = TileMapTileSize.width / 2
                     let physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
                     let rotation = true;
                     
@@ -488,49 +506,15 @@ class GameTileMapRun {
                     let cat = 16 as UInt32
                     let col = 0  as UInt32
                     let con = 1 + 64 as UInt32
-                    bgroutes = 2 //tileData?["routes"] as! Int
-                    bgnodes = 2 //tileData?["nodes"] as! Int
-                    
-                    //Item determines routes and nodes
-                    // 😠 = Leader and three routes
-                    // 😡 = Lieutenant and three routes
-                    // 🤬 = Private and three routes
-                    if newitem == "😠" || newitem == "😡" || newitem == "🤬" {
-                        bgroutes = 5 //tileData?["routes"] as! Int
-                        bgnodes = 5 //tileData?["nodes"] as! Int
-                    }
-                    
-                    //Item determines routes and nodes
-                    // 🤯 = Leader and five routes
-                    // 😳 = Colonel and five routes
-                    // 😱 = Lieutenant and five routes
-                    // 😨 = General and five routes
-                    // 😰 = Private and five routes
-                    if newitem == "🤯" || newitem == "😳" || newitem == "😱" || newitem == "😨" || newitem == "😰" {
-                        
-                        // print(newitem)
-                        
-                        bgroutes = 5 //tileData?["routes"] as! Int
-                        bgnodes = 5 //tileData?["nodes"] as! Int
-                    }
-                    
-                    DrawBadGuxAI(TileMapParent: TileMapParent, TileNode: tileNode, PhysicsBody: physicsBody, Dynamic: true, Gravity: gravity, Category: cat, Collision: col, Rotation: rotation, Emoji: newemoji, Name: newitem, Contact: con, Mass: 0.1, Friction: 0, Letter: String(badguyArray[i]), Routes: bgroutes, Nodes: bgnodes )
+                    bgroutes = 5
+                    bgnodes = 5
+                    DrawBadGuxAIX(TileMapParent: TileMapParent, TileNode: tileNode, PhysicsBody: physicsBody, Dynamic: true, Gravity: gravity, Category: cat, Collision: col, Rotation: rotation, Emoji: newemoji, Name: newitem, Contact: con, Mass: 0.1, Friction: 0, Letter: String(badguyArray[i]), Routes: bgroutes, Nodes: bgnodes )
                     
                     break
                 }
             }
             
             // see if we can remove the count here
-        } else if ( newname == "📈" ) {
-            
-            for i in 1...5 {
-                if badguyai[(name) + String(badguyArray[i])] == nil {
-                    let pos = tileNode.position
-                    badguyai[(name) + String(badguyArray[i])] = pos
-                    break;
-                }
-            }
-            
         } else if ( tileData?["isGrass"] as? Bool == true )  {
             
             centerTexture = SKTexture(imageNamed: name + "top2")
