@@ -39,8 +39,8 @@ func DrawBadGuxAIX(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: S
     
     let codeaction = SKAction.run {
         
-        var loop1 = 1
-        var loop2 = 2
+        var loop1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
+        var loop2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
         
        	print("loop1",loop1,"loop2",loop2)
         
@@ -114,77 +114,22 @@ func DrawBadGuxAIX(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: S
         let path1 = UIBezierPath()
         
         
-        if let _ = badguyai[String("📈") + loop1 + "1" + String(Letter)] {
-            
-        } else {
-            print ("missing pt: " + String("📈") + loop1 + "1" + String(Letter))
-            return
+        for i in 1...5 {
+            if badguyai["📈\(loop2)\(i)\(Letter)"] == nil {
+                print ("missing pt: 📈\(loop2)\(i)\(Letter)")
+                print(badguyai)
+                return
+            }
         }
-        
-        if let _  = badguyai[String("📈") + loop1 + "2" + String(Letter)] {
-        } else {
-             print ("missing pt: " + String("📈") + loop1 + "2" + String(Letter))
-            return
+    
+        for i in 1...5 {
+            if badguyai["📈\(loop2)\(i)\(Letter)"] == nil {
+                print ("missing pt: 📈\(loop2)\(i)\(Letter)")
+                print(badguyai)
+                return
+            }
         }
-        
-        if let _  = badguyai[String("📈") + loop1 + "3" + String(Letter)] {
-        } else {
-             print ("missing pt: " + String("📈") + loop1 + "3" + String(Letter))
-            return
-        }
-        
-        if let _  = badguyai[String("📈") + loop1 + "4" + String(Letter)] {
-        } else {
-            print ("missing pt: " + String("📈") + loop1 + "4" + String(Letter))
-            return
-        }
-        
-        if let _  = badguyai["📈\(loop1)5\(Letter)"] {
-            
-        } else {
-            print ("missing pt: 📈\(loop1)5\(Letter)")
-            print(badguyai)
-            return
-        }
-        
-        if let _  =  badguyai["📈\(loop2)5\(Letter)"] {
-        } else {
-            print ("missing pt: 📈\(loop2)5\(Letter)")
-            print(badguyai)
-            
-            return
-        }
-        
-        if let _  = badguyai[String("📈") + loop2 + "4" + String(Letter)] {
-        } else {
-            print ("missing pt: " + String("📈") + loop2 + "4" + String(Letter))
-            
-            return
-        }
-        
-        if let _  = badguyai[String("📈") + loop2 + "3" + String(Letter)] {
-        } else {
-            print ("missing pt: " + String("📈") + loop2 + "3" + String(Letter))
-            
-            return
-        }
-        
-        if let _  = badguyai[String("📈") + loop2 + "2" + String(Letter)] {
-        } else {
-            print ("missing pt: " + String("📈") + loop2 + "2" + String(Letter))
-            
-            return
-        }
-        
-        if let _  = badguyai[String("📈") + loop2 + "1" + String(Letter)] {
-        } else {
-            print ("missing pt: " + String("📈") + loop2 + "1" + String(Letter))
-            
-            return
-        }
-        
-         
-        
+
         let point1a = badguyai[String("📈") + loop1 + "1" + String(Letter)]
         let point2a = badguyai[String("📈") + loop1 + "2" + String(Letter)]
         let point3a = badguyai[String("📈") + loop1 + "3" + String(Letter)]
@@ -223,15 +168,15 @@ func DrawBadGuxAIX(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: S
             path1.addQuadCurve(to: point0h, controlPoint: point1b! )
         }
 	
-        //print(Nodes)
-        
-        let shape = SKShapeNode()
+   
+       /* let shape = SKShapeNode()
         shape.path = path1.cgPath
         shape.fillColor = UIColor.clear
         shape.strokeColor = UIColor.white
         shape.lineWidth = 1
-        TileMapParent.addChild(shape)
-        
+        shape.name = Name + "shape"
+        TileMapParent.addChild(shape) */
+     	
         
         let moveToCurve1 = SKAction.follow(path1.cgPath, asOffset: false, orientToPath: false, duration: TimeInterval(5))
         let rep = SKAction.sequence([moveToCurve1])
@@ -244,7 +189,7 @@ func DrawBadGuxAIX(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: S
     let seq = SKAction.sequence([codeaction,wait])
     let rep = SKAction.repeatForever(seq)
     
-    //TileNode.run(rep)
+    TileNode.run(rep)
     
     let spriteLabelNode = SKLabelNode(fontNamed:"Apple Color Emoji")
     spriteLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
