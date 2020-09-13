@@ -467,7 +467,7 @@ class GameTileMapRun {
         
         if ( newname == "📈" ) {
             
-            for i in 0...10 {
+            for i in 0...144 {
                 
                 if badguyai[(name) + String(badguyArray[i])] == nil {
                     let pos = tileNode.position
@@ -487,7 +487,7 @@ class GameTileMapRun {
             tileNode =  SKSpriteNode()
             tileNode.position = center
             
-            for i in 0...10 {
+            for i in 0...12 {
                 //print("i: " + String(i))
                 if badguyai[newitem + String(badguyArray[i])] == nil || badguyai[newitem + String(badguyArray[i])] == tileNode.position  {
                     
@@ -497,7 +497,7 @@ class GameTileMapRun {
                     badguyai[newitem + String(badguyArray[i])] = pos // we are now setting the home position, but we are storing this for the drive Letter
                     
                     let gravity = false;
-                    let radius = TileMapTileSize.width / 2
+                    let radius = TileMapTileSize.width / 6
                     let physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
                     let rotation = true;
                     

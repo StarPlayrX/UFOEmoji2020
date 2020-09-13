@@ -42,11 +42,11 @@ func DrawBadGuxAIX(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: S
         var loop1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
         var loop2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
         
-       	print("loop1",loop1,"loop2",loop2)
+       	//print("loop1",loop1,"loop2",loop2)
         
-        let leaders = ["🤬","X"]
+        let leaders = ["🤬"]
         
-        if ( Name == leaders[0] || Name == leaders[1]) {
+        if ( Name == leaders[0] ) {
             
             TileNode.zPosition = 72
             TileNode.alpha = 1.0
@@ -71,35 +71,35 @@ func DrawBadGuxAIX(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: S
         }
         
         // 😡 = Colonel
-        let Colonels = ["🤯","X"]
+        let Colonels = ["🤯"]
         
         // 🤬 = Lieutenant
-        let Lieutenants = ["😠","X"]
+        let Lieutenants = ["😠"]
         
         // 😨 = General
-        let Generals = ["😡","X"]
+        let Generals = ["😡"]
         
         // 😰 = Private and five routes
-        let Privates = ["😨", "X"]
+        let Privates = ["😨"]
         
-        if Name == Colonels[0] || Name ==  Colonels[1] {
+        if Name == Colonels[0] {
             TileNode.zPosition = 74
             TileNode.alpha = 1.0
             
             loop1 = badGuySecond[0]
             loop2 = badGuySecond[1]
             
-        } else if Name == Lieutenants[0] || Name == Lieutenants[1]  {
+        } else if Name == Lieutenants[0]  {
             TileNode.zPosition = 76
             
             loop1 = badGuyThird[0]
             loop2 = badGuyThird[1]
-        } else if Name == Generals[0] || Name == Generals[1]  {
+        } else if Name == Generals[0]   {
             TileNode.zPosition = 76
             
             loop1 = badGuyFourth[0]
             loop2 = badGuyFourth[1]
-        } else if Name == Privates[0] || Name == Privates[1]  {
+        } else if Name == Privates[0]  {
             TileNode.zPosition = 76
             
             loop1 = badGuyFifth[0]
@@ -114,9 +114,9 @@ func DrawBadGuxAIX(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: S
         let path1 = UIBezierPath()
         
         
-        for i in 1...5 {
-            if badguyai["📈\(loop2)\(i)\(Letter)"] == nil {
-                print ("missing pt: 📈\(loop2)\(i)\(Letter)")
+        /*for i in 1...5 {
+            if badguyai["📈\(loop1)\(i)\(Letter)"] == nil {
+                print ("missing pt: 📈\(loop1)\(i)\(Letter)")
                 print(badguyai)
                 return
             }
@@ -128,60 +128,46 @@ func DrawBadGuxAIX(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: S
                 print(badguyai)
                 return
             }
-        }
+        }*/
 
-        let point1a = badguyai[String("📈") + loop1 + "1" + String(Letter)]
-        let point2a = badguyai[String("📈") + loop1 + "2" + String(Letter)]
-        let point3a = badguyai[String("📈") + loop1 + "3" + String(Letter)]
-        let point4a = badguyai[String("📈") + loop1 + "4" + String(Letter)]
-        let point5a = badguyai[String("📈") + loop1 + "5" + String(Letter)]
+        if let point1a = badguyai[String("📈") + loop1 + "1" + String(Letter)],
+        	let point2a = badguyai[String("📈") + loop1 + "2" + String(Letter)],
+        	let point3a = badguyai[String("📈") + loop1 + "3" + String(Letter)],
+        	let point4a = badguyai[String("📈") + loop1 + "4" + String(Letter)],
+        	let point5a = badguyai[String("📈") + loop1 + "5" + String(Letter)],
         
-        let point5b = badguyai[String("📈") + loop2 + "5" + String(Letter)]
-        let point4b = badguyai[String("📈") + loop2 + "4" + String(Letter)]
-        let point3b = badguyai[String("📈") + loop2 + "3" + String(Letter)]
-        let point2b = badguyai[String("📈") + loop2 + "2" + String(Letter)]
-        let point1b = badguyai[String("📈") + loop2 + "1" + String(Letter)]
-        
-        
-        path1.move(to:point0h)
-        
-        if Nodes == 2 {
-            path1.addQuadCurve(to: point2a!, controlPoint: point1a! )
-            path1.addQuadCurve(to: point2b!, controlPoint: point1b! )
-            path1.addQuadCurve(to: point0h, controlPoint: point1a! )
-        } else if Nodes == 3 {
-            path1.addQuadCurve(to: point2a!, controlPoint: point1a! )
-            path1.addQuadCurve(to: point3b!, controlPoint: point2b! )
-            path1.addQuadCurve(to: point0h, controlPoint: point1b! )
-        } else if Nodes == 4 {
-            path1.addQuadCurve(to: point2a!, controlPoint: point1a! )
-            path1.addQuadCurve(to: point4a!, controlPoint: point3a! )
-            path1.addQuadCurve(to: point4b!, controlPoint: point3b! )
-            path1.addQuadCurve(to: point3b!, controlPoint: point2b! )
-            path1.addQuadCurve(to: point0h, controlPoint: point1b! )
-        } else if Nodes == 5 {
-            path1.addQuadCurve(to: point2a!, controlPoint: point1a! )
-            path1.addQuadCurve(to: point4a!, controlPoint: point3a! )
-            path1.addQuadCurve(to: point5b!, controlPoint: point5a! )
-            path1.addQuadCurve(to: point4b!, controlPoint: point3b! )
-            path1.addQuadCurve(to: point3b!, controlPoint: point2b! )
-            path1.addQuadCurve(to: point0h, controlPoint: point1b! )
+        	let point5b = badguyai[String("📈") + loop2 + "5" + String(Letter)],
+        	let point4b = badguyai[String("📈") + loop2 + "4" + String(Letter)],
+        	let point3b = badguyai[String("📈") + loop2 + "3" + String(Letter)],
+        	let point2b = badguyai[String("📈") + loop2 + "2" + String(Letter)],
+        	let point1b = badguyai[String("📈") + loop2 + "1" + String(Letter)]
+        {
+            
+            path1.move(to:point0h)
+            path1.addQuadCurve(to: point2a, controlPoint: point1a )
+            path1.addQuadCurve(to: point4a, controlPoint: point3a )
+            path1.addQuadCurve(to: point5b, controlPoint: point5a )
+            path1.addQuadCurve(to: point4b, controlPoint: point3b )
+            path1.addQuadCurve(to: point3b, controlPoint: point2b )
+            path1.addQuadCurve(to: point0h, controlPoint: point1b )
+
+            let moveToCurve1 = SKAction.follow(path1.cgPath, asOffset: false, orientToPath: false, duration: TimeInterval(5))
+            let rep = SKAction.sequence([moveToCurve1])
+            TileNode.run(rep)
+        } else {
+            return
         }
-	
-   
-       /* let shape = SKShapeNode()
+        
+      	/* used for troubleshooting*/
+        /*let shape = SKShapeNode()
         shape.path = path1.cgPath
         shape.fillColor = UIColor.clear
         shape.strokeColor = UIColor.white
         shape.lineWidth = 1
         shape.name = Name + "shape"
-        TileMapParent.addChild(shape) */
-     	
+        TileMapParent.addChild(shape)*/
         
-        let moveToCurve1 = SKAction.follow(path1.cgPath, asOffset: false, orientToPath: false, duration: TimeInterval(5))
-        let rep = SKAction.sequence([moveToCurve1])
-        
-        TileNode.run(rep)
+      
     }
     
     
