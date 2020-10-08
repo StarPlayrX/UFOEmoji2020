@@ -13,14 +13,14 @@ class GameMenu: SKScene {
     private var minlevel : Int! = 1
     private var maxEmoji : Int! = 3
     private var minEmoji : Int! = 1
-    private var musicLabel  : SKLabelNode! = SKLabelNode()
-    private var soundLabel 	: SKLabelNode! = SKLabelNode()
-    private var stickLabel 	: SKLabelNode! = SKLabelNode()
-    private var levelLabel 	: SKLabelNode! = SKLabelNode()
-    private var versusLabel : SKLabelNode! = SKLabelNode()
-    private var emojiLabel 	: SKLabelNode! = SKLabelNode()
-    private var playLabel1 	: SKLabelNode! = SKLabelNode()
-    private var playLabel2 	: SKLabelNode! = SKLabelNode()
+    private var musicLabel  : SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var soundLabel 	: SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var stickLabel 	: SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var levelLabel 	: SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var versusLabel : SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var emojiLabel 	: SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var playLabel1 	: SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
+    private var playLabel2 	: SKLabelNode! = SKLabelNode(fontNamed: emojifontname)
     private var playNode  : SKNode! = SKNode()
     private var lockDown : Bool! = false
     
@@ -155,7 +155,7 @@ class GameMenu: SKScene {
                     }
                 }
                 
-                if name == "play" && !lockDown {
+                if (name == "play" || name == "playbutton") && !lockDown {
                     
                     lockDown = true
                     
@@ -175,8 +175,6 @@ class GameMenu: SKScene {
                                         "👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽👽"]
                     }
                     
-                  
-                    
                     let fadeIn = SKAction.fadeAlpha(to: 0.5, duration:TimeInterval(0.3))
                     let myDecay = SKAction.wait(forDuration: 0.2)
                     let fadeOut = SKAction.fadeAlpha(to: 1.0, duration:TimeInterval(0.3))
@@ -191,7 +189,7 @@ class GameMenu: SKScene {
                         let startup = StartUp( size: self.size )
                         startup.runner()
                         self.size = setSceneSizeForGame()
-                        startup.scaleMode = .aspectFill
+                        startup.scaleMode = .aspectFit
                         
                         self.view?.backgroundColor = .black
 
@@ -232,19 +230,16 @@ class GameMenu: SKScene {
         KingQueenGlobalDie = 100
         backgroundColor = SKColor.init(displayP3Red: 0, green: 15 / 255, blue: 70 / 255, alpha: 1.0)
         
-        
-        
         if settings.level > maxlevel {
             settings.level = 1
             settings.highlevel = 9
             
         }
-        settings.highlevel = 10 //cheat to get all levels available
+        settings.highlevel = maxlevel //cheat to get all levels available
         
         settings.lives = 5; // may be less when power ups are added
         settings.score = 0;
-        
-        
+    
         musicLabel.text =  settings.music  ? "🎷🔈" : "🎷🔇"
         soundLabel.text =  settings.sound ? "💥🔔" : "💥🔕"
         stickLabel.text =  "👉🕹"
@@ -256,8 +251,6 @@ class GameMenu: SKScene {
         let spc 	 =  CGFloat(100)
         let alphaDog = 	CGFloat(0.25)
         let fontSize =  CGFloat(48.0)
-        
-        
         
         //MARK: Draw Menu replaces our Struct (So we don't have the carry the Scene in to the Struct)
         func drawMenu(_ name: String, label: SKLabelNode, spriteNode: String, spriteName: String, emojiName: String, spriteNodeB: String, spriteNameB: String, versusLabel: SKLabelNode? = nil) {
@@ -272,7 +265,7 @@ class GameMenu: SKScene {
                 sprite.name = spriteName
             	addChild(sprite)
                 
-                label.fontName = "Apple Color Emoji"
+                label.fontName = emojifontname
                 label.fontSize = fontSize
                 label.name = emojiName
                 label.horizontalAlignmentMode = .center
@@ -325,7 +318,7 @@ class GameMenu: SKScene {
             playNode.position = pn.position
             
             playNode.position.x = playNode.position.x + spc - 16
-            let playLabel = SKLabelNode(fontNamed: "Apple Color Emoji")
+            let playLabel = SKLabelNode(fontNamed: emojifontname)
             playLabel.text = "🎮"
             playLabel.fontSize = 48
             playLabel.horizontalAlignmentMode = .center
@@ -361,8 +354,9 @@ class GameMenu: SKScene {
             subtext.position = CGPoint(x:-(spc / 2) - 19.25,y:1.5)
             
             let sprite = SKSpriteNode(imageNamed: "playbutton")
-            sprite.alpha = 0.25
+            sprite.alpha = 1.0
             playNode.addChild(sprite)
+            sprite.name = "playbutton"
             sprite.position = CGPoint(x:0,y:0)
             playNode.addChild(playLabel1)
             playNode.addChild(playLabel2)

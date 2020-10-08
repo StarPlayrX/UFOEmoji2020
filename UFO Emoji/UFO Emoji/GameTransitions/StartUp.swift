@@ -63,7 +63,7 @@ class StartUp: SKScene {
             
             print(mainCharacter,goodGuy,badGuy,settings.level)
             
-            let label1 = SKLabelNode(fontNamed: "Apple Color Emoji")
+            let label1 = SKLabelNode(fontNamed: emojifontname)
             label1.fontSize = 72
             label1.text = mainCharacter
             label1.horizontalAlignmentMode = .center
@@ -71,7 +71,7 @@ class StartUp: SKScene {
             label1.position = CGPoint(x: self.size.width / 2 - 120, y: self.size.height / 2 )
             self.addChild(label1)
             
-            let label2 = SKLabelNode(fontNamed: "Apple Color Emoji")
+            let label2 = SKLabelNode(fontNamed: emojifontname)
             label2.fontSize = 72
             label2.text = goodGuy
             label2.xScale = -1

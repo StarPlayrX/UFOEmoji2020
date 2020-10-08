@@ -12,9 +12,9 @@ import SpriteKit
 var badguyai: [String:CGPoint] = [:] // we clear this out later
 var badguyArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 var badGuySecond = ["1","2"]
-var badGuyThird =  ["2","3"]
-var badGuyFourth = ["3","4"]
-var badGuyFifth = ["4","5"]
+var badGuyThird =  ["3", "4"]
+var badGuyFourth = ["5", "4"]
+var badGuyFifth = ["3","2"]
 //var badGuyCount = Int(0)
 
 
@@ -42,127 +42,59 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
         var loop1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
         var loop2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
         
-        // 😠 = Leader and three routes
-        // 🤯 = Leader and five routes
+       	//print("loop1",loop1,"loop2",loop2)
         
-        let leaders = ["😠","🤯"]
+        let leaders = ["🤬"]
         
-        if ( Name == leaders[0] || Name == leaders[1]) {
+        if ( Name == leaders[0] ) {
             
             TileNode.zPosition = 72
             TileNode.alpha = 1.0
-            //smile out
             
-            if Routes >= 2 {
-                for _ in 1...100 {
-                    let second1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  ( second1 != loop1 ) {
-                        badGuySecond[0] = second1
-                        break
-                    }
-                }
-                
-                //smile in
-                for _ in 1...100 {
-                    let second2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  ( second2 != loop2 ) {
-                        badGuySecond[1] = second2
-                        break
-                    }
+            for _ in 0...1000 {
+                let fifth1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
+                if  (  fifth1 != badGuyFourth[0] && fifth1 != badGuyThird[0] && fifth1 != badGuySecond[0] && fifth1 != loop1  ) {
+                    badGuyFifth[0] = fifth1
+                    break
                 }
             }
             
-            if Routes >= 3 {
-                //alien out
-                for _ in 1...100 {
-                    let third1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  ( third1 != badGuySecond[0] && third1 != loop1  ) {
-                        badGuyThird[0] = third1
-                        break
-                    }
-                }
-                
-                //alien in
-                for _ in 1...100 {
-                    let third2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  ( third2 != badGuySecond[1] && third2 != loop2  ) {
-                        badGuyThird[1] = third2
-                        break
-                    }
+            //alien in
+            for _ in 0...1000 {
+                let fifth2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
+                if  (  fifth2 != badGuyFourth[1] && fifth2 != badGuyThird[1] && fifth2 != badGuySecond[1] && fifth2 != loop2  ) {
+                    badGuyFifth[1] = fifth2
+                    break
                 }
             }
-            
-            if Routes >= 4 {
-                //alien out
-                for _ in 1...100 {
-                    let fourth1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  (  fourth1 != badGuyThird[0] && fourth1 != badGuySecond[0] && fourth1 != loop1  ) {
-                        badGuyFourth[0] = fourth1
-                        break
-                    }
-                }
-                
-                //alien in
-                for _ in 1...100 {
-                    let forth2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  (  forth2 != badGuyThird[1] && forth2 != badGuySecond[1] && forth2 != loop2  ) {
-                        badGuyFourth[1] = forth2
-                        break
-                    }
-                }
-            }
-            
-            if Routes >= 5 {
-                //alien out
-                for _ in 1...100 {
-                    let fifth1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  (  fifth1 != badGuyFourth[0] && fifth1 != badGuyThird[0] && fifth1 != badGuySecond[0] && fifth1 != loop1  ) {
-                        badGuyFifth[0] = fifth1
-                        break
-                    }
-                }
-                
-                //alien in
-                for _ in 1...100 {
-                    let fifth2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-                    if  (  fifth2 != badGuyFourth[1] && fifth2 != badGuyThird[1] && fifth2 != badGuySecond[1] && fifth2 != loop2  ) {
-                        badGuyFifth[1] = fifth2
-                        break
-                    }
-                }
-            }
-            
             
         }
         
-        // 😡 = Colonel and three routes
-        // 😳 = Colonel and five routes
-        let Colonels = ["😡","😳"]
+        // 😡 = Colonel
+        let Colonels = ["🤯"]
         
-        // 🤬 = Lieutenant and three routes
-        // 😱 = Lieutenant and five routes
-        let Lieutenants = ["🤬","😱"]
+        // 🤬 = Lieutenant
+        let Lieutenants = ["😠"]
         
-        
-        // 😨 = General and five routes
-        let Generals = ["X","😨"]
+        // 😨 = General
+        let Generals = ["😡"]
         
         // 😰 = Private and five routes
-        let Privates = ["😰"]
+        let Privates = ["😨"]
         
-        if Name == Colonels[0] || Name ==  Colonels[1] {
+        if Name == Colonels[0] {
             TileNode.zPosition = 74
             TileNode.alpha = 1.0
             
             loop1 = badGuySecond[0]
             loop2 = badGuySecond[1]
             
-        } else if Name == Lieutenants[0] || Name == Lieutenants[1]  {
+        } else if Name == Lieutenants[0]  {
             TileNode.zPosition = 76
             
             loop1 = badGuyThird[0]
             loop2 = badGuyThird[1]
-        } else if Name == Generals[0] || Name == Generals[1]  {
+        } else if Name == Generals[0]   {
             TileNode.zPosition = 76
             
             loop1 = badGuyFourth[0]
@@ -182,124 +114,77 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
         let path1 = UIBezierPath()
         
         
-        
-        if let _ = badguyai[String("📈") + loop1 + "1" + String(Letter)] {
-            
-        } else {
-            //print ("missing pt: " + String("📈") + loop1 + "1" + String(Letter))
-            return
+        for i in 1...5 {
+            if badguyai["📈\(loop1)\(i)\(Letter)"] == nil {
+                print ("missing pt: 📈\(loop1)\(i)\(Letter)")
+                print(badguyai)
+                return
+            }
         }
-        
-        if let _  = badguyai[String("📈") + loop1 + "2" + String(Letter)] {
-        } else {
-            // print ("missing pt: " + String("📈") + loop1 + "2" + String(Letter))
-            return
-        }
-        
-        if let _  = badguyai[String("📈") + loop1 + "3" + String(Letter)] {
-        } else {
-            // print ("missing pt: " + String("📈") + loop1 + "3" + String(Letter))
-            return
-        }
-        
-        if let _  = badguyai[String("📈") + loop1 + "4" + String(Letter)] {
-        } else {
-            // print ("missing pt: " + String("📈") + loop1 + "4" + String(Letter))
-            return
-        }
-        
-        if let _  = badguyai[String("📈") + loop1 + "5" + String(Letter)] {
-            
-        } else {
-            print ("missing pt: " + String("📈") + loop1 + "5" + String(Letter))
-            print(badguyai)
-            return
-        }
-        
-        if let _  = badguyai[String("📈") + loop2 + "5" + String(Letter)] {
-        } else {
-            print ("missing pt: " + String("📈") + loop1 + "5" + String(Letter))
-            print(badguyai)
-            
-            return
-        }
-        
-        if let _  = badguyai[String("📈") + loop2 + "4" + String(Letter)] {
-        } else {
-            //print ("missing pt: " + String("📈") + loop2 + "4" + String(Letter))
-            
-            return
-        }
-        
-        if let _  = badguyai[String("📈") + loop2 + "3" + String(Letter)] {
-        } else {
-            //print ("missing pt: " + String("📈") + loop2 + "3" + String(Letter))
-            
-            return
-        }
-        
-        if let _  = badguyai[String("📈") + loop2 + "2" + String(Letter)] {
-        } else {
-            //print ("missing pt: " + String("📈") + loop2 + "2" + String(Letter))
-            
-            return
-        }
-        
-        if let _  = badguyai[String("📈") + loop2 + "1" + String(Letter)] {
-        } else {
-            //print ("missing pt: " + String("📈") + loop2 + "1" + String(Letter))
-            
-            return
-        }
-        
-         
-        
-        let point1a = badguyai[String("📈") + loop1 + "1" + String(Letter)]
-        let point2a = badguyai[String("📈") + loop1 + "2" + String(Letter)]
-        let point3a = badguyai[String("📈") + loop1 + "3" + String(Letter)]
-        let point4a = badguyai[String("📈") + loop1 + "4" + String(Letter)]
-        let point5a = badguyai[String("📈") + loop1 + "5" + String(Letter)]
-        
-        let point5b = badguyai[String("📈") + loop2 + "5" + String(Letter)]
-        let point4b = badguyai[String("📈") + loop2 + "4" + String(Letter)]
-        let point3b = badguyai[String("📈") + loop2 + "3" + String(Letter)]
-        let point2b = badguyai[String("📈") + loop2 + "2" + String(Letter)]
-        let point1b = badguyai[String("📈") + loop2 + "1" + String(Letter)]
-        
-        
-        path1.move(to:point0h)
-        
-        if Nodes == 2 {
-            path1.addQuadCurve(to: point2a!, controlPoint: point1a! )
-            path1.addQuadCurve(to: point2b!, controlPoint: point1b! )
-            path1.addQuadCurve(to: point0h, controlPoint: point1a! )
-        } else if Nodes == 3 {
-            path1.addQuadCurve(to: point2a!, controlPoint: point1a! )
-            path1.addQuadCurve(to: point3b!, controlPoint: point2b! )
-            path1.addQuadCurve(to: point0h, controlPoint: point1b! )
-        } else if Nodes == 4 {
-            path1.addQuadCurve(to: point2a!, controlPoint: point1a! )
-            path1.addQuadCurve(to: point4a!, controlPoint: point3a! )
-            path1.addQuadCurve(to: point4b!, controlPoint: point3b! )
-            path1.addQuadCurve(to: point3b!, controlPoint: point2b! )
-            path1.addQuadCurve(to: point0h, controlPoint: point1b! )
-        } else if Nodes == 5 {
-            path1.addQuadCurve(to: point2a!, controlPoint: point1a! )
-            path1.addQuadCurve(to: point4a!, controlPoint: point3a! )
-            path1.addQuadCurve(to: point5b!, controlPoint: point5a! )
-            path1.addQuadCurve(to: point4b!, controlPoint: point3b! )
-            path1.addQuadCurve(to: point3b!, controlPoint: point2b! )
-            path1.addQuadCurve(to: point0h, controlPoint: point1b! )
+    
+        for i in 1...5 {
+            if badguyai["📈\(loop2)\(i)\(Letter)"] == nil {
+                print ("missing pt: 📈\(loop2)\(i)\(Letter)")
+                print(badguyai)
+                return
+            }
         }
 
-        let moveToCurve1 = SKAction.follow(path1.cgPath, asOffset: false, orientToPath: false, duration: TimeInterval(5))
-        let rep = SKAction.sequence([moveToCurve1])
+        if let point1a = badguyai[String("📈") + loop1 + "1" + String(Letter)],
+        	let point2a = badguyai[String("📈") + loop1 + "2" + String(Letter)],
+        	let point3a = badguyai[String("📈") + loop1 + "3" + String(Letter)],
+        	let point4a = badguyai[String("📈") + loop1 + "4" + String(Letter)],
+        	let point5a = badguyai[String("📈") + loop1 + "5" + String(Letter)],
         
-        TileNode.run(rep)
+        	let point5b = badguyai[String("📈") + loop2 + "5" + String(Letter)],
+        	let point4b = badguyai[String("📈") + loop2 + "4" + String(Letter)],
+        	let point3b = badguyai[String("📈") + loop2 + "3" + String(Letter)],
+        	let point2b = badguyai[String("📈") + loop2 + "2" + String(Letter)],
+        	let point1b = badguyai[String("📈") + loop2 + "1" + String(Letter)]
+        {
+            
+             path1.move(to:point0h)
+             path1.addQuadCurve(to: point1a, controlPoint: point0h )
+             path1.addQuadCurve(to: point3a, controlPoint: point2a )
+             path1.addQuadCurve(to: point5a, controlPoint: point4a )
+             path1.addQuadCurve(to: point5b, controlPoint: point5a )
+             path1.addQuadCurve(to: point3b, controlPoint: point4b )
+             path1.addQuadCurve(to: point1b, controlPoint: point2b )
+             path1.addQuadCurve(to: point0h, controlPoint: point1b )
+
+            let moveToCurve1 = SKAction.follow(path1.cgPath, asOffset: false, orientToPath: false, duration: TimeInterval(10))
+            let rep = SKAction.sequence([moveToCurve1])
+            TileNode.run(rep)
+        } else {
+            return
+        }
+        
+      	 /* used for troubleshooting*/
+        /*let shape = SKShapeNode()
+        shape.path = path1.cgPath
+        shape.fillColor = UIColor.clear
+        
+        if loop1 == "1" {
+            shape.strokeColor = UIColor.red
+        } else if loop1 == "2" {
+            shape.strokeColor = UIColor.blue
+        } else if loop1 == "3" {
+            shape.strokeColor = UIColor.gray
+        } else if loop1 == "4" {
+            shape.strokeColor = UIColor.yellow
+        } else if loop1 == "5" {
+            shape.strokeColor = UIColor.green
+        }
+        
+        shape.lineWidth = 1
+        shape.name = Name + "shape"
+        TileMapParent.addChild(shape)*/
+        
+      
     }
     
     
-    let wait = SKAction.wait(forDuration: TimeInterval(5))
+    let wait = SKAction.wait(forDuration: TimeInterval(10))
     let seq = SKAction.sequence([codeaction,wait])
     let rep = SKAction.repeatForever(seq)
     

@@ -14,17 +14,12 @@ class GameTileMapRun {
         TileMapTileSize = nil
         TileMapParent   = nil
         TileMapRect     = nil
-        numbers 		= nil
-        largeInt 		= nil
     }
     
     private weak var TileMapParent   : SKNode!
     private var 	 TileMapTileSize : CGSize!
     private var      TileMapRect     : CGRect!
     
-    private var numbers  : [(a:UInt32,b:Double)]! = [(a:UInt32,b:Double)]()
-    private var largeInt : UInt32! = UInt32(64)
-
     init( TileMapTileSize: CGSize?, TileMapParent: SKNode?, TileMapRect: CGRect? ) {
         guard
             let TileMapTileSize = TileMapTileSize,
@@ -52,10 +47,14 @@ class GameTileMapRun {
         TileNode.zPosition = 75
         TileNode.physicsBody?.restitution = 0.5
         
-        let n = Name
+     
+        var n = Name
         let e = Emoji
         let w = NewItem
-        if w == "🐟" || n == "💢" || n == "🛑" || n == "♨️" || e == "🐝" || w == "🦀" || e == "🌈" || e == "☄️" || e == "🚁" {
+        
+        if e == "🛡" {
+            n = "🛡"
+        } else if e == "🐙" || e == "🐋" || e == "🐊" || e == "🦑" || e == "🦈" || e == "⛵️" || e == "🛥" || e == "🚤" || e == "🐳" || w == "🐟" || n == "💢" || n == "🛑" || n == "♨️" || e == "🐝" || e == "🛸" || w == "🦀" || e == "🌈" || e == "🤯" || e == "🚁" || e == "🦇" {
             TileNode.zPosition = -20
             TileNode.physicsBody?.affectedByGravity = false //true
             TileNode.physicsBody?.isDynamic = false //false
@@ -64,10 +63,6 @@ class GameTileMapRun {
             TileNode.physicsBody?.isDynamic = true //false
             TileNode.physicsBody?.fieldBitMask = 16384
             TileNode.physicsBody?.restitution = 1.0
-        } else if NewItem == "🛸" {
-            TileNode.zPosition = 91
-            TileNode.physicsBody?.affectedByGravity = true //true
-            TileNode.physicsBody?.isDynamic = false //false
         }
         
         TileNode.physicsBody?.categoryBitMask = Category //2
@@ -78,37 +73,26 @@ class GameTileMapRun {
         TileNode.physicsBody?.isResting = false
         TileNode.physicsBody?.friction = Friction
         TileNode.physicsBody?.mass = Mass
-        TileNode.name = Name
+        TileNode.name = n
+        
+        if e == "🔱" {
+            TileNode.name = "🔱"
+        } else if e == "💠" {
+            TileNode.name = "💠"
+        } else if e == "💎" {
+            TileNode.name = "💎"
+        }
         
         TileMapParent.addChild(TileNode)
-        if NewItem == "🐟" || NewItem == "🦀" || NewItem == "🛸"  {
+        
+        if NewItem == "🐍" || NewItem == "🐟" || NewItem == "🦀" || NewItem == "🛸" || e == "⛵️" || e == "🛥" || e == "🚤" || e == "🕷"  {
             let r2 = Int(arc4random_uniform(1))
             let divider = Double(20.0)
             let mov = r2 > 0 ? 1 : -1
             
-        	//MARK: Determines how far a character can venture
+            //MARK: Determines how far a character can venture
             func spaceX() -> Double {
-                
-                for i in (3...5).reversed() {
-                    largeInt /= 2
-                    numbers.append( (a: largeInt, b: Double( i )     ))
-                    numbers.append( (a: largeInt, b: Double( i - 2 ) ))
-                }
-                
-                // MARK: Generates Todd's spacial algorithm
-                // [(a: 32, b: 5.0), (a: 32, b: 3.0), (a: 16, b: 4.0), (a: 16, b: 2.0), (a: 8, b: 3.0), (a: 8, b: 1.0)]
-                
-                var randomAmount : Double! = Double(0)
-                
-                for (a,b) in numbers {
-                    randomAmount += Double(arc4random_uniform(a)) + b
-                }
-                
-                //MARK: Random numbers
-                //37.0 //86.0 //76.0 //54.0...
-                
-                
-                return randomAmount
+                return  Double.random(in: 32...96)
             }
             
             let moveAmount1 = spaceX()
@@ -123,7 +107,7 @@ class GameTileMapRun {
 
             let flip1 = SKAction.scaleX(to: CGFloat(mov), duration: 0.25)
             let flip2 = SKAction.scaleX(to: CGFloat(-mov), duration: 0.25)
-            let moveleft = SKAction.move(by: CGVector(dx: Int(moveAmount2) * -mov, dy: 0), duration: TimeInterval(time1))
+            let moveleft = SKAction.move(by: CGVector(dx: Int(moveAmount1) * -mov, dy: 0), duration: TimeInterval(time1))
             
             //MARK: Don't flip the Crab/Lobster emoji as it doesn't look right being vertical
             
@@ -143,10 +127,10 @@ class GameTileMapRun {
                 }
             }
             
-            Emoji == "🦀" ? crabby() : notCrabby()
+            Emoji == "🦀" || Emoji == "🕷" ? crabby() : notCrabby()
         }
         
-        let spriteLabelNode = SKLabelNode(fontNamed:"Apple Color Emoji")
+        let spriteLabelNode = SKLabelNode(fontNamed:emojifontname)
         spriteLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         spriteLabelNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         spriteLabelNode.alpha = 1.0
@@ -161,7 +145,7 @@ class GameTileMapRun {
             
             case "🐟":
                 spriteLabelNode.zPosition = -20
-            case "☄️":
+            case "🤯", "🛸":
                 spriteLabelNode.fontSize = 40
             default:
                 spriteLabelNode.fontSize = 36
@@ -172,10 +156,6 @@ class GameTileMapRun {
             case "🚀":
                 spriteLabelNode.zRotation = CGFloat(Double.pi/4)
                 spriteLabelNode.xScale = -1
-            case "🛸":
-                spriteLabelNode.xScale = -1
-                spriteLabelNode.zRotation = CGFloat(Double.pi/9)
-                spriteLabelNode.fontSize = 50
             case "🧟‍♀️","🧟‍♂️":
                 spriteLabelNode.fontSize = 42
             case "🎱","🥚","💀","⚽️","🏈","🍊","🍏","🍎","🍅","🍈","🍋","🍑","🍓","🥥","🍩":
@@ -183,16 +163,29 @@ class GameTileMapRun {
                 TileNode.physicsBody?.friction = 1
             case "🐌":
                 spriteLabelNode.xScale = -1
-            case "☄️", "🚁", "🐝":
+            case "🤯", "🚁", "🐝", "🛸":
                 
-            
+              
+                            
 				var action = SKAction()
+                var rotateAction = SKAction()
+                var yAction = SKAction()
+
                 let fade = SKAction.fadeAlpha(to: 0, duration: 1.5)
                 let remove = SKAction.removeFromParent()
 
                 if TileNode.position.x < 0 {
                     let moveToX = (TileMapParent.frame.size.width - TileNode.position.x) / 4
                     spriteLabelNode.zRotation = CGFloat(-Double.pi/4)
+                    
+                    if Emoji == "🤯" {
+                        //rotate the Asteroid while moving
+                        rotateAction = SKAction.rotate(byAngle: 22, duration:  Double(moveToX / 20.0))
+                        
+                        //lower Asteroid 1 space over the total distance
+                        yAction = SKAction.moveBy(x: 0, y: -32, duration:  Double(moveToX / 20.0 ))
+                    }
+                    
                     action = SKAction.moveTo(x: -moveToX, duration: Double(moveToX / 20.0))
 
                 } else {
@@ -200,13 +193,29 @@ class GameTileMapRun {
 
                     spriteLabelNode.zRotation = CGFloat(Double.pi/4)
                     action = SKAction.moveTo(x: moveToX, duration: Double(moveToX / 20.0))
+                    
+                    if Emoji == "🤯" {
+                        //rotate the Asteroid while moving
+                        rotateAction = SKAction.rotate(byAngle: 22, duration:  Double(moveToX / 20.0))
+                        
+                        //lower Asteroid 1 space over the total distance
+                        yAction = SKAction.moveBy(x: 0, y: -32, duration:  Double(moveToX / 20.0 ))
+                    }
+
                 }
+                
                 
                 TileNode.run(action)
                 spriteLabelNode.xScale = 1
-                TileNode.name = "☄️"
+                TileNode.name = "🤯"
                 TileNode.run(SKAction.sequence([action,fade,remove]))
-				
+                
+                if Emoji == "🤯" {
+                    TileNode.run(rotateAction)
+                    TileNode.run(yAction)
+                }
+           
+
                 if Emoji == "🚁" {
                     spriteLabelNode.zRotation = 0
                 } else if Emoji == "🐝" {
@@ -216,7 +225,19 @@ class GameTileMapRun {
                         spriteLabelNode.zRotation = CGFloat(Double.pi/8)
                     }
                 }
-            
+            	
+                if Emoji == "🛸" {
+                    spriteLabelNode.xScale = -1
+                    
+                    if TileNode.position.x < 0 {
+                        spriteLabelNode.zRotation = CGFloat(-Double.pi/9)
+                    } else {
+                        spriteLabelNode.zRotation = CGFloat(Double.pi/9)
+                    }
+                    
+                    
+                    spriteLabelNode.fontSize = 50
+            	}
 				
             case "🦔":
                 spriteLabelNode.fontSize = 40
@@ -270,6 +291,10 @@ class GameTileMapRun {
                 str = "" // No Emoji
             case "🔫":
                 str = "🔫" // Gun
+            case "🕹":
+                str = "🕹" // Gun
+            case "🛡":
+                str = "🛡" // Gun
             case "🦎":
                 spriteLabelNode.xScale = -1
             case "❣️":
@@ -413,9 +438,6 @@ class GameTileMapRun {
         var newname = String()
         var newitem = String()
         var newemoji = String()
-        var bgroutes = Int()
-        var bgnodes = Int()
-        
         var tileNode = SKSpriteNode()
         
         //Good guys and Badguys are three characters
@@ -440,72 +462,55 @@ class GameTileMapRun {
         
         //* This is the symbol of our baddie *//
         
+        if ( newname == "📈" ) {
+            
+            for i in 0...144 {
+                
+                if badguyai[(name) + String(badguyArray[i])] == nil {
+                    let pos = tileNode.position
+                    badguyai[(name) + String(badguyArray[i])] = pos
+                    
+                    print ((name) + String(badguyArray[i]))
+                    break;
+                }
+            }
+            
+            
+            
         // 👾 = BadyGuy
-        if ( newname == "👾" ) {
+        } else if ( newname == "👾" ) {
             
             centerTexture = SKTexture()
             tileNode =  SKSpriteNode()
             tileNode.position = center
             
-            for i in 1...100 {
+            for i in 0...12 {
                 //print("i: " + String(i))
-                if badguyai[newitem + String(badguyArray[i])] == nil {
+                if badguyai[newitem + String(badguyArray[i])] == nil || badguyai[newitem + String(badguyArray[i])] == tileNode.position  {
+                    
+                    //print ((name) + String(badguyArray[i]))
+
                     let pos = tileNode.position
                     badguyai[newitem + String(badguyArray[i])] = pos // we are now setting the home position, but we are storing this for the drive Letter
                     
                     let gravity = false;
-                    let radius = TileMapTileSize.width / 2.0 //- 2.0
+                    let radius = TileMapTileSize.width / 2
                     let physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(radius))
-                    let rotation = true;
+                    let rotation = true
                     
                     //let fliph = tileDefinition.flipHorizontally
                     //let flipy = tileDefinition.flipVertically
                     let cat = 16 as UInt32
                     let col = 0  as UInt32
                     let con = 1 + 64 as UInt32
-                    bgroutes = 2 //tileData?["routes"] as! Int
-                    bgnodes = 2 //tileData?["nodes"] as! Int
-                    
-                    //Item determines routes and nodes
-                    // 😠 = Leader and three routes
-                    // 😡 = Lieutenant and three routes
-                    // 🤬 = Private and three routes
-                    if newitem == "😠" || newitem == "😡" || newitem == "🤬" {
-                        bgroutes = 3 //tileData?["routes"] as! Int
-                        bgnodes = 3 //tileData?["nodes"] as! Int
-                    }
-                    
-                    //Item determines routes and nodes
-                    // 🤯 = Leader and five routes
-                    // 😳 = Colonel and five routes
-                    // 😱 = Lieutenant and five routes
-                    // 😨 = General and five routes
-                    // 😰 = Private and five routes
-                    if newitem == "🤯" || newitem == "😳" || newitem == "😱" || newitem == "😨" || newitem == "😰" {
-                        
-                        // print(newitem)
-                        
-                        bgroutes = 5 //tileData?["routes"] as! Int
-                        bgnodes = 5 //tileData?["nodes"] as! Int
-                    }
-                    
-                    DrawBadGuxAI(TileMapParent: TileMapParent, TileNode: tileNode, PhysicsBody: physicsBody, Dynamic: true, Gravity: gravity, Category: cat, Collision: col, Rotation: rotation, Emoji: newemoji, Name: newitem, Contact: con, Mass: 0.1, Friction: 0, Letter: String(badguyArray[i]), Routes: bgroutes, Nodes: bgnodes )
+                  
+                    DrawBadGuxAI(TileMapParent: TileMapParent, TileNode: tileNode, PhysicsBody: physicsBody, Dynamic: true, Gravity: gravity, Category: cat, Collision: col, Rotation: rotation, Emoji: newemoji, Name: newitem, Contact: con, Mass: 0.1, Friction: 0, Letter: String(badguyArray[i]), Routes: 5, Nodes: 5 )
                     
                     break
                 }
             }
             
             // see if we can remove the count here
-        } else if ( newname == "📈" ) {
-            
-            for i in 1...5 {
-                if badguyai[(name) + String(badguyArray[i])] == nil {
-                    let pos = tileNode.position
-                    badguyai[(name) + String(badguyArray[i])] = pos
-                    break;
-                }
-            }
-            
         } else if ( tileData?["isGrass"] as? Bool == true )  {
             
             centerTexture = SKTexture(imageNamed: name + "top2")
@@ -1337,7 +1342,7 @@ class GameTileMapRun {
                     col = 2 + 128 + 256 + 1024  as UInt32
                     con = 32 as UInt32
                     cat = 1024 as UInt32
-                case "☄️" :
+                case "🤯", "🛸" :
                     col = 0  as UInt32
                     con = 1 + 64 as UInt32
                     cat = 16 as UInt32
@@ -1357,13 +1362,13 @@ class GameTileMapRun {
                     con = 32 as UInt32
                     cat = 1024 as UInt32
                     
-                    if newemoji == "⁉️" || newemoji == "‼️" {
+                    if newemoji == "⁉️" {
                         newitem = newemoji
                     }
                     
                     newemoji = String(levelarray[settings.level])
                 
-                case "❣️", "🔱", "💠", "🛡", "🔫":
+                case "❣️", "🔱", "💠", "🛡", "🔫", "🕹":
                     col = 2 + 128 + 256 + 1024 as UInt32
                     con = 32 as UInt32
                     cat = 1024 as UInt32
@@ -1373,7 +1378,7 @@ class GameTileMapRun {
                     con = 1 + 64 as UInt32
                     cat = 2 as UInt32
                     
-                    if newemoji == "⁉️" || newemoji == "‼️" {
+                    if newemoji == "‼️" {
                         newitem = newemoji
                     }
                     
@@ -1389,7 +1394,7 @@ class GameTileMapRun {
                     con = 1 + 64 as UInt32
                     cat = 8 as UInt32
                 
-                case "🛸" :
+                case "🛸xxxs" :
                     col = 2 + 64 + 128 + 256 + 1024 as UInt32
                     con = 1 + 64 as UInt32
                     cat = 2 as UInt32

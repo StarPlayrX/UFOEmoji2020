@@ -1,7 +1,7 @@
 //
 //  GTFlightYoke ]|[ the Ultimate Precision Touch Screen Gaming Flight Stick
 //
-//  by GT | Todd Bruss (c) 2020
+//  by GoodTime aka Todd Bruss (c) 2015 - 2020
 //
 
 import SpriteKit
@@ -14,7 +14,7 @@ protocol FlightYokeProtocol: class {
 class GTFlightYoke: SKNode {
     
     deinit {
-        print("Game Pad De-Init!!!!!!!")
+        //print("Game Pad De-Init!")
         //Should not De-Init until it quits
     }
     
@@ -75,8 +75,6 @@ class GTFlightYoke: SKNode {
             recenter()
             runtimeLoop = CADisplayLink(target: self, selector: #selector(update))
             runtimeLoop?.add(to: RunLoop.current, forMode: RunLoop.Mode.common)
-            
-            
         }
     }
     
@@ -132,7 +130,7 @@ class GTFlightYoke: SKNode {
         self.bgImage = bgImage
         
         super.init()
-       
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -148,7 +146,7 @@ class GTFlightYoke: SKNode {
     
     
     //MARK: Stick Moved (After)
-    func stickMoved(location: CGPoint) {
+    func stickMoved(location: CGPoint, snapToPoles: Bool = false) {
         
         //MARK: Clamp our max and min range of our joystick
         func clamp (_ f: CGFloat) -> CGFloat {
@@ -166,12 +164,23 @@ class GTFlightYoke: SKNode {
         let clampX = clamp( floor(location.x) )
         let clampY = clamp( floor(location.y) )
         
-        let snapY = snap( clampX, clampY )
-        let snapX = snap( clampY, clampX )
+        var moveToLocation = SKAction()
         
-        velocity = CGVector(dx: snapX * multiplier, dy: ( snapY * multiplier ) / two )
+        if snapToPoles {
+            let snapY = snap( clampX, clampY )
+            let snapX = snap( clampY, clampX )
+            
+            velocity = CGVector(dx: snapX * multiplier, dy: ( snapY * multiplier ) / two )
+            moveToLocation = SKAction.move(to: CGPoint( x: snapX, y: snapY ), duration: ease )
+            
+        } else {
+            velocity = CGVector(dx: clampX * multiplier, dy: ( clampY * multiplier ) / two )
+            moveToLocation = SKAction.move(to: CGPoint( x: clampX, y: clampY ), duration: ease )
+        }
+      
         
-        let moveToLocation = SKAction.move(to: CGPoint( x: snapX,y: snapY ), duration: ease )
+	
+       
         moveToLocation.timingMode = .easeOut
         thumbNode.run( moveToLocation )
     }
@@ -182,7 +191,7 @@ class GTFlightYoke: SKNode {
         
         if let location = touches.first?.location(in: self) {
             if location != CGPoint.zero  {
-                stickMoved(location: location)
+                 stickMoved(location: location)
             }
         }
     }

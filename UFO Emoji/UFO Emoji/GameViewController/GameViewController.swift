@@ -16,7 +16,6 @@ protocol GameProtocol: class {
 
 class GameViewController: UIViewController, GameProtocol {
     
-
     func runGameMenu() {
         gameMenu()
     }
@@ -29,22 +28,15 @@ class GameViewController: UIViewController, GameProtocol {
         super.viewDidLoad()
         gameDelegate = self
         gameMenu()
-        
-
     }
     
     deinit {
         print("VC Deinited")
     }
     
-
-    
     override func viewWillAppear(_ animated: Bool) {
         view.backgroundColor = .red
     }
-    
-
-    
     
     func gameMenu() {
         guard
@@ -54,9 +46,10 @@ class GameViewController: UIViewController, GameProtocol {
         
         DispatchQueue.main.async  { [weak view] in
             guard let view = view else { return }
+            scene.size = setSceneSizeForMenu()
+            
             scene.scaleMode = .aspectFill
-            scene.size = setSceneSizeForGame()
-            scene.scaleMode = .aspectFill
+
             scene.backgroundColor = SKColor.init(displayP3Red: 0, green: 20 / 255, blue: 80 / 255, alpha: 1.0)
             view.isMultipleTouchEnabled = true
             view.allowsTransparency = false
@@ -89,18 +82,25 @@ class GameViewController: UIViewController, GameProtocol {
         guard
             let view = self.view as? SKView,
             let scene = GameScene(fileNamed: "GameScene")
-            else { print("FAILED"); return }
+            else {
+                print("Failed to launch gameLevel().")
+                return
+                
+        }
         
         DispatchQueue.main.async  {  [weak view] in
             guard let view = view else { return }
-            scene.scaleMode = .aspectFill
             scene.size = setSceneSizeForGame()
+
             scene.scaleMode = .aspectFill
+
             scene.backgroundColor = SKColor.black
             view.isMultipleTouchEnabled = true
             view.allowsTransparency = false
             view.isAsynchronous = true
-            
+            view.backgroundColor = .black
+            scene.backgroundColor = SKColor.init(displayP3Red: 0, green: 20 / 255, blue: 80 / 255, alpha: 0.25)
+
             view.isOpaque = true
             view.clipsToBounds = true
             view.ignoresSiblingOrder = true
@@ -111,18 +111,18 @@ class GameViewController: UIViewController, GameProtocol {
             view.showsFields = showsFields
             view.showsDrawCount = showsDrawCount
             view.showsQuadCount = showsQuadCount
-            
-            view.showsLargeContentViewer = false
+            scene.anchorPoint = CGPoint(x: 1, y: 1)
+
+            if #available(iOS 13.0, *) {
+                view.showsLargeContentViewer = false
+            } else {
+                // Fallback on earlier versions
+            }
             view.shouldCullNonVisibleNodes = true
             view.preferredFramesPerSecond = 61
             view.presentScene(scene)
 
         }
-        
-       /* DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
-            guard let self = self else { return }
-            self.removeFromParent()
-        }*/
     }
     
     

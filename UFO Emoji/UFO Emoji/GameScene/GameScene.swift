@@ -118,13 +118,13 @@
     private lazy var 👁: SKSpriteNode! = SKSpriteNode()
     private lazy var 💣: SKSpriteNode! = SKSpriteNode()
     private let 🦞 = SKPhysicsBody(circleOfRadius: 16)
-    private let 🧨: SKLabelNode! = SKLabelNode(fontNamed:"Apple Color Emoji")
+    private let 🧨: SKLabelNode! = SKLabelNode(fontNamed:emojifontname)
     private var 💩 : String! = "💩"
     private var 🚨 : String! = "fire.m4a"
     private var 💥 : String! = "wah2.m4a"
     private var 🌞 : UInt32! = UInt32(32)
     private let 🍺 : CGFloat! = CGFloat(16)
-    private let 🍎 : String! = "Apple Color Emoji"
+    private let 🍎 : String! = emojifontname
     private let 🍌 : String! = "🍌"
     private let 🦸 : String! = "laserbeam"
     private let 🥾 : String! = "super"
@@ -138,7 +138,7 @@
         
         
         if let first = world.children.first, first.hasActions() {
-            print("Removing Actions from SKReference Node")
+            //print("Removing Actions from SKReference Node")
             first.removeAllActions()
             first.removeAllChildren()
             first.removeFromParent()
@@ -146,7 +146,7 @@
         
         
         if let w = world {
-            print("DeInit World")
+            //print("DeInit World")
             w.removeAllActions()
             w.removeAllChildren()
             w.removeFromParent()
@@ -155,7 +155,7 @@
         }
         
         if let c = cam {
-            print("DeInit Cam")
+            //print("DeInit Cam")
             c.removeAllActions()
             c.removeAllChildren()
             c.removeFromParent()
@@ -164,7 +164,7 @@
         }
         
         if let cm = camera {
-            print("DeInit Camera")
+            //print("DeInit Camera")
             cm.removeAllActions()
             cm.removeAllChildren()
             cm.removeFromParent()
@@ -173,7 +173,7 @@
         }
         
         if let scene = scene {
-            print("DeInit Scene")
+            //print("DeInit Scene")
             scene.removeAllActions()
             scene.removeAllChildren()
             scene.removeFromParent()
@@ -182,13 +182,13 @@
         
         
         if hasActions() {
-            print("Actions Found")
+            //print("Actions Found")
             removeAllActions()
         }
         
         if !children.isEmpty {
-            print("Destroy the remaining characters!")
-            print(children)
+            //print("Destroy the remaining characters!")
+            //print(children)
             removeAllChildren()
         }
         
@@ -395,7 +395,7 @@
             alphaThreshold: 1.0
         )
         
-        heroEmoji = SKLabelNode(fontNamed:"Apple Color Emoji")
+        heroEmoji = SKLabelNode(fontNamed:emojifontname) //"Apple Color Emoji"
         heroEmoji.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         heroEmoji.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         heroEmoji.alpha = 1.0
@@ -661,13 +661,12 @@
             highScoreLabelNode.run(SKAction.fadeAlpha(to: 0.4, duration: 0.25))
             highScoreLabel.run(SKAction.fadeAlpha(to: 0.4, duration: 0.25))
         }
-        
-        
+    
         /**
          Used by Asteriods and Chopper I
          */
         func movingObjectI() {
-            world.children.first?.enumerateChildNodes(withName: "☄️") { node, _ in
+            world.children.first?.enumerateChildNodes(withName: "🤯") { node, _ in
                 guard let body = node.physicsBody else { return }
                 
                 if body.isDynamic {
@@ -677,31 +676,8 @@
                 }
             }
         }
-        
-      
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+    
       	movingObjectI()
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     
@@ -710,6 +686,8 @@
         🛡 = true
         💠 = true
         🔱 = true
+        🕹 = true
+        
         let logonode = SKSpriteNode(texture: SKTexture(imageNamed: "UFOEmojiLogoLarge"))
         self.cam.addChild(logonode)
         logonode.setScale(0.1875)
@@ -726,7 +704,7 @@
         
         FlightYoke = GTFlightYoke()
         FlightYoke.startup()
-        print("HELLO WORLD!")
+        //print("HELLO WORLD!")
         world = childNode(withName: "world")
         
         // This is the default of King, Queen Nationality
@@ -735,10 +713,10 @@
         🔱 = false
         💠 = false
         🛡 = false
-        
+        🕹 = false
         doublelaser = 0
         
-        if (settings.level >= 1 && settings.level <= 10) {
+        if (settings.level >= 1 && settings.level <= maxlevel) {
             if let soundURL: URL = Bundle.main.url(forResource: "music1", withExtension: "mp3") {
                 audioPlayer = try? AVAudioPlayer(contentsOf: soundURL)
             }
@@ -783,21 +761,27 @@
         scoreDict["😰"] = 60 //super villians
         scoreDict["😨"] = 70 //super villians
         scoreDict["⭕️"] = 75 //heroes
-        scoreDict["❌"] = 75 //villians
-        scoreDict["😱"] = 80 //super villians
-        scoreDict["😳"] = 90 //super villians
-        scoreDict["☄️"] = 95 // Meteor
-        scoreDict["🤯"] = 100 //super villian leader
+        scoreDict["⁉️"] = 80 //heroes not flipped
+        scoreDict["❌"] = 85 //villians
+        scoreDict["‼️"] = 90 //Hero Villians not flipped
+
+        scoreDict["😡"] = 100 //super villians
+        scoreDict["🤬"] = 110 //super villians
+        scoreDict["😳"] = 120 //super villians
+        scoreDict["😱"] = 130 //super villians
+        scoreDict["🤯"] = 140 // Meteor or super villian
+        scoreDict["😠"] = 150 // Meteor or super villian
+
         scoreDict["💰"] = 105 //rare
         scoreDict["💎"] = 110 //rare
         scoreDict["👑"] = 115 //rare
         scoreDict["❣️"] = 120 //extra life (displays him/herself in the game)
         scoreDict["🔫"] = 130 //super rare marker for double laser beams
         scoreDict["🔱"] = 140 //super rare trident (super bomb)
-        scoreDict["‼️"] = 130 //Hero Villians not flipped
         scoreDict["🛡"] = 150 //super rare shields (cloaked ghost, move through walls)
-        scoreDict["💠"] = 150 //super rare shields (cloaked ghost, move through walls)
-        
+        scoreDict["💠"] = 160 //super rare shields (cloaked ghost, move through walls)
+        scoreDict["🕹"] = 170 //super rare shields (cloaked ghost, move through walls)
+
         scoreDict["land"] 	= 1
         scoreDict["dirt"] 	= 1
         scoreDict["grass"] 	= 2
@@ -825,12 +809,12 @@
         switch level {
             
             //skyMtns
-            case 1..<100:
-                background = "waterWorld"
-            case 6..<9:
-                ()
-            case 10:
-                ()
+            case 1...5:
+                background = "waterWorld" //waterWorld
+            case 6...10:
+                background = "miniDesert"
+            case 11...15:
+                background = "skyMtns"
             default :
                 ()
         }
@@ -838,7 +822,7 @@
         
         var filename = "" //default
         
-        filename = "level1"
+        filename = "level\(level)"
          
         world.isPaused = true
         world.isHidden = true
@@ -846,8 +830,6 @@
         let gameWorld = GameWorld(world: world)
         
         world = gameWorld.gameLevel(filename: filename)
-        
-        //print(world.children[1])
         world.isPaused = false
         world.isHidden = false
         
@@ -895,7 +877,7 @@
                         let w = frame.width
                         let h = frame.height
                             
-                        let laserBounds = CGRect(x: x - 5, y: y, width: w + 10, height: h)
+                        let laserBounds = CGRect(x: x + 15, y: y, width: w - 30, height: h) //center laserbeam border within a square
                         laserBoundsNode.physicsBody = SKPhysicsBody(edgeLoopFrom: laserBounds )
                         
                         laserBoundsNode.name = "🔲"
@@ -906,7 +888,7 @@
                         laserBoundsNode.physicsBody?.affectedByGravity = false
                         laserBoundsNode.physicsBody?.restitution = 0
                         laserBoundsNode.speed = 0
-                        laserBoundsNode.yScale = 1.5
+                        //laserBoundsNode.yScale = 1.5
                         self.cam.addChild(laserBoundsNode)
                         
                         node.removeFromParent()
@@ -931,6 +913,7 @@
         
         screenHeight = sh / 2 - 64
         let sceneheight = sh / 2
+        
         let indent = ( sw / 2 ) - 7.5 * CGFloat(settings.mode)
         let difference = CGFloat(20)
         let labelheight = sceneheight - difference
@@ -1034,7 +1017,7 @@
         
         var animationSeqArr = [SKAction]()
 
-        for x in 1..<emojis.count {
+        for x in 0..<emojis.count {
             let emoji = SKAction.run() { [weak emojiNode ] in emojiNode?.text = emojis[x] }
             animationSeqArr.append(wait)
             animationSeqArr.append(emoji)
@@ -1064,22 +1047,22 @@
             
             if let name = touchedNode.name {
                 
-                if name == "fire-right" {
+                if name == "fire-right" || 🕹 {
                     laserbeak(superhero: (heroPosition, herozRotation, heroVelocity), reverse: false)
                     firebomb(firebomb: firebutton)
                 }
                 
-                if name == "fire-left" {
+                if name == "fire-left"  || 🕹 {
                     laserbeak(superhero: (heroPosition, herozRotation, heroVelocity), reverse: true)
                     firebomb(firebomb: firebutton2)
                 }
                 
-                if name == "fire-down" {
+                if name == "fire-down"  || 🕹 {
                     bombaway(superhero: (heroPosition, herozRotation, heroVelocity), reverse: false)
                     firebomb(firebomb: bombsbutton)
                 }
                 
-                if name == "fire-top" {
+                if name == "fire-top"  || 🕹 {
                     bombaway(superhero: (heroPosition, herozRotation, heroVelocity), reverse: true)
                     firebomb(firebomb: bombsbutton2)
                 }
@@ -1405,28 +1388,35 @@
             
             case laserbeam | laserBorder :
                 if let x = firstBody.node?.name {
-                    if x == "🚩" {
+                    if x == "🚩" || x == "💠" {
                         remove(body:firstBody)
                     }
             }
             
             case worldCategory | laserbeam :
-                if firstBody.node?.name == "stone" && (secondBody.node?.name == "🔱" || secondBody.node?.name == "💠") {
-                    baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-                    print("A")
-                } else if firstBody.node?.name == "stone"   {
-                    stoneVersusLaser(secondBody: secondBody, contactPoint: contact.contactPoint)
-                    print("B")
-
-                } else if firstBody.isDynamic {
-                    baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-                    print("C")
-
+                
+                if firstBody.node?.name == "stone" {
+                    
+                    if !firstBody.isDynamic && (secondBody.node?.name == "🔱" || secondBody.node?.name == "💠") {
+                        worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
+                    } else if firstBody.isDynamic && (secondBody.node?.name == "🔱" || secondBody.node?.name == "💠") {
+                        baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                    } else {
+                        stoneVersusLaser(secondBody: secondBody, contactPoint: contact.contactPoint)
+                    }
+                    
                 } else {
-                    worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
-                    print("D")
-
-            }
+                    
+                	if !firstBody.isDynamic {
+                	    worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
+                	} else if firstBody.isDynamic {
+                	    baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                	} else {
+                 	   worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
+            		}
+                }
+        
+                
             
             case badFishCategory | laserbeam :
                 
@@ -1819,7 +1809,7 @@
         
         
         //gives our ship double lasers
-        if name == "🔫" || name == "‼️"  {
+        if name == "🔫" {
             doublelaser = 1
             
             if let l = livesLabel.text, !l.contains("🔫") {
@@ -1835,7 +1825,7 @@
         }
         
         //gives our ship superman lasers
-        if name == "💠" {
+        if name == "💠" || name == "💎" {
             💠 = true
             
             if let l = livesLabel.text, !l.contains("💠") {
@@ -1856,6 +1846,21 @@
                 livesLabel.text? += ("🔱")
             }
                 
+            if settings.sound {
+                let fire: SKAction = SKAction.playSoundFileNamed("doublelaser.m4a", waitForCompletion: false)
+                self.run(fire)
+            }
+        }
+        
+        //gives our trident bombs
+        if name == "🕹" {
+            🕹 = true
+            doublelaser = 1
+
+            if let l = livesLabel.text, !l.contains("🕹") {
+                livesLabel.text? += ("🕹")
+            }
+            
             if settings.sound {
                 let fire: SKAction = SKAction.playSoundFileNamed("doublelaser.m4a", waitForCompletion: false)
                 self.run(fire)
@@ -1892,30 +1897,24 @@
     
     func laserbeak (superhero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool) {
         
-        guard let 🧵 = 💠 ? 🥾 + 🦸 : 🦸 else { return }
+        guard let 🧵 = 💠 ? 🥾 + 🦸 : 🦸 else { print("SHIT"); return }
         
         👁 = SKSpriteNode(texture: SKTexture(imageNamed: 🧵 ))
         
         
         var 👨‍🔬 = SKPhysicsBody(rectangleOf: 👁.size)
         
-        🛥 = !🛥
         
         //Monkey
         if settings.emoji == 2 {
             
             👁.physicsBody?.applyAngularImpulse(5)
-            if 🛥 {
-                🍕 = 1
-            } else {
-                🍕 = -1
-            }
-            
-            
+           // 🛥 ? (🍕 = 1) : (🍕 = -1)
+        
             //let texture = SKTexture.init(image: self.transparentimage)
             👁 = SKSpriteNode()
             👨‍🔬 = SKPhysicsBody(circleOfRadius: 🍺);
-            let 🔫: SKLabelNode = SKLabelNode(fontNamed:🍎)
+            let 🔫: SKLabelNode = SKLabelNode(fontNamed:emojifontname)
             
             🔫.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
             🔫.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
@@ -1925,11 +1924,7 @@
         }
         
         
-        if !💠 {
-            👁.name = "🚩"
-        } else {
-            👁.name = "💠"
-        }
+        💠 ? (👁.name = "💠") : (👁.name = "🚩")
         
         👁.isUserInteractionEnabled = false
         👁.physicsBody = 👨‍🔬
@@ -1940,8 +1935,7 @@
         👁.physicsBody?.fieldBitMask = 0
         👁.physicsBody?.categoryBitMask = 64
         👁.physicsBody?.collisionBitMask = 0
-        let ctb = UInt32(14106)
-        👁.physicsBody?.contactTestBitMask = UInt32(ctb)
+        👁.physicsBody?.contactTestBitMask = UInt32(10010)
         👁.physicsBody?.applyImpulse(CGVector(dx: 100,dy: 0))
         👁.speed = CGFloat(0.8)
         👁.physicsBody?.usesPreciseCollisionDetection = false
@@ -1966,10 +1960,6 @@
         👁.physicsBody?.velocity = CGVector( dx: d.x * constantX + superhero.velocity.dx, dy: rotateLaser * d.y * constantY )
         
         👁.zRotation = superhero.zRotation
-        
-        if 👁.name!.isEmpty {
-            print(👁 as Any)
-        }
         
         let laserDupe = 👁.copy() as! SKSpriteNode
         addChild(laserDupe)
@@ -2002,14 +1992,13 @@
     
     
     func bombaway (superhero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool ) {
-        🛥 = !🛥
         
         💣 = SKSpriteNode()
         💣.position = (CGPoint(x:superhero.position.x, y:superhero.position.y - 10))
         
         //MARK: How to assign values in an Elvis Operator
+
         🔱 ? (💣.name = "🔱") : (💣.name = "💣")
-        
         
         💣.isUserInteractionEnabled = false
         💣.physicsBody = 🦞
@@ -2020,8 +2009,7 @@
         💣.physicsBody?.categoryBitMask = 64
         💣.physicsBody?.collisionBitMask = 4
         //let ctb = UInt32(2 + 8 + 16 + 256 + 512 + 1024 + 8192)
-        let ctb = UInt32(14106)
-        💣.physicsBody?.contactTestBitMask = ctb
+        💣.physicsBody?.contactTestBitMask = UInt32(10010)
         💣.physicsBody?.applyImpulse(CGVector(dx: 0,dy: 50))
         💣.physicsBody?.density = 0
         💣.physicsBody?.fieldBitMask = 0
@@ -2036,9 +2024,7 @@
             💣.physicsBody?.velocity =  CGVector( dx: superhero.velocity.dx / 4, dy: -350 )
         }
         
-        
-        🛥 ? (💣.zPosition = 100) : (💣.zPosition = -100)
-        
+                
         🧨.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         🧨.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         

@@ -72,7 +72,7 @@ class GameOver: SKScene {
             self.backgroundColor = SKColor.black
             
             /* Game Over Message */
-            let label = SKLabelNode(fontNamed: "Apple Color Emoji")
+            let label = SKLabelNode(fontNamed: emojifontname)
             label.text = message
             label.fontSize = 68
             label.horizontalAlignmentMode = .center
