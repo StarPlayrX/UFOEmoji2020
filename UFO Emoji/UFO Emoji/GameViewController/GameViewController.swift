@@ -70,12 +70,6 @@ class GameViewController: UIViewController, GameProtocol {
             view.presentScene(scene)
 
         }
-        
-      /*  DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
-            guard let self = self else { return }
-            self.removeFromParent()
-        }*/
-        
     }
     
     func gameLevel() {

@@ -29,7 +29,7 @@ var 💠 = false
 var 🕹 = false
 
 var KingQueenGlobalDie = 100
-var emojifontname = "Toddmoji" //"Segoe UI Emoji" //"EmojiOneColor"//     "Apple Color Emoji" //"Segoe UI Emoji"
+var emojifontname = "Apple Color Emoji" //"Toddmoji" //"Segoe UI Emoji" //"EmojiOneColor"//     "Apple Color Emoji" //"Segoe UI Emoji"
 var gameDelegate : GameProtocol?
 
 let showsFPS = false
