@@ -80,7 +80,6 @@ class GameViewController: UIViewController, GameProtocol {
             let view = self.view as? SKView,
             let scene = GameScene(fileNamed: "GameScene")
             else {
-                print("Failed to launch gameLevel().")
                 return
                 
         }

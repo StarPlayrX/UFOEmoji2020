@@ -9,7 +9,6 @@
  import SpriteKit
  import AVFoundation
  
- 
  class GameScene: SKScene, FlightYokeProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
     //MARK: Flight Stick
@@ -19,6 +18,8 @@
     let shipCtr = CGFloat(250.0)
     let shipMin = CGFloat(-500.0)
     
+    var alternator = false
+    
     func FlightYokePilot(velocity: CGVector?, zRotation: CGFloat?) {
         //MARK: reference to hero's physic's body - easier
         guard
@@ -26,7 +27,7 @@
             let pb = hero.physicsBody,
             let velocity = velocity,
             let zRotation = zRotation
-            else { return }
+        else { return }
         
         func rotateShip (_ t: TimeInterval, _ angle: CGFloat ) {
             let rot = SKAction.rotate(toAngle: angle, duration: t)
@@ -64,7 +65,7 @@
     private var QuadFireBombHUD : SKReferenceNode!
     private var AlienYokeDpdHUD : SKReferenceNode!
     private var parallax = SKReferenceNode()
-        
+    
     typealias Oreo = (bombsbutton:SKSpriteNode?,firebutton:SKSpriteNode?,hero:SKSpriteNode?,canape:SKSpriteNode?,tractor:SKSpriteNode?,bombsbutton2:SKSpriteNode?,firebutton2:SKSpriteNode?)
     
     private weak var firstBody : SKPhysicsBody!
@@ -268,7 +269,7 @@
                     sprite.physicsBody?.restitution = 0
                     sprite.position = CGPoint(x:sprite.position.x, y: sprite.position.y - 25)
                 } //else {
-                  //  sprite.physicsBody = SKPhysicsBody(texture: sprite.texture!, alphaThreshold: alphaThreshold, size: sprite.size)
+                //  sprite.physicsBody = SKPhysicsBody(texture: sprite.texture!, alphaThreshold: alphaThreshold, size: sprite.size)
                 //}
                 
                 sprite.physicsBody?.categoryBitMask = category
@@ -565,7 +566,7 @@
                 let bodyA = hero.physicsBody,
                 let bodyB = tractor.physicsBody,
                 let anchor = hero.position as CGPoint?
-                else { return }
+            else { return }
             bodyA.density = 1.0
             let joint = SKPhysicsJointPin.joint(withBodyA: bodyA, bodyB: bodyB, anchor: anchor)
             physicsWorld.add(joint)
@@ -576,7 +577,7 @@
                 let bodyA = hero.physicsBody,
                 let bodyB = canape.physicsBody,
                 let anchor = hero.position as CGPoint?
-                else { return }
+            else { return }
             
             let joint = SKPhysicsJointPin.joint(withBodyA: bodyA, bodyB: bodyB, anchor: anchor)
             joint.rotationSpeed = 1.0
@@ -634,15 +635,15 @@
     }
     
     
-
+    
     //MARK: Function Update
     override func update(_ currentTime: TimeInterval) {
         
         guard
             let hero = hero,
             let pos = hero.position as CGPoint?
-            else { return }
-                
+        else { return }
+        
         if pos.y > screenHeight && highScoreLabelNode.alpha > 0.0 {
             
             highScoreLabelNode.run(SKAction.fadeAlpha(to: 0.0, duration: 0.25))
@@ -653,7 +654,7 @@
             highScoreLabelNode.run(SKAction.fadeAlpha(to: 0.4, duration: 0.25))
             highScoreLabel.run(SKAction.fadeAlpha(to: 0.4, duration: 0.25))
         }
-    
+        
         /**
          Used by Asteriods and Chopper I
          */
@@ -668,8 +669,10 @@
                 }
             }
         }
-    
-      	movingObjectI()
+        
+        
+        
+        movingObjectI()
     }
     
     
@@ -735,7 +738,7 @@
         QuadFireBombHUD.zRotation = CGFloat(Double.pi/4)
         
         guard let gamestartup = readyPlayerOne() else { return }
-        
+        //😸
         doublelaser = 0
         scoreDict[""] = 1
         scoreDict["🐽"] = 5
@@ -757,12 +760,15 @@
         scoreDict["‼️"] = 90 //Hero Villians not flipped
 
         scoreDict["😡"] = 100 //super villians
+        
+        scoreDict["😸"] = 105
+
         scoreDict["🤬"] = 110 //super villians
         scoreDict["😳"] = 120 //super villians
         scoreDict["😱"] = 130 //super villians
         scoreDict["🤯"] = 140 // Meteor or super villian
         scoreDict["😠"] = 150 // Meteor or super villian
-
+        
         scoreDict["💰"] = 105 //rare
         scoreDict["💎"] = 110 //rare
         scoreDict["👑"] = 115 //rare
@@ -772,7 +778,7 @@
         scoreDict["🛡"] = 150 //super rare shields (cloaked ghost, move through walls)
         scoreDict["💠"] = 160 //super rare shields (cloaked ghost, move through walls)
         scoreDict["🕹"] = 170 //super rare shields (cloaked ghost, move through walls)
-
+        
         scoreDict["land"] 	= 1
         scoreDict["dirt"] 	= 1
         scoreDict["grass"] 	= 2
@@ -781,7 +787,7 @@
         scoreDict["stone"] 	= 8
         scoreDict["gold"]   = 16
         scoreDict["straw"]  = 16
-
+        
         hero = gamestartup.hero
         canape = gamestartup.canape
         tractor = gamestartup.tractor
@@ -798,26 +804,26 @@
         var background = ""
         
         switch level {
-            
-            //skyMtns
-            case 1...5:
-                background = "waterWorld" //waterWorld
-            case 6...10:
-                background = "miniDesert"
-            case 11...15:
-                background = "skyMtns"
-            default :
-                ()
+        
+        //skyMtns
+        case 1...5:
+            background = "waterWorld" //waterWorld
+        case 6...10:
+            background = "miniDesert"
+        case 11...15:
+            background = "skyMtns"
+        default :
+            ()
         }
         
         
         var filename = "" //default
         
         filename = "level\(level)"
-         
+        
         world.isPaused = true
         world.isHidden = true
-    
+        
         let gameWorld = GameWorld(world: world)
         
         world = gameWorld.gameLevel(filename: filename)
@@ -858,23 +864,19 @@
                         addnode.zPosition = -10000
                         
                         addnode.physicsBody = SKPhysicsBody(edgeLoopFrom: bombBounds)
-                        addnode.physicsBody?.categoryBitMask = bombBoundsCategory;
+                        addnode.physicsBody?.categoryBitMask = bombBoundsCategory
                         addChild(addnode)
                         
+                        //update positioning
                         let laserBoundsNode = SKNode()
-                        
-                        let x = frame.origin.x
-                        let y = frame.origin.y
-                        let w = frame.width
-                        let h = frame.height
-                            
-                        let laserBounds = CGRect(x: x + 15, y: y, width: w - 30, height: h) //center laserbeam border within a square
+                        let screenWidth = CGFloat(UIScreen.main.bounds.size.width)
+                        let screenHeight = CGFloat(UIScreen.main.bounds.size.height)
+                        let laserBounds = CGRect(x: -screenWidth / 2 + 36, y: -screenHeight / 2, width: screenWidth - 72, height: screenHeight) //center laserbeam border within a square
                         laserBoundsNode.physicsBody = SKPhysicsBody(edgeLoopFrom: laserBounds )
-                        
                         laserBoundsNode.name = "🔲"
                         laserBoundsNode.physicsBody?.categoryBitMask = laserBorder
                         laserBoundsNode.physicsBody?.collisionBitMask = 0
-                        laserBoundsNode.physicsBody?.contactTestBitMask = 0
+                        laserBoundsNode.physicsBody?.contactTestBitMask = laserbeam
                         laserBoundsNode.physicsBody?.isDynamic = false
                         laserBoundsNode.physicsBody?.affectedByGravity = false
                         laserBoundsNode.physicsBody?.restitution = 0
@@ -887,7 +889,7 @@
                 }
             }
         }
-    
+        
         let gameParallax = GameParallax(parallax: parallax, bounds: rockBounds)
         parallax = gameParallax.setParallax(texture: SKTexture(imageNamed: background))
         world.addChild(parallax)
@@ -900,7 +902,7 @@
         guard
             let sh = scene?.frame.size.height,
             let sw = scene?.frame.size.width
-            else { return }
+        else { return }
         
         screenHeight = sh / 2 - 64
         let sceneheight = sh / 2
@@ -962,7 +964,19 @@
         livesLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         livesLabelNode.alpha = 0.4
         livesLabelNode.zPosition = 100
-        livesLabelNode.text = String(livesDisplay[lives])
+        
+        if lives > maxlives {
+            lives = maxlives
+        }
+        
+        if settings.emoji > 3 {
+            settings.emoji = 3
+        } else if settings.emoji < 1 {
+            settings.emoji = 1
+        }
+                
+        livesLabelNode.text = String(repeating: heroArray[settings.emoji], count: lives)
+        
         livesLabelNode.fontSize = 14
         cam.addChild(livesLabelNode)
         
@@ -975,6 +989,112 @@
             self.audioPlayer?.stop()
             self.audioPlayer?.volume = 0.0
         }
+        
+        
+        
+        if settings.rapidfire {
+            
+            let autofire = SKAction.sequence(
+                [ SKAction.run {
+                              
+                    switch UIApplication.shared.applicationState {
+                    case .background, .inactive:
+                        ()
+                    case .active:
+
+                        guard
+                            let hero = self.hero,
+                            let heroVelocity = hero.physicsBody?.velocity,
+                            let heroRotation = hero.zRotation as CGFloat?,
+                            let heroPosition = hero.position as CGPoint?,
+                            let firebutton = self.firebutton,
+                            let firebutton2 = self.firebutton2,
+                            let bombsbutton = self.bombsbutton,
+                            let bombsbutton2 = self.bombsbutton2
+                        else
+                        { return }
+                        
+                        func fireaway() {
+                            let fire = Int.random(in: 1...8)
+                            switch fire {
+                            
+                            case 1, 2, 3, 4:
+                                
+                                if heroVelocity.dx > 0 {
+                                    self.laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
+                                    self.firebomb(firebomb: firebutton)
+                                } else if  heroVelocity.dx < 0 {
+                                    self.laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
+                                    self.firebomb(firebomb: firebutton2)
+                                }
+                                
+                            case 5:
+                                
+                                self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
+                                
+                            case 6,7:
+                                
+                                if heroVelocity.dy < 0  {
+                                    self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
+                                    self.firebomb(firebomb: bombsbutton)
+                                } else if heroVelocity.dy > 0 {
+                                    self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
+                                    self.firebomb(firebomb: bombsbutton2)
+                                }
+                                
+                            case 8:
+                                
+                                self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
+                                
+                            default:
+                                ()
+                            }
+                        }
+                        
+                        func blaster() {
+                            self.laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
+                            self.laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
+                            self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
+                            self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
+                            
+                            if heroVelocity.dx > 0 {
+                                self.firebomb(firebomb: firebutton)
+                            } else if  heroVelocity.dx < 0 {
+                                self.firebomb(firebomb: firebutton2)
+                            }
+                            
+                            if heroVelocity.dy < 0  {
+                                self.firebomb(firebomb: bombsbutton)
+                            } else if heroVelocity.dy > 0 {
+                                self.firebomb(firebomb: bombsbutton2)
+                            }
+                        }
+                        
+                        
+                        func autoFire() {
+                            
+                            if !🕹 {
+                                fireaway()
+                            } else {
+                                self.alternator = !self.alternator
+                                self.alternator ?  blaster() : ()
+                            }
+                            
+                        }
+                        
+                        autoFire()
+                    default:
+                        break
+                    }
+                },
+                
+                SKAction.wait(forDuration: 0.1)
+                
+                ]
+            )
+            self.run( SKAction.repeatForever(autofire) )
+        }
+        
     }
     
     override func didSimulatePhysics() {
@@ -982,7 +1102,7 @@
         guard
             let h = hero,
             let c = canape
-            else
+        else
         { return }
         
         //camera node x position = hero's
@@ -998,16 +1118,16 @@
     
     
     public func emojiAnimation(emojis:Array<String>) {
-
+        
         guard
             let hero = hero,
             let emojiNode = hero.children.first as? SKLabelNode
-            else { return }
+        else { return }
         
         let wait = SKAction.wait(forDuration: 1.0)
         
         var animationSeqArr = [SKAction]()
-
+        
         for x in 0..<emojis.count {
             let emoji = SKAction.run() { [weak emojiNode ] in emojiNode?.text = emojis[x] }
             animationSeqArr.append(wait)
@@ -1019,15 +1139,15 @@
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard
-            let hero = hero,
-            let firebutton = firebutton,
-            let firebutton2 = firebutton2,
-            let bombsbutton = bombsbutton,
-            let bombsbutton2 = bombsbutton2,
+            let hero = self.hero,
             let heroVelocity = hero.physicsBody?.velocity,
-            let herozRotation = hero.zRotation as CGFloat?,
-            let heroPosition = hero.position as CGPoint?
-            else
+            let heroRotation = hero.zRotation as CGFloat?,
+            let heroPosition = hero.position as CGPoint?,
+            let firebutton = self.firebutton,
+            let firebutton2 = self.firebutton2,
+            let bombsbutton = self.bombsbutton,
+            let bombsbutton2 = self.bombsbutton2
+        else
         { return }
         
         super.touchesBegan(touches as Set<UITouch>, with: event)
@@ -1039,22 +1159,22 @@
             if let name = touchedNode.name {
                 
                 if name == "fire-right" || 🕹 {
-                    laserbeak(superhero: (heroPosition, herozRotation, heroVelocity), reverse: false)
+                    laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
                     firebomb(firebomb: firebutton)
                 }
                 
                 if name == "fire-left"  || 🕹 {
-                    laserbeak(superhero: (heroPosition, herozRotation, heroVelocity), reverse: true)
+                    laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
                     firebomb(firebomb: firebutton2)
                 }
                 
                 if name == "fire-down"  || 🕹 {
-                    bombaway(superhero: (heroPosition, herozRotation, heroVelocity), reverse: false)
+                    bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
                     firebomb(firebomb: bombsbutton)
                 }
                 
                 if name == "fire-top"  || 🕹 {
-                    bombaway(superhero: (heroPosition, herozRotation, heroVelocity), reverse: true)
+                    bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
                     firebomb(firebomb: bombsbutton2)
                 }
             }
@@ -1069,7 +1189,7 @@
             let prize = prize,
             let body = prize.physicsBody,
             prize.name != "🌠"
-            else { return }
+        else { return }
         
         
         // send the collisions to neverLand
@@ -1164,7 +1284,7 @@
         guard
             let secondBody = secondBody,
             let contactPoint = contactPoint
-            else { return }
+        else { return }
         
         blueZ(pos:contactPoint)
         remove(body:secondBody)
@@ -1175,7 +1295,7 @@
         guard
             let firstBody = firstBody,
             let secondBody = secondBody
-            else { return }
+        else { return }
         
         if let firstNode = firstBody.node, let secondNode = secondBody.node, let firstParent = firstNode.parent, let secondParent = secondNode.parent {
             let firstBodyPos = firstNode.scene?.convert(firstNode.position, from: firstParent)
@@ -1191,7 +1311,7 @@
                     let x2 = secondBodyPos?.x,
                     let y1 = firstBodyPos?.y,
                     let y2 = secondBodyPos?.y
-                    else { return }
+                else { return }
                 
                 var pos = CGFloat(-1)
                 if Double(x1) > Double(x2) {
@@ -1220,7 +1340,7 @@
         guard
             let firstBody = firstBody,
             let secondBody = secondBody
-            else { return }
+        else { return }
         
         
         if let firstNode = firstBody.node, let secondNode = secondBody.node, let firstParent = firstNode.parent, let secondParent = secondNode.parent {
@@ -1238,7 +1358,7 @@
                     let x2 = secondBodyPos?.x,
                     let y1 = firstBodyPos?.y,
                     let y2 = secondBodyPos?.y
-                    else { return }
+                else { return }
                 
                 var pos = CGFloat(-1)
                 
@@ -1271,7 +1391,7 @@
             let secondBody = secondBody,
             let contactPoint = contactPoint,
             let fbname = firstBody.node?.name
-            else { return }
+        else { return }
         
         if !fbname.isEmpty {
             let extraPoints = tallyPoints(name: fbname)
@@ -1289,7 +1409,7 @@
         guard
             let b = body,
             let node = b.node as? SKSpriteNode
-            else { return }
+        else { return }
         
         node.run( SKAction.removeFromParent() )
     }
@@ -1309,7 +1429,7 @@
             let secondBody = secondBody,
             let contactPoint = contactPoint,
             let sbnn = secondBody.node?.name
-            else { return }
+        else { return }
         
         if !sbnn.isEmpty {
             let extraPoints = tallyPoints(name: sbnn)
@@ -1361,7 +1481,7 @@
             contact.bodyB.node != nil,
             contact.bodyA.node?.name != nil,
             contact.bodyB.node?.name != nil
-            else { return }
+        else { return }
         
         
         
@@ -1374,166 +1494,167 @@
         }
         
         let catMask = firstBody.categoryBitMask | secondBody.categoryBitMask
-        
+        print(firstBody.node?.name,secondBody.node?.name)
         switch catMask {
+        case laserbeam | laserBorder :
             
-            case laserbeam | laserBorder :
-                if let x = firstBody.node?.name {
-                    if x == "🚩" || x == "💠" {
-                        remove(body:firstBody)
-                    }
+            if let x = firstBody.node?.name {
+                print(catMask, x)
+                if x == "🚩" || x == "💠" {
+                    remove(body:firstBody)
+                }
             }
             
-            case worldCategory | laserbeam :
-                
-                if firstBody.node?.name == "stone" {
-                    
-                    if !firstBody.isDynamic && (secondBody.node?.name == "🔱" || secondBody.node?.name == "💠") {
-                        worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
-                    } else if firstBody.isDynamic && (secondBody.node?.name == "🔱" || secondBody.node?.name == "💠") {
-                        baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-                    } else {
-                        stoneVersusLaser(secondBody: secondBody, contactPoint: contact.contactPoint)
-                    }
-                    
-                } else {
-                    
-                	if !firstBody.isDynamic {
-                	    worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
-                	} else if firstBody.isDynamic {
-                	    baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-                	} else {
-                 	   worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
-            		}
-                }
-        
-                
+        case worldCategory | laserbeam :
             
-            case badFishCategory | laserbeam :
+            if firstBody.node?.name == "stone" {
                 
-                if firstBody.isDynamic {
+                if !firstBody.isDynamic && (secondBody.node?.name == "🔱" || secondBody.node?.name == "💠") {
+                    worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
+                } else if firstBody.isDynamic && (secondBody.node?.name == "🔱" || secondBody.node?.name == "💠") {
+                    baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+                } else {
+                    stoneVersusLaser(secondBody: secondBody, contactPoint: contact.contactPoint)
+                }
+                
+            } else {
+                
+                if !firstBody.isDynamic {
+                    worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
+                } else if firstBody.isDynamic {
                     baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
                 } else {
                     worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
-            }
-            
-            case badGuyCategory | laserbeam :
-                
-                baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-            
-            case laserbeam | itemCategory :
-                
-                if secondBody.isDynamic {
-                    goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-                    
-                } else {
-                    laserVersusFloater(firstBody: firstBody, secondBody: secondBody)
-            }
-            
-            case laserbeam | fishCategory :
-                
-                if secondBody.isDynamic  {
-                    goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-                } else {
-                    laserVersusFloater(firstBody: firstBody, secondBody: secondBody)
-            }
-            
-            case laserbeam | charmsCategory :
-                
-                goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
-            
-            case tractorCategory | itemCategory, tractorCategory | charmsCategory, tractorCategory | fishCategory :
-                
-                if let prize = secondBody.node as? SKSpriteNode {
-                    tractorBeamedThisItem(prize: prize)
-            }
-            
-            case heroCategory | levelupCategory :
-                
-                levelUpHelper()
-                
-                if secondBody.node?.name == "🌀" {
-                    if level > 0 && level < 4 {
-                        level = 5
-                    }
                 }
+            }
+            
+            
+            
+        case badFishCategory | laserbeam :
+            
+            if firstBody.isDynamic {
+                baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+            } else {
+                worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
+            }
+            
+        case badGuyCategory | laserbeam :
+            
+            baddiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+            
+        case laserbeam | itemCategory :
+            
+            if secondBody.isDynamic {
+                goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
                 
-                saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+            } else {
+                laserVersusFloater(firstBody: firstBody, secondBody: secondBody)
+            }
+            
+        case laserbeam | fishCategory :
+            
+            if secondBody.isDynamic  {
+                goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+            } else {
+                laserVersusFloater(firstBody: firstBody, secondBody: secondBody)
+            }
+            
+        case laserbeam | charmsCategory :
+            
+            goodiePointsHelper(firstBody: firstBody, secondBody: secondBody, contactPoint: contact.contactPoint)
+            
+        case tractorCategory | itemCategory, tractorCategory | charmsCategory, tractorCategory | fishCategory :
+            
+            if let prize = secondBody.node as? SKSpriteNode {
+                tractorBeamedThisItem(prize: prize)
+            }
+            
+        case heroCategory | levelupCategory :
+            
+            levelUpHelper()
+            
+            if secondBody.node?.name == "🌀" {
+                if level > 0 && level < 4 {
+                    level = 5
+                }
+            }
+            
+            saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
+            
+            hero.physicsBody?.velocity = CGVector.zero
+            hero.physicsBody?.applyImpulse(CGVector.zero)
+            
+            let easeOut: SKAction = SKAction.move(to: CGPoint.zero, duration: 0.0)
+            easeOut.timingMode = SKActionTimingMode.easeOut
+            FlightYoke.run(easeOut)
+            FlightYokePilot(velocity: CGVector.zero, zRotation: 0.0)
+            
+            removeHero()
+            removeGUI()
+            
+            
+            //self.removeAllActions()
+            //self.removeAllChildren()
+            //self.removeFromParent()
+            
+            
+            //Loads the LevelUp Scene
+            func starPlayrOneLevelUpX(world:SKNode?, hero: SKSpriteNode?, tractor: SKSpriteNode?) {
+                
+                guard
+                    let world = world,
+                    let hero = hero,
+                    let tractor = tractor
+                else { return }
                 
                 hero.physicsBody?.velocity = CGVector.zero
                 hero.physicsBody?.applyImpulse(CGVector.zero)
+                hero.speed = 0
+                hero.removeFromParent()
+                tractor.removeFromParent()
+                world.speed = 0
                 
-                let easeOut: SKAction = SKAction.move(to: CGPoint.zero, duration: 0.0)
-                easeOut.timingMode = SKActionTimingMode.easeOut
-                FlightYoke.run(easeOut)
-                FlightYokePilot(velocity: CGVector.zero, zRotation: 0.0)
-                
-                removeHero()
-                removeGUI()
-                
-                
-                //self.removeAllActions()
-                //self.removeAllChildren()
-                //self.removeFromParent()
-                
-                
-                //Loads the LevelUp Scene
-                func starPlayrOneLevelUpX(world:SKNode?, hero: SKSpriteNode?, tractor: SKSpriteNode?) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+                    guard let self = self else { return }
+                    let levelup = LevelUp( size: self.size )
+                    levelup.runner()
+                    self.size = setSceneSizeForGame()
+                    levelup.scaleMode = .aspectFill
                     
-                    guard
-                        let world = world,
-                        let hero = hero,
-                        let tractor = tractor
-                        else { return }
+                    self.view?.backgroundColor = .black
                     
-                    hero.physicsBody?.velocity = CGVector.zero
-                    hero.physicsBody?.applyImpulse(CGVector.zero)
-                    hero.speed = 0
-                    hero.removeFromParent()
-                    tractor.removeFromParent()
-                    world.speed = 0
+                    self.view?.isMultipleTouchEnabled = true
+                    self.view?.allowsTransparency = false
+                    self.view?.isAsynchronous = true
+                    self.view?.isOpaque = true
+                    self.view?.clipsToBounds = true
+                    self.view?.ignoresSiblingOrder = true
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
-                        guard let self = self else { return }
-                        let levelup = LevelUp( size: self.size )
-                        levelup.runner()
-                        self.size = setSceneSizeForGame()
-                        levelup.scaleMode = .aspectFill
-                        
-                        self.view?.backgroundColor = .black
-                        
-                        self.view?.isMultipleTouchEnabled = true
-                        self.view?.allowsTransparency = false
-                        self.view?.isAsynchronous = true
-                        self.view?.isOpaque = true
-                        self.view?.clipsToBounds = true
-                        self.view?.ignoresSiblingOrder = true
-                        
-                        self.view?.showsFPS = showsFPS
-                        self.view?.showsNodeCount = showsNodeCount
-                        self.view?.showsPhysics = showsPhysics
-                        self.view?.showsFields = showsFields
-                        self.view?.showsDrawCount = showsDrawCount
-                        self.view?.showsQuadCount = showsQuadCount
-                        
-                        self.view?.shouldCullNonVisibleNodes = true
-                        self.view?.preferredFramesPerSecond = 61
-                        
-                        self.view?.presentScene(levelup)
-                    }
+                    self.view?.showsFPS = showsFPS
+                    self.view?.showsNodeCount = showsNodeCount
+                    self.view?.showsPhysics = showsPhysics
+                    self.view?.showsFields = showsFields
+                    self.view?.showsDrawCount = showsDrawCount
+                    self.view?.showsQuadCount = showsQuadCount
+                    
+                    self.view?.shouldCullNonVisibleNodes = true
+                    self.view?.preferredFramesPerSecond = 61
+                    
+                    self.view?.presentScene(levelup)
                 }
-                
-                starPlayrOneLevelUpX(world:world, hero: hero, tractor: tractor)
+            }
             
-            case heroCategory | worldCategory, heroCategory | badGuyCategory, heroCategory | badFishCategory :
-                
-                if ( 🛡 ) {
-                    return
-                }
-                
-                stopIt(secondBody: secondBody, contactPoint: contact.contactPoint)
-            default :
+            starPlayrOneLevelUpX(world:world, hero: hero, tractor: tractor)
+            
+        case heroCategory | worldCategory, heroCategory | badGuyCategory, heroCategory | badFishCategory :
+            
+            if ( 🛡 ) {
                 return
+            }
+            
+            stopIt(secondBody: secondBody, contactPoint: contact.contactPoint)
+        default :
+            return
             
         }
         
@@ -1546,7 +1667,7 @@
         Explosion()
         removeHero()
         removeGUI()
-
+        
         //save first
         saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
         
@@ -1556,7 +1677,7 @@
             remove(body:secondBody)
             LostLife(contactPoint: contactPoint)
             saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
-
+            
             let wait = SKAction.wait(forDuration: 1.5)
             let run = SKAction.run { [ weak self ] in
                 guard let self = self else { return }
@@ -1564,7 +1685,7 @@
             }
             
             world.run( SKAction.sequence([wait,run]))
-           
+            
         }
     }
     
@@ -1582,7 +1703,7 @@
         QuadFireBombHUD.speed = 10
         FlightYoke.recenter()
         FlightYoke.stickMoved(location: CGPoint.zero)
-
+        
         let wait = SKAction.wait(forDuration: 1.0)
         let run = SKAction.run { [ weak self ] in
             guard let self = self else { return }
@@ -1593,10 +1714,10 @@
             self.FlightYoke.shutdown()
             self.QuadFireBombHUD.speed = 0
         }
-    
         
-       
-	world.run( SKAction.sequence([wait,run]))
+        
+        
+        world.run( SKAction.sequence([wait,run]))
         
         
     }
@@ -1623,7 +1744,7 @@
     
     
     func EndGame() {
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             guard let self = self else { return }
             
@@ -1685,12 +1806,12 @@
         
         removeHero()
         world.speed = 1
-
+        
         let runResetWorld = SKAction.run() { [ weak self ] in
             guard
                 let self = self,
                 let world = self.world
-                else { return }
+            else { return }
             
             let resetWorld = SKAction.moveTo(x: world.position.x, duration: 0.5)
             world.run(resetWorld)
@@ -1701,9 +1822,9 @@
             guard
                 let self = self,
                 let world = self.world,
-            	let gamestartup = self.readyPlayerOne()
-                else { return }
-                        
+                let gamestartup = self.readyPlayerOne()
+            else { return }
+            
             self.hero = gamestartup.hero
             self.canape = gamestartup.canape
             self.tractor = gamestartup.tractor
@@ -1734,7 +1855,7 @@
         
         let wait = SKAction.wait(forDuration: 0.5)
         world.run(SKAction.sequence([wait,runResetWorld,wait,runWorld]))
-
+        
     }
     
     
@@ -1752,24 +1873,20 @@
         
         let pts = 1
         
-        if name == "❣️" && lives >= 0 && lives <= 9 {
-            lives = lives + 1
-            var emoji = "👽"
+        if name == "❣️" && lives >= 0 && lives < 9 {
+            lives += 1
             
-            if settings.emoji == 2 {
-                emoji = "🐵"
+            if lives > maxlives + 3 {
+                lives = maxlives + 3
             }
             
-            emoji = "👽"
-            livesLabelNode.text = String(repeating: emoji, count: lives)
-            
+            livesLabelNode.text = String(repeating: heroArray[settings.emoji], count: lives)
+                    
             if settings.sound {
                 let fire: SKAction = SKAction.playSoundFileNamed("extralife.m4a", waitForCompletion: false)
                 self.run(fire)
             }
         }
-        
-        
         
         //gives our ship shields
         if name == "🛡"  {
@@ -1777,7 +1894,7 @@
             🛡 = true
             
             if let l = livesLabel.text, !l.contains("🛡") {
-                 livesLabel.text? += "🛡"
+                livesLabel.text? += "🛡"
                 
                 hero.alpha = 0.75
                 
@@ -1820,7 +1937,7 @@
             💠 = true
             
             if let l = livesLabel.text, !l.contains("💠") {
-                 livesLabel.text! += "💠"
+                livesLabel.text! += "💠"
             }
             
             if settings.sound {
@@ -1836,7 +1953,7 @@
             if let l = livesLabel.text, !l.contains("🔱") {
                 livesLabel.text? += ("🔱")
             }
-                
+            
             if settings.sound {
                 let fire: SKAction = SKAction.playSoundFileNamed("doublelaser.m4a", waitForCompletion: false)
                 self.run(fire)
@@ -1847,7 +1964,7 @@
         if name == "🕹" {
             🕹 = true
             doublelaser = 1
-
+            
             if let l = livesLabel.text, !l.contains("🕹") {
                 livesLabel.text? += ("🕹")
             }
@@ -1869,7 +1986,7 @@
     
     //MARK: UpdateScore
     func updateScore(extraPoints:Int) {
-
+        
         self.score = self.score + extraPoints
         
         if self.score >= self.highscore {
@@ -1891,7 +2008,7 @@
         guard let 🧵 = 💠 ? 🥾 + 🦸 : 🦸 else { return }
         
         👁 = SKSpriteNode(texture: SKTexture(imageNamed: 🧵 ))
-    
+        
         var 👨‍🔬 = SKPhysicsBody(rectangleOf: 👁.size)
         
         
@@ -1899,8 +2016,8 @@
         if settings.emoji == 2 {
             
             👁.physicsBody?.applyAngularImpulse(5)
-           // 🛥 ? (🍕 = 1) : (🍕 = -1)
-        
+            // 🛥 ? (🍕 = 1) : (🍕 = -1)
+            
             //let texture = SKTexture.init(image: self.transparentimage)
             👁 = SKSpriteNode()
             👨‍🔬 = SKPhysicsBody(circleOfRadius: 🍺);
@@ -1916,6 +2033,8 @@
         
         💠 ? (👁.name = "💠") : (👁.name = "🚩")
         
+        
+        /*
         👁.isUserInteractionEnabled = false
         👁.physicsBody = 👨‍🔬
         👁.zPosition = -100
@@ -1924,8 +2043,50 @@
         👁.physicsBody?.mass = 0
         👁.physicsBody?.fieldBitMask = 0
         👁.physicsBody?.categoryBitMask = 64
-        👁.physicsBody?.collisionBitMask = 0
-        👁.physicsBody?.contactTestBitMask = UInt32(10010)
+        👁.physicsBody?.collisionBitMask = 4096
+        */
+        
+        👁.isUserInteractionEnabled = false
+        👁.physicsBody = 👨‍🔬
+        👁.physicsBody?.affectedByGravity = true
+        👁.physicsBody?.isDynamic = true
+        👁.physicsBody?.affectedByGravity = true
+        👁.physicsBody?.allowsRotation = true
+        👁.physicsBody?.categoryBitMask = laserbeam
+        👁.physicsBody?.collisionBitMask = laserBorder
+        
+        let x = 2 + 8 + 16 + 128 + 256 + 512 + 1024 + 2048
+        👁.physicsBody?.contactTestBitMask = UInt32(x)
+        
+        
+        //let ctb = UInt32(2 + 8 + 16 + 256 + 512 + 1024 + 8192)
+        //💣.physicsBody?.contactTestBitMask = UInt32(10010)
+        //👁.physicsBody?.applyImpulse(CGVector(dx: 0,dy: 50))
+        👁.physicsBody?.density = 0
+        👁.physicsBody?.fieldBitMask = 0
+        //👁.physicsBody?.applyAngularImpulse(20)
+        👁.physicsBody?.restitution = 0.5
+        
+        /*
+         
+         private let heroCategory:UInt32                 =  1
+         private let worldCategory:UInt32                =  2
+         private let bombBoundsCategory:UInt32           =  4
+         private let badFishCategory:UInt32              =  8
+         private let badGuyCategory:UInt32               =  16
+         private let tractorCategory:UInt32              =  32
+         private let laserbeam: UInt32                       =  64
+         private let wallCategory:UInt32                     =  128
+         private let itemCategory:UInt32                 =  256
+         private let fishCategory:UInt32                    =  512
+         private let charmsCategory:UInt32                  =  1024
+         private let levelupCategory:UInt32              =  2048
+         private let laserBorder:UInt32                      =  4096
+         
+         */
+        let xx = 2 + 8 + 16 + 128 + 256 + 512 + 1024 + 2048//
+        //let x = 2 + 8 + 16 + 128 + 256 + 512 + 1024 + 2048 + 4096
+        //👁.physicsBody?.contactTestBitMask = UInt32(xx)
         👁.physicsBody?.applyImpulse(CGVector(dx: 100,dy: 0))
         👁.speed = CGFloat(0.8)
         👁.physicsBody?.usesPreciseCollisionDetection = false
@@ -1987,7 +2148,7 @@
         💣.position = (CGPoint(x:superhero.position.x, y:superhero.position.y - 10))
         
         //MARK: How to assign values in an Elvis Operator
-
+        
         🔱 ? (💣.name = "🔱") : (💣.name = "💣")
         
         💣.isUserInteractionEnabled = false
@@ -1998,8 +2159,13 @@
         💣.physicsBody?.allowsRotation = true
         💣.physicsBody?.categoryBitMask = 64
         💣.physicsBody?.collisionBitMask = 4
+        
+        let x = 2 + 8 + 16 + 128 + 256 + 512 + 1024 + 2048
+        💣.physicsBody?.contactTestBitMask = UInt32(x)
+        
+        
         //let ctb = UInt32(2 + 8 + 16 + 256 + 512 + 1024 + 8192)
-        💣.physicsBody?.contactTestBitMask = UInt32(10010)
+        //💣.physicsBody?.contactTestBitMask = UInt32(10010)
         💣.physicsBody?.applyImpulse(CGVector(dx: 0,dy: 50))
         💣.physicsBody?.density = 0
         💣.physicsBody?.fieldBitMask = 0
@@ -2014,7 +2180,7 @@
             💣.physicsBody?.velocity =  CGVector( dx: superhero.velocity.dx / 4, dy: -350 )
         }
         
-                
+        
         🧨.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         🧨.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         

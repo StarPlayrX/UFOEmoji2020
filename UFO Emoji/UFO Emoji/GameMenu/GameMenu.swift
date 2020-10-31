@@ -211,7 +211,7 @@ class GameMenu: SKScene {
                         self.lockDown = false
                     }
               
-                
+                    
                 } else if name != "musicLabel" && name != "soundLabel" && name != "stickLabel" && name != "levelLabel" && name != "versusLabel" && name != "emojiLabel" {
                     let fadeIn = SKAction.fadeAlpha(to: 0.5, duration:TimeInterval(0.1))
                     let myDecay = SKAction.wait(forDuration: 0.1)
@@ -222,8 +222,9 @@ class GameMenu: SKScene {
         }
     }
     
+
+    
     internal override func didMove(to view: SKView) {
-        
         KingQueenGlobalDie = 100
         backgroundColor = SKColor.init(displayP3Red: 0, green: 15 / 255, blue: 70 / 255, alpha: 1.0)
         
@@ -364,5 +365,9 @@ class GameMenu: SKScene {
         versusLabel.text  = antiarray   [   settings.level 	]
         emojiLabel.text   = heroDisplay [   settings.emoji	]
         playLabel1.text   = heroArray   [   settings.emoji 	]
+        
+        //let screenshot = _UICreateScreenUIImage()
+        //UIImageWriteToSavedPhotosAlbum(screenshot, nil, nil, nil)
+
     }
 }

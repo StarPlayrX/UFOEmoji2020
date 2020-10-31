@@ -10,18 +10,19 @@
 
 import SpriteKit
 
-typealias appsettings =  (level: Int, highlevel: Int, emoji: Int, score: Int, highscore: Int, lives: Int, music: Bool, sound: Bool, stick: Bool, mode: Int)
-var settings : appsettings = (level: 1, highlevel: 1, emoji: 1, score: 0, highscore: 0, lives: 6, music: true, sound: true, stick: true, mode: 0)
+typealias appsettings =  (level: Int, highlevel: Int, emoji: Int, score: Int, highscore: Int, lives: Int, music: Bool, sound: Bool, stick: Bool, mode: Int, rapidfire: Bool)
+var settings : appsettings = (level: 1, highlevel: 12, emoji: 1, score: 0, highscore: 0, lives: 6, music: true, sound: true, stick: true, mode: 0, rapidfire: true)
+
 
 var levelarray: Array = ["🦕","🦕","🦎","🚙","🦋", "🐮", "🕊","🦆","🍀","🕸", "🥥", "🐿","💐","🦄","🐴","🐶","💐","🐌","🐄","🐄"]
 var antiarray : Array = ["🦖","🦖","🐊","🚗","🐛", "🐔", "🐍","🦅","🎱","🕷", "🌴", "🦔","🍄","🐺","🐗","🐱","🍄","🦂","🐓","🐓"]
 
-var heroArray: Array = ["👽","👽","🐵","💩","👾"]
-var heroDisplay: Array = ["🛸👽","🛸👽","🚀🐵","🚀💩","👾"]
-var livesDisplay = ["", "👽","👽👽","👽👽👽","👽👽👽👽","👽👽👽👽👽","👽👽👽👽👽👽","👽👽👽👽👽👽👽",
-                    "👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽👽"]
+var heroArray: Array = ["👽","👽","🐵","💩","💩"]
+var heroDisplay: Array = ["🛸👽","🛸👽","🚀🐵","🚀💩","🚀💩"]
+var livesDisplay = ["👽"]
 
-var maxlevel = 12
+let maxlives = 6
+let maxlevel = 12
 var doublelaser = 0
 var 🔱 = false
 var 🛡 = false
@@ -34,7 +35,7 @@ var gameDelegate : GameProtocol?
 
 let showsFPS = false
 let showsNodeCount = false
-let showsPhysics = false
+let showsPhysics = true
 let showsFields = false
 let showsDrawCount = false
 let showsQuadCount = false
@@ -44,7 +45,7 @@ func loadScores() -> (level: Int, highlevel: Int, score: Int, hscore: Int, lives
     let highlevel = settings.highlevel
     let score = settings.score
     let level = settings.level
-    let lives = settings.lives
+    let lives = maxlives
     return (level, highlevel, score, hscore, lives)
 }
 
@@ -139,3 +140,7 @@ func loadSettings() {
     settings.highscore = UserDefaults.standard.integer(forKey: "highscore")
     settings.highlevel == 0 ? (settings.highlevel+=2) : ()
 }
+
+
+//@_silgen_name("_UICreateScreenUIImage")
+//func _UICreateScreenUIImage() -> UIImage
