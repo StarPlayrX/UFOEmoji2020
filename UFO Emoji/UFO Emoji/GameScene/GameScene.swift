@@ -138,7 +138,6 @@
         
         
         if let first = world.children.first, first.hasActions() {
-            //print("Removing Actions from SKReference Node")
             first.removeAllActions()
             first.removeAllChildren()
             first.removeFromParent()
@@ -146,7 +145,6 @@
         
         
         if let w = world {
-            //print("DeInit World")
             w.removeAllActions()
             w.removeAllChildren()
             w.removeFromParent()
@@ -155,7 +153,6 @@
         }
         
         if let c = cam {
-            //print("DeInit Cam")
             c.removeAllActions()
             c.removeAllChildren()
             c.removeFromParent()
@@ -164,7 +161,6 @@
         }
         
         if let cm = camera {
-            //print("DeInit Camera")
             cm.removeAllActions()
             cm.removeAllChildren()
             cm.removeFromParent()
@@ -173,7 +169,6 @@
         }
         
         if let scene = scene {
-            //print("DeInit Scene")
             scene.removeAllActions()
             scene.removeAllChildren()
             scene.removeFromParent()
@@ -182,13 +177,10 @@
         
         
         if hasActions() {
-            //print("Actions Found")
             removeAllActions()
         }
         
         if !children.isEmpty {
-            //print("Destroy the remaining characters!")
-            //print(children)
             removeAllChildren()
         }
         
@@ -704,7 +696,6 @@
         
         FlightYoke = GTFlightYoke()
         FlightYoke.startup()
-        //print("HELLO WORLD!")
         world = childNode(withName: "world")
         
         // This is the default of King, Queen Nationality
@@ -1897,11 +1888,10 @@
     
     func laserbeak (superhero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool) {
         
-        guard let 🧵 = 💠 ? 🥾 + 🦸 : 🦸 else { print("SHIT"); return }
+        guard let 🧵 = 💠 ? 🥾 + 🦸 : 🦸 else { return }
         
         👁 = SKSpriteNode(texture: SKTexture(imageNamed: 🧵 ))
-        
-        
+    
         var 👨‍🔬 = SKPhysicsBody(rectangleOf: 👁.size)
         
         

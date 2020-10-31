@@ -22,7 +22,6 @@ class GameParallax : SKNode {
     }
     
     deinit {
-        print("Back Parallax Deinit!")
         parallax = nil
         bounds = nil
     }

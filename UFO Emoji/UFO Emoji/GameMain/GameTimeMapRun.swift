@@ -470,8 +470,7 @@ class GameTileMapRun {
                     let pos = tileNode.position
                     badguyai[(name) + String(badguyArray[i])] = pos
                     
-                    print ((name) + String(badguyArray[i]))
-                    break;
+                    break
                 }
             }
             
@@ -485,11 +484,8 @@ class GameTileMapRun {
             tileNode.position = center
             
             for i in 0...12 {
-                //print("i: " + String(i))
                 if badguyai[newitem + String(badguyArray[i])] == nil || badguyai[newitem + String(badguyArray[i])] == tileNode.position  {
                     
-                    //print ((name) + String(badguyArray[i]))
-
                     let pos = tileNode.position
                     badguyai[newitem + String(badguyArray[i])] = pos // we are now setting the home position, but we are storing this for the drive Letter
                     
@@ -726,7 +722,6 @@ class GameTileMapRun {
                 
                 centerTexture = SKTexture(imageNamed: name)
                 
-                //print(name)
                 tileNode = SKSpriteNode(texture: centerTexture)
                 
                 tileNode.position = center

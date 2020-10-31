@@ -23,7 +23,6 @@ class GameWorld : SKNode {
     }
     
     deinit {
-        print("deinit world!")
         world = nil
     }
     

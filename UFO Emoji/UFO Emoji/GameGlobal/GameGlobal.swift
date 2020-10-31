@@ -11,7 +11,7 @@
 import SpriteKit
 
 typealias appsettings =  (level: Int, highlevel: Int, emoji: Int, score: Int, highscore: Int, lives: Int, music: Bool, sound: Bool, stick: Bool, mode: Int)
-var settings : appsettings = (level: 1, highlevel: 10, emoji: 1, score: 0, highscore: 0, lives: 6, music: true, sound: true, stick: true, mode: 0)
+var settings : appsettings = (level: 1, highlevel: 1, emoji: 1, score: 0, highscore: 0, lives: 6, music: true, sound: true, stick: true, mode: 0)
 
 var levelarray: Array = ["🦕","🦕","🦎","🚙","🦋", "🐮", "🕊","🦆","🍀","🕸", "🥥", "🐿","💐","🦄","🐴","🐶","💐","🐌","🐄","🐄"]
 var antiarray : Array = ["🦖","🦖","🐊","🚗","🐛", "🐔", "🐍","🦅","🎱","🕷", "🌴", "🦔","🍄","🐺","🐗","🐱","🍄","🦂","🐓","🐓"]
@@ -21,7 +21,7 @@ var heroDisplay: Array = ["🛸👽","🛸👽","🚀🐵","🚀💩","👾"]
 var livesDisplay = ["", "👽","👽👽","👽👽👽","👽👽👽👽","👽👽👽👽👽","👽👽👽👽👽👽","👽👽👽👽👽👽👽",
                     "👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽👽"]
 
-var maxlevel = 11
+var maxlevel = 12
 var doublelaser = 0
 var 🔱 = false
 var 🛡 = false
@@ -126,3 +126,16 @@ func setSceneSizeForMenu() -> CGSize  {
    
     
 typealias Oreo = (bombsbutton:SKSpriteNode?,firebutton:SKSpriteNode?,hero:SKSpriteNode?,canape:SKSpriteNode?,tractor:SKSpriteNode?,bombsbutton2:SKSpriteNode?,firebutton2:SKSpriteNode?)
+
+
+func saveSettings() {
+    UserDefaults.standard.setValue(settings.highlevel, forKey: "highlevel")
+    UserDefaults.standard.setValue(settings.highscore, forKey: "highscore")
+}
+
+
+func loadSettings() {
+    settings.highlevel = UserDefaults.standard.integer(forKey: "highlevel")
+    settings.highscore = UserDefaults.standard.integer(forKey: "highscore")
+    settings.highlevel == 0 ? (settings.highlevel+=2) : ()
+}

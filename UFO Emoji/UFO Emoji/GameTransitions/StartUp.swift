@@ -18,7 +18,6 @@ class StartUp: SKScene {
     
     
     deinit {
-        print("StartUp DeInit")
 
         if hasActions() {
             removeAllActions()
@@ -60,9 +59,7 @@ class StartUp: SKScene {
             let mainCharacter = heroArray[settings.emoji]
             let goodGuy = levelarray[settings.level]
             let badGuy = antiarray[settings.level]
-            
-            print(mainCharacter,goodGuy,badGuy,settings.level)
-            
+                        
             let label1 = SKLabelNode(fontNamed: emojifontname)
             label1.fontSize = 72
             label1.text = mainCharacter

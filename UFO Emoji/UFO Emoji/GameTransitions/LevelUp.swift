@@ -23,7 +23,6 @@ class LevelUp: SKScene {
     }
         
     deinit {
-        print("Level Up DeInit")
 
         if hasActions() {
             removeAllActions()

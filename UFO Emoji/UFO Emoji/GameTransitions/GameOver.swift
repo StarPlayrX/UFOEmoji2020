@@ -23,7 +23,6 @@ class GameOver: SKScene {
     }
     
     deinit {
-        print("Game Over DeInit")
         if hasActions() {
             removeAllActions()
         }

@@ -17,21 +17,24 @@ protocol GameProtocol: class {
 class GameViewController: UIViewController, GameProtocol {
     
     func runGameMenu() {
+        saveSettings()
         gameMenu()
     }
     
     func runGameLevel() {
+        saveSettings()
         gameLevel()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         gameDelegate = self
+        saveSettings()
         gameMenu()
     }
     
     deinit {
-        print("VC Deinited")
+        saveSettings()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +69,7 @@ class GameViewController: UIViewController, GameProtocol {
             view.showsQuadCount = showsQuadCount
             
             view.shouldCullNonVisibleNodes = true
-            view.preferredFramesPerSecond = 61
+            //view.preferredFramesPerSecond = 61
             view.presentScene(scene)
 
         }
@@ -113,7 +116,7 @@ class GameViewController: UIViewController, GameProtocol {
                 // Fallback on earlier versions
             }
             view.shouldCullNonVisibleNodes = true
-            view.preferredFramesPerSecond = 61
+            //view.preferredFramesPerSecond = 61
             view.presentScene(scene)
 
         }

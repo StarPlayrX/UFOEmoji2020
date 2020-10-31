@@ -41,9 +41,7 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
         
         var loop1 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
         var loop2 = String(Int(arc4random_uniform(UInt32(Routes))) + 1)
-        
-       	//print("loop1",loop1,"loop2",loop2)
-        
+                
         let leaders = ["🤬"]
         
         if ( Name == leaders[0] ) {
@@ -116,16 +114,12 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
         
         for i in 1...5 {
             if badguyai["📈\(loop1)\(i)\(Letter)"] == nil {
-                print ("missing pt: 📈\(loop1)\(i)\(Letter)")
-                print(badguyai)
                 return
             }
         }
     
         for i in 1...5 {
             if badguyai["📈\(loop2)\(i)\(Letter)"] == nil {
-                print ("missing pt: 📈\(loop2)\(i)\(Letter)")
-                print(badguyai)
                 return
             }
         }

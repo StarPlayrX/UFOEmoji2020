@@ -14,7 +14,6 @@ protocol FlightYokeProtocol: class {
 class GTFlightYoke: SKNode {
     
     deinit {
-        //print("Game Pad De-Init!")
         //Should not De-Init until it quits
     }
     
