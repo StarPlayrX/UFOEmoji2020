@@ -6,7 +6,7 @@
 //  Copyright © 2020 Todd Bruss. All rights reserved.
 //
 
-//Maybe move this to a Setting class
+//Could could start moving this into a Struct
 
 import SpriteKit
 
@@ -14,8 +14,8 @@ typealias appsettings =  (level: Int, highlevel: Int, emoji: Int, score: Int, hi
 var settings : appsettings = (level: 1, highlevel: 2, emoji: 1, score: 0, highscore: 0, lives: 6, music: true, sound: true, stick: true, mode: 0, rapidfire: false)
 
 
-var levelarray: Array = ["🦕","🦕","🦎","🚙","🦋", "🐮", "🕊","🦆","🍀","🕸", "🥥", "🐿","💐","🦄","🐴","🐶","💐","🐌","🐄","🐄"]
-var antiarray : Array = ["🦖","🦖","🐊","🚗","🐛", "🐔", "🐍","🦅","🎱","🕷", "🌴", "🦔","🍄","🐺","🐗","🐱","🍄","🦂","🐓","🐓"]
+var levelarray: Array = ["🦕","🦕","🦎","🚙","🦋", "🐮", "🕊","🦆","🍀","🕸", "🥥", "🐿","💐","🦄","🐴","🐶","🐌","🐄","🐄"]
+var antiarray : Array = ["🦖","🦖","🐊","🚗","🐛", "🐔", "🐍","🦅","🎱","🕷", "🌴", "🦔","🍄","🐺","🐗","🐱","🦂","🐓","🐓"]
 
 var heroArray: Array = ["👽","👽","🐵","💩","💩"]
 var heroDisplay: Array = ["🛸👽","🛸👽","🚀🐵","🚀💩","🚀💩"]
@@ -140,7 +140,3 @@ func loadSettings() {
     settings.highscore = UserDefaults.standard.integer(forKey: "highscore")
     settings.highlevel == 0 ? (settings.highlevel+=2) : ()
 }
-
-
-//@_silgen_name("_UICreateScreenUIImage")
-//func _UICreateScreenUIImage() -> UIImage

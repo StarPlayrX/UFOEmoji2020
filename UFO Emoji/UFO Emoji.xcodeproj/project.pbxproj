@@ -154,7 +154,7 @@
 			path = GameGlobal;
 			sourceTree = "<group>";
 		};
-		5F1CF8E6247B19D7008DEC84 /* GameMain */ = {
+		5F1CF8E6247B19D7008DEC84 /* GameModel */ = {
 			isa = PBXGroup;
 			children = (
 				5F1CF8EF247B1AAC008DEC84 /* GameTimeMapRun.swift */,
@@ -162,7 +162,7 @@
 				5F5A0EC324807FCC0034FDBF /* GameWorld.swift */,
 				5F1169BA2480A1B8000A159C /* GameParallax.swift */,
 			);
-			path = GameMain;
+			path = GameModel;
 			sourceTree = "<group>";
 		};
 		5F1CF8F5247B3D03008DEC84 /* GameScene */ = {
@@ -206,13 +206,13 @@
 			isa = PBXGroup;
 			children = (
 				5FC051C5247B0647003C8201 /* GameViewController */,
-				5F1CF8F5247B3D03008DEC84 /* GameScene */,
-				5F1CF8E6247B19D7008DEC84 /* GameMain */,
-				5F1CF8B9247B1883008DEC84 /* GameGlobal */,
-				5FC051D6247B0E41003C8201 /* GameLevels */,
 				5FC051C0247B0562003C8201 /* GameMenu */,
-				5FC051E8247B10CF003C8201 /* GameTransitions */,
+				5F1CF8F5247B3D03008DEC84 /* GameScene */,
+				5F1CF8B9247B1883008DEC84 /* GameGlobal */,
+				5F1CF8E6247B19D7008DEC84 /* GameModel */,
+				5FC051D6247B0E41003C8201 /* GameLevels */,
 				5FC051DC247B0E8D003C8201 /* GameTileSets */,
+				5FC051E8247B10CF003C8201 /* GameTransitions */,
 				5FC051D4247B0D23003C8201 /* GTFlightYoke */,
 				5FC051EC247B111F003C8201 /* GameParticles */,
 				5FC051D1247B0CEA003C8201 /* GameMusic */,
@@ -602,7 +602,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 81;
+				CURRENT_PROJECT_VERSION = 82;
 				DEVELOPMENT_TEAM = 469UCUB275;
 				INFOPLIST_FILE = "UFO Emoji/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -625,7 +625,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 81;
+				CURRENT_PROJECT_VERSION = 82;
 				DEVELOPMENT_TEAM = 469UCUB275;
 				INFOPLIST_FILE = "UFO Emoji/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
