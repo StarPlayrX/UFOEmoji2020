@@ -808,10 +808,13 @@
         //skyMtns
         case 1...5:
             background = "waterWorld" //waterWorld
+            settings.rapidfire = false
         case 6...10:
             background = "miniDesert"
+            settings.rapidfire = false
         case 11...15:
             background = "skyMtns"
+            settings.rapidfire = true
         default :
             ()
         }
@@ -871,7 +874,7 @@
                         let laserBoundsNode = SKNode()
                         let screenWidth = CGFloat(UIScreen.main.bounds.size.width)
                         let screenHeight = CGFloat(UIScreen.main.bounds.size.height)
-                        let laserBounds = CGRect(x: -screenWidth / 2 + 36, y: -screenHeight / 2, width: screenWidth - 72, height: screenHeight) //center laserbeam border within a square
+                        let laserBounds = CGRect(x: -screenWidth / 2, y: -screenHeight / 2, width: screenWidth, height: screenHeight) //center laserbeam border within a square
                         laserBoundsNode.physicsBody = SKPhysicsBody(edgeLoopFrom: laserBounds )
                         laserBoundsNode.name = "🔲"
                         laserBoundsNode.physicsBody?.categoryBitMask = laserBorder
@@ -1959,7 +1962,7 @@
         }
         
         //gives our trident bombs
-        if name == "🕹" {
+        if name == "🕹" && !settings.rapidfire  {
             🕹 = true
             doublelaser = 1
             
@@ -2028,63 +2031,24 @@
             👁.addChild(🔫)
         }
         
-        
         💠 ? (👁.name = "💠") : (👁.name = "🚩")
         
-        
-        /*
         👁.isUserInteractionEnabled = false
         👁.physicsBody = 👨‍🔬
+        👁.physicsBody?.mass = 0
         👁.zPosition = -100
+        👁.physicsBody?.fieldBitMask = 0
         👁.physicsBody?.isDynamic = true
         👁.physicsBody?.affectedByGravity = false
-        👁.physicsBody?.mass = 0
-        👁.physicsBody?.fieldBitMask = 0
-        👁.physicsBody?.categoryBitMask = 64
-        👁.physicsBody?.collisionBitMask = 4096
-        */
-        
-        👁.isUserInteractionEnabled = false
-        👁.physicsBody = 👨‍🔬
-        👁.physicsBody?.affectedByGravity = true
-        👁.physicsBody?.isDynamic = true
-        👁.physicsBody?.affectedByGravity = true
         👁.physicsBody?.allowsRotation = true
         👁.physicsBody?.categoryBitMask = laserbeam
         👁.physicsBody?.collisionBitMask = laserBorder
         
         let x = 2 + 8 + 16 + 128 + 256 + 512 + 1024 + 2048
         👁.physicsBody?.contactTestBitMask = UInt32(x)
-        
-        
-        //let ctb = UInt32(2 + 8 + 16 + 256 + 512 + 1024 + 8192)
-        //💣.physicsBody?.contactTestBitMask = UInt32(10010)
-        //👁.physicsBody?.applyImpulse(CGVector(dx: 0,dy: 50))
         👁.physicsBody?.density = 0
         👁.physicsBody?.fieldBitMask = 0
-        //👁.physicsBody?.applyAngularImpulse(20)
-        👁.physicsBody?.restitution = 0.5
-        
-        /*
-         
-         private let heroCategory:UInt32                 =  1
-         private let worldCategory:UInt32                =  2
-         private let bombBoundsCategory:UInt32           =  4
-         private let badFishCategory:UInt32              =  8
-         private let badGuyCategory:UInt32               =  16
-         private let tractorCategory:UInt32              =  32
-         private let laserbeam: UInt32                       =  64
-         private let wallCategory:UInt32                     =  128
-         private let itemCategory:UInt32                 =  256
-         private let fishCategory:UInt32                    =  512
-         private let charmsCategory:UInt32                  =  1024
-         private let levelupCategory:UInt32              =  2048
-         private let laserBorder:UInt32                      =  4096
-         
-         */
-        let xx = 2 + 8 + 16 + 128 + 256 + 512 + 1024 + 2048//
-        //let x = 2 + 8 + 16 + 128 + 256 + 512 + 1024 + 2048 + 4096
-        //👁.physicsBody?.contactTestBitMask = UInt32(xx)
+        👁.physicsBody?.restitution = 0
         👁.physicsBody?.applyImpulse(CGVector(dx: 100,dy: 0))
         👁.speed = CGFloat(0.8)
         👁.physicsBody?.usesPreciseCollisionDetection = false
@@ -2135,7 +2099,6 @@
         if settings.sound {
             let fire: SKAction = SKAction.playSoundFileNamed(🚨, waitForCompletion: false)
             laserDupe.run(fire)
-            
         }
     }
     
