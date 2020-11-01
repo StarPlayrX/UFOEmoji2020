@@ -1494,12 +1494,10 @@
         }
         
         let catMask = firstBody.categoryBitMask | secondBody.categoryBitMask
-        print(firstBody.node?.name,secondBody.node?.name)
         switch catMask {
         case laserbeam | laserBorder :
             
             if let x = firstBody.node?.name {
-                print(catMask, x)
                 if x == "🚩" || x == "💠" {
                     remove(body:firstBody)
                 }
