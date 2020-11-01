@@ -11,7 +11,7 @@
 import SpriteKit
 
 typealias appsettings =  (level: Int, highlevel: Int, emoji: Int, score: Int, highscore: Int, lives: Int, music: Bool, sound: Bool, stick: Bool, mode: Int, rapidfire: Bool)
-var settings : appsettings = (level: 1, highlevel: 2, emoji: 1, score: 0, highscore: 0, lives: 6, music: true, sound: true, stick: true, mode: 0, rapidfire: false)
+var settings : appsettings = (level: 1, highlevel: 2, emoji: 1, score: 0, highscore: 0, lives: 3, music: true, sound: true, stick: true, mode: 0, rapidfire: false)
 
 
 var levelarray: Array = ["🦕","🦕","🦎","🚙","🦋", "🐮", "🕊","🦆","🍀","🕸", "🥥", "🐿","💐","🦄","🐴","🐶","🐌","🐄","🐄"]

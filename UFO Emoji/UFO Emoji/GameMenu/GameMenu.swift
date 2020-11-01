@@ -227,9 +227,7 @@ class GameMenu: SKScene {
         if settings.level > maxlevel {
             settings.level = 1
         }
-        
-        settings.highlevel = maxlevel //cheat to get all levels available
-        
+                
         settings.lives = settings.lives // may be less when power ups are added
         settings.score = 0
     
