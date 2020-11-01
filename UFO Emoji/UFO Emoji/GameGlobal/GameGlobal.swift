@@ -132,11 +132,16 @@ typealias Oreo = (bombsbutton:SKSpriteNode?,firebutton:SKSpriteNode?,hero:SKSpri
 func saveSettings() {
     UserDefaults.standard.setValue(settings.highlevel, forKey: "highlevel")
     UserDefaults.standard.setValue(settings.highscore, forKey: "highscore")
+    UserDefaults.standard.setValue(settings.level, forKey: "level")
+
 }
 
 
 func loadSettings() {
     settings.highlevel = UserDefaults.standard.integer(forKey: "highlevel")
     settings.highscore = UserDefaults.standard.integer(forKey: "highscore")
+    settings.level = UserDefaults.standard.integer(forKey: "level")
+    settings.level == 0 ? (settings.level+=1) : ()
+    settings.level > maxlevel ? (settings.level = maxlevel) : ()
     settings.highlevel == 0 ? (settings.highlevel+=2) : ()
 }
