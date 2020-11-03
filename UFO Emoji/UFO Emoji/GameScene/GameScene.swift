@@ -874,7 +874,14 @@
                         let laserBoundsNode = SKNode()
                         let screenWidth = CGFloat(UIScreen.main.bounds.size.width)
                         let screenHeight = CGFloat(UIScreen.main.bounds.size.height)
-                        let laserBounds = CGRect(x: -screenWidth / 2, y: -screenHeight / 2, width: screenWidth, height: screenHeight) //center laserbeam border within a square
+                        
+                        //iPhone default
+                        var laserBounds = CGRect(x: -screenWidth + 36 / 2, y: -screenHeight - 72 / 2, width: screenWidth, height: screenHeight) //center laserbeam border within a square
+                        
+                        if settings.mode != 4 {
+                            laserBounds = CGRect(x: -screenWidth / 2, y: -screenHeight / 2, width: screenWidth, height: screenHeight) //center laserbeam border within a square
+                        }
+                        
                         laserBoundsNode.physicsBody = SKPhysicsBody(edgeLoopFrom: laserBounds )
                         laserBoundsNode.name = "🔲"
                         laserBoundsNode.physicsBody?.categoryBitMask = laserBorder
@@ -1736,7 +1743,7 @@
         lives -= 1
         
         if lives >= 0 {
-            livesLabelNode.text = String(livesDisplay[lives])
+            livesLabelNode.text = String(repeating: heroArray[settings.emoji], count: lives)
         }
         
         saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
@@ -1877,8 +1884,8 @@
         if name == "❣️" && lives >= 0 && lives < 9 {
             lives += 1
             
-            if lives > maxlives + 3 {
-                lives = maxlives + 3
+            if lives > maxlives {
+                lives = maxlives
             }
             
             livesLabelNode.text = String(repeating: heroArray[settings.emoji], count: lives)

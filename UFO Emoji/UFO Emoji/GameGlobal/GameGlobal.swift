@@ -21,7 +21,8 @@ var heroArray: Array = ["👽","👽","🐵","💩","💩"]
 var heroDisplay: Array = ["🛸👽","🛸👽","🚀🐵","🚀💩","🚀💩"]
 var livesDisplay = ["👽"]
 
-let maxlives = 6
+let minlives = 3
+let maxlives = 9
 let maxlevel = 12
 var doublelaser = 0
 var 🔱 = false
@@ -45,7 +46,7 @@ func loadScores() -> (level: Int, highlevel: Int, score: Int, hscore: Int, lives
     let highlevel = settings.highlevel
     let score = settings.score
     let level = settings.level
-    let lives = maxlives
+    let lives = settings.lives
     return (level, highlevel, score, hscore, lives)
 }
 

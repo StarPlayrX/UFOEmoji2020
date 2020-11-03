@@ -163,14 +163,6 @@ class GameMenu: SKScene {
                     if settings.level == 0 {
                         settings.level = 1
                     }
-                                
-                    if settings.emoji == 2 {
-                        livesDisplay = ["", "🐵","🐵🐵","🐵🐵🐵","🐵🐵🐵🐵","🐵🐵🐵🐵🐵","🐵🐵🐵🐵🐵🐵",
-                                        "🐵🐵🐵🐵🐵🐵🐵","🐵🐵🐵🐵🐵🐵🐵🐵","🐵🐵🐵🐵🐵🐵🐵🐵🐵", "🐵🐵🐵🐵🐵🐵🐵🐵🐵🐵"]
-                    } else {
-                        livesDisplay = ["", "👽","👽👽","👽👽👽","👽👽👽👽","👽👽👽👽👽","👽👽👽👽👽👽","👽👽👽👽👽👽👽",
-                                        "👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽", "👽👽👽👽👽👽👽👽👽👽"]
-                    }
                     
                     let fadeIn = SKAction.fadeAlpha(to: 0.5, duration:TimeInterval(0.3))
                     let myDecay = SKAction.wait(forDuration: 0.2)
@@ -227,8 +219,8 @@ class GameMenu: SKScene {
         if settings.level > maxlevel {
             settings.level = 1
         }
-                
-        settings.lives = settings.lives // may be less when power ups are added
+               
+        settings.lives = minlives
         settings.score = 0
     
         musicLabel.text =  settings.music  ? "🎷🔈" : "🎷🔇"

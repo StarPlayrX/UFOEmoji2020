@@ -1363,7 +1363,7 @@ class GameTileMapRun {
                     
                     newemoji = String(levelarray[settings.level])
                 
-                case "❣️", "🔱", "💠", "🛡", "🔫", "🕹":
+                case "💎", "❣️", "🔱", "💠", "🛡", "🔫", "🕹":
                     col = 2 + 128 + 256 + 1024 as UInt32
                     con = 32 as UInt32
                     cat = 1024 as UInt32
