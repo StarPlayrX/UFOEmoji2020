@@ -858,9 +858,7 @@
                         gameBoundsNode.physicsBody?.contactTestBitMask = 0
                         
                         addChild(gameBoundsNode)
-                        
-                        //container for bombBounds
-                        
+                                                
                         var bounds = CGRect.zero
                         let extend = CGFloat(128)
                         let half = CGFloat(2)
@@ -871,11 +869,6 @@
                             bounds = CGRect(x: -w / half - halfextend, y: -h / half, width: w + extend, height: h + extend)
                         }
                             
-                        if let w = Optional(self.size.width), let h = Optional(self.size.height)  {
-                            bounds = CGRect(x: -w / half - halfextend, y: -h / half, width: w + extend, height: h + extend)
-                        }
-                                
-                        
                         let addnode = SKNode()
                         addnode.name = "bombBounds"
                         addnode.zPosition = -10000
@@ -886,8 +879,9 @@
                         
                         //update positioning
                         let laserBoundsNode = SKNode()
+                        
                         if let w = Optional(self.size.width), let h = Optional(self.size.height)  {
-                            bounds = CGRect(x: -w / half - halfextend, y: -h / half, width: w + extend, height: h + extend)
+                            bounds = CGRect(x: -w / half, y: -h / half, width: w, height: h + extend)
                         }
                         
                         laserBoundsNode.physicsBody = SKPhysicsBody(edgeLoopFrom: bounds )
@@ -901,7 +895,6 @@
                         laserBoundsNode.physicsBody?.affectedByGravity = false
                         laserBoundsNode.physicsBody?.restitution = 0
                         laserBoundsNode.speed = -1000
-                        //laserBoundsNode.yScale = 1.5
                         self.camera?.addChild(laserBoundsNode)
                         
                         node.removeFromParent()
