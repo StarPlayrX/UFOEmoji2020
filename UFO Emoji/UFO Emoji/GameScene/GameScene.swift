@@ -872,14 +872,9 @@
                         
                         //update positioning
                         let laserBoundsNode = SKNode()
-                        let screenWidth = CGFloat(UIScreen.main.bounds.size.width)
-                        let screenHeight = CGFloat(UIScreen.main.bounds.size.height)
-                        
-                        //iPhone default
-                        var laserBounds = CGRect(x: -screenWidth + 36 / 2, y: -screenHeight - 72 / 2, width: screenWidth, height: screenHeight) //center laserbeam border within a square
-                        
-                        if settings.mode != 4 {
-                            laserBounds = CGRect(x: -screenWidth / 2, y: -screenHeight / 2, width: screenWidth, height: screenHeight) //center laserbeam border within a square
+                        var laserBounds = CGRect.zero
+                        if let w = Optional(self.size.width), let h = Optional(self.size.height)  {
+                            laserBounds = CGRect(x: -w / 2, y: -h / 2, width: w, height: h) //center laserbeam border within a square
                         }
                         
                         laserBoundsNode.physicsBody = SKPhysicsBody(edgeLoopFrom: laserBounds )
@@ -888,11 +883,13 @@
                         laserBoundsNode.physicsBody?.collisionBitMask = 0
                         laserBoundsNode.physicsBody?.contactTestBitMask = laserbeam
                         laserBoundsNode.physicsBody?.isDynamic = false
+                        laserBoundsNode.physicsBody?.isResting = true
+                        laserBoundsNode.isUserInteractionEnabled = false
                         laserBoundsNode.physicsBody?.affectedByGravity = false
                         laserBoundsNode.physicsBody?.restitution = 0
-                        laserBoundsNode.speed = 0
+                        laserBoundsNode.speed = -1000
                         //laserBoundsNode.yScale = 1.5
-                        self.cam.addChild(laserBoundsNode)
+                        self.camera?.addChild(laserBoundsNode)
                         
                         node.removeFromParent()
                     }
@@ -1016,11 +1013,11 @@
                             let hero = self.hero,
                             let heroVelocity = hero.physicsBody?.velocity,
                             let heroRotation = hero.zRotation as CGFloat?,
-                            let heroPosition = hero.position as CGPoint?,
-                            let firebutton = self.firebutton,
-                            let firebutton2 = self.firebutton2,
-                            let bombsbutton = self.bombsbutton,
-                            let bombsbutton2 = self.bombsbutton2
+                            let heroPosition = hero.position as CGPoint?
+                            //let firebutton = self.firebutton,
+                            //let firebutton2 = self.firebutton2,
+                            //let bombsbutton = self.bombsbutton,
+                            //let bombsbutton2 = self.bombsbutton2
                         else
                         { return }
                         
@@ -1028,68 +1025,31 @@
                             let fire = Int.random(in: 1...8)
                             switch fire {
                             
-                            case 1, 2, 3, 4:
+                            case 1,2,3,4:
                                 
                                 if heroVelocity.dx > 0 {
                                     self.laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
-                                    self.firebomb(firebomb: firebutton)
                                 } else if  heroVelocity.dx < 0 {
                                     self.laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
-                                    self.firebomb(firebomb: firebutton2)
                                 }
                                 
-                            case 5:
-                                
-                                self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
-                                
-                            case 6,7:
+                            case 5,6:
                                 
                                 if heroVelocity.dy < 0  {
                                     self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
-                                    self.firebomb(firebomb: bombsbutton)
                                 } else if heroVelocity.dy > 0 {
                                     self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
-                                    self.firebomb(firebomb: bombsbutton2)
                                 }
-                                
-                            case 8:
-                                
-                                self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
                                 
                             default:
                                 ()
                             }
                         }
                         
-                        func blaster() {
-                            self.laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
-                            self.laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
-                            self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
-                            self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
-                            
-                            if heroVelocity.dx > 0 {
-                                self.firebomb(firebomb: firebutton)
-                            } else if  heroVelocity.dx < 0 {
-                                self.firebomb(firebomb: firebutton2)
-                            }
-                            
-                            if heroVelocity.dy < 0  {
-                                self.firebomb(firebomb: bombsbutton)
-                            } else if heroVelocity.dy > 0 {
-                                self.firebomb(firebomb: bombsbutton2)
-                            }
-                        }
-                        
-                        
                         func autoFire() {
-                            
                             if !🕹 {
                                 fireaway()
-                            } else {
-                                self.alternator = !self.alternator
-                                self.alternator ?  blaster() : ()
                             }
-                            
                         }
                         
                         autoFire()
@@ -1504,6 +1464,7 @@
         }
         
         let catMask = firstBody.categoryBitMask | secondBody.categoryBitMask
+        
         switch catMask {
         case laserbeam | laserBorder :
             
@@ -2028,7 +1989,7 @@
             
             //let texture = SKTexture.init(image: self.transparentimage)
             👁 = SKSpriteNode()
-            👨‍🔬 = SKPhysicsBody(circleOfRadius: 🍺);
+            👨‍🔬 = SKPhysicsBody(circleOfRadius: 🍺)
             let 🔫: SKLabelNode = SKLabelNode(fontNamed:emojifontname)
             
             🔫.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
@@ -2050,6 +2011,20 @@
         👁.physicsBody?.allowsRotation = true
         👁.physicsBody?.categoryBitMask = laserbeam
         👁.physicsBody?.collisionBitMask = laserBorder
+        
+       /* private let heroCategory:UInt32                 =  1
+        private let worldCategory:UInt32                =  2
+        private let bombBoundsCategory:UInt32           =  4
+        private let badFishCategory:UInt32              =  8
+        private let badGuyCategory:UInt32               =  16
+        private let tractorCategory:UInt32              =  32
+        private let laserbeam: UInt32                       =  64
+        private let wallCategory:UInt32                     =  128
+        private let itemCategory:UInt32                 =  256
+        private let fishCategory:UInt32                    =  512
+        private let charmsCategory:UInt32                  =  1024
+        private let levelupCategory:UInt32              =  2048
+        private let laserBorder:UInt32                      =  4096 */
         
         let x = 2 + 8 + 16 + 128 + 256 + 512 + 1024 + 2048
         👁.physicsBody?.contactTestBitMask = UInt32(x)
@@ -2077,7 +2052,7 @@
         
         let d = reverse ? (x : -uno, y : uno) : (x : uno, y : -uno)
         
-        👁.physicsBody?.velocity = CGVector( dx: d.x * constantX + superhero.velocity.dx, dy: rotateLaser * d.y * constantY )
+        👁.physicsBody?.velocity = CGVector( dx: d.x * constantX + superhero.velocity.dx, dy: rotateLaser * d.y * constantY + superhero.velocity.dy )
         
         👁.zRotation = superhero.zRotation
         

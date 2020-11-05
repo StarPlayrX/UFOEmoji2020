@@ -60,10 +60,14 @@ class GameWorld : SKNode {
                         land.removeFromParent()
                         land = SKNode()
                     } else {
+                        
                         tileMap.removeAllActions()
+                        tileMap.physicsBody = nil
+                        tileMap.name = ""
                         land.removeAllActions()
                         land.alpha = 0.4
-                        land.zPosition = 1000
+                        land.name = ""
+                        land.zPosition = 100
                     }
                 }
             }
