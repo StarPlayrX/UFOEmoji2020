@@ -860,24 +860,37 @@
                         addChild(gameBoundsNode)
                         
                         //container for bombBounds
-                        let bombBounds = CGRect(x: node.frame.origin.x ,y: node.frame.origin.y, width: node.frame.width, height: node.frame.height + 128)
+                        
+                        var bounds = CGRect.zero
+                        let extend = CGFloat(128)
+                        let half = CGFloat(2)
+                        let halfextend = extend / half
+                        //MARK: Bounds now can only go so far off screen
+                        
+                        if let w = Optional(self.size.width), let h = Optional(self.size.height)  {
+                            bounds = CGRect(x: -w / half - halfextend, y: -h / half, width: w + extend, height: h + extend)
+                        }
+                            
+                        if let w = Optional(self.size.width), let h = Optional(self.size.height)  {
+                            bounds = CGRect(x: -w / half - halfextend, y: -h / half, width: w + extend, height: h + extend)
+                        }
+                                
                         
                         let addnode = SKNode()
                         addnode.name = "bombBounds"
                         addnode.zPosition = -10000
                         
-                        addnode.physicsBody = SKPhysicsBody(edgeLoopFrom: bombBounds)
+                        addnode.physicsBody = SKPhysicsBody(edgeLoopFrom: bounds)
                         addnode.physicsBody?.categoryBitMask = bombBoundsCategory
-                        addChild(addnode)
+                        self.camera?.addChild(addnode)
                         
                         //update positioning
                         let laserBoundsNode = SKNode()
-                        var laserBounds = CGRect.zero
                         if let w = Optional(self.size.width), let h = Optional(self.size.height)  {
-                            laserBounds = CGRect(x: -w / 2, y: -h / 2, width: w, height: h) //center laserbeam border within a square
+                            bounds = CGRect(x: -w / half - halfextend, y: -h / half, width: w + extend, height: h + extend)
                         }
                         
-                        laserBoundsNode.physicsBody = SKPhysicsBody(edgeLoopFrom: laserBounds )
+                        laserBoundsNode.physicsBody = SKPhysicsBody(edgeLoopFrom: bounds )
                         laserBoundsNode.name = "🔲"
                         laserBoundsNode.physicsBody?.categoryBitMask = laserBorder
                         laserBoundsNode.physicsBody?.collisionBitMask = 0
@@ -2062,9 +2075,12 @@
         if settings.emoji == 2 {
             let decay = SKAction.wait(forDuration: TimeInterval(0.6 * Double(settings.mode)))
             let spin = SKAction.rotate(byAngle: CGFloat.pi * 3.0 * 🍕, duration: 2)
+            let spin2 = SKAction.rotate(byAngle: CGFloat.pi * -3.0 * 🍕, duration: 2)
+
             let remove = SKAction.removeFromParent()
             laserDupe.run(SKAction.sequence([spin,decay,remove]))
-            
+            👁.run(SKAction.sequence([spin2,decay,remove]))
+
         } else {
             let decay = SKAction.wait(forDuration: TimeInterval(0.6 * Double(settings.mode)))
             let remove = SKAction.removeFromParent()
