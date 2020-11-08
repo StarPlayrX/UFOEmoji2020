@@ -85,6 +85,7 @@
     private var cam : SKCameraNode!
     private var scoreLabelNode:SKLabelNode!
     private var highScoreLabelNode:SKLabelNode!
+    private var readySetGoNode:SKLabelNode!
     private var highScoreLabel:SKLabelNode!
     private var livesLabel:SKLabelNode!
     private var livesLabelNode:SKLabelNode!
@@ -737,7 +738,6 @@
         
         QuadFireBombHUD.zRotation = CGFloat(Double.pi/4)
         
-        guard let gamestartup = readyPlayerOne() else { return }
         //😸
         doublelaser = 0
         scoreDict[""] = 1
@@ -788,15 +788,7 @@
         scoreDict["gold"]   = 16
         scoreDict["straw"]  = 16
         
-        hero = gamestartup.hero
-        canape = gamestartup.canape
-        tractor = gamestartup.tractor
-        tractor.addGlow()
-        
-        bombsbutton = gamestartup.bombsbutton
-        firebutton = gamestartup.firebutton
-        bombsbutton2 = gamestartup.bombsbutton2
-        firebutton2 = gamestartup.firebutton2
+     
         
         (level, highlevel, score, highscore, lives) = loadScores()
         
@@ -844,7 +836,6 @@
                         
                         let gameBoundsNode = SKNode()
                         
-                        
                         gameBoundsNode.zPosition = 50
                         rockBounds = node.frame
                         
@@ -864,11 +855,11 @@
                         let half = CGFloat(2)
                         let halfextend = extend / half
                         //MARK: Bounds now can only go so far off screen
+                   
+                        let w = self.size.width
+                        let h = self.size.height
+                        bounds = CGRect(x: -w / half - halfextend, y: -h / half, width: w + extend, height: h + extend)
                         
-                        if let w = Optional(self.size.width), let h = Optional(self.size.height)  {
-                            bounds = CGRect(x: -w / half - halfextend, y: -h / half, width: w + extend, height: h + extend)
-                        }
-                            
                         let addnode = SKNode()
                         addnode.name = "bombBounds"
                         addnode.zPosition = -10000
@@ -880,10 +871,8 @@
                         //update positioning
                         let laserBoundsNode = SKNode()
                         
-                        if let w = Optional(self.size.width), let h = Optional(self.size.height)  {
-                            bounds = CGRect(x: -w / half, y: -h / half, width: w, height: h + extend)
-                        }
-                        
+                        bounds = CGRect(x: -w / half, y: -h / half, width: w, height: h + extend)
+
                         laserBoundsNode.physicsBody = SKPhysicsBody(edgeLoopFrom: bounds )
                         laserBoundsNode.name = "🔲"
                         laserBoundsNode.physicsBody?.categoryBitMask = laserBorder
@@ -963,6 +952,19 @@
         highScoreLabelNode.name = "highScoreLabelNode"
         cam.addChild(highScoreLabelNode)
         
+        readySetGoNode = SKLabelNode(fontNamed:emojifontname)
+        readySetGoNode.position = CGPoint( x: 0, y: 0 )
+        readySetGoNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
+        readySetGoNode.alpha = 1.0
+        readySetGoNode.zPosition = 100
+        readySetGoNode.text = String("🚥")
+        readySetGoNode.fontSize = 72
+        readySetGoNode.name = "highScoreLabelNode"
+        cam.addChild(readySetGoNode)
+        
+        //readySetGoNode
+        
+        
         livesLabel = SKLabelNode(fontNamed:"Emulogic")
         livesLabel.position = CGPoint( x: indent, y: labelheight )
         livesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
@@ -1008,7 +1010,7 @@
         if settings.rapidfire {
             
             let autofire = SKAction.sequence(
-                [ SKAction.run {
+                [ SKAction.run { [self] in
                               
                     switch UIApplication.shared.applicationState {
                     case .background, .inactive:
@@ -1016,14 +1018,10 @@
                     case .active:
 
                         guard
-                            let hero = self.hero,
+                            let hero = hero,
                             let heroVelocity = hero.physicsBody?.velocity,
                             let heroRotation = hero.zRotation as CGFloat?,
                             let heroPosition = hero.position as CGPoint?
-                            //let firebutton = self.firebutton,
-                            //let firebutton2 = self.firebutton2,
-                            //let bombsbutton = self.bombsbutton,
-                            //let bombsbutton2 = self.bombsbutton2
                         else
                         { return }
                         
@@ -1034,17 +1032,17 @@
                             case 1,2,3,4:
                                 
                                 if heroVelocity.dx > 0 {
-                                    self.laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
+                                    laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
                                 } else if  heroVelocity.dx < 0 {
-                                    self.laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
+                                    laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
                                 }
                                 
                             case 5,6:
                                 
                                 if heroVelocity.dy < 0  {
-                                    self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
+                                    bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
                                 } else if heroVelocity.dy > 0 {
-                                    self.bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
+                                    bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
                                 }
                                 
                             default:
@@ -1070,6 +1068,35 @@
             )
             self.run( SKAction.repeatForever(autofire) )
         }
+        
+ 
+        let fadeOut = SKAction.fadeOut(withDuration: 0.3)
+        let fadeIn = SKAction.fadeIn(withDuration: 0.3)
+        let waitA = SKAction.wait(forDuration: 1.0)
+        let waitB = SKAction.wait(forDuration: 1.3)
+
+        readySetGoNode.run(SKAction.sequence([waitA,fadeOut]))
+    
+        let actionJackson = SKAction.run { [self] in
+            guard let gamestartup = readyPlayerOne() else { return }
+            
+            hero = gamestartup.hero
+            canape = gamestartup.canape
+            tractor = gamestartup.tractor
+            tractor.addGlow()
+            
+            bombsbutton = gamestartup.bombsbutton
+            firebutton = gamestartup.firebutton
+            bombsbutton2 = gamestartup.bombsbutton2
+            firebutton2 = gamestartup.firebutton2
+            
+        }
+        
+        let sequence = SKAction.sequence([waitB,fadeIn,actionJackson]);
+        
+       
+        self.run( sequence )
+
         
     }
     

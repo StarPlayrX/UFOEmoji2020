@@ -45,7 +45,15 @@ class GameWorld : SKNode {
             if let name = land.name {
                 if var tileMap = referenceNode.childNode(withName: "//" + name ) as? SKTileMapNode {
                     
-                    if name != "Water" {
+                    if name == "Water" {
+                        tileMap.removeAllActions()
+                        tileMap.physicsBody = nil
+                        tileMap.name = ""
+                        land.removeAllActions()
+                        land.alpha = 0.4
+                        land.name = ""
+                        land.zPosition = 1000
+                    } else {
                         setupLevel( tileMap: tileMap)
                         tileMap.removeAllActions()
                         tileMap.removeAllChildren()
@@ -59,15 +67,6 @@ class GameWorld : SKNode {
                         land.removeAllChildren()
                         land.removeFromParent()
                         land = SKNode()
-                    } else {
-                        
-                        tileMap.removeAllActions()
-                        tileMap.physicsBody = nil
-                        tileMap.name = ""
-                        land.removeAllActions()
-                        land.alpha = 0.4
-                        land.name = ""
-                        land.zPosition = 100
                     }
                 }
             }
@@ -100,8 +99,6 @@ class GameWorld : SKNode {
             	let tileDef = SKTileDefinition(textures: tileTexture, size: CGSize.zero, timePerFrame: 0.0)
                 let tileGroup = SKTileGroup.empty()
                 tileMap.setTileGroup(tileGroup, andTileDefinition:tileDef, forColumn: col, row: row)
-                
-                
             }
         }
         

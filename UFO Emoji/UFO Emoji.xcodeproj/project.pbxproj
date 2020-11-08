@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D10D1352554C9F400004E76 /* level.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2D10D1312554C9F400004E76 /* level.sks */; };
 		5F1169BB2480A1B8000A159C /* GameParallax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1169BA2480A1B8000A159C /* GameParallax.swift */; };
 		5F1C9BFF2481DF250047CDB7 /* level3.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F1C9BFE2481DF250047CDB7 /* level3.sks */; };
 		5F1C9C012481F7770047CDB7 /* level1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F1C9C002481F7770047CDB7 /* level1.sks */; };
@@ -62,10 +63,10 @@
 		5FED3AEC24CFC2D50065CEAE /* level6.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FED3AE924CFC2D50065CEAE /* level6.sks */; };
 		5FED3AF124CFC37B0065CEAE /* level7.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FED3AEF24CFC37B0065CEAE /* level7.sks */; };
 		5FF6326824A0005A00758CA2 /* groupTileSet1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5FF6326724A0005A00758CA2 /* groupTileSet1.sks */; };
-		5FF6A20F24DF0CE2006FA292 /* Toddmoji.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FF6A20E24DF0CE2006FA292 /* Toddmoji.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D10D1312554C9F400004E76 /* level.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level.sks; sourceTree = "<group>"; };
 		5F1169BA2480A1B8000A159C /* GameParallax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameParallax.swift; sourceTree = "<group>"; };
 		5F1C9BFE2481DF250047CDB7 /* level3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level3.sks; sourceTree = "<group>"; };
 		5F1C9C002481F7770047CDB7 /* level1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level1.sks; sourceTree = "<group>"; };
@@ -123,7 +124,6 @@
 		5FED3AE924CFC2D50065CEAE /* level6.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level6.sks; sourceTree = "<group>"; };
 		5FED3AEF24CFC37B0065CEAE /* level7.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level7.sks; sourceTree = "<group>"; };
 		5FF6326724A0005A00758CA2 /* groupTileSet1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = groupTileSet1.sks; sourceTree = "<group>"; };
-		5FF6A20E24DF0CE2006FA292 /* Toddmoji.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Toddmoji.otf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,7 +140,6 @@
 		5F1CF8B0247B13B9008DEC84 /* GameFonts */ = {
 			isa = PBXGroup;
 			children = (
-				5FF6A20E24DF0CE2006FA292 /* Toddmoji.otf */,
 				5F1CF8B1247B13C2008DEC84 /* emulogic.ttf */,
 			);
 			path = GameFonts;
@@ -280,6 +279,7 @@
 		5FC051D6247B0E41003C8201 /* GameLevels */ = {
 			isa = PBXGroup;
 			children = (
+				2D10D1312554C9F400004E76 /* level.sks */,
 				5F1C9C002481F7770047CDB7 /* level1.sks */,
 				5FC051D7247B0E6C003C8201 /* level2.sks */,
 				5F1C9BFE2481DF250047CDB7 /* level3.sks */,
@@ -403,7 +403,6 @@
 				5F1CF8C4247B18C8008DEC84 /* Explosion1.m4a in Resources */,
 				5F1CF8E4247B18F7008DEC84 /* smokeParticle.sks in Resources */,
 				5F1CF8E2247B18F7008DEC84 /* magicParticle.sks in Resources */,
-				5FF6A20F24DF0CE2006FA292 /* Toddmoji.otf in Resources */,
 				5F1CF8C5247B18C8008DEC84 /* extralife.m4a in Resources */,
 				5F1CF8DE247B18F7008DEC84 /* blackHole.sks in Resources */,
 				5FED3AEC24CFC2D50065CEAE /* level6.sks in Resources */,
@@ -421,6 +420,7 @@
 				5F1C9BFF2481DF250047CDB7 /* level3.sks in Resources */,
 				5F1CF8E1247B18F7008DEC84 /* grayParticle.sks in Resources */,
 				5FF6326824A0005A00758CA2 /* groupTileSet1.sks in Resources */,
+				2D10D1352554C9F400004E76 /* level.sks in Resources */,
 				5FA0C9C324845B6100A46B03 /* level4.sks in Resources */,
 				5F493BFB25032910006AB05F /* level11.sks in Resources */,
 				5F1CF8DC247B18F2008DEC84 /* water.sks in Resources */,
@@ -602,7 +602,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 469UCUB275;
 				INFOPLIST_FILE = "UFO Emoji/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -610,7 +610,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bruss.todd.UF-Emoji";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -625,7 +625,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 469UCUB275;
 				INFOPLIST_FILE = "UFO Emoji/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -633,7 +633,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bruss.todd.UF-Emoji";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

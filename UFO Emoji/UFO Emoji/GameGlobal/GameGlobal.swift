@@ -14,8 +14,8 @@ typealias appsettings =  (level: Int, highlevel: Int, emoji: Int, score: Int, hi
 var settings : appsettings = (level: 1, highlevel: 2, emoji: 1, score: 0, highscore: 0, lives: 3, music: true, sound: true, stick: true, mode: 0, rapidfire: false)
 
 
-var levelarray: Array = ["🦕","🦕","🦎","🚙","🦋", "🐮", "🕊","🦆","🍀","🕸", "🥥", "🐿","💐","🦄","🐴","🐶","🐌","🐄","🐄"]
-var antiarray : Array = ["🦖","🦖","🐊","🚗","🐛", "🐔", "🐍","🦅","🎱","🕷", "🌴", "🦔","🍄","🐺","🐗","🐱","🦂","🐓","🐓"]
+var levelarray: Array = ["🦕","🦕","😎","🚙","🦋", "🐮", "🕊","🦆","🍀","🕸", "🥥", "🐿","💐","🦄","🐴","🐶","🐌","🐄","🐄"]
+var antiarray : Array = ["🦖","🦖","😡","🚗","🐛", "🐔", "🐍","🦅","🎱","🕷", "🌴", "🦔","🍄","🐺","🐗","🐱","🦂","🐓","🐓"]
 
 var heroArray: Array = ["👽","👽","🐵","💩","💩"]
 var heroDisplay: Array = ["🛸👽","🛸👽","🚀🐵","🚀💩","🚀💩"]
@@ -34,12 +34,12 @@ var KingQueenGlobalDie = 100
 var emojifontname = "Apple Color Emoji" //"Toddmoji" //"Segoe UI Emoji" //"EmojiOneColor"//     "Apple Color Emoji" //"Segoe UI Emoji"
 var gameDelegate : GameProtocol?
 
-let showsFPS = false
-let showsNodeCount = false
-let showsPhysics = true
-let showsFields = false
-let showsDrawCount = false
-let showsQuadCount = false
+let showsFPS        = false
+let showsNodeCount  = false
+let showsPhysics    = false
+let showsFields     = false
+let showsDrawCount  = false
+let showsQuadCount  = false
 
 func loadScores() -> (level: Int, highlevel: Int, score: Int, hscore: Int, lives: Int) {
     let hscore = settings.highscore
@@ -134,6 +134,8 @@ func saveSettings() {
     UserDefaults.standard.setValue(settings.highlevel, forKey: "highlevel")
     UserDefaults.standard.setValue(settings.highscore, forKey: "highscore")
     UserDefaults.standard.setValue(settings.level, forKey: "level")
+    UserDefaults.standard.setValue(settings.emoji, forKey: "emoji")
+
 
 }
 
@@ -142,6 +144,8 @@ func loadSettings() {
     settings.highlevel = UserDefaults.standard.integer(forKey: "highlevel")
     settings.highscore = UserDefaults.standard.integer(forKey: "highscore")
     settings.level = UserDefaults.standard.integer(forKey: "level")
+    settings.emoji = UserDefaults.standard.integer(forKey: "emoji")
+
     settings.level == 0 ? (settings.level+=1) : ()
     settings.level > maxlevel ? (settings.level = maxlevel) : ()
     settings.highlevel == 0 ? (settings.highlevel+=2) : ()
