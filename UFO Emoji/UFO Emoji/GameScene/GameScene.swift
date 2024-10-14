@@ -2,7 +2,7 @@
  //  GameScene.swift
  //  UF Emoji
  //
- //  Created by Todd Bruss on 12/3/15 to 5/9/20
+ //  Created by Todd Bruss on 5/9/20
  //  Copyright (c) 2015 Todd Bruss. All rights reserved.
  //
  
@@ -398,6 +398,10 @@
         heroEmoji.zPosition = 24
         heroEmoji.text = heroArray[settings.emoji]
         hero.addChild(heroEmoji)
+        
+        if settings.emoji == 2 {
+            emojiAnimation(emojis:["🙈","🙊","🙉","🐵"])
+        }
         
         canape = drawSpriteII (
             texture: glass,
@@ -897,10 +901,6 @@
         world.addChild(parallax)
         world?.speed = 1
         
-        if settings.emoji == 2 {
-            emojiAnimation(emojis:["🙈","🙊","🙉","🐵"])
-        }
-        
         guard
             let sh = scene?.frame.size.height,
             let sw = scene?.frame.size.width
@@ -1121,19 +1121,36 @@
     
     
     public func emojiAnimation(emojis:Array<String>) {
-        
         guard
-            let hero = hero,
-            let emojiNode = hero.children.first as? SKLabelNode
+            let hero = hero
         else { return }
         
+        guard
+            let emojiNode = hero.children.first as? SKLabelNode
+        else { return }
+
         let wait = SKAction.wait(forDuration: 1.0)
+        let sizeA = SKAction.run {
+            emojiNode.fontSize = 34
+            emojiNode.position.y = -0.6
+        }
         
+        let sizeB = SKAction.run {
+            emojiNode.fontSize = 32
+            emojiNode.position.y = 0
+        }
+    
         var animationSeqArr = [SKAction]()
         
         for x in 0..<emojis.count {
-            let emoji = SKAction.run() { [weak emojiNode ] in emojiNode?.text = emojis[x] }
+            let emoji = SKAction.run() { [weak emojiNode] in emojiNode?.text = emojis[x] }
+            
             animationSeqArr.append(wait)
+            if x < emojis.count - 1 {
+                animationSeqArr.append(sizeA)
+            } else {
+                animationSeqArr.append(sizeB)
+            }
             animationSeqArr.append(emoji)
         }
         
@@ -1832,7 +1849,7 @@
             self.tractor = gamestartup.tractor
             
             if settings.emoji == 2 {
-                self.emojiAnimation(emojis:["🙈","🙊","🙉","🐵"])
+                emojiAnimation(emojis:["🙈","🙊","🙉","🐵"])
             }
             
             self.bombsbutton     =  gamestartup.bombsbutton

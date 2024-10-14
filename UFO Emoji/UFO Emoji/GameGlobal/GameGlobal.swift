@@ -59,46 +59,50 @@ func saveScores(level: Int, highlevel: Int, score: Int, hscore: Int, lives: Int)
 }
 
 func getDeviceSize() {
-    // iPhone detection
-    let screenWidth = Int(UIScreen.main.bounds.size.width)
-    let screenHeight = Int(UIScreen.main.bounds.size.height)
-    let screenMax = Int(max(screenWidth,screenHeight))
-    
-    let iPhone = screenMax == 568 || screenMax == 667 || screenMax == 736
-    let iPhoneX = screenMax == 812 || screenMax == 896
-    settings.mode = 1 // iPad
-    
-    if iPhone {
+    // iPhone and iPad detection
+    let width = UIScreen.main.bounds.size.width
+    let height = UIScreen.main.bounds.size.height
+    let aspect = width / height
+    let ratio = round(aspect * 10) / 10
+    let device = UIDevice.current.userInterfaceIdiom
+        
+    switch (ratio, device) {
+        
+    case (1.0..<2.0, .pad):
+        settings.mode = 1
+    case (1.5..<2.0, .phone):
         settings.mode = 2
-    } else if iPhoneX {
+    case (2.0..., .phone):
         settings.mode = 4
+    default:
+        if device == .pad {
+            settings.mode = 1
+        } else {
+            settings.mode = 4
+        }
     }
 }
 
-func setSceneSizeForGame() -> CGSize  {
-    
+func setSceneSizeForGame() -> CGSize {
     getDeviceSize()
-        
-
-    //Put this in a common area
-    if (settings.mode == 2 ) {
-        //regular iPhone style
+    switch settings.mode {
+    case 2:
+        // regular iPhone style 1.8
         return CGSize(width: 626, height: 352)
-        
-    } else if (settings.mode == 4) {
-        // iPhone X style
+    case 4:
+        // iPhone X style 2.16
         return CGSize(width: 762, height: 352)
-        
-    } else {
-        
-        let screenWidth = CGFloat(UIScreen.main.bounds.size.width)
-        let screenHeight = CGFloat(UIScreen.main.bounds.size.height)
-        let screenMax = CGFloat(max(screenWidth,screenHeight))
-        let screenMin = CGFloat(min(screenWidth,screenHeight))
-        
-        return CGSize(width: 470,  height: 470 * ( screenMin / screenMax ) )
+    default:
+        let a: CGFloat = 470
+        let b: CGFloat = UIScreen.main.bounds.size.width
+        let c: CGFloat = UIScreen.main.bounds.size.height
+        return CGSize(
+            width: a,
+            height: a * (min(b, c) / max(b, c))
+        )
     }
 }
+
 
 
 func setSceneSizeForMenu() -> CGSize  {

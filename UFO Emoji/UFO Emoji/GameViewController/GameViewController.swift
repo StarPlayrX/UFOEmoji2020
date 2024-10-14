@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-protocol GameProtocol: class {
+protocol GameProtocol: AnyObject {
     func runGameMenu()
     func runGameLevel()
 }

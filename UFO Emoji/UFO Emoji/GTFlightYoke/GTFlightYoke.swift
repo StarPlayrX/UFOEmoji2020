@@ -6,7 +6,7 @@
 
 import SpriteKit
 
-protocol FlightYokeProtocol: class {
+protocol FlightYokeProtocol: AnyObject {
     func FlightYokePilot(velocity: CGVector?, zRotation: CGFloat?)
 }
  

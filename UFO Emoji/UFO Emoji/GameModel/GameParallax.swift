@@ -12,18 +12,17 @@ import SpriteKit
 class GameParallax : SKNode {
     
     private weak var parallax: SKReferenceNode!
-    private var bounds: CGRect!
-    
+    private var boundz: CGRect? = nil
+
     init (parallax: SKReferenceNode, bounds: CGRect) {
         super.init()
         self.parallax = parallax
-        self.bounds = bounds
+        self.boundz = bounds
 
     }
     
     deinit {
         parallax = nil
-        bounds = nil
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -39,7 +38,7 @@ class GameParallax : SKNode {
             
             let factor = CGFloat(2.0) //PDF Textures are 50% scaled up 200% to save memory while retaining a decent look
             let width = t.size().width * factor
-            let interations = Int(round( self.bounds.width / width / factor ))
+            let interations = Int(round( self.boundz!.width / width / factor ))
             var sprite = SKSpriteNode(texture: t)
             sprite.name = String("parallaxSprite")
             sprite.xScale = factor
