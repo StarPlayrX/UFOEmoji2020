@@ -872,10 +872,12 @@
             let sw = scene?.frame.size.width
         else { return }
         
-        screenHeight = sh / 2 - 64
         let sceneheight = sh / 2
+        let scenewidth = sw / 2
+
+        screenHeight = sceneheight - 64
         
-        let indent = ( sw / 2 ) - 7.5 * CGFloat(settings.mode)
+        let indent = scenewidth - 7.5 * CGFloat(settings.mode)
         let difference = CGFloat(20)
         let labelheight = sceneheight - difference
         let scoreheight = sceneheight - (difference * CGFloat(2))
