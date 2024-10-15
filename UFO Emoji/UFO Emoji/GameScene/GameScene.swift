@@ -100,19 +100,19 @@
     private lazy var scoreDict: [String:Int]! = [:]
     
     private var maxVelocity = CGFloat(0)
-    private let heroCategory:UInt32         		=  1
-    private let worldCategory:UInt32        		=  2
-    private let bombBoundsCategory:UInt32   		=  4
-    private let badFishCategory:UInt32      		=  8
-    private let badGuyCategory:UInt32       		=  16
-    private let tractorCategory:UInt32      		=  32
-    private let laserbeam: UInt32          		 	=  64
-    private let wallCategory:UInt32        		 	=  128
-    private let itemCategory:UInt32         		=  256
-    private let fishCategory:UInt32        			=  512
-    private let charmsCategory:UInt32      			=  1024
-    private let levelupCategory:UInt32      		=  2048
-    private let laserBorder:UInt32         	 		=  4096
+    private let heroCategory:UInt32       =  1
+    private let worldCategory:UInt32      =  2
+    private let bombBoundsCategory:UInt32 =  4
+    private let badFishCategory:UInt32    =  8
+    private let badGuyCategory:UInt32     =  16
+    private let tractorCategory:UInt32    =  32
+    private let laserbeam: UInt32         =  64
+    private let wallCategory:UInt32       =  128
+    private let itemCategory:UInt32       =  256
+    private let fishCategory:UInt32       =  512
+    private let charmsCategory:UInt32     =  1024
+    private let levelupCategory:UInt32    =  2048
+    private let laserBorder:UInt32        =  4096
     
     //Game Projectiles
     private var 🛥 : Bool! = true
@@ -134,10 +134,8 @@
     //we can swap these out if we use other emoji ships: 0 through 6
     
     deinit {
-        
         parallax.removeAllChildren()
         parallax.removeFromParent()
-        
         
         if let first = world.children.first, first.hasActions() {
             first.removeAllActions()
@@ -176,7 +174,6 @@
             scene.removeFromParent()
             scene.parent?.removeAllChildren()
         }
-        
         
         if hasActions() {
             removeAllActions()
@@ -220,27 +217,25 @@
         scoreDict = nil
     }
     
-    
     func readyPlayerOne() -> Oreo? {
-        
         var rocket = "aliensaucer"
         var glass = "aliencanape"
         var offset = 0
         var size = 24
         
-        //alien
+        // alien
         if settings.emoji == 1 {
             rocket = "aliensaucer"
             glass = "aliencanape"
             offset = 10
             size = 26
-            //monkey
+        // monkey
         } else if settings.emoji == 2 {
             rocket = "monkeyrocket"
             glass = "monkeycanape"
             offset = 0
             size = 32
-            //poop emoji
+        // poop emoji
         }  else if settings.emoji == 3 {
             rocket = "poopship"
             glass = "poopcanape"
@@ -248,8 +243,7 @@
             size = 36
         }
         
-        
-        func drawSpriteII(texture: String, name: String, category:UInt32, collision:UInt32, contact:UInt32, field:UInt32, dynamic:Bool, allowRotation:Bool, affectedGravity:Bool, zPosition:CGFloat, alpha:CGFloat, speed:CGFloat, alphaThreshold: Float) -> SKSpriteNode?  {
+        func drawSpriteII(texture: String, name: String, category:UInt32, collision:UInt32, contact:UInt32, field:UInt32, dynamic:Bool, allowRotation:Bool, affectedGravity:Bool, zPosition:CGFloat, alpha:CGFloat, speed:CGFloat, alphaThreshold: Float) -> SKSpriteNode? {
             
             let sprite = SKSpriteNode(imageNamed: texture)
             
@@ -269,9 +263,7 @@
                     sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: radius.width + 5, height: radius.height + 5))
                     sprite.physicsBody?.restitution = 0
                     sprite.position = CGPoint(x:sprite.position.x, y: sprite.position.y - 25)
-                } //else {
-                //  sprite.physicsBody = SKPhysicsBody(texture: sprite.texture!, alphaThreshold: alphaThreshold, size: sprite.size)
-                //}
+                }
                 
                 sprite.physicsBody?.categoryBitMask = category
                 sprite.physicsBody?.collisionBitMask = collision
@@ -294,8 +286,6 @@
             
             return sprite
         }
-        
-        
         
         func drawHudII( texture: String, name: String, category:UInt32, collision:UInt32, contact:UInt32, field:UInt32, dynamic:Bool, allowRotation:Bool, affectedGravity:Bool, zPosition:CGFloat, alpha:CGFloat, speed:CGFloat, alphaThreshold: Float) -> SKSpriteNode? {
             
@@ -364,13 +354,10 @@
                 }
                 
                 QuadFireBombHUD.setScale(0.75)
-                
             }
             
             return sprite
-            
         }
-        
         
         //drawsprites
         hero = drawSpriteII (
@@ -418,8 +405,6 @@
             speed: 1,
             alphaThreshold: 0.0
         )
-        
-        
         
         tractor = drawSpriteII (
             texture: "tractorbeam",
@@ -565,7 +550,6 @@
             alphaThreshold: 0
         )
         
-        
         func createHeroJoint() {
             guard
                 let bodyA = hero.physicsBody,
@@ -622,24 +606,20 @@
             if settings.mode == 1 {
                 FlightYoke.setScale(0.75)
                 
-                if stick == "L" {
-                    FlightYoke.position = CGPoint(x: CGFloat(frame.size.width / -2 + (87 * 0.75) ) ,y:  CGFloat(frame.size.height / -2 + (87 * 0.75)) )
-                } else {
-                    FlightYoke.position = CGPoint(x: CGFloat(frame.size.width / 2 - (87 * 0.75) ) ,y:  CGFloat(frame.size.height / -2 + (87 * 0.75)) )
-                }
+                let offset: CGFloat = 65.25
+                let yPosition = frame.size.height / -2 + offset
+                let xPosition = stick == "L" ? frame.size.width / -2 + offset : frame.size.width / 2 - offset
+                
+                FlightYoke.position = CGPoint(x: xPosition, y: yPosition)
             }
         }
-        
-        
-        
+
         createCanapeJoint()
         createHeroJoint()
         gtFlightYoke()
         
         return (bombsbutton,firebutton,hero,canape,tractor,bombsbutton2,firebutton2)
     }
-    
-    
     
     //MARK: Function Update
     override func update(_ currentTime: TimeInterval) {
@@ -661,7 +641,7 @@
         }
         
         /**
-         Used by Asteriods and Chopper I
+         used by meteorites and chopper
          */
         func movingObjectI() {
             world.children.first?.enumerateChildNodes(withName: "🤯") { node, _ in
@@ -675,11 +655,8 @@
             }
         }
         
-        
-        
         movingObjectI()
     }
-    
     
     func demoMode() {
         /* demo mode */
@@ -762,17 +739,13 @@
         scoreDict["⁉️"] = 80 //heroes not flipped
         scoreDict["❌"] = 85 //villians
         scoreDict["‼️"] = 90 //Hero Villians not flipped
-
         scoreDict["😡"] = 100 //super villians
-        
         scoreDict["😸"] = 105
-
         scoreDict["🤬"] = 110 //super villians
         scoreDict["😳"] = 120 //super villians
         scoreDict["😱"] = 130 //super villians
         scoreDict["🤯"] = 140 // Meteor or super villian
         scoreDict["😠"] = 150 // Meteor or super villian
-        
         scoreDict["💰"] = 105 //rare
         scoreDict["💎"] = 110 //rare
         scoreDict["👑"] = 115 //rare
@@ -782,7 +755,6 @@
         scoreDict["🛡"] = 150 //super rare shields (cloaked ghost, move through walls)
         scoreDict["💠"] = 160 //super rare shields (cloaked ghost, move through walls)
         scoreDict["🕹"] = 170 //super rare shields (cloaked ghost, move through walls)
-        
         scoreDict["land"] 	= 1
         scoreDict["dirt"] 	= 1
         scoreDict["grass"] 	= 2
@@ -792,10 +764,7 @@
         scoreDict["gold"]   = 16
         scoreDict["straw"]  = 16
         
-     
-        
         (level, highlevel, score, highscore, lives) = loadScores()
-        
         
         var background = ""
         
@@ -815,7 +784,6 @@
             ()
         }
         
-        
         var filename = "" //default
         
         filename = "level\(level)"
@@ -829,15 +797,13 @@
         world.isPaused = false
         world.isHidden = false
         
-        
         for node in self.children {
             if (node.name == "world") {
                 
                 //Texture Map Node Stuff goes here
                 for node in node.children {
                     
-                    if(node.name == "Rocky") {
-                        
+                    if node.name == "Rocky" {
                         let gameBoundsNode = SKNode()
                         
                         gameBoundsNode.zPosition = 50
