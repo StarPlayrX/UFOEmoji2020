@@ -1132,7 +1132,7 @@
         let wait = SKAction.wait(forDuration: 1.0)
         let sizeA = SKAction.run {
             emojiNode.fontSize = 34
-            emojiNode.position.y = -0.6
+            emojiNode.position.y = -1
         }
         
         let sizeB = SKAction.run {

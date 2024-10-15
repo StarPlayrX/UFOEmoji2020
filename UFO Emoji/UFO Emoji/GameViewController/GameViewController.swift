@@ -53,14 +53,18 @@ class GameViewController: UIViewController, GameProtocol {
             
             scene.scaleMode = .aspectFill
 
-            scene.backgroundColor = SKColor.init(displayP3Red: 0, green: 20 / 255, blue: 80 / 255, alpha: 1.0)
+            //scene.backgroundColor = SKColor.init(displayP3Red: 0, green: 20 / 255, blue: 80 / 255, alpha: 1.0)
+            
+            scene.backgroundColor = .black
+            view.backgroundColor = .black
+
             view.isMultipleTouchEnabled = true
             view.allowsTransparency = false
             view.isAsynchronous = true
             view.isOpaque = true
             view.clipsToBounds = true
             view.ignoresSiblingOrder = true
-           
+
             view.showsFPS = showsFPS
             view.showsNodeCount = showsNodeCount
             view.showsPhysics = showsPhysics
@@ -69,7 +73,6 @@ class GameViewController: UIViewController, GameProtocol {
             view.showsQuadCount = showsQuadCount
             
             view.shouldCullNonVisibleNodes = true
-            //view.preferredFramesPerSecond = 61
             view.presentScene(scene)
 
         }
@@ -90,12 +93,12 @@ class GameViewController: UIViewController, GameProtocol {
 
             scene.scaleMode = .aspectFill
 
-            scene.backgroundColor = SKColor.black
+            scene.backgroundColor = .black
+            view.backgroundColor = .black
+
             view.isMultipleTouchEnabled = true
             view.allowsTransparency = false
             view.isAsynchronous = true
-            view.backgroundColor = .black
-            scene.backgroundColor = SKColor.init(displayP3Red: 0, green: 20 / 255, blue: 80 / 255, alpha: 0.25)
 
             view.isOpaque = true
             view.clipsToBounds = true

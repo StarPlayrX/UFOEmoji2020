@@ -54,7 +54,7 @@ class StartUp: SKScene {
             
             self.anchorPoint = CGPoint(x: 0.0, y: 0.0)
                         
-            self.backgroundColor = SKColor.black
+            self.backgroundColor = .black
             
             let mainCharacter = heroArray[settings.emoji]
             let goodGuy = levelarray[settings.level]

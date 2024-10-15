@@ -68,7 +68,7 @@ class GameOver: SKScene {
         
             let message = "🎯 " + scorelabel
             
-            self.backgroundColor = SKColor.black
+            self.backgroundColor = .black
             
             /* Game Over Message */
             let label = SKLabelNode(fontNamed: emojifontname)

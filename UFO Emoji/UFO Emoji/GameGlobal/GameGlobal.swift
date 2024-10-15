@@ -58,16 +58,15 @@ func saveScores(level: Int, highlevel: Int, score: Int, hscore: Int, lives: Int)
     settings.lives = lives
 }
 
-func getDeviceSize() {
+func getDeviceSize() -> Double {
     // iPhone and iPad detection
     let width = UIScreen.main.bounds.size.width
     let height = UIScreen.main.bounds.size.height
     let aspect = width / height
     let ratio = round(aspect * 10) / 10
     let device = UIDevice.current.userInterfaceIdiom
-        
+
     switch (ratio, device) {
-        
     case (1.0..<2.0, .pad):
         settings.mode = 1
     case (1.5..<2.0, .phone):
@@ -81,10 +80,13 @@ func getDeviceSize() {
             settings.mode = 4
         }
     }
+    
+    return ratio
 }
 
 func setSceneSizeForGame() -> CGSize {
-    getDeviceSize()
+    let ratio = getDeviceSize()
+
     switch settings.mode {
     case 2:
         // regular iPhone style 1.8
@@ -93,23 +95,26 @@ func setSceneSizeForGame() -> CGSize {
         // iPhone X style 2.16
         return CGSize(width: 762, height: 352)
     default:
-        let a: CGFloat = 470
+        // iPad (Supports ratios 1.3, 1.4, 1.5 and future 1.6)
+        let x: CGFloat = round((ratio - 1.3) * 10)
+        let y: CGFloat = 32 //size of the grid square (32 x 32)
+        let a: CGFloat = 469 + (x * y)
         let b: CGFloat = UIScreen.main.bounds.size.width
         let c: CGFloat = UIScreen.main.bounds.size.height
+
         return CGSize(
             width: a,
             height: a * (min(b, c) / max(b, c))
         )
+        
     }
 }
 
 
 
 func setSceneSizeForMenu() -> CGSize  {
-    
-    getDeviceSize()
+    _ = getDeviceSize()
         
-
     //Put this in a common area
     if (settings.mode == 2 ) {
         //regular iPhone style

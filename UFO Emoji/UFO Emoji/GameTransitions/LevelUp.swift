@@ -64,7 +64,7 @@ class LevelUp: SKScene {
             let enemyMessage = antiarray[settings.level]
             let livesMessage = String(repeating: heroArray[settings.emoji], count: lives)
 
-            self.backgroundColor = SKColor.black
+            self.backgroundColor = .black
             
             let label = SKLabelNode(fontNamed: emojifontname)
             label.text = heroMessage
