@@ -82,9 +82,8 @@ class GameViewController: UIViewController, GameProtocol {
         guard
             let view = self.view as? SKView,
             let scene = GameScene(fileNamed: "GameScene")
-            else {
-                return
-                
+        else {
+            return
         }
         
         DispatchQueue.main.async  {  [weak view] in
@@ -99,11 +98,9 @@ class GameViewController: UIViewController, GameProtocol {
             view.isMultipleTouchEnabled = true
             view.allowsTransparency = false
             view.isAsynchronous = true
-
             view.isOpaque = true
             view.clipsToBounds = true
             view.ignoresSiblingOrder = true
-            
             view.showsFPS = showsFPS
             view.showsNodeCount = showsNodeCount
             view.showsPhysics = showsPhysics
@@ -111,16 +108,9 @@ class GameViewController: UIViewController, GameProtocol {
             view.showsDrawCount = showsDrawCount
             view.showsQuadCount = showsQuadCount
             scene.anchorPoint = CGPoint(x: 1, y: 1)
-
-            if #available(iOS 13.0, *) {
-                view.showsLargeContentViewer = false
-            } else {
-                // Fallback on earlier versions
-            }
+            view.showsLargeContentViewer = false
             view.shouldCullNonVisibleNodes = true
-            //view.preferredFramesPerSecond = 61
             view.presentScene(scene)
-
         }
     }
     

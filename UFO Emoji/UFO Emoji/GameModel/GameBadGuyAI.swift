@@ -87,17 +87,17 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
             loop1 = badGuySecond[0]
             loop2 = badGuySecond[1]
             
-        } else if Name == Lieutenants[0]  {
+        } else if Name == Lieutenants[0] {
             TileNode.zPosition = 76
             
             loop1 = badGuyThird[0]
             loop2 = badGuyThird[1]
-        } else if Name == Generals[0]   {
+        } else if Name == Generals[0] {
             TileNode.zPosition = 76
             
             loop1 = badGuyFourth[0]
             loop2 = badGuyFourth[1]
-        } else if Name == Privates[0]  {
+        } else if Name == Privates[0] {
             TileNode.zPosition = 76
             
             loop1 = badGuyFifth[0]

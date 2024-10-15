@@ -639,6 +639,8 @@
         return (bombsbutton,firebutton,hero,canape,tractor,bombsbutton2,firebutton2)
     }
     
+    
+    
     //MARK: Function Update
     override func update(_ currentTime: TimeInterval) {
         
@@ -697,45 +699,6 @@
         canape.setScale(1.75)
         /* end demo mode */
     }
-     
-     public override func keyDown(with event: NSEvent) {
-         handleKeyEvent(event, keyDown: true)
-     }
-
-     public override func keyUp(with event: NSEvent) {
-         handleKeyEvent(event, keyDown: false)
-     }
-
-     public func handleKeyEvent(_ event: NSEvent, keyDown: Bool){
-         if event.modifierFlags.contains(NSEvent.ModifierFlags.numericPad) {
-             if let theArrow = event.charactersIgnoringModifiers, let keyChar = theArrow.unicodeScalars.first?.value{
-                 switch Int(keyChar){
-                 case NSUpArrowFunctionKey:
-                     break
-                 case NSDownArrowFunctionKey:
-                     break
-                 case NSRightArrowFunctionKey:
-                     break
-                 case NSLeftArrowFunctionKey:
-                     break
-                 default:
-                     break
-                 }
-             }
-         } else {
-             if let characters = event.characters{
-                 for character in characters {
-                     switch(character){
-                     case "w":
-                         break
-                     default:
-                         print(character)
-                     }
-                 }
-             }
-         }
-     }
-     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         
@@ -750,7 +713,6 @@
         💠 = false
         🛡 = false
         🕹 = false
-        
         doublelaser = 0
         
         if (settings.level >= 1 && settings.level <= maxlevel) {
@@ -1131,7 +1093,11 @@
         }
         
         let sequence = SKAction.sequence([waitB,fadeIn,actionJackson]);
-        self.run( sequence )  
+        
+       
+        self.run( sequence )
+
+        
     }
     
     override func didSimulatePhysics() {
@@ -1211,24 +1177,26 @@
             let touchedNode = atPoint(location)
             
             if let name = touchedNode.name {
-                    if name == "fire-right" || 🕹 || 1 == 1 {
-                        laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
-                        firebomb(firebomb: firebutton)
-                    }
-                    
-                    if name == "fire-left"  || 🕹 || 1 == 1{
-                        laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
-                        firebomb(firebomb: firebutton2)
-                    }
-                    if name == "fire-down"  || 🕹 || 1 == 1 {
-                        bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
-                        firebomb(firebomb: bombsbutton)
-                    }
-                    if name == "fire-top"  || 🕹 || 1 == 1 {
-                        bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
-                        firebomb(firebomb: bombsbutton2)
-                    }
-             
+                
+                if name == "fire-right" || 🕹 {
+                    laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
+                    firebomb(firebomb: firebutton)
+                }
+                
+                if name == "fire-left"  || 🕹 {
+                    laserbeak(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
+                    firebomb(firebomb: firebutton2)
+                }
+                
+                if name == "fire-down"  || 🕹 {
+                    bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: false)
+                    firebomb(firebomb: bombsbutton)
+                }
+                
+                if name == "fire-top"  || 🕹 {
+                    bombaway(superhero: (heroPosition, heroRotation, heroVelocity), reverse: true)
+                    firebomb(firebomb: bombsbutton2)
+                }
             }
         }
     }
