@@ -1,2 +1,2 @@
-# UFOEmoji2020
-Refreshed version of UFO Emoji 2020 SpriteKit video game for iOS in Swift 5
+# UFOEmoji
+Refreshed 2024 for iOS 18 and all Apple iOS devices running iOS 14 and later.
