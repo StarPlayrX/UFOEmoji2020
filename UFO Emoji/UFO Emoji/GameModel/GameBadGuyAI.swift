@@ -1,9 +1,9 @@
 //
 //  BadGuy.swift
-//  UFEmoji
+//  UFO Emoji
 //
 //  Created by Todd on 5/20/19.
-//  Copyright © 2019 Todd Bruss. All rights reserved.
+//  Copyright (c) 2024 Todd Bruss. All rights reserved.
 //
 
 

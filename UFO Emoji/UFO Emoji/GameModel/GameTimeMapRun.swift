@@ -3,7 +3,7 @@
 //  UF Emoji
 //
 //  Created by Todd Bruss on 4/23/17.
-//  Copyright © 2017 Todd Bruss. All rights reserved.
+//  Copyright (c) 2024 Todd Bruss. All rights reserved.
 //
 
 import SpriteKit
