@@ -553,10 +553,8 @@ class GameTileMapRun {
                 
                 var path = CGMutablePath()
                 
-                path.addLines(between: [
-                    upperLeft, upperRight,
-                    middleRight, middleLeft
-                    ]
+                path.addLines(between: [upperLeft, upperRight,
+                    middleRight, middleLeft]
                 )
                 
                 path.closeSubpath()
@@ -634,8 +632,7 @@ class GameTileMapRun {
                 tileNode.position = center
                 
                 path = CGMutablePath()
-                path.addLines(between: [
-                    middleLeft, centerMost,
+                path.addLines(between: [middleLeft, centerMost,
                     btmMiddle, lowerLeft
                     ]
                 )

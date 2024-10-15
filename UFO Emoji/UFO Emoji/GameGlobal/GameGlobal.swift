@@ -3,7 +3,7 @@
 //  UFO Emoji
 //
 //  Created by Todd Bruss on 5/24/20.
-//  Copyright © 2020 Todd Bruss. All rights reserved.
+//  Copyright © 2024 Todd Bruss. All rights reserved.
 //
 
 //Could could start moving this into a Struct
@@ -154,8 +154,10 @@ func loadSettings() {
     settings.highscore = UserDefaults.standard.integer(forKey: "highscore")
     settings.level = UserDefaults.standard.integer(forKey: "level")
     settings.emoji = UserDefaults.standard.integer(forKey: "emoji")
-
+    
     settings.level == 0 ? (settings.level+=1) : ()
     settings.level > maxlevel ? (settings.level = maxlevel) : ()
     settings.highlevel == 0 ? (settings.highlevel+=2) : ()
+    
+    settings.highlevel = 12 //MARK: ToDo Remove HighLevel
 }
