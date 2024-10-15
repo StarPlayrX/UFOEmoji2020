@@ -11,6 +11,7 @@
  
  class GameScene: SKScene, FlightYokeProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
+     
     //MARK: Flight Stick
     let zero = CGFloat(0.0), dampZero = CGFloat(0.0), dampMax = CGFloat(40.0)
     let ease = TimeInterval(0.08), shipduration = TimeInterval(0.005)
@@ -218,6 +219,7 @@
     }
     
     func readyPlayerOne() -> Oreo? {
+
         var rocket = "aliensaucer"
         var glass = "aliencanape"
         var offset = 0
@@ -658,24 +660,6 @@
         movingObjectI()
     }
     
-    func demoMode() {
-        /* demo mode */
-        🛡 = true
-        💠 = true
-        🔱 = true
-        🕹 = true
-        
-        let logonode = SKSpriteNode(texture: SKTexture(imageNamed: "UFOEmojiLogoLarge"))
-        self.cam.addChild(logonode)
-        logonode.setScale(0.1875)
-        logonode.alpha = 1.00
-        logonode.zPosition = 100
-        hero.zPosition = 1000
-        hero.setScale(1.75)
-        tractor.setScale(1.75)
-        canape.setScale(1.75)
-        /* end demo mode */
-    }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         
@@ -929,10 +913,7 @@
         readySetGoNode.fontSize = 72
         readySetGoNode.name = "highScoreLabelNode"
         cam.addChild(readySetGoNode)
-        
-        //readySetGoNode
-        
-        
+
         livesLabel = SKLabelNode(fontNamed:"Emulogic")
         livesLabel.position = CGPoint( x: indent, y: labelheight )
         livesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
@@ -959,7 +940,6 @@
         }
                 
         livesLabelNode.text = String(repeating: heroArray[settings.emoji], count: lives)
-        
         livesLabelNode.fontSize = 14
         cam.addChild(livesLabelNode)
         
@@ -972,8 +952,6 @@
             self.audioPlayer?.stop()
             self.audioPlayer?.volume = 0.0
         }
-        
-        
         
         if settings.rapidfire {
             
@@ -1037,7 +1015,6 @@
             self.run( SKAction.repeatForever(autofire) )
         }
         
- 
         let fadeOut = SKAction.fadeOut(withDuration: 0.3)
         let fadeIn = SKAction.fadeIn(withDuration: 0.3)
         let waitA = SKAction.wait(forDuration: 1.0)
@@ -1052,7 +1029,6 @@
             canape = gamestartup.canape
             tractor = gamestartup.tractor
             tractor.addGlow()
-            
             bombsbutton = gamestartup.bombsbutton
             firebutton = gamestartup.firebutton
             bombsbutton2 = gamestartup.bombsbutton2
@@ -1061,11 +1037,7 @@
         }
         
         let sequence = SKAction.sequence([waitB,fadeIn,actionJackson]);
-        
-       
         self.run( sequence )
-
-        
     }
     
     override func didSimulatePhysics() {
@@ -1135,8 +1107,7 @@
             let firebutton2 = self.firebutton2,
             let bombsbutton = self.bombsbutton,
             let bombsbutton2 = self.bombsbutton2
-        else
-        { return }
+        else { return }
         
         super.touchesBegan(touches as Set<UITouch>, with: event)
         
@@ -1169,7 +1140,6 @@
         }
     }
     
-    
     //To Do: Move this to GameHits
     func tractorBeamedThisItem(prize:SKSpriteNode?) {
         
@@ -1178,7 +1148,6 @@
             let body = prize.physicsBody,
             prize.name != "🌠"
         else { return }
-        
         
         // send the collisions to neverLand
         // this way the score cannot be counted twice or more
@@ -1205,10 +1174,7 @@
         prize.run(SKAction.sequence([scale,removeFromParent]))
     }
     
-    
-    
     func blueZ (pos: CGPoint) {
-        
         if let smoke = SKEmitterNode(fileNamed: "blueParticle") {
             let fadeToZero = SKAction.fadeAlpha(to: 0.0, duration:TimeInterval(2.0))
             let removeFromParent = SKAction.removeFromParent()
@@ -1221,13 +1187,11 @@
             addChild(smoke)
         }
         
-        
         if settings.sound {
             let explosion: SKAction = SKAction.playSoundFileNamed("murrmurr.m4a", waitForCompletion: false)
             run(explosion)
         }
     }
-    
     
     func smokeM (pos: CGPoint) {
         
@@ -1249,7 +1213,6 @@
     }
     
     func magicParticle (pos: CGPoint) {
-        
         guard let smoke = SKEmitterNode(fileNamed: "magicParticle") else { return }
         
         let fadeToZero = SKAction.fadeAlpha(to: 0.0, duration:TimeInterval(2.0))
@@ -1277,7 +1240,6 @@
         blueZ(pos:contactPoint)
         remove(body:secondBody)
     }
-    
     
     func worldVersusLaser(firstBody: SKPhysicsBody?, secondBody: SKPhysicsBody?) {
         guard
@@ -1326,10 +1288,9 @@
     
     func laserVersusFloater(firstBody:SKPhysicsBody?,secondBody:SKPhysicsBody?) {
         guard
-            let firstBody = firstBody,
-            let secondBody = secondBody
+            let firstBody,
+            let secondBody
         else { return }
-        
         
         if let firstNode = firstBody.node, let secondNode = secondBody.node, let firstParent = firstNode.parent, let secondParent = secondNode.parent {
             let firstBodyPos = firstNode.scene?.convert(firstNode.position, from: firstParent)
@@ -1375,9 +1336,12 @@
     func baddiePointsHelper(firstBody:SKPhysicsBody?, secondBody:SKPhysicsBody?, contactPoint: CGPoint?) {
         
         guard
-            let firstBody = firstBody,
-            let secondBody = secondBody,
-            let contactPoint = contactPoint,
+            let firstBody,
+            let secondBody,
+            let contactPoint
+        else { return }
+        
+        guard
             let fbname = firstBody.node?.name
         else { return }
         
@@ -1390,9 +1354,7 @@
         remove(body: firstBody)
         remove(body: secondBody)
     }
-    
-    
-    
+
     func remove(body:SKPhysicsBody?) {
         guard
             let b = body,
@@ -1409,13 +1371,16 @@
         let r = SKAction.removeFromParent()
         n.run(r)
     }
-    
-    
+
     func goodiePointsHelper(firstBody:SKPhysicsBody?, secondBody:SKPhysicsBody?, contactPoint: CGPoint?) {
+        
         guard
-            let firstBody = firstBody,
-            let secondBody = secondBody,
-            let contactPoint = contactPoint,
+            let firstBody,
+            let secondBody,
+            let contactPoint
+        else { return }
+        
+        guard
             let sbnn = secondBody.node?.name
         else { return }
         
@@ -1428,7 +1393,6 @@
         remove(body: firstBody)
         remove(body: secondBody)
     }
-    
     
     func levelUpHelper() {
         level += 1
@@ -1448,7 +1412,6 @@
         world?.speed = 0
         tractor.speed = 0
         
-        
         if settings.music {
             audioPlayer?.numberOfLoops = 0
             audioPlayer?.stop()
@@ -1456,12 +1419,10 @@
         }
     }
     
-    
-    
     //MARK: digBeginContact
     func didBegin(_ contact: SKPhysicsContact) {
         guard
-            contact.bodyA.categoryBitMask !=  0,
+            contact.bodyA.categoryBitMask != 0,
             contact.bodyB.categoryBitMask != 0,
             contact.bodyA.node?.parent != nil,
             contact.bodyB.node?.parent != nil,
@@ -1470,8 +1431,6 @@
             contact.bodyA.node?.name != nil,
             contact.bodyB.node?.name != nil
         else { return }
-        
-        
         
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
@@ -1514,8 +1473,6 @@
                     worldVersusLaser(firstBody: firstBody, secondBody: secondBody)
                 }
             }
-            
-            
             
         case badFishCategory | laserbeam :
             
@@ -1579,12 +1536,6 @@
             removeHero()
             removeGUI()
             
-            
-            //self.removeAllActions()
-            //self.removeAllChildren()
-            //self.removeFromParent()
-            
-            
             //Loads the LevelUp Scene
             func starPlayrOneLevelUpX(world:SKNode?, hero: SKSpriteNode?, tractor: SKSpriteNode?) {
                 
@@ -1644,9 +1595,7 @@
             return
             
         }
-        
     }
-    
     
     var runForestRun = true
     
@@ -1672,16 +1621,13 @@
             }
             
             world.run( SKAction.sequence([wait,run]))
-            
         }
     }
     
     func removeHero() {
-        
         removeNode(node: canape)
         removeNode(node: tractor)
         removeNode(node: hero)
-        
     }
     
     func removeGUI() {
@@ -1702,15 +1648,10 @@
             self.QuadFireBombHUD.speed = 0
         }
         
-        
-        
         world.run( SKAction.sequence([wait,run]))
-        
-        
     }
     
     func LostLife(contactPoint: CGPoint) {
-        
         smokeM(pos: contactPoint)
         
         if settings.music {
@@ -1728,10 +1669,7 @@
         saveScores(level: level, highlevel: highlevel, score: score, hscore: highscore, lives: lives)
     }
     
-    
-    
     func EndGame() {
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             guard let self = self else { return }
             
@@ -1747,21 +1685,17 @@
             self.view?.isOpaque = true
             self.view?.clipsToBounds = true
             self.view?.ignoresSiblingOrder = true
-            
             self.view?.showsFPS = showsFPS
             self.view?.showsNodeCount = showsNodeCount
             self.view?.showsPhysics = showsPhysics
             self.view?.showsFields = showsFields
             self.view?.showsDrawCount = showsDrawCount
             self.view?.showsQuadCount = showsQuadCount
-            
             self.view?.shouldCullNonVisibleNodes = true
             self.view?.preferredFramesPerSecond = 61
             self.view?.presentScene(gameOverScene)
-            
         }
     }
-    
     
     func Explosion() {
         guard let hero = hero else { return }
@@ -1788,9 +1722,7 @@
         }
     }
     
-    
     func RestartLevel() {
-        
         removeHero()
         world.speed = 1
         
@@ -1820,10 +1752,10 @@
                 emojiAnimation(emojis:["🙈","🙊","🙉","🐵"])
             }
             
-            self.bombsbutton     =  gamestartup.bombsbutton
-            self.firebutton     = gamestartup.firebutton
-            self.bombsbutton2     = gamestartup.bombsbutton2
-            self.firebutton2     = gamestartup.firebutton2
+            self.bombsbutton  =  gamestartup.bombsbutton
+            self.firebutton   = gamestartup.firebutton
+            self.bombsbutton2 = gamestartup.bombsbutton2
+            self.firebutton2  = gamestartup.firebutton2
             
             if settings.music {
                 self.audioPlayer?.numberOfLoops = -1
@@ -1842,14 +1774,11 @@
         
         let wait = SKAction.wait(forDuration: 0.5)
         world.run(SKAction.sequence([wait,runResetWorld,wait,runWorld]))
-        
     }
-    
     
     // Find the Score
     // And return 1 if we can't find it
     func tallyPoints(name:String?) -> Int {
-        
         guard let name = name else {
             return(0)
         }
@@ -1899,9 +1828,7 @@
                 let fire: SKAction = SKAction.playSoundFileNamed("doublelaser.m4a", waitForCompletion: false)
                 self.run(fire)
             }
-            
         }
-        
         
         //gives our ship double lasers
         if name == "🔫" {
@@ -1910,9 +1837,7 @@
             if let l = livesLabel.text, !l.contains("🔫") {
                 livesLabel.text! += "🔫"
             }
-            
-            
-            
+ 
             if settings.sound {
                 let fire: SKAction = SKAction.playSoundFileNamed("doublelaser.m4a", waitForCompletion: false)
                 self.run(fire)
@@ -2001,7 +1926,6 @@
         
         //Monkey
         if settings.emoji == 2 {
-            
             👁.physicsBody?.applyAngularImpulse(5)
             // 🛥 ? (🍕 = 1) : (🍕 = -1)
             
@@ -2029,21 +1953,7 @@
         👁.physicsBody?.allowsRotation = true
         👁.physicsBody?.categoryBitMask = laserbeam
         👁.physicsBody?.collisionBitMask = laserBorder
-        
-       /* private let heroCategory:UInt32                 =  1
-        private let worldCategory:UInt32                =  2
-        private let bombBoundsCategory:UInt32           =  4
-        private let badFishCategory:UInt32              =  8
-        private let badGuyCategory:UInt32               =  16
-        private let tractorCategory:UInt32              =  32
-        private let laserbeam: UInt32                       =  64
-        private let wallCategory:UInt32                     =  128
-        private let itemCategory:UInt32                 =  256
-        private let fishCategory:UInt32                    =  512
-        private let charmsCategory:UInt32                  =  1024
-        private let levelupCategory:UInt32              =  2048
-        private let laserBorder:UInt32                      =  4096 */
-        
+
         let x = 2 + 8 + 16 + 128 + 256 + 512 + 1024 + 2048
         👁.physicsBody?.contactTestBitMask = UInt32(x)
         👁.physicsBody?.density = 0
@@ -2063,7 +1973,6 @@
         }
         
         let rotateLaser = superhero.zRotation * -3
-        
         let constantX = CGFloat(750)
         let constantY = CGFloat(250)
         let uno = CGFloat(1)
@@ -2105,7 +2014,6 @@
         }
     }
     
-    
     func bombaway (superhero: (position:CGPoint, zRotation: CGFloat, velocity: CGVector), reverse: Bool ) {
         
         💣 = SKSpriteNode()
@@ -2127,9 +2035,6 @@
         let x = 2 + 8 + 16 + 128 + 256 + 512 + 1024 + 2048
         💣.physicsBody?.contactTestBitMask = UInt32(x)
         
-        
-        //let ctb = UInt32(2 + 8 + 16 + 256 + 512 + 1024 + 8192)
-        //💣.physicsBody?.contactTestBitMask = UInt32(10010)
         💣.physicsBody?.applyImpulse(CGVector(dx: 0,dy: 50))
         💣.physicsBody?.density = 0
         💣.physicsBody?.fieldBitMask = 0
@@ -2139,11 +2044,10 @@
         let wait = 800
         
         if reverse {
-            💣.physicsBody?.velocity =  CGVector( dx: superhero.velocity.dx / 4, dy: 350)
+            💣.physicsBody?.velocity = CGVector( dx: superhero.velocity.dx / 4, dy: 350)
         } else {
-            💣.physicsBody?.velocity =  CGVector( dx: superhero.velocity.dx / 4, dy: -350 )
+            💣.physicsBody?.velocity = CGVector( dx: superhero.velocity.dx / 4, dy: -350 )
         }
-        
         
         🧨.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         🧨.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
@@ -2158,7 +2062,6 @@
         
         let DaBomb = 💣.copy() as! SKSpriteNode
         addChild(DaBomb)
-        
         
         let decay = SKAction.wait(forDuration: TimeInterval(wait))
         let remove = SKAction.removeFromParent()
@@ -2176,11 +2079,7 @@
         let fadeOut = SKAction.fadeAlpha(to: 0.0001, duration:TimeInterval(0.6))
         firebomb.run(SKAction.sequence([fadeIn,myDecay,fadeOut]))
     }
-    
-    
-    
  }
- 
  
  extension SKSpriteNode {
     func addGlow(radius: Float = 64) {
