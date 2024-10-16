@@ -11,6 +11,9 @@
  
  class GameScene: SKScene, FlightYokeProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
+    //MARK: Determine if demoMode is ON/OFF
+    let demoMode = true
+     
     //MARK: Flight Stick
     let zero = CGFloat(0.0), dampZero = CGFloat(0.0), dampMax = CGFloat(40.0)
     let ease = TimeInterval(0.08), shipduration = TimeInterval(0.005)
@@ -626,6 +629,19 @@
             let pos = hero.position as CGPoint?
         else { return }
         
+        if self.demoMode {
+            let triggerScreenShot = Int.random(in: 1...1000)
+            
+            if triggerScreenShot == 500, let screenshot = view {
+                UIGraphicsBeginImageContextWithOptions(screenshot.bounds.size, true, 0)
+                screenshot.drawHierarchy(in: screenshot.bounds, afterScreenUpdates: true)
+                if let image = UIGraphicsGetImageFromCurrentImageContext() {
+                    UIGraphicsEndImageContext()
+                    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                }
+            }
+        }
+       
         if pos.y > screenHeight && highScoreLabelNode.alpha > 0.0 {
             
             highScoreLabelNode.run(SKAction.fadeAlpha(to: 0.0, duration: 0.25))
@@ -752,27 +768,22 @@
         //skyMtns
         case 1...5:
             background = "waterWorld" //waterWorld
-            settings.rapidfire = false
         case 6...10:
             background = "miniDesert"
-            settings.rapidfire = false
         case 11...15:
             background = "skyMtns"
-            settings.rapidfire = true
         default :
             ()
         }
         
-        var filename = "" //default
-        
-        filename = "level\(level)"
-        
+        settings.rapidfire = demoMode
+
         world.isPaused = true
         world.isHidden = true
         
         let gameWorld = GameWorld(world: world)
         
-        world = gameWorld.gameLevel(filename: filename)
+        world = gameWorld.gameLevel(filename: "level\(level)")
         world.isPaused = false
         world.isHidden = false
         
@@ -2075,12 +2086,3 @@
     }
  }
  
- extension SKSpriteNode {
-    func addGlow(radius: Float = 64) {
-        let effectNode = SKEffectNode()
-        effectNode.addChild(SKSpriteNode(texture: texture))
-        effectNode.filter = CIFilter( name: "CIMotionBlur", parameters: [ "inputRadius":radius,"inputAngle": CGFloat.pi / 2 ] )
-        effectNode.shouldRasterize = true
-        addChild(effectNode)
-    }
- }
