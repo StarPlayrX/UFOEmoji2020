@@ -50,7 +50,6 @@ class GameMenu: SKScene {
     }
     
     internal override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
         if settings.highlevel > maxlevel {
             settings.highlevel = maxlevel
         }
@@ -68,12 +67,12 @@ class GameMenu: SKScene {
                     musicLabel.text = settings.music ? "🎷🔈" : "🎷🔇"
                 }
                 
-                if name == "sound-left" || name == "sound-right" || name == "soundLabel"{
+                if name == "sound-left" || name == "sound-right" || name == "soundLabel" {
                     settings.sound = !settings.sound
                     soundLabel.text = settings.sound ? "💥🔔" : "💥🔕"
                 }
                 
-                if name == "stick-left" || name == "stick-right" || name == "stickLabel"{
+                if name == "stick-left" || name == "stick-right" || name == "stickLabel" {
                     settings.stick = !settings.stick
                     stickLabel.xScale = settings.stick ? -1 : 1
                 }
@@ -84,11 +83,11 @@ class GameMenu: SKScene {
                         settings.level = settings.level + 1
                     }
                     
-                    if settings.level  <= settings.highlevel  {
+                    if settings.level <= settings.highlevel  {
                         levelLabel.text = levelarray[settings.level]
                         versusLabel.text = antiarray[settings.level]
                     } else {
-                        settings.level  = minlevel
+                        settings.level = minlevel
                         levelLabel.text = levelarray[settings.level]
                         versusLabel.text = antiarray[settings.level]
                     }
@@ -109,7 +108,7 @@ class GameMenu: SKScene {
                     }
                 }
                 
-                if name == "emo-right" || name == "emojiLabel"{
+                if name == "emo-right" || name == "emojiLabel" {
                     if settings.emoji <= maxEmoji {
                         settings.emoji = settings.emoji + 1
                     }
@@ -225,6 +224,7 @@ class GameMenu: SKScene {
                 sprite.position = childNode.position
                 sprite.position.x = sprite.position.x + -spc
                 sprite.name = spriteName
+                
             	addChild(sprite)
                 
                 label.fontName = emojifontname

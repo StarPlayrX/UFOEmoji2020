@@ -11,7 +11,6 @@
  
  class GameScene: SKScene, FlightYokeProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
-     
     //MARK: Flight Stick
     let zero = CGFloat(0.0), dampZero = CGFloat(0.0), dampMax = CGFloat(40.0)
     let ease = TimeInterval(0.08), shipduration = TimeInterval(0.005)
@@ -19,7 +18,7 @@
     let shipCtr = CGFloat(250.0)
     let shipMin = CGFloat(-500.0)
     
-    var alternator = false
+    //var alternator = false
     
     func FlightYokePilot(velocity: CGVector?, zRotation: CGFloat?) {
         //MARK: reference to hero's physic's body - easier
@@ -37,13 +36,11 @@
         }
         
         if velocity == CGVector.zero {
-            
             pb.linearDamping = dampMax
             pb.velocity = velocity
             
             rotateShip(ease, zRotation)
         } else {
-            
             pb.linearDamping = CGFloat(dampZero)
             pb.velocity = velocity
             
@@ -144,7 +141,6 @@
             first.removeFromParent()
         }
         
-        
         if let w = world {
             w.removeAllActions()
             w.removeAllChildren()
@@ -219,7 +215,6 @@
     }
     
     func readyPlayerOne() -> Oreo? {
-
         var rocket = "aliensaucer"
         var glass = "aliencanape"
         var offset = 0
@@ -277,7 +272,6 @@
                 sprite.physicsBody?.velocity = CGVector.zero
                 sprite.physicsBody?.applyImpulse(CGVector.zero)
                 sprite.name = name
-                
                 sprite.zPosition = zPosition
                 sprite.alpha = alpha
                 sprite.speed = speed
@@ -294,7 +288,7 @@
             let sprite = SKSpriteNode(imageNamed: texture)
             let btnLoc = settings.stick ? "R" : "L"
             
-            if name == "fire-right" ||  name == "hud-right" {
+            if name == "fire-right" || name == "hud-right" {
                 sprite.position.x = sprite.size.width / 2
                 sprite.position.y = -sprite.size.height / 2
             }
@@ -309,7 +303,7 @@
                 sprite.position.y = sprite.size.height / 2
             }
             
-            if name == "fire-down" ||  name == "hud-down" {
+            if name == "fire-down" || name == "hud-down" {
                 sprite.position.x = -sprite.size.width / 2
                 sprite.position.y = -sprite.size.height / 2
             }
@@ -317,7 +311,8 @@
             sprite.zPosition = 1000
             sprite.alpha = alpha
             sprite.name = name
-            if name == "hud-right" ||  name == "hud-down" || name == "hud-top" || name == "hud-left" {
+            
+            if name == "hud-right" || name == "hud-down" || name == "hud-top" || name == "hud-left" {
                 sprite.isUserInteractionEnabled = true
             } else {
                 sprite.isUserInteractionEnabled = false
@@ -1872,13 +1867,12 @@
             }
         }
         
-        //gives our trident bombs
         if name == "🕹" && !settings.rapidfire  {
             🕹 = true
             doublelaser = 1
-            
+            settings.rapidfire = true
             if let l = livesLabel.text, !l.contains("🕹") {
-                livesLabel.text? += ("🕹")
+                livesLabel.text? += "🕹"
             }
             
             if settings.sound {
@@ -1919,7 +1913,7 @@
         
         guard let 🧵 = 💠 ? 🥾 + 🦸 : 🦸 else { return }
         
-        👁 = SKSpriteNode(texture: SKTexture(imageNamed: 🧵 ))
+        👁 = SKSpriteNode(texture: SKTexture(imageNamed: 🧵))
         
         var 👨‍🔬 = SKPhysicsBody(rectangleOf: 👁.size)
         
@@ -1954,7 +1948,7 @@
         👁.physicsBody?.categoryBitMask = laserbeam
         👁.physicsBody?.collisionBitMask = laserBorder
 
-        let x = 2 + 8 + 16 + 128 + 256 + 512 + 1024 + 2048
+        let x = 3994 //calculated 2 + 8 + 16 + 128 + 256 + 512 + 1024 + 2048
         👁.physicsBody?.contactTestBitMask = UInt32(x)
         👁.physicsBody?.density = 0
         👁.physicsBody?.fieldBitMask = 0
@@ -2046,7 +2040,7 @@
         if reverse {
             💣.physicsBody?.velocity = CGVector( dx: superhero.velocity.dx / 4, dy: 350)
         } else {
-            💣.physicsBody?.velocity = CGVector( dx: superhero.velocity.dx / 4, dy: -350 )
+            💣.physicsBody?.velocity = CGVector( dx: superhero.velocity.dx / 4, dy: -350)
         }
         
         🧨.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center

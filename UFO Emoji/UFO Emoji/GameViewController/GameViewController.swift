@@ -15,7 +15,6 @@ protocol GameProtocol: AnyObject {
 }
 
 class GameViewController: UIViewController, GameProtocol {
-    
     func runGameMenu() {
         saveSettings()
         gameMenu()

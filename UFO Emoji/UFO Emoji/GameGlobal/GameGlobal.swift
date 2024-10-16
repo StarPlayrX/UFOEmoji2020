@@ -13,8 +13,8 @@ import SpriteKit
 typealias appsettings =  (level: Int, highlevel: Int, emoji: Int, score: Int, highscore: Int, lives: Int, music: Bool, sound: Bool, stick: Bool, mode: Int, rapidfire: Bool)
 var settings : appsettings = (level: 1, highlevel: 2, emoji: 1, score: 0, highscore: 0, lives: 3, music: true, sound: true, stick: true, mode: 0, rapidfire: false)
 
-
 var levelarray: Array = ["🦕","🦕","😎","🚙","🦋", "🐮", "🕊","🦆","🍀","🕸", "🥥", "🐿","💐","🦄","🐴","🐶","🐌","🐄","🐄"]
+
 var antiarray : Array = ["🦖","🦖","😡","🚗","🐛", "🐔", "🐍","🦅","🎱","🕷", "🌴", "🦔","🍄","🐺","🐗","🐱","🦂","🐓","🐓"]
 
 var heroArray: Array = ["👽","👽","🐵","💩","💩"]
@@ -106,11 +106,8 @@ func setSceneSizeForGame() -> CGSize {
             width: a,
             height: a * (min(b, c) / max(b, c))
         )
-        
     }
 }
-
-
 
 func setSceneSizeForMenu() -> CGSize  {
     _ = getDeviceSize()
@@ -135,29 +132,22 @@ func setSceneSizeForMenu() -> CGSize  {
     }
 }
    
-    
 typealias Oreo = (bombsbutton:SKSpriteNode?,firebutton:SKSpriteNode?,hero:SKSpriteNode?,canape:SKSpriteNode?,tractor:SKSpriteNode?,bombsbutton2:SKSpriteNode?,firebutton2:SKSpriteNode?)
-
 
 func saveSettings() {
     UserDefaults.standard.setValue(settings.highlevel, forKey: "highlevel")
     UserDefaults.standard.setValue(settings.highscore, forKey: "highscore")
     UserDefaults.standard.setValue(settings.level, forKey: "level")
     UserDefaults.standard.setValue(settings.emoji, forKey: "emoji")
-
-
 }
-
 
 func loadSettings() {
     settings.highlevel = UserDefaults.standard.integer(forKey: "highlevel")
     settings.highscore = UserDefaults.standard.integer(forKey: "highscore")
     settings.level = UserDefaults.standard.integer(forKey: "level")
     settings.emoji = UserDefaults.standard.integer(forKey: "emoji")
-    
     settings.level == 0 ? (settings.level+=1) : ()
     settings.level > maxlevel ? (settings.level = maxlevel) : ()
     settings.highlevel == 0 ? (settings.highlevel+=2) : ()
-    
     settings.highlevel = 12 //MARK: ToDo Remove HighLevel
 }
