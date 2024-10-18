@@ -3,7 +3,9 @@ Refreshed 2024 for iOS 18 and runs on all Apple iPad and iPhone devices capable 
 
 Source code provided to Apple on Apple's originality, creativity and undeniable proof on why it should continue to be allowed on the AppStore.
 
-GTFlightYoke, Graphics including sketches, concept art, final Photoshop and Illustrator vector PDFs, background Music created in garage band and all original Sound Effects created by Todd Bruss.
+Heads up Display including FlightYoke & diamond circle arrow fire buttons buttons, power ups, 3 themes, 3 staring charachers, graphics including sketches, concept art, final photoshop and Illustrator vector PDFs, background Music created in garage band and all original Sound Effects created soley by Todd Bruss.
+
+100% Swift, no AI generated code. No preservatives. 100% Creative. 100% 2D SpriteKit Side Scrolling arcade style video game.
 
 (c) 2014 - 2024 by Todd Bruss, aka Good Time and StarPlayrX. All Rights Reserved.
 
