@@ -1,7 +1,7 @@
 # UFO Emoji version 1.1.0 build 9
 Refreshed 2024 for iOS 18 and runs on all Apple iPad and iPhone devices capable of running iOS 14 and later.
 
-Source code provided to Apple on Apple's originality, creativity and undeniable proof on why it should continue to be allowed on the AppStore.
+Source code provided to Apple on to show its originality, creativity and undeniable proof on why it should continue to be allowed on the AppStore.
 
 Heads up Display including FlightYoke & diamond circle arrow fire buttons buttons, power ups, 3 themes, 3 staring charachers, graphics including sketches, concept art, final photoshop and Illustrator vector PDFs, background Music created in garage band and all original Sound Effects created soley by Todd Bruss.
 
