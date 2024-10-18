@@ -2,14 +2,13 @@
 //  GameWorld.swift
 //  UFO Emoji
 //
-//  Created by Todd Bruss on 5/28/20.
+//  Created by Todd Bruss on 5/28/20, Updated Oct 15, 2024.
 //  Copyright (c) 2024 Todd Bruss. All rights reserved.
 //
 
 import SpriteKit
 
 class GameWorld : SKNode {
-    
     private weak var world : SKNode!
     private var gameTileMapRun : GameTileMapRun!
     
@@ -32,9 +31,7 @@ class GameWorld : SKNode {
             var referenceNode = SKReferenceNode.init(fileNamed: filename),
             let level = referenceNode.children.first?.children
             else { return world }
-        
 
-        
         referenceNode.name = "🥶🥶🥶"
         referenceNode.position = CGPoint(x:0,y:0)
         
@@ -72,13 +69,11 @@ class GameWorld : SKNode {
             }
         }
         
-        
         referenceNode = SKReferenceNode()
         referenceNode.resolve()
         
         return world
     }
-    
     
     func setupLevel(tileMap: SKTileMapNode) {
         tileMap.alpha = 0.0
@@ -107,5 +102,4 @@ class GameWorld : SKNode {
         
         gameTileMapRun = nil
     }
-    
 }

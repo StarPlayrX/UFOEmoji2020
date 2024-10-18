@@ -2,12 +2,11 @@
 //  GameParallax.swift
 //  UFO Emoji
 //
-//  Created by Todd Bruss on 5/28/20.
+//  Created by Todd Bruss on 5/28/20, Updated Oct 15, 2024.
 //  Copyright (c) 2024 Todd Bruss. All rights reserved.
 //
 
 import SpriteKit
-
 
 class GameParallax : SKNode {
     
@@ -18,7 +17,6 @@ class GameParallax : SKNode {
         super.init()
         self.parallax = parallax
         self.boundz = bounds
-
     }
     
     deinit {

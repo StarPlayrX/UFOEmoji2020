@@ -2,7 +2,7 @@
 //  tileMapRun.swift
 //  UF Emoji
 //
-//  Created by Todd Bruss on 4/23/17.
+//  Created by Todd Bruss on 4/23/17, Updated Oct 15, 2024.
 //  Copyright (c) 2024 Todd Bruss. All rights reserved.
 //
 
@@ -46,8 +46,7 @@ class GameTileMapRun {
         
         TileNode.zPosition = 75
         TileNode.physicsBody?.restitution = 0.5
-        
-     
+    
         var n = Name
         let e = Emoji
         let w = NewItem
@@ -152,7 +151,6 @@ class GameTileMapRun {
         }
         
         switch Emoji {
-            
             case "🚀":
                 spriteLabelNode.zRotation = CGFloat(Double.pi/4)
                 spriteLabelNode.xScale = -1
@@ -164,9 +162,6 @@ class GameTileMapRun {
             case "🐌":
                 spriteLabelNode.xScale = -1
             case "🤯", "🚁", "🐝", "🛸":
-                
-              
-                            
 				var action = SKAction()
                 var rotateAction = SKAction()
                 var yAction = SKAction()
@@ -203,8 +198,7 @@ class GameTileMapRun {
                     }
 
                 }
-                
-                
+  
                 TileNode.run(action)
                 spriteLabelNode.xScale = 1
                 TileNode.name = "🤯"
@@ -214,7 +208,6 @@ class GameTileMapRun {
                     TileNode.run(rotateAction)
                     TileNode.run(yAction)
                 }
-           
 
                 if Emoji == "🚁" {
                     spriteLabelNode.zRotation = 0
@@ -234,8 +227,7 @@ class GameTileMapRun {
                     } else {
                         spriteLabelNode.zRotation = CGFloat(Double.pi/9)
                     }
-                    
-                    
+   
                     spriteLabelNode.fontSize = 50
             	}
 				
@@ -311,7 +303,7 @@ class GameTileMapRun {
         spriteLabelNode.text = str
         
         /**
-         We don't want to flight these sprite, usually for write or to direct out bad guys and good guys in a certain direction
+         We don't want to fight these sprite, usually for write or to direct out bad guys and good guys in a certain direction
          */
         switch str {
             case "💰","🎰","🤑","💵","🏧","💸","🏦","🏪","🎫","🤬","💴","💶","💷","📟","🚕":
@@ -342,8 +334,7 @@ class GameTileMapRun {
                 TileNode.addChild(💢)
             }
         }
-        
-        
+    
         // = 🛑 StarField (Space Mini Game Gravity Pull)
         if Name == "🛑" {
             //let 💢 = SKFieldNode.noiseField(withSmoothness: 0.5, animationSpeed: 0.5)
@@ -357,8 +348,7 @@ class GameTileMapRun {
                 💢.categoryBitMask = 2 + 8 + 64 + 256 + 512 + 1024 //    16384;
                 TileNode.addChild(💢)
             }
-            
-            
+        
             //prevent stuff from going all the way in
             let circlePath = UIBezierPath(arcCenter: CGPoint(x: 0,y: 0), radius: 128, startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             TileNode.physicsBody = SKPhysicsBody(edgeLoopFrom: circlePath.cgPath)
@@ -392,7 +382,6 @@ class GameTileMapRun {
                 blackhole.setScale(0.334)
                 TileNode.addChild(blackhole)
             }
-            
         }
         
         /* portal to a mini game */
@@ -461,7 +450,6 @@ class GameTileMapRun {
         tileNode.position = center
         
         //* This is the symbol of our baddie *//
-        
         if ( newname == "📈" ) {
             
             for i in 0...144 {
@@ -473,12 +461,8 @@ class GameTileMapRun {
                     break
                 }
             }
-            
-            
-            
         // 👾 = BadyGuy
         } else if ( newname == "👾" ) {
-            
             centerTexture = SKTexture()
             tileNode =  SKSpriteNode()
             tileNode.position = center
@@ -501,7 +485,6 @@ class GameTileMapRun {
                     let con = 1 + 64 as UInt32
                   
                     DrawBadGuxAI(TileMapParent: TileMapParent, TileNode: tileNode, PhysicsBody: physicsBody, Dynamic: true, Gravity: gravity, Category: cat, Collision: col, Rotation: rotation, Emoji: newemoji, Name: newitem, Contact: con, Mass: 0.1, Friction: 0, Letter: String(badguyArray[i]), Routes: 5, Nodes: 5 )
-                    
                     break
                 }
             }
@@ -624,7 +607,6 @@ class GameTileMapRun {
                 physicsBody = SKPhysicsBody(polygonFrom: path)
                 
                 DrawSprites(TileNode: tileNode, PhysicsBody: physicsBody, Name: name, Attribute: 4)
-                
                 
                 //mark: 7 LowerLeftCorner
                 centerTexture = SKTexture(imageNamed: name + "7")
@@ -1456,8 +1438,4 @@ class GameTileMapRun {
         TileMapParent.addChild(TileNode)
         TileNode = SKSpriteNode()
     }
-    
 }
-
-
-

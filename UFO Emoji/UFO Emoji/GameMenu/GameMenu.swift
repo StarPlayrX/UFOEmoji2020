@@ -1,8 +1,8 @@
 //
 //  GameMenu.swift
-//  UF Emoji
+//  UFO Emoji
 //
-//  Created by Todd Bruss on 12/3/15.
+//  Created by Todd Bruss on 12/3/15, Updated Oct 15, 2024.
 //  Copyright (c) 2024 Todd Bruss. All rights reserved.
 //
 

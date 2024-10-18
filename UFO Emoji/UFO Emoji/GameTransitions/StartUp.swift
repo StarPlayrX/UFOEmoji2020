@@ -1,8 +1,8 @@
 //
 //  GameOver.swift
-//  UF Emoji
+//  UFO Emoji
 //
-//  Created by todd on 12/7/15.
+//  Created by Todd Bruss on 12/7/15, Updated Oct 15, 2024.
 //  Copyright (c) 2024 Todd Bruss. All rights reserved.
 //
 
@@ -15,7 +15,6 @@ class StartUp: SKScene {
     override init(size: CGSize) {
         super.init(size: size)
     }
-    
     
     deinit {
 
@@ -31,7 +30,6 @@ class StartUp: SKScene {
     }
     
     func runner() {
-        
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
         
@@ -41,19 +39,15 @@ class StartUp: SKScene {
             self.view?.isOpaque = true
             self.view?.clipsToBounds = true
             self.view?.ignoresSiblingOrder = true
-           	
             self.view?.showsFPS = showsFPS
             self.view?.showsNodeCount = showsNodeCount
             self.view?.showsPhysics = showsPhysics
             self.view?.showsFields = showsFields
             self.view?.showsDrawCount = showsDrawCount
             self.view?.showsQuadCount = showsQuadCount
-            
             self.view?.shouldCullNonVisibleNodes = true
             self.view?.preferredFramesPerSecond = 61
-            
             self.anchorPoint = CGPoint(x: 0.0, y: 0.0)
-                        
             self.backgroundColor = .black
             
             let mainCharacter = heroArray[settings.emoji]
@@ -84,8 +78,6 @@ class StartUp: SKScene {
             label3.verticalAlignmentMode = .center
             label3.position = CGPoint(x: self.size.width / 2 + 120, y: self.size.height / 2)
             self.addChild(label3)
-            
-            
         }
 
         DispatchQueue.main.async { [weak self] in
@@ -96,6 +88,4 @@ class StartUp: SKScene {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
 }

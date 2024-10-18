@@ -1,8 +1,8 @@
 //
 //  GameOver.swift
-//  UF Emoji
+//  UFO Emoji
 //
-//  Created by todd on 12/7/15.
+//  Created by Todd Bruss on 12/7/15, Updated Oct 15, 2024.
 //  Copyright (c) 2024 Todd Bruss. All rights reserved.
 //
 
@@ -96,15 +96,7 @@ class GameOver: SKScene {
         }
     }
     
-    
-    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
-
-
-
-
-

@@ -1,19 +1,17 @@
 //
 //  LevelUp.swift
-//  UF Emoji
+//  UFO Emoji
 //
-//  Created by todd on 12/7/15.
+//  Created by Todd Bruss on 12/7/15, Updated Oct 15, 2024.
 //  Copyright (c) 2024 Todd Bruss. All rights reserved.
 //
 
 import SpriteKit
 
 class LevelUp: SKScene {
-    
     weak var gd = gameDelegate
 
      override init(size: CGSize ) {
-        
         super.init(size: size)
         
         self.removeAllActions()
@@ -23,7 +21,6 @@ class LevelUp: SKScene {
     }
         
     deinit {
-
         if hasActions() {
             removeAllActions()
         }
@@ -36,7 +33,6 @@ class LevelUp: SKScene {
     }
     
     func runner () {
-          
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
      
@@ -99,8 +95,6 @@ class LevelUp: SKScene {
         }
     }
         
- 
-    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

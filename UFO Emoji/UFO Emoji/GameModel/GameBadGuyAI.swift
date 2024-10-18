@@ -2,10 +2,9 @@
 //  BadGuy.swift
 //  UFO Emoji
 //
-//  Created by Todd on 5/20/19.
+//  Created by Todd on 5/20/19, Updated Oct 15, 2024.
 //  Copyright (c) 2024 Todd Bruss. All rights reserved.
 //
-
 
 import SpriteKit
 
@@ -15,8 +14,6 @@ var badGuySecond = ["1","2"]
 var badGuyThird =  ["3", "4"]
 var badGuyFourth = ["5", "4"]
 var badGuyFifth = ["3","2"]
-//var badGuyCount = Int(0)
-
 
 func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SKPhysicsBody, Dynamic: Bool, Gravity: Bool, Category: UInt32, Collision: UInt32, Rotation: Bool, Emoji: String, Name: String, Contact: UInt32, Mass: CGFloat, Friction: CGFloat, Letter:String, Routes:Int, Nodes:Int ) {
  
@@ -65,7 +62,6 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
                     break
                 }
             }
-            
         }
         
         // 😡 = Colonel
@@ -104,13 +100,9 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
             loop2 = badGuyFifth[1]
         }
         
-        
-        
-        
         let point0h = homePosition //badguyai[String(Name) + String(Letter)]  //home position
         
         let path1 = UIBezierPath()
-        
         
         for i in 1...5 {
             if badguyai["📈\(loop1)\(i)\(Letter)"] == nil {
@@ -136,7 +128,6 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
         	let point2b = badguyai[String("📈") + loop2 + "2" + String(Letter)],
         	let point1b = badguyai[String("📈") + loop2 + "1" + String(Letter)]
         {
-            
              path1.move(to:point0h)
              path1.addQuadCurve(to: point1a, controlPoint: point0h )
              path1.addQuadCurve(to: point3a, controlPoint: point2a )
@@ -173,10 +164,7 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
         shape.lineWidth = 1
         shape.name = Name + "shape"
         TileMapParent.addChild(shape)*/
-        
-      
     }
-    
     
     let wait = SKAction.wait(forDuration: TimeInterval(10))
     let seq = SKAction.sequence([codeaction,wait])
@@ -194,6 +182,4 @@ func DrawBadGuxAI(TileMapParent: SKNode, TileNode: SKSpriteNode, PhysicsBody: SK
     spriteLabelNode.text = String(Emoji)
     spriteLabelNode.fontSize = 42
     TileNode.addChild(spriteLabelNode)
-    
 }
-
