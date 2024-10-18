@@ -12,7 +12,7 @@
  class GameScene: SKScene, FlightYokeProtocol, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
     //MARK: Determine if demoMode is ON/OFF
-    let demoMode = true
+    let demoMode = false
      
     //MARK: Flight Stick
     let zero = CGFloat(0.0), dampZero = CGFloat(0.0), dampMax = CGFloat(40.0)
