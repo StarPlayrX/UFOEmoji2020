@@ -7,7 +7,7 @@ GTFlightYoke, Graphics including sketches, concept art, final Photoshop and Illu
 
 (c) 2014 - 2024 by Todd Bruss, aka Good Time and StarPlayrX. All Rights Reserved.
 
-Apple Color Emoji is owned by Apple, Inc., and can only be used on Apple devices and eco system.
+Apple Color Emoji is owned by Apple, Inc., and can only be used on Apple devices within the  eco system.
 
 
 ![6AC7C1FA-CCCD-4C71-88C5-5A96FD17D0D9](https://github.com/user-attachments/assets/4f17927d-ebfd-40d5-9a00-cf4ce34167d7)
