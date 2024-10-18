@@ -3,7 +3,7 @@ Refreshed 2024 for iOS 18 and all Apple iOS devices running iOS 14 and later.
 
 GTFlightYoke, Graphics (Sketches, concept art, final Photoshop and Illustrator vector PDFs, Background Music and Sound Effects created by Todd Bruss.
 
-(c) 2014 - 2024 by Todd Bruss, aka Good Time. All Rights Reserved.
+(c) 2014 - 2024 by Todd Bruss, aka Good Time and StarPlayrX. All Rights Reserved.
 
 Apple Color Emoji is owned by Apple, Inc., and can only be used on Apple devices and eco system.
 
