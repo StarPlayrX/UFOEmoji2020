@@ -1,4 +1,4 @@
-# UFOEmoji
+# UFO Emoji version 1.1.0 build 9
 Refreshed 2024 for iOS 18 and all Apple iOS devices running iOS 14 and later.
 
 GTFlightYoke, Graphics (besides Apple Color Emoji), Sound and Sound Effects copyright (c) 2024 by Todd Bruss. App Rights Reserved.
