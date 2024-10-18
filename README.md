@@ -1,7 +1,7 @@
 # UFO Emoji version 1.1.0 build 9
 Refreshed 2024 for iOS 18 and runs on all Apple iPad and iPhone devices capable of running iOS 14 and later.
 
-Source code provided to Apple on Apple's originality, creativity and undeniable proof on why it should continue to exist on the AppStore.
+Source code provided to Apple on Apple's originality, creativity and undeniable proof on why it should continue to be allowed on the AppStore.
 
 GTFlightYoke, Graphics (Sketches, concept art, final Photoshop and Illustrator vector PDFs, Background Music and Sound Effects created by Todd Bruss.
 
