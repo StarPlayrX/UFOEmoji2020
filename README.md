@@ -3,7 +3,7 @@ Refreshed 2024 for iOS 18 and runs on all Apple iPad and iPhone devices capable 
 
 Source code provided to Apple on Apple's originality, creativity and undeniable proof on why it should continue to be allowed on the AppStore.
 
-GTFlightYoke, Graphics (Sketches, concept art, final Photoshop and Illustrator vector PDFs, Background Music and Sound Effects created by Todd Bruss.
+GTFlightYoke, Graphics including sketches, concept art, final Photoshop and Illustrator vector PDFs, background Music created in garage band and all original Sound Effects created by Todd Bruss.
 
 (c) 2014 - 2024 by Todd Bruss, aka Good Time and StarPlayrX. All Rights Reserved.
 
