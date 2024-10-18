@@ -13,4 +13,4 @@ Apple Color Emoji is owned by Apple, Inc., and can only be used on Apple devices
 
 
 ![6AC7C1FA-CCCD-4C71-88C5-5A96FD17D0D9](https://github.com/user-attachments/assets/4f17927d-ebfd-40d5-9a00-cf4ce34167d7)
-
+![4D865019-1573-4C92-926C-DB37DC5F50A9](https://github.com/user-attachments/assets/23d91374-ce24-473a-a3c6-55ab5133147d)
