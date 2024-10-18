@@ -5,7 +5,7 @@ Source code provided to Apple on Apple's originality, creativity and undeniable 
 
 Heads up Display including FlightYoke & diamond circle arrow fire buttons buttons, power ups, 3 themes, 3 staring charachers, graphics including sketches, concept art, final photoshop and Illustrator vector PDFs, background Music created in garage band and all original Sound Effects created soley by Todd Bruss.
 
-100% Swift, no AI generated code. No preservatives. 100% Creative. 100% 2D SpriteKit Side Scrolling arcade style video game.
+100% Swift, 100% Original, 100% Creative, 100% 2D SpriteKit Side Scrolling arcade style video game. Includes absolutely no AI generated code.
 
 (c) 2014 - 2024 by Todd Bruss, aka Good Time and StarPlayrX. All Rights Reserved.
 
