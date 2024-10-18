@@ -11,7 +11,7 @@ Heads up Display including FlightYoke & diamond circle arrow fire buttons button
 
 Apple Color Emoji is owned by Apple, Inc., and can only be used on Apple devices within the  ecosystem.
 
-
+![C8119B6E-565B-4320-9411-98C51CEF8D0F_1_101_o](https://github.com/user-attachments/assets/14022404-570a-43ce-9550-056e72689bac)
 ![6AC7C1FA-CCCD-4C71-88C5-5A96FD17D0D9](https://github.com/user-attachments/assets/4f17927d-ebfd-40d5-9a00-cf4ce34167d7)
 ![ED5E1AAD-3085-4E60-BADB-162483FB81F3](https://github.com/user-attachments/assets/8ebbc1a8-b2c5-45ae-9d30-2df9bdd39b25)
 ![AC98C0AC-F524-453E-8AE2-CD5FFB6FDD60](https://github.com/user-attachments/assets/ed24efd9-22c9-45aa-8379-67780942c9a6)
