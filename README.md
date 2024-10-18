@@ -1,6 +1,9 @@
 # UFO Emoji version 1.1.0 build 9
 5 Star App Store Rating!
 
+Play this gameo on TestFlight:
+https://testflight.apple.com/join/FBNY1GqS
+
 Refreshed 2024 for iOS 18 and runs on all Apple iPad and iPhone devices capable of running iOS 14 and later.
 
 Source code provided to Apple on to show its originality, creativity and undeniable proof on why it should continue to be allowed on the AppStore.
