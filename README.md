@@ -9,7 +9,7 @@ Heads up Display including FlightYoke & diamond circle arrow fire buttons button
 
 100% Swift, 100% Original, 100% Creative, 100% 2D SpriteKit Side Scrolling arcade style video game. No AI generated code. No templates. Hand drawn, Hand coded in Charlotte, North Carolina.
 
-(c) 2014 - 2024 by Todd Bruss. All Rights Reserved.
+(c) 2015 - 2024 by Todd Bruss. All Rights Reserved.
 
 Apple Color Emoji is owned by Apple, Inc., and can only be used on Apple devices within the  ecosystem.
 
