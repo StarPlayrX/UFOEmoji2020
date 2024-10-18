@@ -16,7 +16,8 @@ The best side Scrolling arcade style video game on the planet.
 
 No:
 AI generated code, templates. 
-Hand draw & Hand coded
+
+Drawn by Hand. Coded By Hand 
 Designed with Pride in Charlotte, North Carolina.
 
 (c) 2015 - 2024 by Todd Bruss. All Rights Reserved.
