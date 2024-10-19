@@ -31,7 +31,7 @@ The source code provided to **Apple** proves the game’s **originality** and **
 
 - ✏️ **Graphics and Concept Art**  
   - 🎨 Hand-drawn sketches transformed into **Photoshop and Illustrator** assets  
-  - Original **vector PDFs** for transparency into the creative process  
+  - Original **vector PDFs** supporting any screen resolution. All hi-res retina ready graphics 
 
 - 🎵 **Original Soundtrack and Sound Effects**  
   - Composed entirely in 🎧 **GarageBand**  
