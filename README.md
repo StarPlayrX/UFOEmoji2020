@@ -1,7 +1,7 @@
 # 🚀 **UFO Emoji** – Version 1.1.0 (Build 9)  
 🌟 **5-Star App Store Rating!**  
 
-🎮 ** [Test it Now on TestFlight on iOS]**(https://testflight.apple.com/join/FBNY1GqS)  
+🎮 [**Test it Now on TestFlight on iOS**](https://testflight.apple.com/join/FBNY1GqS)  
 
 ---
 
