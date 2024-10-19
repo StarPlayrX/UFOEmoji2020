@@ -64,33 +64,27 @@ The source code provided to **Apple** proves the game’s **originality** and **
 “I hope you enjoy **UFO Emoji** as much as I’ve enjoyed making it. This game embodies everything I love about **creativity, independence, and the Apple ecosystem**. It’s not just about gaming—it’s about **pushing boundaries** and showcasing what’s possible when we create with passion. Thank you for being part of this journey. Here’s to the **future of independent game development**!”  
 
 — **Todd Bruss**  
- # 🚀 **UFO Emoji Gallery**
 
-# UFO Emoji Screenshots
+# 🚀 **UFO Emoji Gallery**
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/14022404-570a-43ce-9550-056e72689bac" alt="Screenshot 1" style="border-radius: 30px; width: 300px;">
-  <img src="https://github.com/user-attachments/assets/4f17927d-ebfd-40d5-9a00-cf4ce34167d7" alt="Screenshot 2" style="border-radius: 30px; width: 300px;">
-  <img src="https://github.com/user-attachments/assets/b0502a80-9b0b-4a3f-aeba-9863f03f90f0" alt="Screenshot 3" style="border-radius: 30px; width: 300px;">
-</p>
+<div style="width:100%; display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/1fb955e0-72ee-4430-bda5-9e8abaf3c36c" alt="Screenshot 4" style="border-radius: 30px; width: 300px;">
-  <img src="https://github.com/user-attachments/assets/adb25860-0a99-4205-9563-9b65cc94466d" alt="Screenshot 5" style="border-radius: 30px; width: 300px;">
-  <img src="https://github.com/user-attachments/assets/7eca1166-0931-4fcf-85bf-9bef032034bc" alt="Screenshot 6" style="border-radius: 30px; width: 300px;">
-</p>
+  <img src="https://github.com/user-attachments/assets/14022404-570a-43ce-9550-056e72689bac" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/4f17927d-ebfd-40d5-9a00-cf4ce34167d7" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/b0502a80-9b0b-4a3f-aeba-9863f03f90f0" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/1fb955e0-72ee-4430-bda5-9e8abaf3c36c" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/adb25860-0a99-4205-9563-9b65cc94466d" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/7eca1166-0931-4fcf-85bf-9bef032034bc" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/8ebbc1a8-b2c5-45ae-9d30-2df9bdd39b25" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/ed24efd9-22c9-45aa-8379-67780942c9a6" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/20294b36-7adc-4181-84b9-f04f5fe922ee" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/9df936a0-20ee-45ea-a260-03ca9b2b099b" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/a2bac68f-0354-483f-9060-2d6e1430727d" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/30d421da-ea8d-4502-b042-5cc98533ee60" style="width:300px; height:auto; border-radius:25px;">
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/8ebbc1a8-b2c5-45ae-9d30-2df9bdd39b25" alt="Screenshot 7" style="border-radius: 30px; width: 300px;">
-  <img src="https://github.com/user-attachments/assets/ed24efd9-22c9-45aa-8379-67780942c9a6" alt="Screenshot 8" style="border-radius: 30px; width: 300px;">
-  <img src="https://github.com/user-attachments/assets/20294b36-7adc-4181-84b9-f04f5fe922ee" alt="Screenshot 9" style="border-radius: 30px; width: 300px;">
-</p>
+</div>
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/9df936a0-20ee-45ea-a260-03ca9b2b099b" alt="Screenshot 10" style="border-radius: 30px; width: 300px;">
-  <img src="https://github.com/user-attachments/assets/a2bac68f-0354-483f-9060-2d6e1430727d" alt="Screenshot 11" style="border-radius: 30px; width: 300px;">
-  <img src="https://github.com/user-attachments/assets/30d421da-ea8d-4502-b042-5cc98533ee60" alt="Screenshot 12" style="border-radius: 30px; width: 300px;">
-</p>
+---
 
 
 
