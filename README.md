@@ -61,8 +61,12 @@ The source code provided to **Apple** proves the game’s **originality** and **
 
 ## **UFO Emoji Video Game History**
 - Game in Wireframe present to Apple's Design Lead at WWDC 2015
-- 2016 - 2018 Game Development
-  - Art, Music, Sound Effects,
+- 2015 - Present Game Development
+  - Hand drawn background and foreground art
+    - final Assets
+    - Photoshop and Illustrator PDFs
+    - Music (Garageband)
+    - Sound Effects (Garageband and a custom software synthentizer)
   - Swift Code using Apple's SpriteKit framework,
   - HUD Design
     - On screen Joystick
@@ -85,7 +89,20 @@ The source code provided to **Apple** proves the game’s **originality** and **
         - intro scene
         - creates level in millisecones
         - stop and go light (Ready, Set, Go!)
-
+  - 2018 UFO Emoji makes it Debut at the Mac App Store
+  - 2020 Major changes
+    - All new levels
+    - More Power ups
+    - More fun and excitment
+    - Bad Guy Pathfinder AI update
+    - Added support for iOS 14
+  - 2023 iOS 17 update
+  - 2025 iOS 18 update
+     - Several bug fixes made
+     - Supports any screen size
+     - Supports 1.3, 1.4, 1.5, 1.8, 2.2 screen ratios
+     - Code clean up
+     - Supports Xcode 16.0 Developer tools
 
 ## ✨ **A Message from Todd Bruss**  
 “I hope you enjoy **UFO Emoji** as much as I’ve enjoyed making it. This game embodies everything I love about **creativity, independence, and the Apple ecosystem**. It’s not just about gaming—it’s about **pushing boundaries** and showcasing what’s possible when we create with passion. Thank you for being part of this journey. Here’s to the **future of independent game development**!”  
