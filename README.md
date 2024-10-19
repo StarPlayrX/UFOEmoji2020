@@ -84,7 +84,7 @@ The source code provided to **Apple** proves the game’s **originality** and **
     - 🕹️ Joystick on **Left** or **Right** (with fire buttons on the opposite side)  
   - **Level Selection**  
   - **Game Start Button** with an **Intro Scene**  
-    - 🟢 **Ready, Set, Go!** traffic light animation  
+    - 🟢 **Ready, Set, Go!** traffic light  
     - Levels created in **milliseconds** for fast-paced gameplay
     
 ### 🕹️ **2017: HUD and Game Design**  
