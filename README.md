@@ -143,4 +143,3 @@ From humble beginnings in **WWDC 2015** to continuous updates for **iOS 18**, UF
   <img src="https://github.com/user-attachments/assets/bcc30a80-cb54-4f9a-932e-99b0f24e3b3d" style="width:333px; height:auto; border-radius:25px;">
   
 </div>
----
