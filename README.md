@@ -96,8 +96,8 @@ The source code provided to **Apple** proves the game’s **originality** and **
 
 ### 🎉 **Major Milestones**  
 
-#### **2018**: 🚀 **Debut on the Mac App Store**  
-- UFO Emoji officially launches, bringing emoji-powered action to Mac gamers.  
+#### **2018**: 🚀 **Debut on the iOS Apple App Store**  
+- UFO Emoji officially launches, bringing emoji-powered action to iOS gamers.  
 
 #### **2020**: 🌟 **Major Update and iOS 14 Support**  
 - **All-New Levels** for extended gameplay  
