@@ -2,7 +2,7 @@
 🌟 **5-Star App Store Rating!**  
 
 🎮 **Test it Now on TestFlight**  
-[🔗 Join the TestFlight](https://testflight.apple.com/join/FBNY1GqS)  
+[Join the UFO Emoji Beta in TestFlight](https://testflight.apple.com/join/FBNY1GqS)  
 
 ---
 
