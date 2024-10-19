@@ -88,7 +88,6 @@ The source code provided to **Apple** proves the game’s **originality** and **
 ## 🎥 **Interactive Slideshow**  
 You can also view the following images in a rotating slideshow using the code below if you're embedding in a custom GitHub page:
 
-```html
 <div class="slideshow-container">
   <div class="mySlides fade">
     <img src="https://github.com/user-attachments/assets/14022404-570a-43ce-9550-056e72689bac" style="width:100%; border-radius:25px;">
