@@ -71,7 +71,7 @@ The source code provided to **Apple** proves the game’s **originality** and **
   - Game Menu
     - UFO EMOJI orange logo
     - UFO EMOJI icon redesign
-    - Selections
+    - Menu Selections
       - Choose your pilot/space craft
         - Alien with custom flying Saucer
         - Animated Monkey in his Banana ship
@@ -80,6 +80,7 @@ The source code provided to **Apple** proves the game’s **originality** and **
       - Toggle Background Music ON/OFF
       - Joystick on Left or Joystick on Right
         - Fire buttons on opposite side
+      - Level start selection
       - 
 
 
