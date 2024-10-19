@@ -59,6 +59,30 @@ The source code provided to **Apple** proves the game’s **originality** and **
 
 ---
 
+## **UFO Emoji Video Game History**
+- Game in Wireframe present to Apple's Design Lead at WWDC 2015
+- 2016 - 2018 Game Development
+  - Art, Music, Sound Effects,
+  - Swift Code using Apple's SpriteKit framework,
+  - HUD Design
+    - On screen Joystick
+    - Fire buttons
+    - Score, High Score, Lives and Powerups
+  - Game Menu
+    - UFO EMOJI orange logo
+    - UFO EMOJI icon redesign
+    - Selections
+      - Choose your pilot/space craft
+        - Alien with custom flying Saucer
+        - Animated Monkey in his Banana ship
+        - Poop Emoji with PooShip
+      - Toggle Sound Effects ON/OFF
+      - Toggle Background Music ON/OFF
+      - Joystick on Left or Joystick on Right
+        - Fire buttons on opposite side
+      - 
+
+
 ## ✨ **A Message from Todd Bruss**  
 “I hope you enjoy **UFO Emoji** as much as I’ve enjoyed making it. This game embodies everything I love about **creativity, independence, and the Apple ecosystem**. It’s not just about gaming—it’s about **pushing boundaries** and showcasing what’s possible when we create with passion. Thank you for being part of this journey. Here’s to the **future of independent game development**!”  
 
