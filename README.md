@@ -6,7 +6,7 @@
 ---
 
 ## 🔄 **Updated for 2024 and Beyond!**  
-**Refreshed for iOS 18**: UFO Emoji runs seamlessly on all **iPads and iPhones** from **iOS 14** onwards. Whether you're on the 📱 **iPhone 14 Pro Max** or the 📲 **iPad Pro**, expect nothing short of **stellar gameplay**.  
+**Refreshed for iOS 18**: UFO Emoji runs seamlessly on all **iPads and iPhones** from **iOS 14** onwards. Whether you're on the 📱 **iPhone** or the 📲 **iPad**, expect nothing short of **stellar gameplay**.  
 
 ---
 
