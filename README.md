@@ -21,7 +21,7 @@ The source code provided to **Apple** proves the game’s **originality** and **
 - ⚡ **Power-Ups** that unlock new abilities  
 - 🌎 **Three Unique Worlds** to Explore:  
   - 🌊 **Water World**  
-  - 🏜️ **Egyptian Sand Dunes**  
+  - 🏜️ **Sand Dunes**  
   - 🌌 **Outer Space**  
 
 - 👾 **Three Playable Characters**:  
