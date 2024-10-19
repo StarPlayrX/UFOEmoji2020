@@ -122,7 +122,6 @@ The source code provided to **Apple** proves the game’s **originality** and **
 ### 🛠️ **A Labor of Love, Built to Evolve**  
 From humble beginnings in **WWDC 2015** to continuous updates for **iOS 18**, UFO Emoji represents years of dedication, creativity, and independent development. Hand-drawn art, custom sounds, and handcrafted code make it a truly unique side-scrolling arcade experience designed to thrive in the **Apple ecosystem**. Stay tuned for even more updates and new adventures!  
 
-
 ## ✨ **A Message from Todd Bruss**  
 “I hope you enjoy **UFO Emoji** as much as I’ve enjoyed making it. This game embodies everything I love about **creativity, independence, and the Apple ecosystem**. It’s not just about gaming—it’s about **pushing boundaries** and showcasing what’s possible when we create with passion. Thank you for being part of this journey. Here’s to the **future of independent game development**!”  
 
@@ -139,23 +138,9 @@ From humble beginnings in **WWDC 2015** to continuous updates for **iOS 18**, UF
   <img src="https://github.com/user-attachments/assets/8ebbc1a8-b2c5-45ae-9d30-2df9bdd39b25" style="width:333px; height:auto; border-radius:25px;">
   <img src="https://github.com/user-attachments/assets/ed24efd9-22c9-45aa-8379-67780942c9a6" style="width:333px; height:auto; border-radius:25px;">
   <img src="https://github.com/user-attachments/assets/20294b36-7adc-4181-84b9-f04f5fe922ee" style="width:333px; height:auto; border-radius:25px;">
-  <img src="https://github.com/user-attachments/assets/9df936a0-20ee-45ea-a260-03ca9b2b099b" style="width:333px; height:auto; border-radius:25px;">
   <img src="https://github.com/user-attachments/assets/a2bac68f-0354-483f-9060-2d6e1430727d" style="width:333px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/fa2cb19b-6237-413f-b5f5-ace02e2bffa3" style="width:333px; height:auto; border-radius:25px;">
   <img src="https://github.com/user-attachments/assets/bcc30a80-cb54-4f9a-932e-99b0f24e3b3d" style="width:333px; height:auto; border-radius:25px;">
-
-
+  
 </div>
-
-
 ---
-
-
-
-
-
-
-
-
-
-
-
