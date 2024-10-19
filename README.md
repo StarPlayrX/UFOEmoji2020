@@ -31,7 +31,7 @@ The source code provided to **Apple** proves the game’s **originality** and **
   - 💩 **Poo Emoji**: For those who love quirky humor  
 
 - ✏️ **Graphics and Concept Art**  
-  - Hand-drawn sketches transformed into 🎨 **Photoshop and Illustrator** assets  
+  - 🎨 Hand-drawn sketches transformed into **Photoshop and Illustrator** assets  
   - Original **vector PDFs** for transparency into the creative process  
 
 - 🎵 **Original Soundtrack and Sound Effects**  
@@ -64,21 +64,82 @@ The source code provided to **Apple** proves the game’s **originality** and **
 “I hope you enjoy **UFO Emoji** as much as I’ve enjoyed making it. This game embodies everything I love about **creativity, independence, and the Apple ecosystem**. It’s not just about gaming—it’s about **pushing boundaries** and showcasing what’s possible when we create with passion. Thank you for being part of this journey. Here’s to the **future of independent game development**!”  
 
 — **Todd Bruss**  
- 
+ # 🚀 **UFO Emoji Gallery**
 
+<div style="width:100%; display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
 
-![C8119B6E-565B-4320-9411-98C51CEF8D0F_1_101_o](https://github.com/user-attachments/assets/14022404-570a-43ce-9550-056e72689bac)
-![6AC7C1FA-CCCD-4C71-88C5-5A96FD17D0D9](https://github.com/user-attachments/assets/4f17927d-ebfd-40d5-9a00-cf4ce34167d7)
-![03C13B24-B5CC-4205-B601-BA94BD1C7C47](https://github.com/user-attachments/assets/b0502a80-9b0b-4a3f-aeba-9863f03f90f0)
-![C443B92B-7AB7-4431-A3D8-6DF1C7F63E71](https://github.com/user-attachments/assets/1fb955e0-72ee-4430-bda5-9e8abaf3c36c)
-![591A7A89-D456-4955-ABA4-0E89C54DB295_1_101_o](https://github.com/user-attachments/assets/adb25860-0a99-4205-9563-9b65cc94466d)
-![CB158935-3398-4DB1-9DFF-388AD60DBCA3](https://github.com/user-attachments/assets/7eca1166-0931-4fcf-85bf-9bef032034bc)
-![ED5E1AAD-3085-4E60-BADB-162483FB81F3](https://github.com/user-attachments/assets/8ebbc1a8-b2c5-45ae-9d30-2df9bdd39b25)
-![AC98C0AC-F524-453E-8AE2-CD5FFB6FDD60](https://github.com/user-attachments/assets/ed24efd9-22c9-45aa-8379-67780942c9a6)
-![E677B804-CE13-4217-8A60-4036EBCE3C89_1_101_o](https://github.com/user-attachments/assets/20294b36-7adc-4181-84b9-f04f5fe922ee)
-![CBD4018A-74EF-4C5B-960E-7CD588FD22D9](https://github.com/user-attachments/assets/9df936a0-20ee-45ea-a260-03ca9b2b099b)
-![833FECBF-753A-4D49-AFDE-B357677F4326](https://github.com/user-attachments/assets/a2bac68f-0354-483f-9060-2d6e1430727d)
-![310A19FE-45D7-425F-A58F-F7170B103C65](https://github.com/user-attachments/assets/30d421da-ea8d-4502-b042-5cc98533ee60)
+  <img src="https://github.com/user-attachments/assets/14022404-570a-43ce-9550-056e72689bac" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/4f17927d-ebfd-40d5-9a00-cf4ce34167d7" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/b0502a80-9b0b-4a3f-aeba-9863f03f90f0" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/1fb955e0-72ee-4430-bda5-9e8abaf3c36c" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/adb25860-0a99-4205-9563-9b65cc94466d" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/7eca1166-0931-4fcf-85bf-9bef032034bc" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/8ebbc1a8-b2c5-45ae-9d30-2df9bdd39b25" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/ed24efd9-22c9-45aa-8379-67780942c9a6" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/20294b36-7adc-4181-84b9-f04f5fe922ee" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/9df936a0-20ee-45ea-a260-03ca9b2b099b" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/a2bac68f-0354-483f-9060-2d6e1430727d" style="width:300px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/30d421da-ea8d-4502-b042-5cc98533ee60" style="width:300px; height:auto; border-radius:25px;">
+
+</div>
+
+---
+
+## 🎥 **Interactive Slideshow**  
+You can also view the following images in a rotating slideshow using the code below if you're embedding in a custom GitHub page:
+
+```html
+<div class="slideshow-container">
+  <div class="mySlides fade">
+    <img src="https://github.com/user-attachments/assets/14022404-570a-43ce-9550-056e72689bac" style="width:100%; border-radius:25px;">
+  </div>
+
+  <div class="mySlides fade">
+    <img src="https://github.com/user-attachments/assets/4f17927d-ebfd-40d5-9a00-cf4ce34167d7" style="width:100%; border-radius:25px;">
+  </div>
+
+  <div class="mySlides fade">
+    <img src="https://github.com/user-attachments/assets/b0502a80-9b0b-4a3f-aeba-9863f03f90f0" style="width:100%; border-radius:25px;">
+  </div>
+</div>
+
+<style>
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+.mySlides {
+  display: none;
+}
+
+.fade {
+  animation: fade 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+</style>
+
+<script>
+let slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  let slides = document.getElementsByClassName("mySlides");
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}    
+  slides[slideIndex-1].style.display = "block";  
+  setTimeout(showSlides, 3000);
+}
+</script>
+
 
 
 
