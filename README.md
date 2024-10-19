@@ -141,7 +141,7 @@ From humble beginnings in **WWDC 2015** to continuous updates for **iOS 18**, UF
   <img src="https://github.com/user-attachments/assets/20294b36-7adc-4181-84b9-f04f5fe922ee" style="width:333px; height:auto; border-radius:25px;">
   <img src="https://github.com/user-attachments/assets/9df936a0-20ee-45ea-a260-03ca9b2b099b" style="width:333px; height:auto; border-radius:25px;">
   <img src="https://github.com/user-attachments/assets/a2bac68f-0354-483f-9060-2d6e1430727d" style="width:333px; height:auto; border-radius:25px;">
-  <img src="https://github.com/user-attachments/assets/40fff21d-dd61-4701-a254-274d861bfed2" style="width:333px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/bcc30a80-cb54-4f9a-932e-99b0f24e3b3d" style="width:333px; height:auto; border-radius:25px;">
 
 
 </div>
