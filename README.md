@@ -70,7 +70,7 @@ The source code provided to **Apple** proves the game’s **originality** and **
   - 🎧 **Custom Sound Effects** produced with **GarageBand** and a **custom software synthesizer**  
   - 💻 **Swift Code** built on **Apple’s SpriteKit framework**  
 
-### 🛸 2015 **Game Menu Features**  
+### 🛸 2016 **Game Menu Features**  
 - **UFO Emoji Orange Logo** and **Icon Redesign**  
 - **Menu Selections:**  
   - **Choose Your Pilot / Spacecraft:**  
