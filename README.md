@@ -70,12 +70,7 @@ The source code provided to **Apple** proves the game’s **originality** and **
   - 🎧 **Custom Sound Effects** produced with **GarageBand** and a **custom software synthesizer**  
   - 💻 **Swift Code** built on **Apple’s SpriteKit framework**  
 
-### 🕹️ **HUD and Game Design**  
-- **On-Screen Joystick**  
-  - 🎯 **Fire Buttons** for shooting mechanics  
-  - 📊 **Score, High Score, Lives**, and **Power-ups Display**  
-
-### 🛸 **Game Menu Features**  
+### 🛸 2015 **Game Menu Features**  
 - **UFO Emoji Orange Logo** and **Icon Redesign**  
 - **Menu Selections:**  
   - **Choose Your Pilot / Spacecraft:**  
@@ -90,7 +85,14 @@ The source code provided to **Apple** proves the game’s **originality** and **
   - **Level Selection**  
   - **Game Start Button** with an **Intro Scene**  
     - 🟢 **Ready, Set, Go!** traffic light animation  
-    - Levels created in **milliseconds** for fast-paced gameplay  
+    - Levels created in **milliseconds** for fast-paced gameplay
+    
+### 🕹️ ** 2016 - 2018 HUD and Game Design**  
+- **On-Screen Joystick**  
+  - 🎯 **Fire Buttons** for shooting mechanics  
+  - 📊 **Score, High Score, Lives**, and **Power-ups Display**
+  - Latest revisons to game assets
+  - Level Design and Game Play
 
 ---
 
@@ -108,7 +110,7 @@ The source code provided to **Apple** proves the game’s **originality** and **
 #### **2023**: 📱 **iOS 17 Update**  
 - Optimized to run seamlessly on **iOS 17**.  
 
-#### **2025**: 🔧 **iOS 18 and Code Optimization**  
+#### **2024**: 🔧 **iOS 18 and Code Optimization**  
 - **Bug Fixes** ensuring smooth gameplay  
 - Full support for **any screen size** across devices  
 - Adapted to **multiple screen ratios** (1.3, 1.4, 1.5, 1.8, 2.2)  
