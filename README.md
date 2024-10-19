@@ -81,7 +81,10 @@ The source code provided to **Apple** proves the game’s **originality** and **
       - Joystick on Left or Joystick on Right
         - Fire buttons on opposite side
       - Level start selection
-      - 
+      - Game Start button
+        - intro scene
+        - creates level in millisecones
+        - stop and go light (Ready, Set, Go!)
 
 
 ## ✨ **A Message from Todd Bruss**  
