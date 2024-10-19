@@ -69,7 +69,7 @@ The source code provided to **Apple** proves the game’s **originality** and **
 
 <div style="width:100%; display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
 
-  <img src="https://github.com/user-attachments/assets/14022404-570a-43ce-9550-056e72689bac" style="width:333px; height:auto; border-radius:25px;">
+  <img src="https://github.com/user-attachments/assets/14022404-570a-43ce-9550-056e72689bac" style="width:333px; height:auto; corner-radius:25px;">
   <img src="https://github.com/user-attachments/assets/4f17927d-ebfd-40d5-9a00-cf4ce34167d7" style="width:333px; height:auto; border-radius:25px;">
   <img src="https://github.com/user-attachments/assets/b0502a80-9b0b-4a3f-aeba-9863f03f90f0" style="width:333px; height:auto; border-radius:25px;">
   <img src="https://github.com/user-attachments/assets/1fb955e0-72ee-4430-bda5-9e8abaf3c36c" style="width:333px; height:auto; border-radius:25px;">
