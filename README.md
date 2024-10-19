@@ -70,7 +70,7 @@ The source code provided to **Apple** proves the game’s **originality** and **
   - 🎧 **Custom Sound Effects** produced with **GarageBand** and a **custom software synthesizer**  
   - 💻 **Swift Code** built on **Apple’s SpriteKit framework**  
 
-### 🛸 2016: **Game Menu Features**  
+### 🛸 **2016: Game Menu Features**  
 - **UFO Emoji Orange Logo** and **Icon Redesign**  
 - **Menu Selections:**  
   - **Choose Your Pilot / Spacecraft:**  
@@ -87,7 +87,7 @@ The source code provided to **Apple** proves the game’s **originality** and **
     - 🟢 **Ready, Set, Go!** traffic light animation  
     - Levels created in **milliseconds** for fast-paced gameplay
     
-### 🕹️ ** 2017: HUD and Game Design**  
+### 🕹️ **2017: HUD and Game Design**  
 - **On-Screen Joystick**  
   - 🎯 **Fire Buttons** for shooting mechanics  
   - 📊 **Score, High Score, Lives**, and **Power-ups Display**
